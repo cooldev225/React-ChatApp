@@ -1,0 +1,64 @@
+[
+    
+    {
+        "id": 0,
+        "name": "Jony Lynetin",
+        "thumb": "contact/2.jpg",
+        "status": "8",
+        "mesg":"Typing................",
+        "lastSeenDate": "30/11/19",
+        "onlineStatus": "online",
+        "typing": true
+    },
+    {
+        "id": 1,
+        "name": "Josephin water",
+        "thumb": "contact/1.jpg",
+        "status": "Seen",
+        "mesg":"Hi, i am josephin. How are you.. ! There are many variations of passages.",
+        "lastSeenDate": "22/10/19",
+        "onlineStatus": "online",
+        "typing": false
+        
+    },
+    {
+        "id": 2,
+        "name": "Sufiya Elija",
+        "thumb": "contact/3.jpg",
+        "status": "Sending",
+        "mesg":"I need job, please help me.",
+        "lastSeenDate": "15/06/19",
+        "onlineStatus": "unreachable",
+        "typing": false
+    },
+    {
+        "id": 3,
+        "name": "Mukrani Pabelo",
+        "thumb": "contact/4.jpg",
+        "status": "Failed",
+        "mesg":"Hi, i am josephin. How are you.. ! There are many variations of passages.",
+        "lastSeenDate": "04/06/19",
+        "onlineStatus": "busy",
+        "typing": false
+    },
+    {
+        "id": 4,
+        "name": "Jhon Deo",
+        "thumb": "contact/2.jpg",
+        "status": "Failed",
+        "mesg":"Hi, i am josephin. How are you.. ! There are many variations of passages.",
+        "lastSeenDate": "04/06/19",
+        "onlineStatus": "busy",
+        "typing": false
+    },
+    {
+        "id": 5,
+        "name": "Pabelo Mukrani",
+        "thumb": "contact/1.jpg",
+        "status": "Failed",
+        "mesg":"Hi, i am josephin. How are you.. ! There are many variations of passages.",
+        "lastSeenDate": "04/06/19",
+        "onlineStatus": "busy",
+        "typing": false
+    }
+]

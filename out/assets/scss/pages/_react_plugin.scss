@@ -1,0 +1,107 @@
+
+
+// slick slider css
+.slick-slider {
+    .slick-list {
+        margin: 0 -6px;
+        .slick-slide {
+            padding: 0 6px;
+            .item {
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+}
+
+// reactstrap switch css
+.custom-control-label {
+    font-size: calc(13px + (14 - 13) * ((100vw - 320px) / (1920 - 320)));
+    color: $muted-font;
+    font-weight: 600;
+    line-height: 1.9;
+    padding-left: 10px;
+}
+.custom-switch {
+    .custom-control-label {
+        &::before {
+            border-radius: 20px;
+            height: 19px;
+            width: 34px;
+            box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset;
+            border-color: rgb(223, 223, 223);
+            cursor: pointer;
+        }
+        &::after {
+            top: calc(0.25rem + 3px);
+            left: calc(-2.25rem + 1px);
+            width: calc(1rem - 3px);
+            border-radius: 100%;
+            height: calc(1rem - 3px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            background-color: transparent;
+            cursor: pointer;
+        }
+    }
+    .custom-control-input {
+        &:checked {
+            ~ .custom-control-label {
+                &::before {
+                    background-color: rgb(63, 204, 53);
+                    border-color: rgb(63, 204, 53);
+                    box-shadow: rgb(63, 204, 53) 0px 0px 0px 10px inset;
+                }
+                &::after {
+                    transform: translateX(1.15rem);
+                }
+            }
+        }
+        &:focus {
+            ~ .custom-control-label {
+                &::before {
+                    box-shadow: none;
+                }
+            }
+        }
+        &:not(:disabled):active {
+            ~ .custom-control-label {
+                &::before {
+                    background-color: unset;
+                    border-color: rgb(223, 223, 223);
+                }
+            }
+        }
+    }
+    &.custom-switch-primary {
+        .custom-control-label {
+            &::before {
+                transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;
+            }
+            &::after {
+                transition: background-color 0.4s ease 0s, transform 0.2s ease 0s;
+            }
+        }
+        .custom-control-input {
+            &:checked {
+                ~ .custom-control-label {
+                    &::before {
+                        background-color: $primary-color;
+                        border-color: $primary-color;
+                        box-shadow: $primary-color 0px 0px 0px 10px inset;
+                        transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+                    }
+                    &::after {
+                        background-color: $white;
+                        transition: background-color 0.4s ease 0s, transform 0.2s ease 0s;
+                    }
+                }
+            }
+        }
+    }
+}
+.status-switch {
+    .custom-control-label {
+        color: $dark-color;
+    }
+}

@@ -1,0 +1,43 @@
+
+@import "utils/variables.scss";
+@import "style";
+@import "vendors/slick";
+@import "vendors/slick-theme";
+html {
+    &.style1 {
+        $primary-color :#3a62b8;
+        $primary-light: #f6f7fa;
+        $gray1 : #e4e7ef;
+        @import "style";
+    }
+    &.style2 {
+        $primary-color :#064c3c;
+        $primary-light: #f4faf9;
+        $gray1 : #e1f1ee;
+        @import "style";
+    }
+    &.style3 {
+        $primary-color :#9b4aff ;
+        $primary-light:#faf8fc;
+        $gray1: #f4effa;
+        @import "style";
+    }
+    &.style4 {
+        $primary-color :#00d3cb;
+        $primary-light:#ebfafa;
+        $gray1: #daf6f5;
+        @import "style";
+    }
+    &.style5 {
+        $primary-color :#ff5b92 ;
+        $primary-light:#f8f5f6;
+        $gray1 : #faebf0;
+        @import "style";
+    }
+    &.style6 {
+        $primary-color :#ff803c ;
+        $primary-light:#fff9f5;
+        $gray1 : #faeae0;
+        @import "style";
+    }
+}
