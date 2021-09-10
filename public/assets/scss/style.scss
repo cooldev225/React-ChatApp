@@ -1,0 +1,63 @@
+// vendors
+@import "~bootstrap-scss/bootstrap.scss";
+@import "vendors/font-awesome";
+@import "vendors/themify";
+@import "vendors/feather-icon";
+@import "vendors/animate";
+@import "vendors/owl.carousel.scss";
+@import "vendors/slick.scss";
+@import "vendors/slick-theme.scss";
+@import "utils/helpers.scss";
+
+//base
+@import "base/typography.scss";
+@import "base/reset.scss";
+
+// components
+@import "components/buttons";
+@import "components/tabs";
+@import "components/msg";
+@import "components/dropdown";
+@import "components/chat-box";
+@import "components/tootip";
+@import "components/loader";
+@import "components/switchery";
+@import "components/collapse";
+@import "components/call";
+@import "components/call-list";
+@import "components/according";
+@import "components/tour";
+
+
+//layout
+@import "layout/grid.scss";
+@import "layout/sidebar.scss";
+@import "layout/content.scss";
+@import "layout/dark.scss";
+@import "layout/rtl.scss";
+@import "layout/login";
+@import "layout/forms.scss";
+@import "layout/customizer.scss";
+
+//pages
+@import "pages/inner-pages";
+@import "pages/landing";
+@import "pages/inner-pages-responsive";
+@import "pages/landing-responsive";
+@import "pages/landing-page";
+@import "pages/react_plugin";
+
+// themes
+@import "themes/admin.scss";
+@import "themes/theme.scss";
+@import "themes/responsive.scss";
+
+// ReactToastify
+@import "~react-toastify/dist/ReactToastify.css";
+@import "~react-datepicker/dist/react-datepicker.css";
+
+// ToolTip
+@import '~react-tippy/dist/tippy.css';
+
+// Image gallery
+@import "~react-image-lightbox/style.css";
