@@ -48,6 +48,7 @@ $(function () {
 
   pageResetForm.on('submit',function(e){
     e.preventDefault();
+    alert('sss');
     var form_data = new FormData();
     form_data.append('firstName',$('#firstName').val());
     form_data.append('cnpj',$('#cnpj').val());

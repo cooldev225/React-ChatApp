@@ -46,96 +46,80 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        
         $email = $request->input('email');
-        if($email==null)return view('frontend.auth.register',['page_title' => 'Register']);
+        if($email==null)
+            return view('frontend.auth.register',['page_title' => 'Register']);
+        
+        $this->validate($request, [
+            'username' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required'
+        ], [
+            'username.required' => 'The username field is required.',
+            'username.unique' => 'The username already exists.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email format is incorrect.',
+            'email.unique' => ' The email already exists.',
+            'password.required' => 'The password field is required',
+        ]);
 
-        $username=self::getRandomString();
-        if(count(User::select()->where('username',$request->input('cnpj'))->get()))
-            return array(
-                'message'=> 'The CNPJ is exist already.',
-                'loggedin'=> false,
-                'password'=>''
-            );
-        if(count(User::select()->where('email',$request->input('email'))->get()))
-            return array(
-                'message'=> 'The email is exist already.',
-                'loggedin'=> false,
-                'password'=>''
-            );
-        $password=self::getRandomString();//Str::random(7);
+        // if(count(User::select()->where('username',$request->input('username'))->get()))
+        //     return view('frontend.auth.register', ['message' => 'The username is exist already.']);    
+        
+        // if(count(User::select()->where('email',$request->input('email'))->get()))
+        //     return view('frontend.auth.register', ['message' => 'The email is exist already.']);    
+        $password=$request->input('password');//Str::random(7);
         $cryptpass=Hash::make($password);
         $email=$request->input('email');
         $token=Crypt::encryptString($email.'###'.$password);  
         $user = User::create([
-            'username' => $request->input('cnpj'),
+            'username' => $request->input('username'),
             'email' => $email,
             'password' => $cryptpass,
-            'firstName'=>$request->input('firstName'),
-            'phone_mobile'=>$request->input('phone'),
             'remember_token'=>$token
         ]);
-        mail($email,"OLT support","Your password is ".$password);
-        try{
-            $mailData = new MailData();
-            $mailData->template='temps.common';
-            $mailData->fromEmail = config('mail.from.address');
-            $mailData->userName = $request->input('phone');
-            $mailData->toEmail = $email;
-            $mailData->subject = 'Gracias por crear una cuenta.';
-            $mailData->mailType = 'MAGIC_LINK_TYPE';
-            $mailData->content = "Your password is ".$password;
-            Mail::to($mailData->toEmail)->send(new MailHelper($mailData));
-        }catch(ConnectException $e){}
-        return array(
-            'message'=> 'We sent your password to your email.',
-            'loggedin'=> true,
-            'password'=>''
-        );
+        // mail($email,"OLT support","Your password is ".$password);
+        // try{
+        //     $mailData = new MailData();
+        //     $mailData->template='temps.common';
+        //     $mailData->fromEmail = config('mail.from.address');
+        //     $mailData->userName = $request->input('phone');
+        //     $mailData->toEmail = $email;
+        //     $mailData->subject = 'Gracias por crear una cuenta.';
+        //     $mailData->mailType = 'MAGIC_LINK_TYPE';
+        //     $mailData->content = "Your password is ".$password;
+        //     Mail::to($mailData->toEmail)->send(new MailHelper($mailData));
+        // }catch(ConnectException $e){}
+        // return view('frontend.auth.login', ['page_title' => 'Login']);
+        return redirect('/login');
     }
 
     public function login(Request $request)
     {
-        //login
-        if($request->input('username')=='')
-          return array(
-            'message'=> 'Please fill username or email field.',
-            'loggedin'=> false
-        );
-        if($request->input('password')=='')
-          return array(
-            'message'=> 'Please, type password.',
-            'loggedin'=> false
-        );
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ], [
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email format is incorrect.',
+            'password.required' => 'The password field is required',
+        ]);
         $validator = $this->selectAuthType($request) ?
-            $request->validate([
-                'email'     => 'required',
-                'password'  => 'required'
-            ])
-            :
-            $request->validate([
-                'username'     => 'required',
-                'password'  => 'required'
-            ])
+             $request->validate([
+                 'email'     => 'required',
+                 'password'  => 'required'
+             ])
+             :
+             $request->validate([
+                 'username'     => 'required',
+                 'password'  => 'required'
+             ])
         ;
         if (Auth::attempt($validator))
         {
             if(auth::check()){
-                $login = Session::select()->where('user_id', Auth::id())->get();
-                if (count($login) > 0)
-                {
-                    if($this->get_client_ip()==$login[0]['ip_address']){
-                        $login[0]->delete();
-                    }else{
-                        Session::select()->where('user_id',Auth::id())->delete();//Auth::logoutUsingId(Auth::id());
-                        Auth::logout();     
-                        session()->flash('logout', "You are Logged in on other devices");
-                        return array(
-                            'message'=> 'You are Logged in on other devices',
-                            'loggedin'=> false
-                        );
-                    }
-                }
-
+               $login = Session::select()->where('user_id', Auth::id())->get();
                 $user=Auth::user();
                 $user->remember_token=Crypt::encryptString("{$user->email}###{$validator['password']}");
                 $user->logins=$user->logins+1;
@@ -149,6 +133,10 @@ class AuthController extends Controller
                 $session->payload='login';
                 $session->last_activity=1;
                 $session->save();
+            }else{
+                if(!User::select()->where('email',$request->input('username'))->count())
+                    return view('frontend.auth.login',['msg' => 'The email is not exist.','loggedin'=>false]);
+                    return view('frontend.auth.login',['msg' => 'Password is wrong.','loggedin'=>false]);
             }
             $request->session()->regenerate();
             $row=new LastLogin;
@@ -162,14 +150,7 @@ class AuthController extends Controller
         }
         else
         {
-            $msg='error';
-            if(!User::select()->where('email',$request->input('username'))->count())
-                $msg='The email is not exist.';
-            else $msg='Password is wrong.';
-            return array(
-                'message'=> $msg,
-                'loggedin'=> false
-            );
+            
         }
     }
 

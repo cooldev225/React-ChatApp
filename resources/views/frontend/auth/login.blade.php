@@ -1,6 +1,7 @@
 @extends('frontend.layouts.empty')
 @section('content')
 <div class="login-page1">
+	<?php if(isset($errors)&&count($errors))dd($errors);?>
 	<div class="container-fluid p-0">
 	<div class="row">
 		<div class="col-12">
@@ -13,11 +14,13 @@
 				<form class="form1" action="/login" method="post">
 				<div class="form-group">
 					<label class="col-form-label" for="inputEmail3">Email Address</label>
-					<input class="form-control" id="inputEmail3" name="email" type="email" placeholder="Demo@123gmail.com">
+					<input class="form-control" id="inputEmail3" name="email" type="email" placeholder="Demo@123gmail.com" value="{{ old('email') }}">
+					<span class="text-danger">{{ $errors->first('email') }}</span>                            
 				</div>
 				<div class="form-group">
 					<label class="col-form-label" for="inputPassword3">Password</label><span> </span>
-					<input class="form-control" id="inputPassword3" name="password" type="password" placeholder="Password">
+					<input class="form-control" id="inputPassword3" name="password" type="password" placeholder="Password" value="{{ old('password') }}">
+					<span class="text-danger">{{ $errors->first('password') }}</span>                            
 				</div>
 				<div class="form-group">
 					<div class="rememberchk">
