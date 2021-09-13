@@ -27,11 +27,11 @@ $(function () {
         $(element).valid();
       }, */
       rules: {
-        'login-email': {
+        'email': {
           required: true,
-          email: true
+          email: false
         },
-        'login-password': {
+        'password': {
           required: true
         }
       }
@@ -41,7 +41,7 @@ $(function () {
   pageLoginForm.on('submit',function(e){
     e.preventDefault();
     var form_data = new FormData();
-    form_data.append('username',$('#login-email').val());
+    form_data.append('email',$('#login-email').val());
     form_data.append('password',$('#login-password').val());
     $.ajax({
         url: '/login',

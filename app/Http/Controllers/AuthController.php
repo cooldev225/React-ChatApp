@@ -30,7 +30,7 @@ class AuthController extends Controller
 
     protected function selectAuthType(Request $request)
     {
-        $login = $request->input('username');
+        $login = $request->input('email');
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $request->merge([$fieldType => $login]);
         switch ($fieldType)
@@ -64,11 +64,6 @@ class AuthController extends Controller
             'password.required' => 'The password field is required',
         ]);
 
-        // if(count(User::select()->where('username',$request->input('username'))->get()))
-        //     return view('frontend.auth.register', ['message' => 'The username is exist already.']);    
-        
-        // if(count(User::select()->where('email',$request->input('email'))->get()))
-        //     return view('frontend.auth.register', ['message' => 'The email is exist already.']);    
         $password=$request->input('password');//Str::random(7);
         $cryptpass=Hash::make($password);
         $email=$request->input('email');
@@ -79,47 +74,37 @@ class AuthController extends Controller
             'password' => $cryptpass,
             'remember_token'=>$token
         ]);
-        // mail($email,"OLT support","Your password is ".$password);
-        // try{
-        //     $mailData = new MailData();
-        //     $mailData->template='temps.common';
-        //     $mailData->fromEmail = config('mail.from.address');
-        //     $mailData->userName = $request->input('phone');
-        //     $mailData->toEmail = $email;
-        //     $mailData->subject = 'Gracias por crear una cuenta.';
-        //     $mailData->mailType = 'MAGIC_LINK_TYPE';
-        //     $mailData->content = "Your password is ".$password;
-        //     Mail::to($mailData->toEmail)->send(new MailHelper($mailData));
-        // }catch(ConnectException $e){}
-        // return view('frontend.auth.login', ['page_title' => 'Login']);
         return redirect('/login');
     }
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ], [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email format is incorrect.',
-            'password.required' => 'The password field is required',
-        ]);
+        if($request->input('email') == '')
+            return array(
+                'message' => 'Please input email or username',
+                'loggedin' => false
+            );
+        if($request->input('password') == '')
+            return array(
+                'message' => 'Please input password',
+                'loggedin' => false
+            );
         $validator = $this->selectAuthType($request) ?
-             $request->validate([
-                 'email'     => 'required',
-                 'password'  => 'required'
-             ])
-             :
-             $request->validate([
-                 'username'     => 'required',
-                 'password'  => 'required'
-             ])
+            $request->validate([
+                'email'     => 'required',
+                'password'  => 'required'
+            ])
+            :
+            $request->validate([
+                'username'  => 'required',
+                'password'  => 'required'
+            ])
         ;
+        
         if (Auth::attempt($validator))
         {
             if(auth::check()){
-               $login = Session::select()->where('user_id', Auth::id())->get();
+                $login = Session::select()->where('user_id', Auth::id())->get();
                 $user=Auth::user();
                 $user->remember_token=Crypt::encryptString("{$user->email}###{$validator['password']}");
                 $user->logins=$user->logins+1;
@@ -133,10 +118,6 @@ class AuthController extends Controller
                 $session->payload='login';
                 $session->last_activity=1;
                 $session->save();
-            }else{
-                if(!User::select()->where('email',$request->input('username'))->count())
-                    return view('frontend.auth.login',['msg' => 'The email is not exist.','loggedin'=>false]);
-                    return view('frontend.auth.login',['msg' => 'Password is wrong.','loggedin'=>false]);
             }
             $request->session()->regenerate();
             $row=new LastLogin;
@@ -150,7 +131,14 @@ class AuthController extends Controller
         }
         else
         {
-            
+            $msg='error';
+            if(!User::select()->where('email',$request->input('email'))->count())
+                $msg='The email is not exist.';
+            else $msg='Password is wrong.';
+            return array(
+                'message'=> $msg,
+                'loggedin'=> false
+            );  
         }
     }
 
@@ -160,7 +148,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function forgot(Request $request)
@@ -185,7 +173,7 @@ class AuthController extends Controller
             $mailData->fromEmail = config('mail.from.address');
             $mailData->userName = $user->userName;
             $mailData->toEmail = $email;
-            $mailData->subject = 'OLT - Password Reset';
+            $mailData->subject = 'ChitChat - Password Reset';
             $mailData->mailType = 'RESET_LINK_TYPE';
             $mailData->content = $newPassword;
 

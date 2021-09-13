@@ -2,18 +2,18 @@
 @inject('dateFormat', 'App\Services\DateService')
 @section('content')
 <div class="chitchat-loader">
-    <div><img src="/public/chat/images/logo/logo_big.png" alt=""/>
+    <div><img src="/chat/images/logo/logo_big.png" alt=""/>
     <h3>Simple, secure messaging for fast connect to world..!</h3>
     </div>
 </div>
 <div class="chitchat-container sidebar-toggle">
     <nav class="main-nav on custom-scroll">
-    <div class="logo-warpper"><a href="messenger.html"><img src="/public/chat/images/logo/logo.png" alt="logo"/></a></div>
+    <div class="logo-warpper"><a href="messenger.html"><img src="/chat/images/logo/logo.png" alt="logo"/></a></div>
     <div class="sidebar-main">
         <ul class="sidebar-top">
         <li><a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
             <div class="user-popup status one">
-                <div> <img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+                <div> <img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
             </div></a></li>
         <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
         <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li>
@@ -25,7 +25,7 @@
         </ul>
         <ul class="sidebar-bottom">         
         <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode" data-intro="Change mode"><i class="fa fa-moon-o"></i></a></li>
-        <li><a class="icon-btn btn-light" href="login.html" data-tippy-content=" SignOut"> <i class="fa fa-power-off">  </i></a></li>
+        <li><a class="icon-btn btn-light" href="/logout" data-tippy-content=" SignOut"> <i class="fa fa-power-off">  </i></a></li>
         </ul>
     </div>
     </nav>
@@ -45,7 +45,7 @@
             <div class="item">
             <div class="recent-box">
                 <div class="dot-btn dot-danger grow"></div>
-                <div class="recent-profile"><img class="bg-img" src="/public/chat/images/avtar/1.jpg" alt="Avatar"/>
+                <div class="recent-profile"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/>
                 <h6> John deo</h6>
                 </div>
             </div>
@@ -53,7 +53,7 @@
             <div class="item">
             <div class="recent-box">
                 <div class="dot-btn dot-success grow"></div>
-                <div class="recent-profile online"><img class="bg-img" src="/public/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
+                <div class="recent-profile online"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
                 <h6> John </h6>
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="item">
             <div class="recent-box">
                 <div class="dot-btn dot-warning grow"></div>
-                <div class="recent-profile"><img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt="Avatar"/>
+                <div class="recent-profile"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/>
                 <h6> Jpny</h6>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                     <ul class="chat-main">
                         <li data-to="blank">
                         <div class="chat-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Josephin water</h5>
                             <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -124,7 +124,7 @@
                         </li>
                         <li class="active" data-to="chating">
                         <div class="chat-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6>Typing................</h6>
@@ -137,7 +137,7 @@
                         </li>
                         <li data-to="blank">
                         <div class="chat-box">
-                            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Sufiya Elija</h5>
                             <h6>I need job, please help me.</h6>
@@ -150,7 +150,7 @@
                         </li>
                         <li data-to="blank">
                         <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Mukrani Pabelo</h5>
                             <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -163,7 +163,7 @@
                         </li>
                         <li data-to="blank">
                         <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jhon Deo</h5>
                             <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -176,7 +176,7 @@
                         </li>
                         <li data-to="blank">
                         <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Pabelo Mukrani</h5>
                             <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -201,16 +201,16 @@
                     <ul class="group-main">
                         <li class="active" data-to="group_chat">
                         <div class="group-box">
-                            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
+                            <div class="profile"><img class="bg-img" src="/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Tech Ninjas</h5>
                             <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
                             </div>
                             <div class="date-status">
                             <ul class="grop-icon">
-                                <li><a class="group-tp" href="#" data-tippy-content="Josephin"> <img src="/public/chat/images/contact/1.jpg" alt="group-icon-img"/></a></li>
-                                <li><a class="group-tp" href="#" data-tippy-content="Jony "> <img src="/public/chat/images/contact/2.jpg" alt="group-icon-img"/></a></li>
-                                <li><a class="group-tp" href="#" data-tippy-content="Pabelo"> <img src="/public/chat/images/contact/3.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Josephin"> <img src="/chat/images/contact/1.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Jony "> <img src="/chat/images/contact/2.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Pabelo"> <img src="/chat/images/contact/3.jpg" alt="group-icon-img"/></a></li>
                                 <li>+ 35</li>
                             </ul>
                             </div>
@@ -218,16 +218,16 @@
                         </li>
                         <li data-to="group_blank">
                         <div class="group-box">
-                            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/family.jpg" alt="Avatar"/></div>
+                            <div class="profile"><img class="bg-img" src="/chat/images/avtar/family.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Family Ties</h5>
                             <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
                             </div>
                             <div class="date-status">
                             <ul class="grop-icon">
-                                <li><a class="group-tp" href="#" data-tippy-content="Josephin"> <img src="/public/chat/images/contact/1.jpg" alt="group-icon-img"/></a></li>
-                                <li><a class="group-tp" href="#" data-tippy-content="Jony "> <img src="/public/chat/images/contact/2.jpg" alt="group-icon-img"/></a></li>
-                                <li><a class="group-tp" href="#" data-tippy-content="Pabelo"> <img src="/public/chat/images/contact/3.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Josephin"> <img src="/chat/images/contact/1.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Jony "> <img src="/chat/images/contact/2.jpg" alt="group-icon-img"/></a></li>
+                                <li><a class="group-tp" href="#" data-tippy-content="Pabelo"> <img src="/chat/images/contact/3.jpg" alt="group-icon-img"/></a></li>
                                 <li>+ 12</li>
                             </ul>
                             <div class="badge badge-primary"></div>
@@ -245,7 +245,7 @@
                         </li>
                         <li data-to="group_blank">
                         <div class="group-box">
-                            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/girls.jpg" alt="Avatar"/></div>
+                            <div class="profile"><img class="bg-img" src="/chat/images/avtar/girls.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Staunch Ladies</h5>
                             <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
@@ -280,7 +280,7 @@
                     <ul class="call-log-main">
                         <li class="active">
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-left"></i>3:30 pm</h6>
@@ -292,7 +292,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
@@ -304,7 +304,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -316,7 +316,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -328,7 +328,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -340,7 +340,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -356,7 +356,7 @@
                     <ul class="call-log-main">
                         <li class="active">
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:30 pm</h6>
@@ -368,7 +368,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:10 pm</h6>
@@ -380,7 +380,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -392,7 +392,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -404,7 +404,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -416,7 +416,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -432,7 +432,7 @@
                     <ul class="call-log-main">
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
@@ -444,7 +444,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -456,7 +456,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -468,7 +468,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -480,7 +480,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -496,7 +496,7 @@
                     <ul class="call-log-main">
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-up-right"></i>3:10 pm</h6>
@@ -508,7 +508,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
@@ -520,7 +520,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
@@ -532,7 +532,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
@@ -544,7 +544,7 @@
                         </li>
                         <li>
                         <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Jony Lynetin</h5>
                             <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
@@ -563,7 +563,7 @@
                 <ul class="contact-log-main">
                 <li>
                     <div class="contact-box">
-                    <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="details">
                         <h5>Jony Lynetin</h5>
                         <h6>+21 3523 25544 </h6>
@@ -576,7 +576,7 @@
                 </li>
                 <li class="active">
                     <div class="contact-box">
-                    <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                    <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                     <div class="details">
                         <h5>Jony Lynetin</h5>
                         <h6>+54 541447 255 </h6>
@@ -589,7 +589,7 @@
                 </li>
                 <li>
                     <div class="contact-box">
-                    <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                    <div class="profile busy"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                     <div class="details">
                         <h5>Jony Lynetin</h5>
                         <h6>+58 2564 02554</h6>
@@ -602,7 +602,7 @@
                 </li>
                 <li>
                     <div class="contact-box">
-                    <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                    <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                     <div class="details">
                         <h5>Jony Lynetin</h5>
                         <h6>+44 55124 2524</h6>
@@ -615,7 +615,7 @@
                 </li>
                 <li>
                     <div class="contact-box">
-                    <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                    <div class="profile online"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                     <div class="details">
                         <h5>Jony Lynetin</h5>
                         <h6>+54 541447 255 </h6>
@@ -653,7 +653,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Alabma , USA</h6>
@@ -665,7 +665,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Los Angeles, California</h6>
@@ -677,7 +677,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>Glasgow , Scotland</h6>
@@ -689,7 +689,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Pabelo Mukrani</h5>
                 <h6>Leicester , England</h6>
@@ -701,7 +701,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Alabma , USA</h6>
@@ -713,7 +713,7 @@
         <li>
             <div class="chat-box">
             <div class="media">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Alabma , USA</h6>
@@ -750,7 +750,7 @@
                 <h5>messenger.html</h5>
                 <h6>2, octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -762,7 +762,7 @@
                 <h5>chapter1.MP4</h5>
                 <h6>3, Octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/chapter1.MP4" target="_blank"> <i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/chapter1.MP4" target="_blank"> <i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -774,7 +774,7 @@
                 <h5>salary.xlsx</h5>
                 <h6>5, Octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/salary.xlsx" target="_blank"> <i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/salary.xlsx" target="_blank"> <i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -786,7 +786,7 @@
                 <h5>document.pdf</h5>
                 <h6>7, Octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/document.pdf" target="_blank"> <i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/document.pdf" target="_blank"> <i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -798,7 +798,7 @@
                 <h5>details.txt</h5>
                 <h6>20, Octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/details.txt" target="_blank"> <i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/details.txt" target="_blank"> <i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -810,7 +810,7 @@
                 <h5>messenger.html</h5>
                 <h6>2, octomber 2019</h6>
                 </div>
-                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
+                <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
             </div>
             </div>
         </li>
@@ -836,7 +836,7 @@
         <ul class="chat-main">
         <li>
             <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -849,7 +849,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -862,7 +862,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -875,7 +875,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Pabelo Mukrani</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -888,7 +888,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -901,7 +901,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -914,7 +914,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -927,7 +927,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -940,7 +940,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -953,7 +953,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -966,7 +966,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -979,7 +979,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Pabelo Mukrani</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -992,7 +992,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -1005,7 +1005,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -1018,7 +1018,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -1031,7 +1031,7 @@
         </li>
         <li>
             <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Hello</h6>
@@ -1057,7 +1057,7 @@
         <ul class="chat-main">
         <li>
             <div class="chat-box notification">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
             <div class="details"><span>Josephin water</span>
                 <h5>Upload New Photos</h5>
                 <p>Lorem Ipsum is simply dummy text of the printing.</p>
@@ -1081,7 +1081,7 @@
         </li>
         <li>
             <div class="chat-box notification">
-            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details"><span>Sufiya Elija</span>
                 <h5>Comment On your Photo</h5>
                 <p>Lorem Ipsum is simply dummy text of the printing.</p>
@@ -1093,7 +1093,7 @@
         </li>
         <li>
             <div class="chat-box notification">
-            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
             <div class="details"><span>Pabelo Mukrani</span>
                 <h5>Invite Your New Friend</h5>
                 <p>Lorem Ipsum is simply dummy text of the printing.</p>
@@ -1128,7 +1128,7 @@
         </div>
         <div class="profile-box">
             <div class="media">
-            <div class="profile"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Alabma , USA</h6>
@@ -1307,12 +1307,12 @@
             <li>
                 <h5>Chat wallpaper</h5>
                 <ul class="wallpaper">
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/2.jpg" alt="Avatar"/></li>
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/1.jpg" alt="Avatar"/></li>
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/3.jpg" alt="Avatar"/></li>
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/4.jpg" alt="Avatar"/></li>
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/5.jpg" alt="Avatar"/></li>
-                <li><img class="bg-img" src="/public/chat/images/wallpaper/6.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/2.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/1.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/3.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/4.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/5.jpg" alt="Avatar"/></li>
+                <li><img class="bg-img" src="/chat/images/wallpaper/6.jpg" alt="Avatar"/></li>
                 </ul>
             </li>
             <li>
@@ -1348,7 +1348,7 @@
                 <div class="media-left"> <a class="fb" href="https://www.facebook.com/login" target="_blank"><i class="fa fa-facebook"></i>
                     <h5>Facebook   </h5></a></div>
                 <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 </div>
                 </div>
             </li>
@@ -1357,7 +1357,7 @@
                 <div class="media-left"> <a class="insta" href="https://www.instagram.com/accounts/login/?hl=en" target="_blank"><i class="fa fa-instagram"></i>
                     <h5>instagram</h5></a></div>
                 <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 </div>
                 </div>
             </li>
@@ -1366,7 +1366,7 @@
                 <div class="media-left"> <a class="twi" href="https://twitter.com/login" target="_blank"><i class="fa fa-twitter"></i>
                     <h5>twitter   </h5></a></div>
                 <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                 </div>
                 </div>
             </li>
@@ -1375,7 +1375,7 @@
                 <div class="media-left"> <a class="ggl" href="https://accounts.google.com/signin/v2/identifier?service=mail&amp;passive=true&amp;rm=false&amp;continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;ss=1&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2&amp;emr=1&amp;osid=1&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" target="_blank"><i class="fa fa-google"></i>
                     <h5>google   </h5></a></div>
                 <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 </div>
                 </div>
             </li>
@@ -1438,7 +1438,7 @@
         <div class="status-content">
             <div class="media">
             <div class="img-status">
-                <div class="user-status two"><img class="img-fluid bg-img" src="/public/chat/images/avtar/girls.jpg" alt="status"/></div>
+                <div class="user-status two"><img class="img-fluid bg-img" src="/chat/images/avtar/girls.jpg" alt="status"/></div>
                 <div class="upload-img">
                 <input type="file"/>
                 </div>
@@ -1457,8 +1457,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-1.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox"><img src="/public/chat/images/status-img/large/lg-1.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-1.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox"><img src="/chat/images/status-img/large/lg-1.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Josephin water</h5>
@@ -1468,8 +1468,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox2"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-2.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox2"><img src="/public/chat/images/status-img/large/lg-2.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox2"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-2.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox2"><img src="/chat/images/status-img/large/lg-2.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Jony Lynetin</h5>
@@ -1479,8 +1479,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox3"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox3"><img src="/public/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox3"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox3"><img src="/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Sufiya Elija</h5>
@@ -1490,8 +1490,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox4"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-4.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox4"><img src="/public/chat/images/status-img/large/lg-4.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox4"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-4.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox4"><img src="/chat/images/status-img/large/lg-4.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Mukrani Pabelo </h5>
@@ -1501,8 +1501,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox5"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-5.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox5"><img src="/public/chat/images/status-img/large/lg-5.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox5"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-5.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox5"><img src="/chat/images/status-img/large/lg-5.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Pabelo Mukrani</h5>
@@ -1512,8 +1512,8 @@
         </div>
         <div class="status-content">
             <ul>
-            <li class="user-status"><a class="lightbox img-status status" href="#statusbox6"><img class="img-fluid bg-img" src="/public/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
-                <div class="lightbox-target" id="statusbox6"><img src="/public/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
+            <li class="user-status"><a class="lightbox img-status status" href="#statusbox6"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
+                <div class="lightbox-target" id="statusbox6"><img src="/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
             </li>
             <li>
                 <h5>Sufiya Elija</h5>
@@ -1538,7 +1538,7 @@
             <div class="col-7">
                 <div class="media left">
                 <div class="media-left me-3">
-                    <div class="profile online menu-trigger"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 </div>
                 <div class="media-body">
                     <h5>Josephin water</h5>
@@ -1584,7 +1584,7 @@
             <ul class="chatappend">
             <li class="replies">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Alan josheph</h5>
@@ -1626,7 +1626,7 @@
             </li>
             <li class="sent">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Josephin water</h5>
@@ -1668,7 +1668,7 @@
             </li>
             <li class="replies">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/avtar/1.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Alan josheph</h5>
@@ -1694,7 +1694,7 @@
                             <h5>Document.xlsx</h5>
                             <h6>25mb Seprate file</h6>
                             </div>
-                            <div class="icon-btns"><a class="icon-btn btn-outline-light" href="/public/chat/doc/Document.xlsx" target="_blank"><i data-feather="download"> </i></a></div>
+                            <div class="icon-btns"><a class="icon-btn btn-outline-light" href="/chat/doc/Document.xlsx" target="_blank"><i data-feather="download"> </i></a></div>
                         </div>
                         <div class="badge badge-dark sm ms-2"> D</div>
                         <div class="msg-dropdown-main">
@@ -1716,7 +1716,7 @@
             </li>
             <li class="sent">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Josephin water</h5>
@@ -1738,9 +1738,9 @@
                         </li>
                         <li class="msg-setting-main">
                         <ul class="auto-gallery">
-                            <li><img class="bg-img" src="/public/chat/images/media/1.jpg" alt="Avatar"/></li>
-                            <li>   <img class="bg-img" src="/public/chat/images/media/2.jpg" alt="Avatar"/></li>
-                            <li>   <img class="bg-img" src="/public/chat/images/media/3.jpg" alt="Avatar"/></li>
+                            <li><img class="bg-img" src="/chat/images/media/1.jpg" alt="Avatar"/></li>
+                            <li>   <img class="bg-img" src="/chat/images/media/2.jpg" alt="Avatar"/></li>
+                            <li>   <img class="bg-img" src="/chat/images/media/3.jpg" alt="Avatar"/></li>
                         </ul>
                         <div class="refresh-block">
                             <div class="badge badge-outline-primary refresh sm ms-2"> <i data-feather="rotate-cw"></i></div>
@@ -1765,7 +1765,7 @@
             </li>
             <li class="replies">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/avtar/1.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Alan josheph</h5>
@@ -1799,7 +1799,7 @@
             <div class="col">
                 <div class="media left">
                 <div class="media-left me-3">
-                    <div class="profile online menu-trigger"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 </div>
                 <div class="media-body">
                     <h5>Josephin water</h5>
@@ -1870,7 +1870,7 @@
             <div class="dot1"> </div>
             </div>
         </div>
-        <div class="call-list-center"><img src="/public/chat/images/chat.png" alt=""/>
+        <div class="call-list-center"><img src="/chat/images/chat.png" alt=""/>
             <div class="animated-bg"><i></i><i></i><i></i></div>
             <p>Select a chat to read messages</p>
         </div>
@@ -1881,7 +1881,7 @@
             <div class="col">
                 <div class="media left">
                 <div class="media-left me-3">
-                    <div class="profile online menu-trigger"><img class="bg-img" src="/public/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
+                    <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
                 </div>
                 <div class="media-body">
                     <h5>Tech Ninjas</h5>
@@ -1940,7 +1940,7 @@
                     <li>
                         <div class="chat-box">
                         <div class="media">
-                            <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Josephin water</h5>
                             <h6>Alabma , USA</h6>
@@ -1952,7 +1952,7 @@
                     <li>
                         <div class="chat-box">
                         <div class="media">
-                            <div class="profile"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                            <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Josephin water</h5>
                             <h6>Alabma , USA</h6>
@@ -1964,7 +1964,7 @@
                     <li>
                         <div class="chat-box">
                         <div class="media">
-                            <div class="profile"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                            <div class="profile"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Josephin water</h5>
                             <h6>Alabma , USA</h6>
@@ -1976,7 +1976,7 @@
                     <li>
                         <div class="chat-box">
                         <div class="media">
-                            <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                             <div class="details">
                             <h5>Josephin water</h5>
                             <h6>Alabma , USA</h6>
@@ -1988,12 +1988,12 @@
                     </ul>
                 </div>
                 </div>
-                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img" src="/public/chat/images/avtar/3.jpg" alt="Avatar"/></div>
-                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img" src="/public/chat/images/avtar/5.jpg" alt="Avatar"/></div>
+                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar"/></div>
+                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img" src="/chat/images/avtar/5.jpg" alt="Avatar"/></div>
             </li>
             <li class="sent">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Josephin water</h5>
@@ -2035,7 +2035,7 @@
             </li>
             <li class="replies">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/avtar/1.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Alan josheph</h5>
@@ -2072,7 +2072,7 @@
                             <h5>Document.xlsx</h5>
                             <h6>25mb Seprate file</h6>
                             </div>
-                            <div class="icon-btns"><a class="icon-btn btn-outline-light" href="/public/chat/doc/Document.xlsx" target="_blank"><i data-feather="download"> </i></a></div>
+                            <div class="icon-btns"><a class="icon-btn btn-outline-light" href="/chat/doc/Document.xlsx" target="_blank"><i data-feather="download"> </i></a></div>
                         </div>
                         <div class="badge badge-dark sm ms-2"> D</div>
                         </li>
@@ -2083,7 +2083,7 @@
             </li>
             <li class="sent">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Josephin water</h5>
@@ -2105,9 +2105,9 @@
                         </li>
                         <li class="msg-setting-main">
                         <ul class="auto-gallery">
-                            <li><img class="bg-img" src="/public/chat/images/media/1.jpg" alt="Avatar"/></li>
-                            <li>   <img class="bg-img" src="/public/chat/images/media/2.jpg" alt="Avatar"/></li>
-                            <li>   <img class="bg-img" src="/public/chat/images/media/3.jpg" alt="Avatar"/></li>
+                            <li><img class="bg-img" src="/chat/images/media/1.jpg" alt="Avatar"/></li>
+                            <li>   <img class="bg-img" src="/chat/images/media/2.jpg" alt="Avatar"/></li>
+                            <li>   <img class="bg-img" src="/chat/images/media/3.jpg" alt="Avatar"/></li>
                         </ul>
                         <div class="badge badge-danger sm ms-2"></div>
                         <div class="badge badge-outline-primary refresh sm ms-2"> <i data-feather="rotate-cw"></i></div>
@@ -2130,7 +2130,7 @@
             </li>
             <li class="replies">
                 <div class="media">
-                <div class="profile me-4"><img class="bg-img" src="/public/chat/images/avtar/1.jpg" alt="Avatar"/></div>
+                <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
                 <div class="media-body">
                     <div class="contact-name">
                     <h5>Alan josheph</h5>
@@ -2164,7 +2164,7 @@
             <div class="col">
                 <div class="media left">
                 <div class="media-left me-3">
-                    <div class="profile online menu-trigger"><img class="bg-img" src="/public/chat/images/avtar/family.jpg" alt="Avatar"/></div>
+                    <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/avtar/family.jpg" alt="Avatar"/></div>
                 </div>
                 <div class="media-body">
                     <h5>Family Ties</h5>
@@ -2235,7 +2235,7 @@
             <div class="dot1"> </div>
             </div>
         </div>
-        <div class="call-list-center"><img src="/public/chat/images/chat.png" alt=""/>
+        <div class="call-list-center"><img src="/chat/images/chat.png" alt=""/>
             <div class="animated-bg"><i></i><i></i><i></i></div>
             <p>Select a chat to read messages</p>
         </div>
@@ -2338,50 +2338,50 @@
             <div class="sticker-contain">
             <div class="sticker-sub-contain custom-scroll">
                 <ul>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/1.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/2.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/3.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/3.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/4.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/5.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/6.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/7.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/8.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/9.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/10.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/11.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/12.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/13.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/14.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/15.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/16.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/17.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/18.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/19.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/20.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/21.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/22.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/23.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/24.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/25.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/26.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/27.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/28.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/29.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/30.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/31.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/32.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/33.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/34.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/35.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/36.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/37.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/38.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/39.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/40.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/41.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/42.gif" alt="sticker"/></a></li>
-                <li><a href="#"><img class="img-fluid" src="/public/chat/images/sticker/43.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/1.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/2.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/3.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/3.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/4.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/5.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/6.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/7.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/8.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/9.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/10.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/11.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/12.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/13.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/14.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/15.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/16.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/17.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/18.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/19.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/20.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/21.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/22.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/23.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/24.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/25.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/26.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/27.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/28.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/29.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/30.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/31.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/32.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/33.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/34.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/35.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/36.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/37.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/38.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/39.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/40.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/41.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/42.gif" alt="sticker"/></a></li>
+                <li><a href="#"><img class="img-fluid" src="/chat/images/sticker/43.gif" alt="sticker"/></a></li>
                 </ul>
             </div>
             </div>
@@ -2392,7 +2392,7 @@
         <div class="row">
         <div class="col-sm-5">
             <div class="user-profile mb-3">
-            <div class="user-content"><img class="img-fluid" src="/public/chat/images/contact/2.jpg" alt="user-img"/>
+            <div class="user-content"><img class="img-fluid" src="/chat/images/contact/2.jpg" alt="user-img"/>
                 <h3>Josephin water</h3>
                 <h4 class="mt-2">+0 1800 76855</h4>
                 <ul> 
@@ -2535,7 +2535,7 @@
         <div class="row">
             <div class="col-sm-5">
             <div class="user-profile">
-                <div class="user-content"><img class="img-fluid bg-icon" src="/public/chat/images/contact/2.jpg" alt="user-img"/>
+                <div class="user-content"><img class="img-fluid bg-icon" src="/chat/images/contact/2.jpg" alt="user-img"/>
                 <h3>Josephin water</h3>
                 <ul> 
                     <li><i class="fa fa-twitch"> </i>massage</li>
@@ -2552,7 +2552,7 @@
                         <div class="media-left"><a class="fb" href="https://www.facebook.com/login" target="_blank"><i class="fa fa-facebook"></i>
                             <h5>Facebook   </h5></a></div>
                         <div class="media-right">
-                        <div class="profile bg-size"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                        <div class="profile bg-size"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                         </div>
                     </div>
                     </li>
@@ -2561,7 +2561,7 @@
                         <div class="media-left"><a class="twi" href="https://twitter.com/login" target="_blank"><i class="fa fa-twitter"></i>
                             <h5>twitter   </h5></a></div>
                         <div class="media-right">
-                        <div class="profile bg-size"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                        <div class="profile bg-size"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                         </div>
                     </div>
                     </li>
@@ -2570,7 +2570,7 @@
                         <div class="media-left"><a class="ggl" href="https://accounts.google.com/signin/v2/identifier?service=mail&amp;passive=true&amp;rm=false&amp;continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;ss=1&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2&amp;emr=1&amp;osid=1&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" target="_blank"><i class="fa fa-google"></i>
                             <h5>google   </h5></a></div>
                         <div class="media-right">
-                        <div class="profile bg-size"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                        <div class="profile bg-size"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                         </div>
                     </div>
                     </li>
@@ -2642,7 +2642,7 @@
             </div>
         </div>
         <div class="details">
-            <div class="contact-top"><img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt=""/></div>
+            <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt=""/></div>
             <div class="name">
             <h3>Josephin water</h3>
             <h6>Add Description</h6>
@@ -2689,36 +2689,36 @@
                 <div class="col-4 isotopeSelector filter">
                 <div class="media-big">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/1.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/1.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
                 <div class="col-4">
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
                 <div class="col-4">
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 <div class="media-small isotopeSelector filter fashion">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/5.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/5.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
@@ -2728,24 +2728,24 @@
                 <div class="col-4">
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
                 <div class="col-4">
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
                 <div class="col-4">
                 <div class="media-small isotopeSelector filter">
                     <div class="overlay">
-                    <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                    <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                        <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                     </div>
                 </div>
                 </div>
@@ -2763,7 +2763,7 @@
                 <ul class="str-msg">
                 <li>
                     <div class="media">
-                    <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                         <div class="contact-name">
                         <h5>Alan josheph</h5>
@@ -2779,7 +2779,7 @@
                 </li>
                 <li>
                     <div class="media">
-                    <div class="profile me-4"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                    <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                         <div class="contact-name">
                         <h5>Josephin water</h5>
@@ -2807,7 +2807,7 @@
             <ul class="group-main">
                 <li>
                 <div class="group-box">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
                     <div class="details">
                     <h5>Tech Ninjas</h5>
                     <h6>johan, deo, Sufiya Elija, Pabelo & you</h6>
@@ -2816,7 +2816,7 @@
                 </li>
                 <li>
                 <div class="group-box">
-                    <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/family.jpg" alt="Avatar"/></div>
+                    <div class="profile"><img class="bg-img" src="/chat/images/avtar/family.jpg" alt="Avatar"/></div>
                     <div class="details">
                     <h5>Family Ties</h5>
                     <h6>Mukrani, deo & you</h6>
@@ -3032,36 +3032,36 @@
                         <div class="col-4 isotopeSelector filter">
                             <div class="media-big">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/1.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/1.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter fashion">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/5.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/5.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
@@ -3075,36 +3075,36 @@
                         <div class="col-4 isotopeSelector filter">
                             <div class="media-big">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/1.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/1.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter fashion">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/5.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/5.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
@@ -3118,60 +3118,60 @@
                         <div class="col-4 isotopeSelector filter">
                             <div class="media-big">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/1.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/1.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter fashion">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/5.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/5.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
@@ -3185,60 +3185,60 @@
                         <div class="col-4 isotopeSelector filter">
                             <div class="media-big">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/1.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/1.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/1.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                             <div class="media-small isotopeSelector filter fashion">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/5.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/5.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/5.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/2.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/2.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/2.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/3.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/3.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/3.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="media-small isotopeSelector filter">
                             <div class="overlay">
-                                <div class="border-portfolio"><a href="/public/chat/images/gallery/4.jpg">
-                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/public/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
+                                <div class="border-portfolio"><a href="/chat/images/gallery/4.jpg">
+                                    <div class="overlay-background"><i class="ti-plus" aria-hidden="true"></i></div><img class="img-fluid bg-img" src="/chat/images/gallery/4.jpg" alt="portfolio-image"/></a></div>
                             </div>
                             </div>
                         </div>
@@ -3255,7 +3255,7 @@
                         <h6>12:05 PM Today </h6>
                     </div>
                     </div><a href="https://themeforest.net/item/endless-react-admin-template/25365098">https://themeforest.net/item/endless-react-admin-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/12.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/12.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>React Template</h5>
                         <h6 class="mt-0">Functionality integration project.</h6>
@@ -3269,7 +3269,7 @@
                         <h6>05:12 AM Today</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/multikart-responsive-vuejs-ecommerce-template/25174665">https://themeforest.net/item/multikart-responsive-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/3.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/3.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Multipurpose Vuejs.</h5>
                         <h6 class="mt-0">Template is a multi-use Vue template.</h6>
@@ -3283,7 +3283,7 @@
                         <h6>03:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/unice-angular-multipurpose-template/24776272">https://themeforest.net/item/unice-angular-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/8.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/8.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Angular Template.</h5>
                         <h6 class="mt-0">Unice is a Perfect Respon.</h6>
@@ -3297,7 +3297,7 @@
                         <h6>02:26 AM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/endless-angular-admin-template/23884779">https://themeforest.net/item/endless-angular-admin-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/12.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/12.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Endless Document.</h5>
                         <h6 class="mt-0">Help you understand angular.</h6>
@@ -3311,7 +3311,7 @@
                         <h6>04:00 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/bigdeal-ecommerce-htms-template/24809149">https://themeforest.net/item/bigdeal-ecommerce-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/9.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/9.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>HTML Template.</h5>
                         <h6 class="mt-0">eCommerce HTML Template.</h6>
@@ -3325,7 +3325,7 @@
                         <h6>11:05 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773">https://themeforest.net/item/multikart-responsive-react-ecommerce</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/3.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/3.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Multipurp eComme.</h5>
                         <h6 class="mt-0">Well with multi-purpose websites.</h6>
@@ -3339,7 +3339,7 @@
                         <h6>12:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/creative-responsive-admin-template/24978419">https://themeforest.net/item/creative-responsive</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/11.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/11.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Dashboard Templa.</h5>
                         <h6 class="mt-0">Creative Admin is a full featured.</h6>
@@ -3353,7 +3353,7 @@
                         <h6>12:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/multikart-responsive-angular-ecommerce-template/22905358">https://themeforest.net/item/multikart-responsive-angular</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/3.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/3.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Responsive Ang.</h5>
                         <h6 class="mt-0">Multikart – Multipurpose.</h6>
@@ -3368,7 +3368,7 @@
                         <h6>12:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/multikart-responsive-ecommerce-htms-template/22809967">https://themeforest.net/item/multikart-responsive-ecommerce</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/10.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/10.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Multi Responsive.</h5>
                         <h6 class="mt-0">Ecommerce HTML Theme.</h6>
@@ -3383,7 +3383,7 @@
                         <h6>04:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/bigboost-ecommerce-htms-template/24168053">https://themeforest.net/item/bigboost-ecommerce-htms-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/7.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/7.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Fully Responsive.</h5>
                         <h6 class="mt-0">Multiple Header Varations.</h6>
@@ -3397,7 +3397,7 @@
                         <h6>10:05 PM 20/05/2019</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template/24581311">https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/4.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/4.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Multi-Purpos theme.</h5>
                         <h6 class="mt-0">Unice is a Perfect Responsive.</h6>
@@ -3411,7 +3411,7 @@
                         <h6>12:26 PM</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/reno-multipurpose-htms-template/24141678">https://themeforest.net/item/reno-multipurpose-htms-template</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/6.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/6.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Reno Template is a busines.</h5>
                         <h6 class="mt-0">Android Mobile or tablets.</h6>
@@ -3425,7 +3425,7 @@
                         <h6>12:26 PM 03/11/2019</h6>
                     </div>
                     </div><a href="https://themeforest.net/item/shopmart-multipurpose-shopify-theme/24040917?s_rank=12">https://themeforest.net/item/shopmart-multipurpose-shopify-theme</a>
-                    <div class="media"><img class="img-fluid" src="/public/chat/images/file_icons/5.png" alt="media-img"/>
+                    <div class="media"><img class="img-fluid" src="/chat/images/file_icons/5.png" alt="media-img"/>
                     <div class="media-body">
                         <h5>Shop Mart Landing Page.</h5>
                         <h6 class="mt-0">This is App Landing Template.</h6>
@@ -3443,7 +3443,7 @@
                             <h5>messenger.html</h5>
                             <h6>2, octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3455,7 +3455,7 @@
                             <h5>chapter1.MP4</h5>
                             <h6>3, Octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/chapter1.MP4" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/chapter1.MP4" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3467,7 +3467,7 @@
                             <h5>salary.xlsx</h5>
                             <h6>5, Octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/salary.xlsx" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/salary.xlsx" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3479,7 +3479,7 @@
                             <h5>document.pdf</h5>
                             <h6>7, Octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/document.pdf" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/document.pdf" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3491,7 +3491,7 @@
                             <h5>details.txt</h5>
                             <h6>20, Octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/details.txt" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/details.txt" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3503,7 +3503,7 @@
                             <h5>messenger.html</h5>
                             <h6>2, octomber 2019</h6>
                         </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/public/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
+                        <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right" href="/chat/doc/messenger.html" target="_blank"><i data-feather="download"></i></a></div>
                         </div>
                     </div>
                     </li>
@@ -3538,7 +3538,7 @@
             </form>
             <div class="notes-list">
                 <h6 class="mb-2 text-muted">Joshephin Water.10 Jan</h6>
-                <div class="media"><img class="img-fluid me-3" src="/public/chat/images/file_icons/5.png" alt="media-img"/>
+                <div class="media"><img class="img-fluid me-3" src="/chat/images/file_icons/5.png" alt="media-img"/>
                 <div class="media-body">
                     <h5 class="mt-0">Joshephin Water</h5>
                 </div>
@@ -3825,7 +3825,7 @@
 <div class="modal fade" id="audiocall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-body">
-        <div class="audiocall1 call-modal"><img class="bg-img" src="/public/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
+        <div class="audiocall1 call-modal"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
         <div class="center-con text-center">
             <div class="title2">Josephin water</div>
             <h6>log angelina california</h6>
@@ -3841,19 +3841,19 @@
 <div class="viddiolog modal fade" id="videocall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-body">
-        <div class="videocall call-modal"><img class="bg-img" src="/public/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/>
-        <div class="small-image"><img class="bg-img" src="/public/chat/images/avtar/big/videocall.jpg" alt="Avatar"/></div>
+        <div class="videocall call-modal"><img class="bg-img" src="/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/>
+        <div class="small-image"><img class="bg-img" src="/chat/images/avtar/big/videocall.jpg" alt="Avatar"/></div>
         <div class="media videocall-details">
             <div class="usersprof">
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt="Avatar"/></div>
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/3.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar"/></div>
             </div>
             <div class="media-body">
             <h5>Josephin water</h5>
             <h6>America ,California</h6>
             </div>
             <div id="basicUsage">00:00:00</div>
-            <div class="zoomcontent"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()" data-tippy-content="Zoom Screen"><img src="/public/chat/images/logo/maximize.svg" alt="zoom screen"/></a></div>
+            <div class="zoomcontent"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()" data-tippy-content="Zoom Screen"><img src="/chat/images/logo/maximize.svg" alt="zoom screen"/></a></div>
         </div>
         <div class="center-con text-center">
             <ul>
@@ -3869,13 +3869,13 @@
 <div class="modal fade" id="confercall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-body">
-        <div class="conferencecall call-modal"><img class="bg-img" src="/public/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
+        <div class="conferencecall call-modal"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
         <div class="center-con text-center">
             <div class="usersprof">
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt="Avatar"/></div>
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/3.jpg" alt="Avatar"/></div>
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/5.jpg" alt="Avatar"/></div>
-            <div class="profile"><img class="bg-img" src="/public/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/5.jpg" alt="Avatar"/></div>
+            <div class="profile"><img class="bg-img" src="/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/></div>
             </div>
             <p>Incoming Call</p>
             <h3>Conference Call</h3>
@@ -3894,16 +3894,16 @@
         <div class="modal-body">
         <div class="row confimg">
             <div class="col-6">
-            <div class="vclimg"><img class="bg-img" src="/public/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/></div>
+            <div class="vclimg"><img class="bg-img" src="/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar"/></div>
             </div>
             <div class="col-6">
-            <div class="vclimg"><img class="bg-img" src="/public/chat/images/avtar/5.jpg" alt="Avatar"/></div>
+            <div class="vclimg"><img class="bg-img" src="/chat/images/avtar/5.jpg" alt="Avatar"/></div>
             </div>
             <div class="col-6">
-            <div class="vclimg"><img class="bg-img" src="/public/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+            <div class="vclimg"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
             </div>
             <div class="col-6">
-            <div class="vclimg"><img class="bg-img" src="/public/chat/images/avtar/3.jpg" alt="Avatar"/></div>
+            <div class="vclimg"><img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar"/></div>
             </div>
         </div>
         </div>
@@ -3925,7 +3925,7 @@
 <div class="modal fade audiorcvcall" id="audiorcvcall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-body">
-        <div class="audiocall2 call-modal"><img class="bg-img" src="/public/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
+        <div class="audiocall2 call-modal"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
         <div class="center-con text-center">
             <div id="basicUsage2">00:00:00</div>
             <div class="title2">Josephin water</div>
@@ -4077,7 +4077,7 @@
         <ul class="chat-main custom-scroll">
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Josephin water</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4090,7 +4090,7 @@
             </li>
             <li class="active" data-to="chating">
             <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6>Typing................</h6>
@@ -4103,7 +4103,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -4116,7 +4116,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Mukrani Pabelo</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4129,7 +4129,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jhon Deo</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4142,7 +4142,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Pabelo Mukrani</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4155,7 +4155,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="/public/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Sufiya Elija</h5>
                 <h6>I need job, please help me.</h6>
@@ -4168,7 +4168,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/4.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Mukrani Pabelo</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4181,7 +4181,7 @@
             </li>
             <li data-to="blank">
             <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jhon Deo</h5>
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -4215,7 +4215,7 @@
         <ul class="call-log-main custom-scroll">
             <li class="active">
             <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i data-feather="arrow-down-left"></i>3:30 pm</h6>
@@ -4227,7 +4227,7 @@
             </li>
             <li>
             <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
@@ -4239,7 +4239,7 @@
             </li>
             <li>
             <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
@@ -4251,7 +4251,7 @@
             </li>
             <li>
             <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -4263,7 +4263,7 @@
             </li>
             <li>
             <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="/public/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
@@ -4275,7 +4275,7 @@
             </li>
             <li>
             <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/public/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jony Lynetin</h5>
                 <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
