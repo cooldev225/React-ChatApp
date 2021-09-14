@@ -28,9 +28,9 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
   </head>
-  <body class="sidebar-active">
-    @yield('content')
+  <body class="">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
+    @yield('content')
     <script src="/chat/js/owl.carousel.js"></script>
     <script src="/chat/js/popper.min.js"></script>
     <script src="/chat/js/tippy-bundle.iife.min.js"></script>

@@ -24,10 +24,7 @@ Route::get('/admin/logout', 'Admin\\AuthController@logout')->name('admin_logout'
 Route::group(['middleware' => ['login']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index')->name('home');
-    //Route::get('/waiting', 'WaitingController@index');
-    //Route::post('/waiting/getDataTable', 'WaitingController@getDataTable');
-    //Route::post('/waiting/saveSlot', 'WaitingController@saveSlot');
-    //Route::post('/waiting/deleteSlot', 'WaitingController@deleteSlot');
+    Route::post('/home/getContactList', 'HomeController@getContactList');
 });
 
 Route::group(['middleware' => ['admin']], function () {

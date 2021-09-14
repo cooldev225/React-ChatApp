@@ -8,15 +8,15 @@
 </div>
 <div class="chitchat-container sidebar-toggle">
     <nav class="main-nav on custom-scroll">
-    <div class="logo-warpper"><a href="messenger.html"><img src="/chat/images/logo/logo.png" alt="logo"/></a></div>
+    <div class="logo-warpper"><a href="/home"><img src="/chat/images/logo/logo.png" alt="logo"/></a></div>
     <div class="sidebar-main">
         <ul class="sidebar-top">
-        <li><a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
+        <!-- <li><a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
             <div class="user-popup status one">
                 <div> <img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
             </div></a></li>
         <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
-        <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li>
+        <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li> -->
         <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List"> <i class="fa fa-users">  </i></a></li>
         <li>
             <div class="dot-btn dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification" data-tippy-content="Notification"> <i class="fa fa-bell"></i></a></div>
@@ -89,7 +89,8 @@
                     <input class="form-control-plaintext" type="search" placeholder="Search.."/>
                     <div class="icon-close close-search">                 </div>
                 </div>
-                </form><a class="icon-btn btn-primary btn-fix chat-cont-toggle outside" href="#"><i data-feather="plus"></i></a>
+                </form>
+                <!-- <a class="icon-btn btn-primary btn-fix chat-cont-toggle outside" href="#"><i data-feather="plus"></i></a> -->
             </div>
             </div>
         </div>
@@ -102,10 +103,6 @@
             <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab"> 
                 <div class="theme-tab">       
-                <ul class="nav nav-tabs" id="myTab1" role="tablist">
-                    <li class="nav-item"><a class="nav-link button-effect active" id="direct-tab" data-bs-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a></li>
-                    <li class="nav-item"><a class="nav-link button-effect" id="group-tab" data-bs-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a></li>
-                </ul>
                 <div class="tab-content" id="myTabContent1">
                     <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab"> 
                     <ul class="chat-main">
@@ -135,58 +132,7 @@
                             </div>
                         </div>
                         </li>
-                        <li data-to="blank">
-                        <div class="chat-box">
-                            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Sufiya Elija</h5>
-                            <h6>I need job, please help me.</h6>
-                            </div>
-                            <div class="date-status"><i class="ti-pin2"></i>
-                            <h6>15/06/19</h6>
-                            <h6 class="font-dark status"> Sending</h6>
-                            </div>
-                        </div>
-                        </li>
-                        <li data-to="blank">
-                        <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Mukrani Pabelo</h5>
-                            <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                            </div>
-                            <div class="date-status"><i class="ti-pin2"></i>
-                            <h6>04/06/19</h6>
-                            <h6 class="font-danger status"> Failed</h6>
-                            </div>
-                        </div>
-                        </li>
-                        <li data-to="blank">
-                        <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jhon Deo</h5>
-                            <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                            </div>
-                            <div class="date-status"><i class="ti-pin2"></i>
-                            <h6>04/06/19</h6>
-                            <h6 class="font-danger status"> Failed</h6>
-                            </div>
-                        </div>
-                        </li>
-                        <li data-to="blank">
-                        <div class="chat-box">
-                            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Pabelo Mukrani</h5>
-                            <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                            </div>
-                            <div class="date-status"><i class="ti-pin2"></i>
-                            <h6>04/06/19</h6>
-                            <h6 class="font-danger status"> Failed</h6>
-                            </div>
-                        </div>
-                        </li>
+
                     </ul>
                     </div>
                     <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="group-tab"> 
@@ -355,204 +301,84 @@
                     <div class="tab-pane fade" id="con2" role="tabpanel" aria-labelledby="con2-tab"> 
                     <ul class="call-log-main">
                         <li class="active">
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:30 pm</h6>
+                            <div class="call-box">
+                                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i class="missed" data-feather="corner-left-down"></i>3:30 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="phone"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
                         </li>
                         <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:10 pm</h6>
+                            <div class="call-box">
+                                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i class="missed" data-feather="corner-left-down"></i>3:10 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="video"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
                         </li>
                     </ul>
                     </div>
                     <div class="tab-pane fade" id="con3" role="tabpanel" aria-labelledby="con3-tab"> 
                     <ul class="call-log-main">
                         <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
+                            <div class="call-box">
+                                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
                         </li>
                         <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
+                            <div class="call-box">
+                                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
                         </li>
                     </ul>
                     </div>
                     <div class="tab-pane fade" id="con4" role="tabpanel" aria-labelledby="con4-tab"> 
                     <ul class="call-log-main">
                         <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-up-right"></i>3:10 pm</h6>
+                            <div class="call-box">
+                                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i data-feather="arrow-up-right"></i>3:10 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
                         </li>
                         <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
+                            <div class="call-box">
+                                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                                <div class="details">
+                                <h5>Jony Lynetin</h5>
+                                <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
+                                </div>
                             </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
-                            </div>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="call-box">
-                            <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                            <div class="details">
-                            <h5>Jony Lynetin</h5>
-                            <h6> <i data-feather="arrow-up-right"></i>3:00 pm</h6>
-                            </div>
-                            <div class="call-status">
-                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                            </div>
-                        </div>
                         </li>
                     </ul>
                     </div>
@@ -829,219 +655,50 @@
                 <input class="form-control-plaintext" type="search" placeholder="Search.."/>
                 <div class="icon-close close-search">                               </div>
                 </div>
-            </form><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+            </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#addcallmodal"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
             </div>
         </div>
         </div>
         <ul class="chat-main">
-        <li>
-            <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Josephin water</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-            </div>
-            <div class="date-status">
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Pabelo Mukrani</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Josephin water</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-            </div>
-            <div class="date-status">
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Josephin water</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-            </div>
-            <div class="date-status">
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Pabelo Mukrani</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Josephin water</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-            </div>
-            <div class="date-status">
-                <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-            </div>
-            <div class="date-status">
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box">
-            <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Hello</h6>
-            </div>
-            <div class="date-status">
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-            </div>
-            </div>
-        </li>
+            <li>
+                <div class="chat-box">
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="details">
+                    <h5>Josephin water</h5>
+                    <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                </div>
+                <div class="date-status">
+                    <h6>22/10/19</h6>
+                    <h6 class="font-success status"> Seen</h6>
+                </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-box">
+                <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                <div class="details">
+                    <h5>Jony Lynetin</h5>
+                    <h6>Hello</h6>
+                </div>
+                <div class="date-status">
+                    <h6>30/11/19</h6>
+                    <div class="badge badge-primary sm">8</div>
+                </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-box">
+                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
+                <div class="details">
+                    <h5>Sufiya Elija</h5>
+                    <h6>I need job, please help me.</h6>
+                </div>
+                <div class="date-status">
+                    <h6>15/06/19</h6>
+                    <h6 class="font-dark status"> Sending</h6>
+                </div>
+                </div>
+            </li>    
         </ul>
     </div>
     <div class="notification-tab dynemic-sidebar custom-scroll" id="notification">
@@ -1055,66 +712,30 @@
         </div>
         </div>
         <ul class="chat-main">
-        <li>
-            <div class="chat-box notification">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-            <div class="details"><span>Josephin water</span>
-                <h5>Upload New Photos</h5>
-                <p>Lorem Ipsum is simply dummy text of the printing.</p>
-            </div>
-            <div class="date-status">
-                <h6>Now</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box notification">
-            <div class="profile bg-success offline"><span>J</span></div>
-            <div class="details"><span>Jony Today Birthday</span>
-                <h5>Upload New Photos</h5>
-                <p>Lorem Ipsum is simply dummy text of the printing.</p>
-            </div>
-            <div class="date-status">
-                <h6>1 hour ago</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box notification">
-            <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-            <div class="details"><span>Sufiya Elija</span>
-                <h5>Comment On your Photo</h5>
-                <p>Lorem Ipsum is simply dummy text of the printing.</p>
-            </div>
-            <div class="date-status">
-                <h6>5 hour ago</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box notification">
-            <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-            <div class="details"><span>Pabelo Mukrani</span>
-                <h5>Invite Your New Friend</h5>
-                <p>Lorem Ipsum is simply dummy text of the printing.</p>
-            </div>
-            <div class="date-status">
-                <h6>6 hour ago</h6>
-            </div>
-            </div>
-        </li>
-        <li>
-            <div class="chat-box notification">
-            <div class="profile bg-success offline"><span>PM</span></div>
-            <div class="details"><span>Pabelo Mukrani</span>
-                <h5>Update Profile Picture</h5>
-                <p>Lorem Ipsum is simply dummy text of the printing.</p>
-            </div>
-            <div class="date-status">
-                <h6>6 hour ago</h6>
-            </div>
-            </div>
-        </li>
+            <li>
+                <div class="chat-box notification">
+                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                <div class="details"><span>Josephin water</span>
+                    <h5>Upload New Photos</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                </div>
+                <div class="date-status">
+                    <h6>Now</h6>
+                </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-box notification">
+                <div class="profile bg-success offline"><span>J</span></div>
+                <div class="details"><span>Jony Today Birthday</span>
+                    <h5>Upload New Photos</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                </div>
+                <div class="date-status">
+                    <h6>1 hour ago</h6>
+                </div>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="settings-tab dynemic-sidebar custom-scroll" id="settings">
@@ -1524,7 +1145,7 @@
         </div>
     </div>
     </aside>
-    <div class="chitchat-main small-sidebar" id="content">
+    <div class="chitchat-main" id="content">
     <div class="chat-content tabto active">
         <div class="messages custom-scroll active" id="chating">
         <div class="contact-details">
@@ -1557,15 +1178,12 @@
                 <ul class="calls text-end">
                 <li><a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-bs-toggle="modal" data-bs-target="#audiocall"><i data-feather="phone"></i></a></li>
                 <li><a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-bs-toggle="modal" data-bs-target="#videocall"><i data-feather="video"></i></a></li>
-                <li><a class="icon-btn btn-light button-effect apps-toggle" href="#" data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
+                <!-- <li><a class="icon-btn btn-light button-effect apps-toggle" href="#" data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li> -->
                 <li class="chat-friend-toggle"><a class="icon-btn btn-light bg-transparent button-effect outside" href="#" data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
                     <div class="chat-frind-content">
                     <ul>
                         <li><a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="user"></i></a>
                         <h5>Profile</h5>
-                        </li>
-                        <li><a class="icon-btn btn-outline-success button-effect btn-sm" href="#"><i data-feather="plus-circle"></i></a>
-                        <h5>Archive</h5>
                         </li>
                         <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
                         <h5>Delete</h5>
@@ -2250,20 +1868,23 @@
                 <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
             </svg></a>
             <div class="dot-btn dot-primary me-3"><a class="icon-btn btn-outline-primary button-effect toggle-emoji" href="#"><i data-feather="smile"></i></a></div>
-            <div class="contact-poll"><a class="icon-btn btn-outline-primary me-4 outside" href="#"><i class="fa fa-plus"></i></a>
-            <div class="contact-poll-content">
-                <ul>
-                <li><a href="#"><i data-feather="image"></i>gallery</a></li>
-                <li><a href="#"><i data-feather="camera"></i>camera</a></li>
-                <li><a data-bs-toggle="modal" data-bs-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
-                <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
-                <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
-                <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
-                <li><a data-bs-toggle="modal" data-bs-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
-                <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
-                </ul>
-            </div>
-            </div>
+            <!-- <a href="#"><i data-feather="paperclip"></i></a> -->
+            <a class="icon-btn btn-outline-primary me-4 outside" href="#"><i data-feather="paperclip"></i></i></a>
+            <!-- <div class="contact-poll"><a class="icon-btn btn-outline-primary me-4 outside" href="#"><i class="fa fa-plus"></i></a>
+                <div class="contact-poll-content">
+                    <ul>
+                    <li><a href="#"><i data-feather="image"></i>gallery</a></li>
+                    <li><a href="#"><i data-feather="camera"></i>camera</a></li>
+                    <li><a data-bs-toggle="modal" data-bs-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
+                    <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
+                    <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
+                    <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
+                    <li><a data-bs-toggle="modal" data-bs-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
+                    
+                    <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
+                    </ul>
+                </div>
+            </div> -->
             <input class="setemoj" id="setemoj" type="text" placeholder="Write your message..."/><a class="icon-btn btn-outline-primary button-effect me-3 ms-3" href="#"><i data-feather="mic">                </i></a>
             <button class="submit icon-btn btn-primary disabled" id="send-msg" disabled="disabled"><i data-feather="send">               </i></button>
             <div class="emojis-contain">
@@ -2875,7 +2496,7 @@
         </div>
     </div>
     </aside>
-    <aside class="app-sidebar active">
+    <aside class="app-sidebar">
     <div class="apps">
         <ul class="apps-ul">
         <li id="todo">
@@ -4290,4 +3911,7 @@
     </div>
     </div>
 </div>
+
+<script src="/frontend/js/pages/homepage.js"></script>
+
 @endsection

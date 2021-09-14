@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use App\Models\User;
+use App\Models\Message;
+use App\Models\Contact;
 class HomeController extends Controller
 {
     public function __construct()
@@ -23,4 +26,15 @@ class HomeController extends Controller
 //            'announcements'=>$anns
         ]);
     }
+    public function getContactList(Request $request)
+    {
+        $id=Auth::id();
+        $contacts=Contact::where('user_id',$id)->get();
+        for($i=0;$i<count($contacts);$i++){
+            $msg=Message::where('sender',$contacts[$i]->contact_id)
+                ->orWhere('recipient',$contacts[$i]->contact_id);
+            $contacts[$i]['message']=$msg->count()?$msg->orderBy('created_at','desc')->get()[0]:'';
+        }
+        return $contacts;
+    } 
 }
