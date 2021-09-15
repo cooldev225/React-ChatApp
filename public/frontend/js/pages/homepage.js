@@ -1,12 +1,41 @@
 var $contact_active;
 $(document).ready(() => {
-    startContactProcess();
+    // startContactProcess();
 });
-function startContactProcess(){
+
+function addContact() {
+    var form_data = new FormData();
+    form_data.append('email', $('#exampleInputEmail1').val());
+    $.ajax({
+        url: '/home/addContactItem',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            console.log(res);
+            // var obj = '.recent-default .chat-tabs #myTabContent #direct .chat-main';
+            // $(obj).html('');
+            // for (var i = 0; i < res.length; i++) {
+
+            // }
+        },
+        error: function (response) {
+
+        }
+    });
+}
+
+function startContactProcess() {
     setTimeout(function () {
         startContactProcess();
     }, 5000);
-    if($('.contact-list-tab.dynemic-sidebar').hasClass('active')){
+    if ($('.contact-list-tab.dynemic-sidebar').hasClass('active')) {
         var form_data = new FormData();
         $.ajax({
             url: '/home/getContactList',
@@ -20,10 +49,10 @@ function startContactProcess(){
             type: 'POST',
             dataType: "json",
             success: function (res) {
-                var obj='.recent-default .chat-tabs #myTabContent #direct .chat-main';
+                var obj = '.recent-default .chat-tabs #myTabContent #direct .chat-main';
                 $(obj).html('');
-                for(var i=0;i<res.length;i++){
-                    
+                for (var i = 0; i < res.length; i++) {
+
                 }
             },
             error: function (response) {
@@ -34,7 +63,7 @@ function startContactProcess(){
 }
 function getChatData() {
     var form_data = new FormData();
-	$.ajax({
+    $.ajax({
         url: '/home/getChatData',
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')

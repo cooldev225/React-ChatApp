@@ -26,6 +26,24 @@ class HomeController extends Controller
 //            'announcements'=>$anns
         ]);
     }
+
+    public function addContactItem(Request $request)
+    {
+        $id=Auth::id();
+        
+        $userInfo = User::where('email', $request->input('email'))->get();
+        // $conatctId = User::where('user_id',$id)->get();
+        return $userInfo[0]->id;
+        // $id=Auth::id();
+        // $contacts=Contact::where('user_id',$id)->get();
+        // for($i=0;$i<count($contacts);$i++){
+        //     $msg=Message::where('sender',$contacts[$i]->contact_id)
+        //         ->orWhere('recipient',$contacts[$i]->contact_id);
+        //     $contacts[$i]['message']=$msg->count()?$msg->orderBy('created_at','desc')->get()[0]:'';
+        // }
+        // return $contacts;
+    } 
+
     public function getContactList(Request $request)
     {
         $id=Auth::id();

@@ -655,7 +655,7 @@
                 <input class="form-control-plaintext" type="search" placeholder="Search.."/>
                 <div class="icon-close close-search">                               </div>
                 </div>
-            </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#addcallmodal"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+            </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
             </div>
         </div>
         </div>
@@ -3256,20 +3256,20 @@
         <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-        <form class="default-form">
+        <form class="default-form" id="addContactForm">
             <div class="form-group">
             <h5>Email  or  Username</h5>
             <input class="form-control" id="exampleInputEmail1" type="text" placeholder="Josephin water"/>
             </div>
-            <div class="form-group mb-0">
+            <!-- <div class="form-group mb-0">
             <h5>Contact number</h5>
             <input class="form-control" id="examplemsg" type="number" placeholder="12345678912"/>
-            </div>
+            </div> -->
         </form>
         </div>
         <div class="modal-footer">
         <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary button-effect btn-sm" type="button">Add contact</button>
+        <button class="btn btn-primary button-effect btn-sm" type="button" onclick="addContact()">Add contact</button>
         </div>
     </div>
     </div>
@@ -3565,29 +3565,29 @@
 </div>
 <div class="modal fade fev-addcall-main add-popup" id="addcallmodal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h2 class="modal-title">
-            Add Contact</h2>
-        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-        <form class="default-form">
-            <div class="form-group">
-            <h5>Email  or  Username</h5>
-            <input class="form-control" id="exampleInputEmail12" type="text" placeholder="Josephin water"/>
+        <div class="modal-content">
+            <div class="modal-header">
+            <h2 class="modal-title">
+                Add Contact</h2>
+            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="form-group">
-            <h5>Contact number</h5>
-            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+            <div class="modal-body">
+            <form class="default-form">
+                <div class="form-group">
+                <h5>Email  or  Username</h5>
+                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="Josephin water"/>
+                </div>
+                <!-- <div class="form-group">
+                <h5>Contact number</h5>
+                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                </div> -->
+            </form>
             </div>
-        </form>
+            <div class="modal-footer">
+            <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
+            <!-- <button class="btn btn-primary button-effect btn-sm" type="button" >Add contact</button> -->
+            </div>
         </div>
-        <div class="modal-footer">
-        <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary button-effect btn-sm" type="button">Add contact</button>
-        </div>
-    </div>
     </div>
 </div>
 <div class="modal fade add-popup todo-main-modal" id="todoModal" tabindex="-1" role="dialog" aria-hidden="true">
