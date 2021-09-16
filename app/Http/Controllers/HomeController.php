@@ -31,27 +31,40 @@ class HomeController extends Controller
     {
         $id=Auth::id();
         
-        $userInfo = User::where('email', $request->input('email'))->get();
-        // $conatctId = User::where('user_id',$id)->get();
-        return $userInfo[0]->id;
-        // $id=Auth::id();
-        // $contacts=Contact::where('user_id',$id)->get();
-        // for($i=0;$i<count($contacts);$i++){
-        //     $msg=Message::where('sender',$contacts[$i]->contact_id)
-        //         ->orWhere('recipient',$contacts[$i]->contact_id);
-        //     $contacts[$i]['message']=$msg->count()?$msg->orderBy('created_at','desc')->get()[0]:'';
-        // }
-        // return $contacts;
-    } 
+        $newContactInfo = User::where('email', $request->input('email'))->get();
+        $contactIds = Contact::where('user_id', Auth::id())->get();
+        foreach($contactIds as $contactId) {
+            if ($newContactInfo[0]->id == $contactId->contact_id)
+                return array(
+                    'message' => 'This email exists in Contact',
+                    'insertion' => false
+                );
+        }
+        if (!count($newContactInfo)) 
+            return array(
+                'message' => 'This email doesnot register',
+                'insertion' => false
+            );
+        $newContact = new Contact;
+        $newContact->user_id = $id;
+        $newContact->contact_id = $newContactInfo[0]->id;
+        $newContact->save();
+        return array(
+            'message' => 'Save Successfully',
+            'insertion' => true,
+            'data' => $newContactInfo[0],
+        );
+    }
 
     public function getContactList(Request $request)
     {
         $id=Auth::id();
-        $contacts=Contact::where('user_id',$id)->get();
-        for($i=0;$i<count($contacts);$i++){
-            $msg=Message::where('sender',$contacts[$i]->contact_id)
+        $contacts = Contact::where('user_id',$id)->get();
+        for ($i = 0; $i < count($contacts); $i++) {
+            $msg = Message::where('sender',$contacts[$i]->contact_id)
                 ->orWhere('recipient',$contacts[$i]->contact_id);
-            $contacts[$i]['message']=$msg->count()?$msg->orderBy('created_at','desc')->get()[0]:'';
+            $contacts[$i]['message'] = $msg->count() ? $msg->orderBy('created_at','desc')->get()[0] : '';
+            $contacts[$i]['username'] = User::where('id', $contacts[$i]->contact_id)->get()[0]->username;
         }
         return $contacts;
     } 

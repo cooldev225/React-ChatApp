@@ -644,61 +644,23 @@
     </div>
     <div class="contact-list-tab dynemic-sidebar custom-scroll" id="contact-list">
         <div class="theme-title">
-        <div class="media">
-            <div> 
-            <h2>Contact</h2>
-            <h4>Start talking now</h4>
-            </div>
-            <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
-            <form class="form-inline search-form">
-                <div class="form-group">
-                <input class="form-control-plaintext" type="search" placeholder="Search.."/>
-                <div class="icon-close close-search">                               </div>
+            <div class="media">
+                <div> 
+                <h2>Contact</h2>
+                <h4>Start talking now</h4>
                 </div>
-            </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+                <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                    <input class="form-control-plaintext" type="search" placeholder="Search.."/>
+                    <div class="icon-close close-search">                               </div>
+                    </div>
+                </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+                </div>
             </div>
-        </div>
         </div>
         <ul class="chat-main">
-            <li>
-                <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                    <h5>Josephin water</h5>
-                    <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                    <h6>22/10/19</h6>
-                    <h6 class="font-success status"> Seen</h6>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                    <h5>Jony Lynetin</h5>
-                    <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                    <h6>30/11/19</h6>
-                    <div class="badge badge-primary sm">8</div>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-                <div class="details">
-                    <h5>Sufiya Elija</h5>
-                    <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                    <h6>15/06/19</h6>
-                    <h6 class="font-dark status"> Sending</h6>
-                </div>
-                </div>
-            </li>    
+             
         </ul>
     </div>
     <div class="notification-tab dynemic-sidebar custom-scroll" id="notification">
@@ -3249,29 +3211,26 @@
 </div>
 <div class="modal fade add-popup add-contact-modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h2 class="modal-title">
-            Add Contact</h2>
-        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-        <form class="default-form" id="addContactForm">
-            <div class="form-group">
-            <h5>Email  or  Username</h5>
-            <input class="form-control" id="exampleInputEmail1" type="text" placeholder="Josephin water"/>
+        <div class="modal-content">
+            <div class="modal-header">
+            <h2 class="modal-title">
+                Add Contact</h2>
+            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <!-- <div class="form-group mb-0">
-            <h5>Contact number</h5>
-            <input class="form-control" id="examplemsg" type="number" placeholder="12345678912"/>
-            </div> -->
-        </form>
+            <div class="modal-body">
+                <form class="default-form" id="addContactForm">
+                    <div class="form-group">
+                        <h5>Email  or  Username</h5>
+                        <input class="form-control" id="exampleInputEmail1" type="text" placeholder="Josephin water"/>
+                        <span class="text-danger addContactError"></span>                            
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary button-effect btn-sm" type="button" onclick="addContact()">Add contact</button>
+            </div>
         </div>
-        <div class="modal-footer">
-        <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary button-effect btn-sm" type="button" onclick="addContact()">Add contact</button>
-        </div>
-    </div>
     </div>
 </div>
 <div class="modal pol-modal-main add-popup" id="pollModal" tabindex="-1" role="dialog" aria-hidden="true">

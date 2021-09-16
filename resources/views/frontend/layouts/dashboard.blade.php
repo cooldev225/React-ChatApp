@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/tableselection/styles/tableselection.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
   </head>
   <body class="">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
