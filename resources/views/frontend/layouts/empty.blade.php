@@ -29,8 +29,8 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
 
-
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
+    <script src="/frontend/js/constant.js"></script>
   </head>
   <body>
   @yield('content')

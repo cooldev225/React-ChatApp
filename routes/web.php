@@ -26,6 +26,8 @@ Route::group(['middleware' => ['login']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/home/addContactItem', 'HomeController@addContactItem');
     Route::post('/home/getContactList', 'HomeController@getContactList');
+    Route::post('/home/getChatData', 'HomeController@getChatData');
+    Route::post('/home/sendMessage', 'HomeController@sendMessage');
 });
 
 Route::group(['middleware' => ['admin']], function () {

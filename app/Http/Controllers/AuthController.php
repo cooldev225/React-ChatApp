@@ -126,7 +126,8 @@ class AuthController extends Controller
             $row->save();
             return array(
                 'message'=> 'success',
-                'loggedin'=> true
+                'loggedin'=> true,
+                'currentUsername' => User::where('id', $row->userId)->get('username')
             );
         }
         else
@@ -137,7 +138,7 @@ class AuthController extends Controller
             else $msg='Password is wrong.';
             return array(
                 'message'=> $msg,
-                'loggedin'=> false
+                'loggedin'=> false,
             );  
         }
     }

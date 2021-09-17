@@ -31,6 +31,8 @@
   </head>
   <body class="">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
+    <script src="/frontend/js/constant.js"></script>
+
     @yield('content')
     <script src="/chat/js/owl.carousel.js"></script>
     <script src="/chat/js/popper.min.js"></script>
