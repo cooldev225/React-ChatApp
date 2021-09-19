@@ -109,4 +109,19 @@ class HomeController extends Controller
             'insertion' => true,
         );
     }
+
+    public function saveProfileInfo(Request $request)
+    {
+        $id = Auth::id();
+        $username = $request->input('username');
+        $location = $request->input('location');
+        $user = User::find($id);
+        $user->username = $username;
+        $user->location = $location;
+        $user->save();
+        return array(
+            'message' => 'Save Successfully',
+            'update' => true,
+        );
+    }
 }

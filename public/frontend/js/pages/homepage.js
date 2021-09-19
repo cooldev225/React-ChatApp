@@ -151,7 +151,8 @@ function displayChatData() {
             type: 'POST',
             dataType: "json",
             success: function(res) {
-                if (res.message != 'no data') {
+                console.log(res);
+                if (res.message != 'no data' && res.message ) {
                     let { contactor, message } = res;
 
                     $('.chat-content .contactor-name').html(contactor.username);

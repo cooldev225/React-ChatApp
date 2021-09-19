@@ -14,11 +14,14 @@
         <div class="logo-warpper"><a href="/home"><img src="/chat/images/logo/logo.png" alt="logo"/></a></div>
         <div class="sidebar-main">
             <ul class="sidebar-top">
-                <!-- <li><a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
-                    <div class="user-popup status one">
-                        <div> <img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
-                    </div></a></li>
-                <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
+                <!-- <li>
+                    <a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
+                        <div class="user-popup status one">
+                            <div> <img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+                        </div>
+                    </a>
+                </li> -->
+                <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
                 <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li> -->
                 <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List"> <i class="fa fa-users">  </i></a></li>
                 <li>
@@ -678,22 +681,26 @@
                 </div>
                 <div class="profile-box">
                     <div class="media">
-                    <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                    <div class="details">
-                        <h5>Josephin water</h5>
-                        <h6>Alabma , USA</h6>
-                    </div>
-                    <div class="details edit">
-                        <form class="form-radious form-sm">
-                        <div class="form-group mb-2">
-                            <input class="form-control" type="text" name="username" value="Josephin water"/>
+                        <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                        <div class="details">
+                            <h5>{{Auth::user()->username}}</h5>
+                            <h6>{{Auth::user()->location}}</h6>
                         </div>
-                        <div class="form-group mb-0">
-                            <input class="form-control" type="text" name="address" value="Alabma , USA"/>
+                        <div class="details edit">
+                            <form class="form-radious form-sm">
+                                <div class="form-group mb-2">
+                                    <input class="form-control username" type="text" name="username" value="{{Auth::user()->username}}" placeholder="John Doe" />
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input class="form-control location" type="text" name="address" value="{{Auth::user()->location}}" placeholder="Alabma, USA"/>
+                                </div>
+                            </form>
                         </div>
-                        </form>
-                    </div>
-                    <div class="media-body"><a class="icon-btn btn-outline-light btn-sm pull-right edit-btn" href="#"> <i data-feather="edit">       </i></a></div>
+                        <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right edit-btn" href="#">
+                                <i data-feather="edit"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -983,8 +990,8 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="status-tab custom-scroll dynemic-sidebar" id="status">
-            <div class="my-status-box">
+        <div class="status-tab custom-scroll dynemic-sidebar" id="status">
+            <!-- <div class="my-status-box">
                 <div class="status-content">
                     <div class="media">
                     <div class="img-status">
@@ -1000,7 +1007,7 @@
                     <div><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="contact-status-box">
                 <div class="theme-title">
                     <h3>Recent Update</h3>
@@ -1072,7 +1079,7 @@
                     </ul>
                 </div>
             </div>
-        </div> -->
+        </div>
     </aside>
     <div class="chitchat-main" id="content">
         <div class="chat-content tabto active">

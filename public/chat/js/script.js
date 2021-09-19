@@ -560,7 +560,38 @@
         $(this).toggleClass("btn-outline-primary").toggleClass("btn-primary");
     });
     $(".edit-btn").on('click', function() {
-        $(this).parent().parent().toggleClass("open");
+        if ($(this).parent().parent().hasClass('open')) {
+            $(this).parent().parent().removeClass("open");
+            var form_data = new FormData();
+            let username = $(this).parents('.media').find('input.username').val()
+            let location = $(this).parents('.media').find('input.location').val()
+            form_data.append('username', username);
+            form_data.append('location', location);
+            $.ajax({
+                url: '/home/saveProfileInfo',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function(res) {
+                    if (res.update == true) {
+                        console.log($(this));
+                        $('#settings .profile-box .details h5').html(username);
+                        $('#settings .profile-box .details h6').html(location);
+                    }
+                },
+                error: function(response) {
+
+                }
+            });
+        } else {
+            $(this).parent().parent().addClass("open");
+        }
     });
 
     /*=====================
