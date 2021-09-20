@@ -562,11 +562,13 @@
     $(".edit-btn").on('click', function() {
         if ($(this).parent().parent().hasClass('open')) {
             $(this).parent().parent().removeClass("open");
+            // changeProfileInfo();
             var form_data = new FormData();
-            let username = $(this).parents('.media').find('input.username').val()
-            let location = $(this).parents('.media').find('input.location').val()
+            let username = $(this).parents('.media').find('input.username').val();
+            let location = $(this).parents('.media').find('input.location').val();
             form_data.append('username', username);
             form_data.append('location', location);
+            form_data.append('avatar', $('#profileImageUploadBtn')[0].files[0] || null);
             $.ajax({
                 url: '/home/saveProfileInfo',
                 headers: {
@@ -580,10 +582,11 @@
                 dataType: "json",
                 success: function(res) {
                     if (res.update == true) {
-                        console.log($(this));
                         $('#settings .profile-box .details h5').html(username);
                         $('#settings .profile-box .details h6').html(location);
                     }
+                    $('#profileImageUploadBtn').css('pointer-events', 'none');
+
                 },
                 error: function(response) {
 
@@ -591,6 +594,8 @@
             });
         } else {
             $(this).parent().parent().addClass("open");
+            $('#profileImageUploadBtn').css('pointer-events', '');
+
         }
     });
 
@@ -650,7 +655,14 @@
            27. profile open close
            ==========================*/
     $('.menu-trigger, .close-profile').on('click', function(e) {
-        $('body').toggleClass('menu-active'); //add class
+        if ($('body').hasClass('menu-active')) {
+            $('body').removeClass('menu-active'); //remove class
+        } else {
+            $('body').addClass('menu-active'); //add class
+            $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+            $('.contact-profile .name h3').html(contactorInfo.username);
+            $('.contact-profile .name h6').html(contactorInfo.location);
+        }
         // $('.app-sidebar').toggleClass('active'); //remove
         // $('.chitchat-main').toggleClass("small-sidebar"); //remove
         //     if($( window ).width() <= 1440 ) {

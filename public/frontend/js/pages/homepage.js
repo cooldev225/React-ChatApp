@@ -2,7 +2,7 @@ var $contact_active;
 var currentContactId;
 var contactTimer;
 var chatContentTimer;
-
+var contactorInfo = {};
 $(document).ready(() => {
     getContactList();
     displayChatData();
@@ -10,6 +10,10 @@ $(document).ready(() => {
         currentContactId = $(e.currentTarget).attr('key');
         // displayChatData(contactId);
     });
+    $('#profileImageUploadBtn').css('pointer-events', 'none');
+    //profile Image Ajax Change
+    changeProfileImageAjax();
+
 });
 
 function addContactItem(target, data) {
@@ -151,13 +155,16 @@ function displayChatData() {
             type: 'POST',
             dataType: "json",
             success: function(res) {
-                console.log(res);
-                if (res.message != 'no data' && res.message ) {
-                    let { contactor, message } = res;
+                let { contactor, message } = res;
+                contactorInfo = Object.assign(contactor || {});
+                $('.chat-content .contactor-name').html(contactor.username);
+                if (contactorInfo.avatar) {
+                    $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                }
 
-                    $('.chat-content .contactor-name').html(contactor.username);
-                    currentContactId = contactor.id;
-                    $('.contact-chat ul.chatappend').html('');
+                currentContactId = contactor.id;
+                $('.contact-chat ul.chatappend').html('');
+                if (res.message != 'no data' && res.message) {
                     let target = '.contact-chat ul.chatappend';
                     message.forEach(item => {
                         let data = {};
@@ -260,4 +267,23 @@ function sendMessage() {
             alert('The operation is failed');
         }
     });
+}
+
+function changeProfileImageAjax() {
+    let profileImageBtn = $('#profileImageUploadBtn')
+    let avatarImage = $('#profileImage');
+    
+    profileImageBtn.on('change', (e) => {
+        let reader = new FileReader();
+        files = e.target.files;
+        reader.onload = () => {
+            avatarImage.attr('src', reader.result);
+            avatarImage.parent().css('background-image', `url("${reader.result}")`);
+        }
+        reader.readAsDataURL(files[0]);
+    });
+}
+
+function changeProfileInfo() {
+
 }

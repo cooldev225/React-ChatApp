@@ -118,6 +118,11 @@ class HomeController extends Controller
         $user = User::find($id);
         $user->username = $username;
         $user->location = $location;
+        if ($request->file('avatar') != null) {
+            $path = $request->file('avatar')->store('upload/avatar');
+            $user->avatar = $path;
+        }
+        $user->updated_at=date('Y-m-d H:i:s');
         $user->save();
         return array(
             'message' => 'Save Successfully',

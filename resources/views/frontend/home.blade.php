@@ -4,6 +4,7 @@
 <script>
     var currentUserId = {{Auth::id()}};
 </script>
+<!-- {{Auth::user()}} -->
 <div class="chitchat-loader">
     <div><img src="/chat/images/logo/logo_big.png" alt=""/>
     <h3>Simple, secure messaging for fast connect to world..!</h3>
@@ -681,7 +682,16 @@
                 </div>
                 <div class="profile-box">
                     <div class="media">
-                        <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+                    <!-- <div class="img-status">
+                        <div class="upload-img">
+                        <div class="user-status two"><img class="img-fluid bg-img" src="/chat/images/avtar/girls.jpg" alt="status"/></div>
+                            <input type="file"/>
+                        </div>
+                    </div> -->
+                        <div class="profile" style="position: relative">
+                            <img class="bg-img" id="profileImage" src="{{!Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path='.Auth::user()->avatar}}" alt="Avatar"/>
+                            <input type="file" id="profileImageUploadBtn"/>
+                        </div>
                         <div class="details">
                             <h5>{{Auth::user()->username}}</h5>
                             <h6>{{Auth::user()->location}}</h6>
@@ -2189,27 +2199,27 @@
         <aside class="chitchat-right-sidebar" id="slide-menu">
         <div class="custom-scroll right-sidebar">           
         <div class="contact-profile">
-        <div class="theme-title">
-            <div class="media">
-            <div> 
-                <h2>Profile</h2>
-                <h4>Personal Information</h4>
+            <div class="theme-title">
+                <div class="media">
+                <div> 
+                    <h2>Profile</h2>
+                    <h4>Personal Information</h4>
+                </div>
+                <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm close-profile ms-3" href="#"> <i data-feather="x"> </i></a></div>
+                </div>
             </div>
-            <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm close-profile ms-3" href="#"> <i data-feather="x"> </i></a></div>
+            <div class="details">
+                <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt=""/></div>
+                <div class="name">
+                    <h3>John Doe</h3>
+                    <h6>Alabma USA</h6>
+                </div>
+                <ul class="medialogo">
+                <li><a class="icon-btn btn-danger button-effect" href="#"><i class="fa fa-google"></i></a></li>
+                <li><a class="icon-btn btn-primary button-effect" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a class="icon-btn btn-facebook button-effect" href="#"><i class="fa fa-facebook-f"></i></a></li>
+                </ul>
             </div>
-        </div>
-        <div class="details">
-            <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt=""/></div>
-            <div class="name">
-            <h3>Josephin water</h3>
-            <h6>Add Description</h6>
-            </div>
-            <ul class="medialogo">
-            <li><a class="icon-btn btn-danger button-effect" href="#"><i class="fa fa-google"></i></a></li>
-            <li><a class="icon-btn btn-primary button-effect" href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a class="icon-btn btn-facebook button-effect" href="#"><i class="fa fa-facebook-f"></i></a></li>
-            </ul>
-        </div>
         </div>
         <div class="document">
         <div class="filter-block">
