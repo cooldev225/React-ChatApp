@@ -701,8 +701,11 @@
                                 <div class="form-group mb-2">
                                     <input class="form-control username" type="text" name="username" value="{{Auth::user()->username}}" placeholder="John Doe" />
                                 </div>
-                                <div class="form-group mb-0">
+                                <div class="form-group mb-2">
                                     <input class="form-control location" type="text" name="address" value="{{Auth::user()->location}}" placeholder="Alabma, USA"/>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control description" placeholder="Description" style="font-size: 12px;" row="5">{{Auth::user()->description}}</textarea>
                                 </div>
                             </form>
                         </div>
@@ -2212,7 +2215,8 @@
                 <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt=""/></div>
                 <div class="name">
                     <h3>John Doe</h3>
-                    <h6>Alabma USA</h6>
+                    <h5 class="mb-2">Alabma USA</h5>
+                    <h6>add description</h6>
                 </div>
                 <ul class="medialogo">
                 <li><a class="icon-btn btn-danger button-effect" href="#"><i class="fa fa-google"></i></a></li>

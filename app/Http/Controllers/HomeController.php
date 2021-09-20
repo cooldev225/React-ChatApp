@@ -115,9 +115,11 @@ class HomeController extends Controller
         $id = Auth::id();
         $username = $request->input('username');
         $location = $request->input('location');
+        $description = $request->input('description');
         $user = User::find($id);
         $user->username = $username;
         $user->location = $location;
+        $user->description = $description;
         if ($request->file('avatar') != null) {
             $path = $request->file('avatar')->store('upload/avatar');
             $user->avatar = $path;

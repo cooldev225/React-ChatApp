@@ -566,8 +566,11 @@
             var form_data = new FormData();
             let username = $(this).parents('.media').find('input.username').val();
             let location = $(this).parents('.media').find('input.location').val();
+            let description = $(this).parents('.media').find('textarea.description').val();
+            console.log(location, description);
             form_data.append('username', username);
             form_data.append('location', location);
+            form_data.append('description', description);
             form_data.append('avatar', $('#profileImageUploadBtn')[0].files[0] || null);
             $.ajax({
                 url: '/home/saveProfileInfo',
@@ -659,9 +662,13 @@
             $('body').removeClass('menu-active'); //remove class
         } else {
             $('body').addClass('menu-active'); //add class
-            $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+            if (contactorInfo.avatar) {
+                $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+            }
             $('.contact-profile .name h3').html(contactorInfo.username);
-            $('.contact-profile .name h6').html(contactorInfo.location);
+            console.log(contactorInfo);
+            $('.contact-profile .name h5').html(contactorInfo.location);
+            $('.contact-profile .name h6').html(contactorInfo.description);
         }
         // $('.app-sidebar').toggleClass('active'); //remove
         // $('.chitchat-main').toggleClass("small-sidebar"); //remove

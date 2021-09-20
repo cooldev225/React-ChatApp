@@ -156,14 +156,16 @@ function displayChatData() {
             dataType: "json",
             success: function(res) {
                 let { contactor, message } = res;
-                contactorInfo = Object.assign(contactor || {});
-                $('.chat-content .contactor-name').html(contactor.username);
-                if (contactorInfo.avatar) {
-                    $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                if (contactor) {
+                    contactorInfo = Object.assign(contactor || {});
+                    $('.chat-content .contactor-name').html(contactor.username);
+                    if (contactorInfo.avatar) {
+                        $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                    }
+                    currentContactId = contactor.id;
                 }
-
-                currentContactId = contactor.id;
                 $('.contact-chat ul.chatappend').html('');
+
                 if (res.message != 'no data' && res.message) {
                     let target = '.contact-chat ul.chatappend';
                     message.forEach(item => {
@@ -172,34 +174,6 @@ function displayChatData() {
                         data.username = item.sender == currentUserId ? 'You' : contactor.username;
                         data.content = item.content;
                         addChatItem(target, data);
-                        // $('.contact-chat ul.chatappend').append(`<li class="${type}">
-                        //     <div class="media">
-                        //         <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                        //         <div class="media-body">
-                        //             <div class="contact-name">
-                        //             <h5>${username}</h5>
-                        //             <h6>01:40 AM</h6>
-                        //             <ul class="msg-box">
-                        //                 <li class="msg-setting-main">
-                        //                     <div class="msg-dropdown-main">
-                        //                         <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                        //                         <div class="msg-dropdown"> 
-                        //                         <ul>
-                        //                             <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                        //                             <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                        //                             <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                        //                             <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                        //                         </ul>
-                        //                         </div>
-                        //                     </div>
-                        //                     <h5>${item.content}</h5>
-                        //                 </li>
-
-                        //             </ul>
-                        //             </div>
-                        //         </div>
-                        //     </div>
-                        // </li>`);
                     });
                 }
             },
