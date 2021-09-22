@@ -46,9 +46,8 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        
         $email = $request->input('email');
-        if($email==null)
+        if ($email == null)
             return view('frontend.auth.register',['page_title' => 'Register']);
         
         $this->validate($request, [
@@ -79,12 +78,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if($request->input('email') == '')
+        if ($request->input('email') == '')
             return array(
                 'message' => 'Please input email or username',
                 'loggedin' => false
             );
-        if($request->input('password') == '')
+        if ($request->input('password') == '')
             return array(
                 'message' => 'Please input password',
                 'loggedin' => false
@@ -105,24 +104,25 @@ class AuthController extends Controller
         {
             if(auth::check()){
                 $login = Session::select()->where('user_id', Auth::id())->get();
-                $user=Auth::user();
-                $user->remember_token=Crypt::encryptString("{$user->email}###{$validator['password']}");
-                $user->logins=$user->logins+1;
+                $user = Auth::user();
+                $user->remember_token = Crypt::encryptString("{$user->email}###{$validator['password']}");
+                $user->logins = $user->logins + 1;
+                $user->logout = 0;
                 $user->save();
 
-                $session=new Session;
-                $session->id=session()->getId();
-                $session->user_id=Auth::id();
-                $session->ip_address=$this->get_client_ip();
-                $session->user_agent='';
-                $session->payload='login';
-                $session->last_activity=1;
+                $session = new Session;
+                $session->id = session()->getId();
+                $session->user_id = Auth::id();
+                $session->ip_address = $this->get_client_ip();
+                $session->user_agent = '';
+                $session->payload = 'login';
+                $session->last_activity = 1;
                 $session->save();
             }
             $request->session()->regenerate();
-            $row=new LastLogin;
-            $row->userId=Auth::id();
-            $row->time=date("Y-m-d H:i:s");
+            $row = new LastLogin;
+            $row->userId = Auth::id();
+            $row->time = date("Y-m-d H:i:s");
             $row->save();
             return array(
                 'message'=> 'success',
@@ -146,6 +146,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Session::select()->where('user_id',Auth::id())->delete();
+        $row = Auth::user();
+        $row->logout = 1;
+        $row->save();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
