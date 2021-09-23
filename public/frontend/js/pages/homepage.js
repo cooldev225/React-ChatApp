@@ -1,14 +1,24 @@
 var $contact_active;
 var currentContactId;
-var contactTimer;
-var chatContentTimer;
 var contactorInfo = {};
+var usersList = [];
+
 $(document).ready(() => {
+    getRecentChatUsers();
+    getUsersList();
+    searchAndAddRecentChatList();
     getContactList();
-    displayChatData();
+    // displayChatData();
     $('ul.chat-main').on('click', 'li', (e) => {
+        if (currentContactId) {
+            $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+        }
         currentContactId = $(e.currentTarget).attr('key');
-        // displayChatData(contactId);
+        $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+
+        
+        setCurrentChatContent(currentContactId);
+
     });
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
@@ -16,24 +26,191 @@ $(document).ready(() => {
 
 });
 
-function addContactItem(target, data) {
+function getRecentChatUsers() {
+    $.ajax({
+        url: '/home/getRecentChatUsers',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            if (res.state == 'true') {
+                let { recentChatUsers, lastChatUserId } = res;
+                currentContactId = lastChatUserId;
+                let userListTarget = $('.recent-default .recent-chat-list');
+                userListTarget.empty();
+                recentChatUsers.forEach(item => {
+                    addChatUserListItem(userListTarget, item);
+                });
+                $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+                setCurrentChatContent(lastChatUserId);
+            }
+        },
+        error: function (res) {
+            alert('The operation is failed');
+        }
+    });
+}
+
+function setCurrentChatContent(contactorId) {
+    var form_data = new FormData();
+    form_data.append('currentContactorId', contactorId);
+    $.ajax({
+        url: '/home/getCurrentChatContent',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            if (res.state == 'true') {
+                let { messageData } = res;
+                let [contactorInfo] = res.contactorInfo;
+                
+                currentContactId = contactorId;
+                $('.chat-content .contactor-name').html(contactorInfo.username);
+                if (contactorInfo.logout) {
+                    $('.chat-content .contact-details .profile').addClass('offline');
+                    $('.chat-content .contact-details .profile').removeClass('online');
+                    $('.chat-content .contactor-status').html('Inactive')
+                    $('.chat-content .contactor-status').addClass('badge-dark');
+                    $('.chat-content .contactor-status').removeClass('badge-success');
+                } else {
+                    $('.chat-content .contact-details .profile').addClass('online');
+                    $('.chat-content .contact-details .profile').removeClass('offline');
+                    $('.chat-content .contactor-status').html('Active')
+                    $('.chat-content .contactor-status').addClass('badge-success');
+                    $('.chat-content .contactor-status').removeClass('badge-dark');
+                }
+                if (contactorInfo.avatar) {
+                    $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                }
+
+                //Chat data display
+                $('.contact-chat ul.chatappend').html('');
+
+                if (messageData) {
+                    let target = '.contact-chat ul.chatappend';
+                    messageData.forEach(item => {
+                        let data = {};
+                        data.type = item.sender == currentUserId ? 'replies' : 'sent';
+                        data.username = item.sender == currentUserId ? currentUsername : contactorInfo.username;
+                        data.content = item.content;
+                        addChatItem(target, data);
+                    });
+                }
+
+            }
+        },
+        error: function (response) {
+            alert('The operation is failed');
+        }
+    });
+
+
+}
+
+function getUsersList() {
+    var form_data = new FormData();
+    $.ajax({
+        url: '/home/getUsersList',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            usersList = res.data;
+            let target = $('.recent-default .recent-chat-list');
+        },
+        error: function (response) {
+            alert('The operation is failed');
+        }
+    });
+}
+
+function searchAndAddRecentChatList() {
+    let keyuptimer;
+    let target = $('.recent-default .recent-chat-list');
+    $('.new-chat-search').bind('keyup', function () {
+        clearTimeout(keyuptimer);
+        keyuptimer = setTimeout(function () {
+            let value = $('.new-chat-search').val();
+            target.empty();
+            if (value) {
+                usersList.filter(item => item.username.includes(value)).forEach(item => {
+                    addChatUserListItem(target, item);
+                });
+                $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+            } else {
+                getRecentChatUsers(); 
+            }
+        }, 100);
+    })
+}
+
+function addChatUserListItem(target, data) {
     $(target).append(
-        `<li key="${data.contact_id}">
+        `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
-            <div class="profile offline">
-                <img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar" />
+            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url('/chat/images/contact/1.jpg'); background-size: cover; background-position: center center; display: block;">
+                
             </div>
             <div class="details">
                 <h5>${data.username}</h5>
-                <h6>Hello</h6>
+                <h6>${data.description || ''}</h6>
             </div>
-            <div class="date-status">
-                <h6>${data.created_at.toLocaleDateString("en-US")}</h6>
-                <h6 class="font-success status"></h6>
+            <div class="date-status"><i class="ti-pin2"></i>
+                <h6>22/10/19</h6>
+                <h6 class="font-success status"> Seen</h6>
             </div>
             </div>
         </li>`
     );
+}
+
+function getContactList() {
+    $('.icon-btn[data-tippy-content="Contact List"]').on('click', () => {
+        if ($('.contact-list-tab.dynemic-sidebar').hasClass('active')) {
+            var form_data = new FormData();
+            $.ajax({
+                url: '/home/getContactList',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    let target = '#contact-list .chat-main';
+                    $(target).empty();
+                    console.log(res);
+                    res.forEach(item => {
+                        addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
+                    });
+    
+                },
+                error: function (response) {
+    
+                }
+            });
+        }
+    });
 }
 
 function addContact() {
@@ -50,7 +227,8 @@ function addContact() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
+            console.log(res);
             if (res.insertion == false) {
                 $('.addContactError').html(res.message);
                 setTimeout(() => {
@@ -61,52 +239,18 @@ function addContact() {
                 let data = res.data;
                 data.created_at = new Date();
                 let target = '#contact-list .chat-main';
-                addContactItem(target, data);
+                addChatUserListItem(target, data);
             }
         },
-        error: function(response) {
+        error: function (response) {
             alert('The operation is failed');
         }
     });
 }
 
-function getContactList() {
 
-    if ($('.contact-list-tab.dynemic-sidebar').hasClass('active')) {
-        var form_data = new FormData();
-        $.ajax({
-            url: '/home/getContactList',
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: "json",
-            success: function(res) {
-                let target = '#contact-list .chat-main';
-                $(target).empty();
-                res.forEach(item => {
-                    let data = {};
-                    data.contact_id = item.contact_id;
-                    data.username = item.username;
-                    data.created_at = new Date();
-                    // data.created_at = item.created_at;
-                    addContactItem(target, data);
-                });
 
-            },
-            error: function(response) {
 
-            }
-        });
-    }
-    contactTimer = setTimeout(function() {
-        getContactList();
-    }, 5000);
-}
 
 function addChatItem(target, data) {
     $(target).append(`<li class="${data.type}">
@@ -154,7 +298,7 @@ function displayChatData() {
             processData: false,
             type: 'POST',
             dataType: "json",
-            success: function(res) {
+            success: function (res) {
                 let { contactor, message } = res;
                 if (contactor) {
                     contactorInfo = Object.assign(contactor || {});
@@ -171,44 +315,18 @@ function displayChatData() {
                     message.forEach(item => {
                         let data = {};
                         data.type = item.sender == currentUserId ? 'replies' : 'sent';
-                        data.username = item.sender == currentUserId ? 'You' : contactor.username;
+                        data.username = item.sender == currentUserId ? currentUsername : contactor.username;
                         data.content = item.content;
                         addChatItem(target, data);
                     });
                 }
             },
-            error: function(response) {
+            error: function (response) {
 
             }
         });
     }
-    chatContentTimer = setTimeout(function() {
-        displayChatData();
-    }, 3000);
-
 }
-
-// function getChatData() {
-//     var form_data = new FormData();
-//     $.ajax({
-//         url: '/home/getChatData',
-//         headers: {
-//             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-//         },
-//         data: form_data,
-//         cache: false,
-//         contentType: false,
-//         processData: false,
-//         type: 'POST',
-//         dataType: "json",
-//         success: function(response) {
-//             console.log(response);
-//         },
-//         error: function(response) {
-
-//         }
-//     });
-// }
 
 function sendMessage() {
     var form_data = new FormData();
@@ -226,7 +344,7 @@ function sendMessage() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.insertion == true) {
                 let data = {};
                 data.username = 'You';
@@ -237,7 +355,7 @@ function sendMessage() {
 
             }
         },
-        error: function(response) {
+        error: function (response) {
             alert('The operation is failed');
         }
     });
@@ -246,7 +364,7 @@ function sendMessage() {
 function changeProfileImageAjax() {
     let profileImageBtn = $('#profileImageUploadBtn')
     let avatarImage = $('#profileImage');
-    
+
     profileImageBtn.on('change', (e) => {
         let reader = new FileReader();
         files = e.target.files;

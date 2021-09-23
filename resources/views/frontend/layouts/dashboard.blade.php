@@ -29,7 +29,7 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
   </head>
-  <body class="">
+  <body class="sidebar-active">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
     <script src="/frontend/js/constant.js"></script>
 

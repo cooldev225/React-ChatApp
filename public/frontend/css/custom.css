@@ -20,3 +20,13 @@
     top: 0;
     cursor: pointer;
 }
+.contact-list-tab li .chat-box .date-status {
+    top: 0px;
+}
+.emojis-main .contact-poll .contact-poll-content {
+    left: 0px;
+    bottom: 80px;
+}
+.chitchat-main .message-input input {
+    flex: 1;
+}

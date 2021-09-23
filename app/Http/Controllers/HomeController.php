@@ -26,6 +26,56 @@ class HomeController extends Controller
 //            'announcements'=>$anns
         ]);
     }
+    
+    public function getRecentChatUsers(Request $request) {
+        $id = Auth::id();
+
+        $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
+        $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
+        $recentChatUsers = array();
+
+        if (count($myData)) {
+            foreach($myData as $message) {
+                if (count($recentChatUsers) < 2) {
+                    if ($message['sender'] == $id){
+                        if (!in_array($message['recipient'], $recentChatUsers))
+                            array_push($recentChatUsers, $message['recipient']);
+                    } else {
+                        if (!in_array($message['sender'], $recentChatUsers))
+                            array_push($recentChatUsers, $message['sender']);
+                    }
+                } else {
+                    break;
+                }
+            }
+            $userList = User::whereIn('id', $recentChatUsers)->get();
+            return array('state' => 'true',
+                    'recentChatUsers' => $userList,
+                    'lastChatUserId' => $lastChatUserId);
+        }
+        return array('state' => 'false'); 
+    }
+    public function getCurrentChatContent(Request $request) {
+        $id = Auth::id();
+        $contactorId = $request->input('currentContactorId');
+        $contactorInfo = User::where('id', $contactorId)->get();
+        $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
+            ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(100)->get();
+        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messageData);
+    }
+
+
+
+
+    public function getRecentChatData(Request $request) {
+        
+    }
+
+    public function getUsersList(Request $request) {
+        $id = Auth::id();
+        $userList = User::where('id', '<>', $id)->get();
+        return array('state' => 'true', 'data' => $userList);
+    }
 
     public function addContactItem(Request $request)
     {
@@ -33,6 +83,11 @@ class HomeController extends Controller
         
         $newContactInfo = User::where('email', $request->input('email'))->get();
         $contactIds = Contact::where('user_id', Auth::id())->get();
+        if (!count($newContactInfo)) 
+            return array(
+                'message' => "This email doesn't register",
+                'insertion' => false
+            );
         foreach($contactIds as $contactId) {
             if ($newContactInfo[0]->id == $contactId->contact_id)
                 return array(
@@ -40,11 +95,6 @@ class HomeController extends Controller
                     'insertion' => false
                 );
         }
-        if (!count($newContactInfo)) 
-            return array(
-                'message' => 'This email doesnot register',
-                'insertion' => false
-            );
         $newContact = new Contact;
         $newContact->user_id = $id;
         $newContact->contact_id = $newContactInfo[0]->id;
@@ -59,14 +109,14 @@ class HomeController extends Controller
     public function getContactList(Request $request)
     {
         $id = Auth::id();
-        $contacts = Contact::where('user_id',$id)->get();
-        for ($i = 0; $i < count($contacts); $i++) {
-            $msg = Message::where('sender',$contacts[$i]->contact_id)
-                ->orWhere('recipient',$contacts[$i]->contact_id);
-            $contacts[$i]['message'] = $msg->count() ? $msg->orderBy('created_at','desc')->get()[0] : '';
-            $contacts[$i]['username'] = User::where('id', $contacts[$i]->contact_id)->get()[0]->username;
-        }
-        return $contacts;
+        $contactIds = Contact::where('user_id', $id)->get('contact_id');
+        // for ($i = 0; $i < count($contacts); $i++) {
+        //     $msg = Message::where('sender',$contacts[$i]->contact_id)
+        //         ->orWhere('recipient',$contacts[$i]->contact_id);
+        //     $contacts[$i]['message'] = $msg->count() ? $msg->orderBy('created_at','desc')->get()[0] : '';
+        //     $contacts[$i]['username'] = User::where('id', $contacts[$i]->contact_id)->get()[0]->username;
+        // }
+        return $contactIds;
     }
     
     public function getChatData(Request $request)
