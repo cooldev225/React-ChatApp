@@ -3,13 +3,15 @@ var currentContactId;
 var contactorInfo = {};
 var usersList = [];
 
-$(document).ready(() => {
+$(document).ready(() => { 
+
+   
     getRecentChatUsers();
     getUsersList();
     searchAndAddRecentChatList();
     getContactList();
     // displayChatData();
-    $('ul.chat-main').on('click', 'li', (e) => {
+    $('ul.chat-main').on('click', 'li', (e) => { 
         if (currentContactId) {
             $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
         }
@@ -23,7 +25,7 @@ $(document).ready(() => {
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
     changeProfileImageAjax();
-
+    
 });
 
 function getRecentChatUsers() {
@@ -92,7 +94,16 @@ function setCurrentChatContent(contactorId) {
                 }
                 if (contactorInfo.avatar) {
                     $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                    $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+                } else {
+                    $('.profile.menu-trigger').css('background-image', `url("/chat/images/contact/1.jpg")`);
+                    $('.contact-top').css('background-image', `url("/chat/images/contact/1.jpg")`);
+
                 }
+                $('.contact-profile .name h3').html(contactorInfo.username);
+                console.log(contactorInfo);
+                $('.contact-profile .name h5').html(contactorInfo.location);
+                $('.contact-profile .name h6').html(contactorInfo.description)
 
                 //Chat data display
                 $('.contact-chat ul.chatappend').html('');
@@ -165,7 +176,7 @@ function addChatUserListItem(target, data) {
     $(target).append(
         `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
-            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url('/chat/images/contact/1.jpg'); background-size: cover; background-position: center center; display: block;">
+            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path='+data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
                 
             </div>
             <div class="details">
@@ -258,25 +269,14 @@ function addChatItem(target, data) {
             <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
             <div class="media-body">
                 <div class="contact-name">
-                <h5>${data.username}</h5>
-                <h6>01:40 AM</h6>
-                <ul class="msg-box">
-                    <li class="msg-setting-main">
-                        <div class="msg-dropdown-main">
-                            <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                            <div class="msg-dropdown"> 
-                            <ul>
-                                <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                            </ul>
-                            </div>
-                        </div>
-                        <h5>${data.content}</h5>
-                    </li>
-                    
-                </ul>
+                    <h5>${data.username}</h5>
+                    <h6>01:40 AM</h6>
+                    <ul class="msg-box">
+                        <li class="msg-setting-main">
+                            
+                            <h5>${data.content}</h5>
+                        </li>  
+                    </ul>
                 </div>
             </div>
         </div>

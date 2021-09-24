@@ -254,10 +254,14 @@
             <div class="theme-title">
                 <div class="media">
                     <div> 
-                    <h2>Settings</h2>
-                    <h4>Change your app setting.</h4>
+                        <h2>Settings</h2>
+                        <h4>Change your app setting.</h4>
                     </div>
-                    <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a></div>
+                    <div class="media-body text-end">
+                        <a class="icon-btn btn-outline-light btn-sm close-panel" href="#">
+                            <i data-feather="x"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="profile-box">
                     <div class="media">
@@ -272,8 +276,9 @@
                             <input type="file" id="profileImageUploadBtn"/>
                         </div>
                         <div class="details">
-                            <h5>{{Auth::user()->username}}</h5>
-                            <h6>{{Auth::user()->location}}</h6>
+                            <h5 class="setting__profile--name">{{Auth::user()->username}}</h5>
+                            <h6 class="setting__profile--location">{{Auth::user()->location}}</h6>
+                            <h6 class="setting__profile--description">{{Auth::user()->description}}</h6>
                         </div>
                         <div class="details edit">
                             <form class="form-radious form-sm">
@@ -3305,7 +3310,6 @@
     </div>
     </div>
 </div>
-
 <script src="/frontend/js/pages/homepage.js"></script>
 
 @endsection
