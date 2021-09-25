@@ -615,7 +615,7 @@
                         <div class="lightbox-target" id="statusbox"><img src="/chat/images/status-img/large/lg-1.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
                     </li>
                     <li>
-                        <h5>Josephin water</h5>
+                        <h5>John Doe</h5>
                         <p>today , 8:30am</p>
                     </li>
                     </ul>
@@ -695,7 +695,7 @@
                         <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     </div>
                     <div class="media-body">
-                        <h5 class="contactor-name">Josephin water</h5>
+                        <h5 class="contactor-name">John Doe</h5>
                         <div class="badge badge-success contactor-status">Active</div>
                     </div>
                     <div class="media-right">
@@ -780,11 +780,11 @@
                         <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                         <div class="media-body">
                             <div class="contact-name">
-                            <h5>Josephin water</h5>
+                            <h5>John Doe</h5>
                             <h6>01:35 AM</h6>
                             <ul class="msg-box">
                                 <li class="msg-setting-main">
-                                <h5>Hi I am Josephin, can you help me to find best chat app?. </h5>
+                                <h5>Hi I am John, can you help me to find best chat app?. </h5>
                                 <div class="msg-dropdown-main">
                                     <div class="msg-setting"><i class="ti-more-alt"></i></div>
                                     <div class="msg-dropdown"> 
@@ -870,7 +870,7 @@
                         <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                         <div class="media-body">
                             <div class="contact-name">
-                            <h5>Josephin water</h5>
+                            <h5>John Doe</h5>
                             <h6>01:42 AM</h6>
                             <ul class="msg-box">
                                 <li class="msg-setting-main">
@@ -953,7 +953,7 @@
                         <div class="profile online menu-trigger"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     </div>
                     <div class="media-body">
-                        <h5>Josephin water</h5>
+                        <h5>John Doe</h5>
                         <h6>Last Seen 5 hours</h6>
                     </div>
                     <div class="media-right">
@@ -1093,7 +1093,7 @@
                             <div class="media">
                                 <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                                 <div class="details">
-                                <h5>Josephin water</h5>
+                                <h5>John Doe</h5>
                                 <h6>Alabma , USA</h6>
                                 </div>
                                 <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm" href="#" data-tippy-content="Add User"><i class="fa fa-plus"></i></a></div>
@@ -1105,7 +1105,7 @@
                             <div class="media">
                                 <div class="profile"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                                 <div class="details">
-                                <h5>Josephin water</h5>
+                                <h5>John Doe</h5>
                                 <h6>Alabma , USA</h6>
                                 </div>
                                 <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm" href="#" data-tippy-content="Add User"><i class="fa fa-plus"></i></a></div>
@@ -1117,7 +1117,7 @@
                             <div class="media">
                                 <div class="profile"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                                 <div class="details">
-                                <h5>Josephin water</h5>
+                                <h5>John Doe</h5>
                                 <h6>Alabma , USA</h6>
                                 </div>
                                 <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm" href="#" data-tippy-content="Add User"><i class="fa fa-plus"></i></a></div>
@@ -1129,7 +1129,7 @@
                             <div class="media">
                                 <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                                 <div class="details">
-                                <h5>Josephin water</h5>
+                                <h5>John Doe</h5>
                                 <h6>Alabma , USA</h6>
                                 </div>
                                 <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm" href="#" data-tippy-content="Add User"><i class="fa fa-plus"></i></a></div>
@@ -1147,11 +1147,11 @@
                     <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                         <div class="contact-name">
-                        <h5>Josephin water</h5>
+                        <h5>John Doe</h5>
                         <h6>01:35 AM</h6>
                         <ul class="msg-box">
                             <li class="msg-setting-main">
-                            <h5>Hi I am Josephin, can you help me to find best chat app?. </h5>
+                            <h5>Hi I am John, can you help me to find best chat app?. </h5>
                             <div class="msg-dropdown-main">
                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
                                 <div class="msg-dropdown"> 
@@ -1237,7 +1237,7 @@
                     <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                         <div class="contact-name">
-                        <h5>Josephin water</h5>
+                        <h5>John Doe</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
                             <li class="msg-setting-main">
@@ -1417,7 +1417,7 @@
             <div class="col-sm-5">
                 <div class="user-profile mb-3">
                 <div class="user-content"><img class="img-fluid" src="/chat/images/contact/2.jpg" alt="user-img"/>
-                    <h3>Josephin water</h3>
+                    <h3>John Doe</h3>
                     <h4 class="mt-2">+0 1800 76855</h4>
                     <ul> 
                     <li><i class="fa fa-twitch"></i>massage</li>
@@ -1560,7 +1560,7 @@
                 <div class="col-sm-5">
                 <div class="user-profile">
                     <div class="user-content"><img class="img-fluid bg-icon" src="/chat/images/contact/2.jpg" alt="user-img"/>
-                    <h3>Josephin water</h3>
+                    <h3>John Doe</h3>
                     <ul> 
                         <li><i class="fa fa-twitch"> </i>massage</li>
                         <li><i class="fa fa-phone"> </i>voice call</li>
@@ -1807,7 +1807,7 @@
                     <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                         <div class="contact-name">
-                        <h5>Josephin water</h5>
+                        <h5>John Doe</h5>
                         <h6>01:35 AM</h6>
                         <ul class="msg-box">
                             <li> 
@@ -1918,7 +1918,7 @@
                 <form class="default-form">
                 <select class="custom-scroll" name="support[support_type]">
                     <option>All Conversations</option>
-                    <option>Josephin water</option>
+                    <option>John Doe</option>
                     <option>Jony Lynetin</option>
                     <option>Sufiya Elija</option>
                     <option>Mukrani Pabelo</option>
@@ -1951,7 +1951,7 @@
                                 <div class="fa fa-user"></div>
                                 <h5 class="text-muted">Assign To</h5>
                                 </li>
-                                <li><a href="#">Josephin john</a></li>
+                                <li><a href="#">John Doe</a></li>
                                 <li><a href="#">Lynetin john</a></li>
                                 <li><a href="#">Sufiya john</a></li>
                                 <li><a href="#">Jhon john</a></li>
@@ -1977,7 +1977,7 @@
                                 <div class="fa fa-user"></div>
                                 <h5 class="text-muted">Assign To</h5>
                                 </li>
-                                <li><a href="#">Josephin john</a></li>
+                                <li><a href="#">John Doe</a></li>
                                 <li><a href="#">Lynetin john</a></li>
                                 <li><a href="#">Sufiya john</a></li>
                                 <li><a href="#">Jhon john</a></li>
@@ -2003,7 +2003,7 @@
                                 <div class="fa fa-user"></div>
                                 <h5 class="text-muted">Assign To</h5>
                                 </li>
-                                <li><a href="#">Josephin john</a></li>
+                                <li><a href="#">John Doe</a></li>
                                 <li><a href="#">Lynetin john</a></li>
                                 <li><a href="#">Sufiya john</a></li>
                                 <li><a href="#">Jhon john</a></li>
@@ -2663,7 +2663,7 @@
                 <form class="default-form" id="addContactForm">
                     <div class="form-group">
                         <h5>Email  or  Username</h5>
-                        <input class="form-control" id="exampleInputEmail1" type="text" placeholder="Josephin water"/>
+                        <input class="form-control" id="exampleInputEmail1" type="text" placeholder="John Doe"/>
                         <span class="text-danger addContactError"></span>                            
                     </div>
                 </form>
@@ -2822,19 +2822,19 @@
             <form class="default-form">
                 <!-- <h3>creat snippets</h3> -->
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Title"/>
+                    <input class="form-control title" type="text" placeholder="Title"/>
                 </div>
                 
                 <div class="form-group">
-                    <textarea class="form-control" rows="5" placeholder="Description"></textarea>
+                    <textarea class="form-control description" rows="5" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
-                    <input class="form-control mb-0" type="number" placeholder="Price($)"/>
+                    <input class="form-control mb-0 price" type="number" placeholder="Price($)"/>
                 </div>
                 <div class="form-group mb-0">
                     <div class="btn-snipate">
                         <a class="btn btn-danger button-effect btn-sm me-3" href="#" data-bs-dismiss="modal" aria-label="Close">Cancel</a>
-                        <a class="btn btn-primary button-effect btn-sm" href="#" data-bs-dismiss="modal" aria-label="Close">Send Request</a>
+                        <a class="btn btn-primary button-effect btn-sm" href="#" data-bs-dismiss="modal" aria-label="Close" onclick="sendPhotoRequest();">Send Request</a>
                     </div>
                 </div>
             </form>
@@ -2847,7 +2847,7 @@
     <div class="modal-body">
         <div class="audiocall1 call-modal"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
         <div class="center-con text-center">
-            <div class="title2">Josephin water</div>
+            <div class="title2">John Doe</div>
             <h6>log angelina california</h6>
             <ul>
             <li><a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" data-bs-toggle="modal" data-bs-target="#audiorcvcall" data-bs-dismiss="modal"> <i data-feather="phone"></i></a></li>
@@ -2869,7 +2869,7 @@
             <div class="profile"><img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar"/></div>
             </div>
             <div class="media-body">
-            <h5>Josephin water</h5>
+            <h5>John Doe</h5>
             <h6>America ,California</h6>
             </div>
             <div id="basicUsage">00:00:00</div>
@@ -2948,7 +2948,7 @@
         <div class="audiocall2 call-modal"><img class="bg-img" src="/chat/images/avtar/big/audiocall.jpg" alt="Avatar"/>
         <div class="center-con text-center">
             <div id="basicUsage2">00:00:00</div>
-            <div class="title2">Josephin water</div>
+            <div class="title2">John Doe</div>
             <h6>log angelina california</h6>
             <ul>
             <li><a class="icon-btn btn-light button-effect mute" href="#" data-tippy-content="Mute"><i class="fa fa-microphone"></i></a></li>
@@ -2974,7 +2974,7 @@
             <form class="default-form">
                 <div class="form-group">
                 <h5>Email  or  Username</h5>
-                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="Josephin water"/>
+                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe"/>
                 </div>
                 <!-- <div class="form-group">
                 <h5>Contact number</h5>
@@ -3015,7 +3015,7 @@
                         <div class="fa fa-user text-muted"></div>
                         <h5 class="text-muted">Assign To</h5>
                     </li>
-                    <li>Josephin john</li>
+                    <li>John Doe</li>
                     <li>Lynetin john</li>
                     <li>Sufiya john</li>
                     <li>Jhon john</li>
@@ -3060,7 +3060,7 @@
                         <div class="fa fa-user text-muted"></div>
                         <h5 class="text-muted">Assign To</h5>
                     </li>
-                    <li>Josephin john</li>
+                    <li>John Doe</li>
                     <li>Lynetin john</li>
                     <li>Sufiya john</li>
                     <li>Jhon john</li>
@@ -3099,8 +3099,8 @@
             <div class="chat-box">
                 <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
-                <h5>Josephin water</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h5>John Doe</h5>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>22/10/19</h6>
@@ -3139,7 +3139,7 @@
                 <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Mukrani Pabelo</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>04/06/19</h6>
@@ -3152,7 +3152,7 @@
                 <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jhon Deo</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>04/06/19</h6>
@@ -3165,7 +3165,7 @@
                 <div class="profile busy"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Pabelo Mukrani</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>04/06/19</h6>
@@ -3191,7 +3191,7 @@
                 <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Mukrani Pabelo</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>04/06/19</h6>
@@ -3204,7 +3204,7 @@
                 <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
                 <div class="details">
                 <h5>Jhon Deo</h5>
-                <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status"><i class="ti-pin2"></i>
                 <h6>04/06/19</h6>
