@@ -9,7 +9,25 @@ $(document).ready(() => {
     socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
     socket.on('message', message => {
-        console.log(message);
+        if (currentContactId != message.from) {
+
+            if (currentContactId) {
+                $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+            }
+            currentContactId = Number(message.from);
+            $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+            setCurrentChatContent(currentContactId);
+        }
+        var contentwidth = jQuery(window).width();
+        if (contentwidth <= '768') {
+            $('.chitchat-container').toggleClass("mobile-menu");
+        }
+        let target = '.contact-chat ul.chatappend';
+        let data = usersList.find(item => item.id == message.from);
+        data.type = 'sent';
+        data.content = message.message;
+        setTimeout(() => addChatItem(target, data), 0);
+
     });
 
     getRecentChatUsers();
@@ -122,8 +140,16 @@ function setCurrentChatContent(contactorId) {
                     let target = '.contact-chat ul.chatappend';
                     messageData.forEach(item => {
                         let data = {};
-                        data.type = item.sender == currentUserId ? 'replies' : 'sent';
-                        data.username = item.sender == currentUserId ? currentUsername : contactorInfo.username;
+                        if (item.sender == currentUserId) {
+                            data.type = 'replies';
+                            data.username = currentUsername;
+                            data.avatar = usersList.find(user => user.id == item.sender).avatar;
+                        } else {
+                            data.type = 'sent';
+                            data.username = contactorInfo.username;
+                            data.avatar = contactorInfo.avatar;
+                        }
+
                         data.content = item.content;
                         addChatItem(target, data);
                     });
@@ -171,7 +197,7 @@ function searchAndAddRecentChatList() {
             let value = $('.new-chat-search').val();
             target.empty();
             if (value) {
-                usersList.filter(item => item.username.includes(value)).forEach(item => {
+                usersList.filter(item => item.id != currentUserId && item.username.includes(value)).forEach(item => {
                     addChatUserListItem(target, item);
                 });
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
@@ -220,7 +246,6 @@ function getContactList() {
                 success: function (res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
-                    console.log(res);
                     res.forEach(item => {
                         addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
                     });
@@ -249,7 +274,6 @@ function addContact() {
         type: 'POST',
         dataType: "json",
         success: function (res) {
-            console.log(res);
             if (res.insertion == false) {
                 $('.addContactError').html(res.message);
                 setTimeout(() => {
@@ -276,22 +300,21 @@ function newMessage() {
     if ($.trim(message) == '') {
         return false;
     }
-
-    // $(`<li class="replies">
-    //     <div class="media">
-    //         <div class="profile mr-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path='+data.avatar : "/chat/images/contact/1.jpg"}); background-size: cover; background-position: center center;">
-    //         </div>
-    //         <div class="media-body">
-    //             <div class="contact-name">
-    //                 <h5>${currentUsername}</h5>
-    //                 <h6>01:42 AM</h6>
-    //                 <ul class="msg-box">
-    //                     <li><h5>${message}</h5></li>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </li>`).appendTo($('.messages .chatappend'));
+    $(`<li class="replies">
+        <div class="media">
+            <div class="profile mr-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path='+data.avatar : "/chat/images/contact/1.jpg"}); background-size: cover; background-position: center center;">
+            </div>
+            <div class="media-body">
+                <div class="contact-name">
+                    <h5>${currentUsername}</h5>
+                    <h6>01:42 AM</h6>
+                    <ul class="msg-box">
+                        <li><h5>${message}</h5></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </li>`).appendTo($('.messages .chatappend'));
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
@@ -315,100 +338,115 @@ function typingMessage() {
 function addChatItem(target, data) {
     $(target).append(`<li class="${data.type}">
         <div class="media">
-            <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+            <div class="profile me-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path='+data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+            </div>
             <div class="media-body">
                 <div class="contact-name">
                     <h5>${data.username}</h5>
-                    <h6>01:40 AM</h6>
+                    <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        <li class="msg-setting-main">
-                            
-                            <h5>${data.content}</h5>
-                        </li>  
+                        <li><h5>${data.content}</h5></li>
                     </ul>
                 </div>
             </div>
         </div>
     </li>`);
+
+    // $(target).append(`<li class="${data.type}">
+    //     <div class="media">
+    //         <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
+    //         <div class="media-body">
+    //             <div class="contact-name">
+    //                 <h5>${data.username}</h5>
+    //                 <h6>01:40 AM</h6>
+    //                 <ul class="msg-box">
+    //                     <li class="msg-setting-main">
+    //                         <h5>${data.content}</h5>
+    //                     </li>  
+    //                 </ul>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </li>`);
 }
 
-function displayChatData() {
-    if ($('#content .chat-content').hasClass('active')) {
-        var form_data = new FormData();
-        form_data.append('currentContactId', currentContactId);
-        $.ajax({
-            url: '/home/getChatData',
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: "json",
-            success: function (res) {
-                let { contactor, message } = res;
-                if (contactor) {
-                    contactorInfo = Object.assign(contactor || {});
-                    $('.chat-content .contactor-name').html(contactor.username);
-                    if (contactorInfo.avatar) {
-                        $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
-                    }
-                    currentContactId = contactor.id;
-                }
-                $('.contact-chat ul.chatappend').html('');
+// function displayChatData() {
+//     if ($('#content .chat-content').hasClass('active')) {
+//         var form_data = new FormData();
+//         form_data.append('currentContactId', currentContactId);
+//         $.ajax({
+//             url: '/home/getChatData',
+//             headers: {
+//                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             data: form_data,
+//             cache: false,
+//             contentType: false,
+//             processData: false,
+//             type: 'POST',
+//             dataType: "json",
+//             success: function (res) {
+//                 let { contactor, message } = res;
+//                 if (contactor) {
+//                     contactorInfo = Object.assign(contactor || {});
+//                     $('.chat-content .contactor-name').html(contactor.username);
+//                     if (contactorInfo.avatar) {
+//                         $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
+//                     }
+//                     currentContactId = contactor.id;
+//                 }
+//                 $('.contact-chat ul.chatappend').html('');
 
-                if (res.message != 'no data' && res.message) {
-                    let target = '.contact-chat ul.chatappend';
-                    message.forEach(item => {
-                        let data = {};
-                        data.type = item.sender == currentUserId ? 'replies' : 'sent';
-                        data.username = item.sender == currentUserId ? currentUsername : contactor.username;
-                        data.content = item.content;
-                        addChatItem(target, data);
-                    });
-                }
-            },
-            error: function (response) {
+//                 if (res.message != 'no data' && res.message) {
+//                     let target = '.contact-chat ul.chatappend';
+//                     message.forEach(item => {
+//                         let data = {};
+//                         data.type = item.sender == currentUserId ? 'replies' : 'sent';
+//                         data.username = item.sender == currentUserId ? currentUsername : contactor.username;
+//                         data.content = item.content;
+//                         addChatItem(target, data);
+//                     });
+//                 }
+//             },
+//             error: function (response) {
 
-            }
-        });
-    }
-}
+//             }
+//         });
+//     }
+// }
 
-function sendMessage() {
-    var form_data = new FormData();
-    form_data.append('content', $('#setemoj').val());
-    form_data.append('currentContactId', currentContactId);
+// function sendMessage() {
+//     var form_data = new FormData();
+//     form_data.append('content', $('#setemoj').val());
+//     form_data.append('currentContactId', currentContactId);
 
-    $.ajax({
-        url: '/home/sendMessage',
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: form_data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        dataType: "json",
-        success: function (res) {
-            if (res.insertion == true) {
-                let data = {};
-                data.username = 'You';
-                data.content = $('#setemoj').val();
-                let target = '.contact-chat ul.chatappend';
-                addChatItem(target, data);
-            } else {
+//     $.ajax({
+//         url: '/home/sendMessage',
+//         headers: {
+//             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         data: form_data,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         type: 'POST',
+//         dataType: "json",
+//         success: function (res) {
+//             if (res.insertion == true) {
+//                 let data = {};
+//                 data.username = 'You';
+//                 data.content = $('#setemoj').val();
+//                 let target = '.contact-chat ul.chatappend';
+//                 addChatItem(target, data);
+//             } else {
 
-            }
-        },
-        error: function (response) {
-            alert('The operation is failed');
-        }
-    });
-}
+//             }
+//         },
+//         error: function (response) {
+//             alert('The operation is failed');
+//         }
+//     });
+// }
 
 function changeProfileImageAjax() {
     let profileImageBtn = $('#profileImageUploadBtn')
@@ -423,8 +461,4 @@ function changeProfileImageAjax() {
         }
         reader.readAsDataURL(files[0]);
     });
-}
-
-function changeProfileInfo() {
-
 }

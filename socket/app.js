@@ -45,11 +45,7 @@ io.on('connection', (socket) => {
       let message = {
         from:currentUserId, to:data.currentContactId, message:data.message
       }
-      console.log(message);
-      // socket.broadcast.emit('message', message);
       io.sockets.sockets.get(socketId).emit('message', message);
-
-      // socket1.emit('message', message);
     }
   });
 });

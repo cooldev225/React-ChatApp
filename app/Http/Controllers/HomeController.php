@@ -73,7 +73,8 @@ class HomeController extends Controller
 
     public function getUsersList(Request $request) {
         $id = Auth::id();
-        $userList = User::where('id', '<>', $id)->get();
+        // $userList = User::where('id', '<>', $id)->get();
+        $userList = User::get();
         return array('state' => 'true', 'data' => $userList);
     }
 
