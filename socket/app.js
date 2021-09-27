@@ -43,14 +43,18 @@ io.on('connection', (socket) => {
   
   user_socketMap.set(currentUserId, socket.id);
   socket_userMap.set(socket.id, currentUserId);
+
   console.log(user_socketMap);
   socket.on('message', data => {
-    let socketId = user_socketMap.get(data.currentContactId.toString());
-    if (socketId) {
-      let message = {
-        from:currentUserId, to:data.currentContactId, message:data.message
+    console.log(data.currentContactId.toString());
+    if (data.currentContactId) {
+      let socketId = user_socketMap.get(data.currentContactId.toString());
+      if (socketId) {
+        let message = {
+          from:currentUserId, to:data.currentContactId, message:data.message
+        }
+        io.sockets.sockets.get(socketId).emit('message', message);
       }
-      io.sockets.sockets.get(socketId).emit('message', message);
     }
   });
 });
