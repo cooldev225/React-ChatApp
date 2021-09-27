@@ -173,7 +173,6 @@ class HomeController extends Controller
         $user->location = $location;
         $user->description = $description;
         if ($request->file('avatar') != null) {
-            dd('aaa');
             $path = $request->file('avatar')->store('upload/avatar');
             $user->avatar = $path;
         }
