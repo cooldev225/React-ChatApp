@@ -56,6 +56,23 @@ io.on('connection', (socket) => {
       }
     }
   });
+
+  socket.on('send:request', data => {
+    console.log(data);
+    if (data.to) {
+      let socketId = user_socketMap.get(data.to.toString());
+      console.log(socketId);
+      if (socketId) {
+        let message = {
+          from: currentUserId, 
+          data
+        }
+        if (io.sockets.sockets.get(socketId)){
+          io.sockets.sockets.get(socketId).emit('receive:request', message);
+        }
+      }
+    }
+  })
 });
 
 server.listen(port, () => {

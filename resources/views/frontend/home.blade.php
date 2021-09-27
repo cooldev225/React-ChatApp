@@ -16,13 +16,13 @@
         <div class="logo-warpper"><a href="/home"><img src="/chat/images/logo/logo.png" alt="logo"/></a></div>
         <div class="sidebar-main">
             <ul class="sidebar-top">
-                <!-- <li>
-                    <a class="button-effect" href="status" data-tippy-content="status" data-intro="Check Status here">
+                <li>
+                    <a class="button-effect" data-intro="Check Status here">
                         <div class="user-popup status one">
-                            <div> <img class="bg-img" src="/chat/images/avtar/2.jpg" alt="Avatar"/></div>
+                            <div> <img class="bg-img" src="{{!Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path='.Auth::user()->avatar}}" alt="Avatar"/></div>
                         </div>
                     </a>
-                </li> -->
+                </li>
                 <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
                 <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li> -->
                 <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List"> <i class="fa fa-users">  </i></a></li>
@@ -265,12 +265,6 @@
                 </div>
                 <div class="profile-box">
                     <div class="media">
-                    <!-- <div class="img-status">
-                        <div class="upload-img">
-                        <div class="user-status two"><img class="img-fluid bg-img" src="/chat/images/avtar/girls.jpg" alt="status"/></div>
-                            <input type="file"/>
-                        </div>
-                    </div> -->
                         <div class="profile" style="position: relative">
                             <img class="bg-img" id="profileImage" src="{{!Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path='.Auth::user()->avatar}}" alt="Avatar"/>
                             <input type="file" id="profileImageUploadBtn"/>
@@ -587,96 +581,7 @@
                 </div>
             </div>
         </div>
-        <div class="status-tab custom-scroll dynemic-sidebar" id="status">
-            <!-- <div class="my-status-box">
-                <div class="status-content">
-                    <div class="media">
-                    <div class="img-status">
-                        <div class="user-status two"><img class="img-fluid bg-img" src="/chat/images/avtar/girls.jpg" alt="status"/></div>
-                        <div class="upload-img">
-                        <input type="file"/>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h3>my status</h3>
-                        <p>tap to add status Update</p>
-                    </div>
-                    <div><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a></div>
-                    </div>
-                </div>
-            </div> -->
-            <div class="contact-status-box">
-                <div class="theme-title">
-                    <h3>Recent Update</h3>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-1.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox"><img src="/chat/images/status-img/large/lg-1.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>John Doe</h5>
-                        <p>today , 8:30am</p>
-                    </li>
-                    </ul>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox2"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-2.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox2"><img src="/chat/images/status-img/large/lg-2.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>Jony Lynetin</h5>
-                        <p>today , 10:30am</p>
-                    </li>
-                    </ul>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox3"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox3"><img src="/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>Sufiya Elija</h5>
-                        <p>today , 11:00am</p>
-                    </li>
-                    </ul>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox4"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-4.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox4"><img src="/chat/images/status-img/large/lg-4.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>Mukrani Pabelo </h5>
-                        <p>today , 9:55am</p>
-                    </li>
-                    </ul>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox5"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-5.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox5"><img src="/chat/images/status-img/large/lg-5.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>Pabelo Mukrani</h5>
-                        <p>today , 12:05am</p>
-                    </li>
-                    </ul>
-                </div>
-                <div class="status-content">
-                    <ul>
-                    <li class="user-status"><a class="lightbox img-status status" href="#statusbox6"><img class="img-fluid bg-img" src="/chat/images/status-img/small/sm-3.jpg" alt="status"/></a>
-                        <div class="lightbox-target" id="statusbox6"><img src="/chat/images/status-img/large/lg-3.jpg" alt="status"/><a class="lightbox-close" href="#"></a></div>
-                    </li>
-                    <li>
-                        <h5>Sufiya Elija</h5>
-                        <p>today , 11:00am</p>
-                    </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        
     </aside>
     <div class="chitchat-main small-sidebar" id="content">
         <div class="chat-content tabto active">

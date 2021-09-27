@@ -40,6 +40,10 @@ $(document).ready(() => {
 
     });
 
+    socket.on('receive:request', data => {
+        console.log(data);
+    })
+
     getRecentChatUsers();
     getUsersList();
     searchAndAddRecentChatList();
@@ -385,12 +389,14 @@ function sendPhotoRequest() {
     let price = $('#photoRequestModal .price').val();
     let type = 1;
     let to = currentContactId;
-    let data = {};
+    let data = {title, description, price, type, to};
+    console.log(data);
+    let form_data = new FormData();
     form_data.append('title', title);
     form_data.append('description', description);
     form_data.append('price', price);
-    form_data.append('type', price);
-    socket.emit('send:request', {  });
+    form_data.append('type', 0);
+    socket.emit('send:request', data);
 
     // let to = currentContactId;
     // var form_data = new FormData();
