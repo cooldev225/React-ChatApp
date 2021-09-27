@@ -4,7 +4,6 @@ RewriteCond %{HTTP_HOST} ^ojochat.com$ [NC,OR]
 RewriteCond %{HTTP_HOST} ^ojochat.com$    
 RewriteCond %{REQUEST_URI} !public/
 RewriteRule (.*) /public/$1 [L]
-RewriteCond %{HTTPS} on
 RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # php -- BEGIN cPanel-generated handler, do not edit
