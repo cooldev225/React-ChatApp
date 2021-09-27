@@ -7,6 +7,7 @@ var socket;
 $(document).ready(() => {
 
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
+    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
 
     socket.on('message', message => {
