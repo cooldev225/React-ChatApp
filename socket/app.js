@@ -51,7 +51,8 @@ io.on('connection', (socket) => {
         let message = {
           from:currentUserId, to:data.currentContactId, message:data.message
         }
-        io.sockets.sockets.get(socketId).emit('message', message);
+        if (io.sockets.sockets.get(socketId))
+          io.sockets.sockets.get(socketId).emit('message', message);
       }
     }
   });
