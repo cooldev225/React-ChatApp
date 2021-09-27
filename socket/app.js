@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const server = require('https').createServer(app)
+// const server = require('https').createServer(app)
+const server = require('http').createServer(app)
 const port = process.env.PORT || 3000
 const io = require('socket.io')(server, {
   // cors: {
