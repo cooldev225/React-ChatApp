@@ -31,10 +31,10 @@ class HomeController extends Controller
         $id = Auth::id();
 
         $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
-        $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
-        $recentChatUsers = array();
-
+        
         if (count($myData)) {
+            $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
+            $recentChatUsers = array();
             foreach($myData as $message) {
                 if (count($recentChatUsers) < 2) {
                     if ($message['sender'] == $id){
