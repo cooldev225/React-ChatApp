@@ -3,12 +3,12 @@ const app = express()
 const server = require('http').createServer(app)
 const port = process.env.PORT || 3000
 const io = require('socket.io')(server, {
-  cors: {
-    origins: ['ojochat.com', 'ojochat.com:3000'],
-  }
   // cors: {
-  //   origins: ['https:ojochat.com', 'https:ojochat.com:3000'],
+  //   origins: ['ojochat.com', 'ojochat.com:3000'],
   // }
+  cors: {
+    origins: '*',
+  }
 });
 let user_socketMap = new Map();
 let socket_userMap = new Map();
@@ -29,11 +29,8 @@ const getSocketsInRoom = (io, room, namespace = '/') => {
 }
 // let roomList = [];
 
-// app.use(cors({
-//   origin: '*'
-// }));
 app.use(cors({
-  origin: ['ojochat.com', 'ojochat.com:3000']
+  origin: '*'
 }));
 
 io.on('connection', (socket) => {
