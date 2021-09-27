@@ -32,6 +32,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getChatData', 'HomeController@getChatData');
     Route::post('/home/sendMessage', 'HomeController@sendMessage');
     Route::post('/home/saveProfileInfo', 'HomeController@saveProfileInfo');
+    Route::post('/home/sendRequest', 'HomeController@sendRequest');
 });
 
 Route::group(['middleware' => ['admin']], function () {

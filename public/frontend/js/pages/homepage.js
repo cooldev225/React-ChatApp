@@ -95,7 +95,7 @@ function getRecentChatUsers() {
 function setCurrentChatContent(contactorId, resolve) {
     let data = [currentUserId, currentContactId];
     // socket = io.connect("http://localhost:3000", { query: { currentUserId, currentContactId } });
-    socket.emit('join:room', data);
+    
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
     $.ajax({
@@ -379,5 +379,45 @@ function changeProfileImageAjax() {
 
 function sendPhotoRequest() {
     let title = $('#photoRequestModal .title').val();
+    let description = $('#photoRequestModal .description').val();
+    let price = $('#photoRequestModal .price').val();
+    let type = 1;
+    let to = currentContactId;
+    let data = {};
+    form_data.append('title', title);
+    form_data.append('description', description);
+    form_data.append('price', price);
+    form_data.append('type', price);
+    socket.emit('send:request', {  });
+
+    // let to = currentContactId;
+    // var form_data = new FormData();
+    // form_data.append('title', title);
+    // form_data.append('description', description);
+    // form_data.append('price', price);
+    // form_data.append('type', price);
+    // $.ajax({
+    //     url: '/home/sendRequest',
+    //     headers: {
+    //         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     data: form_data,
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false,
+    //     type: 'POST',
+    //     dataType: "json",
+    //     success: function (res) {
+    //         if (res.state == 'true') {
+    //             let data = res.data;
+
+    //         } else {
+
+    //         }
+    //     },
+    //     error: function (response) {
+    //         alert('The operation is failed');
+    //     }
+    // });
     
 }

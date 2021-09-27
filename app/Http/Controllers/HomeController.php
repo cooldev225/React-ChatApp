@@ -55,6 +55,7 @@ class HomeController extends Controller
         }
         return array('state' => 'false'); 
     }
+
     public function getCurrentChatContent(Request $request) {
         $id = Auth::id();
         $contactorId = $request->input('currentContactorId');
@@ -181,5 +182,24 @@ class HomeController extends Controller
             'message' => 'Save Successfully',
             'update' => true,
         );
+    }
+    
+    public function sendPhotoRequest(Request $request) 
+    {
+        $id = Auth::id();
+        $to = $request->input('to');
+        $title = $request->input('title');
+        $description = $request->input('description');
+        $price = $request->input('price');
+        $type = $request->input('type');
+        $request = new Request;
+        $request->from = $id;
+        $request->to = $to;
+        $request->title = $title;
+        $request->description = $description;
+        $request->price = $price;
+        $request->type = $type;
+        $request->save();
+        return;
     }
 }
