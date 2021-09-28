@@ -9,7 +9,6 @@ $(document).ready(() => {
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
-
     socket.on('message', message => {
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
@@ -41,7 +40,10 @@ $(document).ready(() => {
     });
 
     socket.on('receive:request', data => {
-        console.log(data);
+
+        let senderInfo = getCertainUserInfoById(data.from);
+        let receiverInfo = getCertainUserInfoById(currentUserId);
+        addRequestItem(senderInfo, receiverInfo, data.data);
     })
 
     getRecentChatUsers();
@@ -49,12 +51,12 @@ $(document).ready(() => {
     searchAndAddRecentChatList();
     getContactList();
     // displayChatData();
-    $('ul.chat-main').on('click', 'li', (e) => {
+    $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         if (currentContactId) {
-            $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+            $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
         }
         currentContactId = Number($(e.currentTarget).attr('key'));
-        $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+        $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
 
         setCurrentChatContent(currentContactId);
         var contentwidth = jQuery(window).width();
@@ -62,11 +64,22 @@ $(document).ready(() => {
             $('.chitchat-container').toggleClass("mobile-menu");
         }
     });
+
+    $('ul.chat-main.request-list').on('click', 'li', (e) => {
+        let from = $(e.currentTarget).data('from');
+        let to = $(e.currentTarget).data('to');
+        $('#detailRequestModal .request-title').text($(e.currentTarget).find('.title').text());
+        $('#detailRequestModal .request-description').text($(e.currentTarget).find('.description').val());
+        $('#detailRequestModal .request-price').text($(e.currentTarget).find('.price').val() + "$");
+    });
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
     changeProfileImageAjax();
 
 });
+function getCertainUserInfoById(id) {
+    return usersList.find(item => item.id == id);
+}
 
 function getRecentChatUsers() {
     $.ajax({
@@ -101,7 +114,7 @@ function getRecentChatUsers() {
 function setCurrentChatContent(contactorId, resolve) {
     let data = [currentUserId, currentContactId];
     // socket = io.connect("http://localhost:3000", { query: { currentUserId, currentContactId } });
-    
+
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
     $.ajax({
@@ -389,7 +402,7 @@ function sendPhotoRequest() {
     let price = $('#photoRequestModal .price').val();
     let type = 1;
     let to = currentContactId;
-    let data = {title, description, price, type, to};
+    let data = { title, description, price, type, to };
     console.log(data);
     let form_data = new FormData();
     form_data.append('title', title);
@@ -427,5 +440,28 @@ function sendPhotoRequest() {
     //         alert('The operation is failed');
     //     }
     // });
-    
+
+}
+
+function addRequestItem(senderInfo, receiverInfo, data) {
+    $("ul.request-list").append(
+        `<li data-to="blank" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
+            <div class="chat-box">
+            <div class="profile bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
+                
+            </div>
+            <div class="details">
+                <h5>${senderInfo.username}</h5>
+                <h6 class="title">${data.title || ''}</h6>
+                <input class="description" type="hidden" value="${data.description}">
+                <input class="price" type="hidden" value="${data.price}">
+                <input class="status" type="hidden" value="1">
+            </div>
+            <div class="date-status">
+                <a data-bs-toggle="modal" data-bs-target="#detailRequestModal"><i class="fa fa-eye"></i></a>
+                <h6 class="font-success status" request-status="4"> Completed</h6>
+            </div>
+            </div>
+        </li>`
+    );
 }

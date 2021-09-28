@@ -44,7 +44,6 @@ io.on('connection', (socket) => {
 
   console.log(user_socketMap);
   socket.on('message', data => {
-    console.log(data.currentContactId.toString());
     if (data.currentContactId) {
       let socketId = user_socketMap.get(data.currentContactId.toString());
       if (socketId) {
@@ -61,7 +60,6 @@ io.on('connection', (socket) => {
     console.log(data);
     if (data.to) {
       let socketId = user_socketMap.get(data.to.toString());
-      console.log(socketId);
       if (socketId) {
         let message = {
           from: currentUserId, 

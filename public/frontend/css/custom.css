@@ -30,3 +30,41 @@
 .chitchat-main .message-input input {
     flex: 1;
 }
+.chat-main li .chat-box .date-status {
+    top: 10px;
+}
+#detailRequestModal .modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+#detailRequestModal .modal-footer .btn-sm {
+    padding: 5px 20px;
+}
+.d-flex {
+    display: flex;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-center {
+    justify-content: center;
+}
+#detailRequestModal .request-description {
+    height: 150px;
+    font-size: 14px;
+    margin-top: 10px;
+    border: 1px solid lightgray;
+    padding: 10px 20px;
+}
+#detailRequestModal .request-title,
+#detailRequestModal .request-price {
+    font-size: 20px;
+    color: darkgreen;
+}
+#detailRequestModal .sender-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid salmon;
+}

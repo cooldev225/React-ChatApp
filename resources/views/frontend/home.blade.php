@@ -23,12 +23,13 @@
                         </div>
                     </a>
                 </li>
-                <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li>
-                <li><a class="icon-btn btn-light button-effect" href="document" data-tippy-content="Document"> <i class="fa fa-file-text">       </i></a></li> -->
+                <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li> -->
+                
                 <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List"> <i class="fa fa-users">  </i></a></li>
                 <li>
                     <div class="dot-btn dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification" data-tippy-content="Notification"> <i class="fa fa-bell"></i></a></div>
                 </li>
+                <li><a class="icon-btn btn-light button-effect" href="request" data-tippy-content="PhotoRequest"> <i class="fa fa-image">       </i></a></li>
                 <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting" data-intro="You can change settings by clicking here"> <i class="fa fa-cog"></i></a></li>
             </ul>
             <ul class="sidebar-bottom">         
@@ -113,7 +114,7 @@
                             <div class="theme-tab">       
                                 <div class="tab-content" id="myTabContent1">
                                     <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab"> 
-                                        <ul class="chat-main recent-chat-list">
+                                        <ul class="chat-main recent-chat-list chat-item-list">
 
                                         </ul>
                                     </div>
@@ -193,13 +194,13 @@
             <ul class="chat-main">
                 
             </ul>
-        </div>
-        <div class="document-tab dynemic-sidebar" id="document">
+        </div> -->
+        <div class="document-tab dynemic-sidebar" id="request">
             <div class="theme-title">
             <div class="media">
                 <div> 
-                <h2>Document</h2>
-                <h4>List of document</h4>
+                <h2>Request</h2>
+                <h4>List of PhotoRequests</h4>
                 </div>
                 <div class="media-body text-end">   <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
                 <form class="form-inline search-form">
@@ -211,10 +212,21 @@
                 </div>
             </div>
             </div>
-            <ul class="chat-main">
-               
+            <ul class="chat-main request-list">
+                <li>
+                    <div class="chat-box">
+                        <div class="media">
+                        <div class="profile"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                        <div class="details">
+                            <h5>Josephin water</h5>
+                            <h6>Alabma , USA</h6>
+                        </div>
+                        <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#"> <i data-feather="star"> </i></a></div>
+                        </div>
+                    </div>
+                </li>
             </ul>
-        </div> -->
+        </div>
         <div class="contact-list-tab dynemic-sidebar custom-scroll" id="contact-list">
             <div class="theme-title">
                 <div class="media">
@@ -232,7 +244,7 @@
                     </div>
                 </div>
             </div>
-            <ul class="chat-main">
+            <ul class="chat-main chat-item-list">
                 
             </ul>
         </div>
@@ -581,7 +593,6 @@
                 </div>
             </div>
         </div>
-        
     </aside>
     <div class="chitchat-main small-sidebar" id="content">
         <div class="chat-content tabto active">
@@ -638,214 +649,7 @@
             </div>
             <div class="contact-chat">
                 <ul class="chatappend">
-                    <!-- <li class="replies">
-                        <div class="media">
-                        <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                        <div class="media-body">
-                            <div class="contact-name">
-                            <h5>Alan josheph</h5>
-                            <h6>01:40 AM</h6>
-                            <ul class="msg-box">
-                                <li class="msg-setting-main">
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <h5>Hi I am Alan,</h5>
-                                </li>
-                                <li class="msg-setting-main">
-                                <h5> your personal assistant to help you &#128512; </h5>
-                                <div class="badge badge-success sm ms-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </li>
-                    <li class="sent">
-                        <div class="media">
-                        <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                        <div class="media-body">
-                            <div class="contact-name">
-                            <h5>John Doe</h5>
-                            <h6>01:35 AM</h6>
-                            <ul class="msg-box">
-                                <li class="msg-setting-main">
-                                <h5>Hi I am John, can you help me to find best chat app?. </h5>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                                <li class="msg-setting-main">
-                                <h5> it should from elite auther &#128519;</h5>
-                                <div class="badge badge-success sm ms-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </li>
-                    <li class="replies">
-                        <div class="media">
-                        <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
-                        <div class="media-body">
-                            <div class="contact-name">
-                            <h5>Alan josheph</h5>
-                            <h6>01:40 AM</h6>
-                            <ul class="msg-box">
-                                <li class="msg-setting-main">
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <h5>Sure, chitchat is best theme for chating project, you can it check<a class="ms-1" href="https://themeforest.net/user/pixelstrap/portfolio" target="_blank">here.</a></h5>
-                                </li>
-                                <li class="msg-setting-main">
-                                <div class="document"><i class="fa fa-file-excel-o font-primary"></i>
-                                    <div class="details">
-                                    <h5>Document.xlsx</h5>
-                                    <h6>25mb Seprate file</h6>
-                                    </div>
-                                    <div class="icon-btns"><a class="icon-btn btn-outline-light" href="/chat/doc/Document.xlsx" target="_blank"><i data-feather="download"> </i></a></div>
-                                </div>
-                                <div class="badge badge-dark sm ms-2"> D</div>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </li>
-                    <li class="sent">
-                        <div class="media">
-                        <div class="profile me-4"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                        <div class="media-body">
-                            <div class="contact-name">
-                            <h5>John Doe</h5>
-                            <h6>01:42 AM</h6>
-                            <ul class="msg-box">
-                                <li class="msg-setting-main">
-                                <h5>I think it's best for my project.</h5>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                                <li class="msg-setting-main">
-                                <ul class="auto-gallery">
-                                    <li><img class="bg-img" src="/chat/images/media/1.jpg" alt="Avatar"/></li>
-                                    <li>   <img class="bg-img" src="/chat/images/media/2.jpg" alt="Avatar"/></li>
-                                    <li>   <img class="bg-img" src="/chat/images/media/3.jpg" alt="Avatar"/></li>
-                                </ul>
-                                <div class="refresh-block">
-                                    <div class="badge badge-outline-primary refresh sm ms-2"> <i data-feather="rotate-cw"></i></div>
-                                    <div class="badge badge-danger sm ms-2">F</div>
-                                </div>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </li>
-                    <li class="replies">
-                        <div class="media">
-                        <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg" alt="Avatar"/></div>
-                        <div class="media-body">
-                            <div class="contact-name">
-                            <h5>Alan josheph</h5>
-                            <h6>01:45 AM</h6>
-                            <ul class="msg-box">
-                                <li class="msg-setting-main">
-                                <h5>If you have any other query then feel free to ask us.</h5>
-                                <div class="msg-dropdown-main">
-                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                    <div class="msg-dropdown"> 
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                        <li><a href="#"><i class="ti-trash"></i>delete                  </a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </li> -->
+                    
                 </ul>
             </div>
             </div>
@@ -2916,14 +2720,14 @@
                     <div class="select"><span>Assign To</span></div>
                     <input type="hidden" name="currency"/>
                     <ul class="dropdown-menu">
-                    <li class="dropdown-divider">
-                        <div class="fa fa-user text-muted"></div>
-                        <h5 class="text-muted">Assign To</h5>
-                    </li>
-                    <li>John Doe</li>
-                    <li>Lynetin john</li>
-                    <li>Sufiya john</li>
-                    <li>Jhon john</li>
+                        <li class="dropdown-divider">
+                            <div class="fa fa-user text-muted"></div>
+                            <h5 class="text-muted">Assign To</h5>
+                        </li>
+                        <li>John Doe</li>
+                        <li>Lynetin john</li>
+                        <li>Sufiya john</li>
+                        <li>Jhon john</li>
                     </ul>
                 </div>
                 <input class="datepicker-here form-control digits" type="url" data-language="en" placeholder="Due date"/>
@@ -2957,21 +2761,21 @@
                 <input class="w-100" id="user_input123" type="text" placeholder="Fill Your Fillings "/>
                 </div>
                 <div class="drop-picker">
-                <div class="dropdown currency" tabindex="1">
-                    <div class="select"><span>Assign To</span></div>
-                    <input type="hidden" name="currency"/>
-                    <ul class="dropdown-menu">
-                    <li class="dropdown-divider">
-                        <div class="fa fa-user text-muted"></div>
-                        <h5 class="text-muted">Assign To</h5>
-                    </li>
-                    <li>John Doe</li>
-                    <li>Lynetin john</li>
-                    <li>Sufiya john</li>
-                    <li>Jhon john</li>
-                    </ul>
-                </div>
-                <input class="datepicker-here form-control digits" type="url" data-language="en" placeholder="Due date"/>
+                    <div class="dropdown currency" tabindex="1">
+                        <div class="select"><span>Assign To</span></div>
+                        <input type="hidden" name="currency"/>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-divider">
+                                <div class="fa fa-user text-muted"></div>
+                                <h5 class="text-muted">Assign To</h5>
+                            </li>
+                            <li>John Doe</li>
+                            <li>Lynetin john</li>
+                            <li>Sufiya john</li>
+                            <li>Jhon john</li>
+                        </ul>
+                    </div>
+                    <input class="datepicker-here form-control digits" type="url" data-language="en" placeholder="Due date"/>
                 </div>
             </div>
             </div>
@@ -3001,121 +2805,17 @@
         </div>
         <ul class="chat-main custom-scroll">
             <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>John Doe</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
+                <div class="chat-box">
+                    <div class="profile offline"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
+                    <div class="details">
+                    <h5>John Doe</h5>
+                    <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
+                    </div>
+                    <div class="date-status"><i class="ti-pin2"></i>
+                    <h6>22/10/19</h6>
+                    <h6 class="font-success status"> Seen</h6>
+                    </div>
                 </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
-                </div>
-            </div>
-            </li>
-            <li class="active" data-to="chating">
-            <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6>Typing................</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>30/11/19</h6>
-                <div class="badge badge-primary sm">8</div>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Mukrani Pabelo</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jhon Deo</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Pabelo Mukrani</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="/chat/images/contact/3.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Sufiya Elija</h5>
-                <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>15/06/19</h6>
-                <h6 class="font-dark status"> Sending</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/4.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Mukrani Pabelo</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-                </div>
-            </div>
-            </li>
-            <li data-to="blank">
-            <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jhon Deo</h5>
-                <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status"><i class="ti-pin2"></i>
-                <h6>04/06/19</h6>
-                <h6 class="font-danger status"> Failed</h6>
-                </div>
-            </div>
             </li>
         </ul>
         </div>
@@ -3150,69 +2850,42 @@
                 </div>
             </div>
             </li>
-            <li>
-            <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6> <i data-feather="arrow-down-right"></i>3:10 pm</h6>
-                </div>
-                <div class="call-status">
-                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6> <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="phone"></i></div>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                <div class="details">
-                <h5>Jony Lynetin</h5>
-                <h6> <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="video"></i></div>
-                </div>
-            </div>
-            </li>
+           
         </ul>
         </div>
     </div>
+    </div>
+</div>
+<div class="modal fade add-popup request-modal" id="detailRequestModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Photo Request</h2>
+                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="request-detail">
+                    <!-- <div class="d-flex justify-center sender-image">
+                        <img class="" src="/chat/images/contact/2.jpg" alt="Avatar"/>
+                        <div class="request-from">John Doe</div>
+                    </div> -->
+                    <div class="request-content">
+                        <div class="d-flex justify-between">
+                            <div class="request-title">I need your photo</div>
+                            <div class="request-price">100$</div>
+                        </div>
+                        <div class="request-description">Hello, DongLong Cui. Nice to meet you. How are you. I am very interested in your photo. Could you send me your photo as 10$ to me? If you agree with my request, I  will be very appreciated with your kind support. Thank you very much.</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success button-effect btn-sm" type="button" data-bs-dismiss="modal">Accept</button>
+                <button class="btn btn-primary button-effect btn-sm" type="button" data-bs-dismiss="modal ">Raise</button>
+                <button class="btn btn-warning button-effect btn-sm" type="button" data-bs-dismiss="modal">Reject</button>
+                <button class="btn btn-danger button-effect btn-sm" type="button" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 <script src="/frontend/js/pages/homepage.js"></script>
