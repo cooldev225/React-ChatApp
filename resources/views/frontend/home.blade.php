@@ -213,18 +213,7 @@
             </div>
             </div>
             <ul class="chat-main request-list">
-                <li>
-                    <div class="chat-box">
-                        <div class="media">
-                        <div class="profile"><img class="bg-img" src="/chat/images/contact/1.jpg" alt="Avatar"/></div>
-                        <div class="details">
-                            <h5>Josephin water</h5>
-                            <h6>Alabma , USA</h6>
-                        </div>
-                        <div class="media-body"><a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#"> <i data-feather="star"> </i></a></div>
-                        </div>
-                    </div>
-                </li>
+               
             </ul>
         </div>
         <div class="contact-list-tab dynemic-sidebar custom-scroll" id="contact-list">
