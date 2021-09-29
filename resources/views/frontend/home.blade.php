@@ -1534,8 +1534,6 @@
         <section class="section-py-space chitchat-main light-bg">
             <div class="container-fluid">
                 <div class="landing-title">
-                    <div>
-                    </div>
                     <div class="sub-title">
                         <div>
                             <h4>Welcome to OJOChat</h4>
