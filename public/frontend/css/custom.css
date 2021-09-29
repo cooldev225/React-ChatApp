@@ -73,6 +73,10 @@
     width: 100%;
     text-align: center;
 }
+.section-py-space .custom-container {
+    margin-top: 45px;
+    border-left: 1px solid lightgray;
+}
 .sidebar-active .chitchat-container .chitchat-main.section-py-space {
     width: 100%;
 }

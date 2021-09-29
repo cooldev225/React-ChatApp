@@ -1535,12 +1535,11 @@
             <div class="container-fluid">
                 <div class="landing-title">
                     <div>
-                        <h1>why chooce</h1>
                     </div>
                     <div class="sub-title">
                         <div>
-                            <h4>Welcome to Chitchat</h4>
-                            <h2>Chitchat is fully responsive excellent choice</h2>
+                            <h4>Welcome to OJOChat</h4>
+                            <h2>OJOChat is fully responsive excellent choice</h2>
                         </div>
                     </div>
                 </div>
