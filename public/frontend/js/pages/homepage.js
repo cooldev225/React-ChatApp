@@ -20,7 +20,15 @@ $(document).ready(() => {
                     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
                 }
                 currentContactId = Number(message.from);
+                if (!$(`ul.chat-main li[key=${currentContactId}]`).length) {
+                    let currentContactorInfo = usersList.find(item => item.id == currentContactId);
+                    let userListTarget = $('.recent-default .recent-chat-list');
+                    addChatUserListItem(userListTarget, currentContactorInfo);
+
+                }
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+                    console.log('aaa');
+                console.log($(`ul.chat-main li[key=${currentContactId}]`).length);
                 setCurrentChatContent(currentContactId, resolve);
             }).then(() => {
                 let target = '.contact-chat ul.chatappend';
