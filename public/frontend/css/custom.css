@@ -68,3 +68,17 @@
     border-radius: 50%;
     border: 2px solid salmon;
 }
+.section-py-space {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+.sidebar-active .chitchat-container .chitchat-main.section-py-space {
+    width: 100%;
+}
+@media (max-width: 1366px) {
+
+    .sidebar-active .chitchat-container .chitchat-main.section-py-space {
+        width: 100%;
+    }
+}

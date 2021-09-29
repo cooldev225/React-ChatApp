@@ -6,8 +6,8 @@ var socket;
 
 $(document).ready(() => {
 
-    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
-    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
+    // socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
+    socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
     socket.on('message', message => {
         var contentwidth = jQuery(window).width();
@@ -52,6 +52,9 @@ $(document).ready(() => {
     getContactList();
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
+        $('.section-py-space').css('display', 'none');
+        $('.app-list').css('display', 'block');
+        $('#content').css('display', 'block');
         if (currentContactId) {
             $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
         }
@@ -94,6 +97,7 @@ function getRecentChatUsers() {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
+               
                 let { recentChatUsers, lastChatUserId } = res;
                 currentContactId = lastChatUserId;
                 let userListTarget = $('.recent-default .recent-chat-list');
@@ -103,6 +107,12 @@ function getRecentChatUsers() {
                 });
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
                 setCurrentChatContent(lastChatUserId);
+            } else {
+                console.log(currentContactId);
+                $('.section-py-space').css('display', 'block');
+                $('#content').css('display', 'none');
+                $('.app-list').css('display', 'none');
+                
             }
         },
         error: function (res) {
