@@ -29,11 +29,14 @@
                     <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List">
                             <i class="fa fa-users"> </i></a></li>
                     <li>
-                        <div class="dot-btn dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification"
+                        <div class="dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification"
                                 data-tippy-content="Notification"> <i class="fa fa-bell"></i></a></div>
                     </li>
-                    <li><a class="icon-btn btn-light button-effect" href="request" data-tippy-content="PhotoRequest"> <i
-                                class="fa fa-image"> </i></a></li>
+                    <li>
+                        <div class="dot-danger grow photo-request-icon">
+                            <a class="icon-btn btn-light button-effect" href="request"
+                                data-tippy-content="PhotoRequest"> <i class="fa fa-image"></i></a></div>
+                    </li>
                     <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"
                             data-intro="You can change settings by clicking here"> <i class="fa fa-cog"></i></a></li>
                 </ul>
@@ -3503,5 +3506,6 @@
         </div>
     </div>
     <script src="/frontend/js/pages/homepage.js"></script>
+    <script src="/frontend/js/pages/requestpage.js"></script>
 
 @endsection
