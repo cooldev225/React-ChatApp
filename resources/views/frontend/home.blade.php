@@ -3476,10 +3476,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="request-detail">
-                        <!-- <div class="d-flex justify-center sender-image">
-                                                                        <img class="" src="/chat/images/contact/2.jpg" alt="Avatar"/>
-                                                                        <div class="request-from">John Doe</div>
-                                                                    </div> -->
                         <div class="request-content">
                             <div class="d-flex justify-between">
                                 <div class="request-title">I need your photo</div>

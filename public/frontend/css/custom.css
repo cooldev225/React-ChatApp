@@ -86,3 +86,25 @@
         width: 100%;
     }
 }
+ul.request-list li {
+    background-color: #d5c5d6;
+    border: 1px solid #83bb83;
+    box-shadow: 0 0 3px rgb(0 0 0 / 80%);
+    border-radius: 5px;
+    margin-bottom: 2px;
+}
+ul.request-list li.sent {
+    background-color: #ddf0fc;
+}
+.contact-chat>ul>li.replies.photo-request .msg-box li h5 {
+    border-radius: 15px 0 0 15px;
+    border-right: 5px solid darkorange;
+    background-color: darkseagreen;
+}
+
+.contact-chat>ul>li.sent.photo-request .msg-box li h5 {
+    border-radius: 0px 15px 15px 0px;
+    border-left: 5px solid darkorange;
+    background-color: darkseagreen;
+
+}
