@@ -176,7 +176,7 @@ function setCurrentChatContent(contactorId, resolve) {
 
                 if (messageData) {
                     let target = '.contact-chat ul.chatappend';
-                    messageData.forEach(item => {
+                    messageData.reverse().forEach(item => {
                         let data = {};
                         if (item.sender == currentUserId) {
                             data.type = 'replies';

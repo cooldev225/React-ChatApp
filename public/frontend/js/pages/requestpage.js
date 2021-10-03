@@ -143,7 +143,8 @@ function sendPhotoRequest() {
 }
 
 function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
-    console.log(receiverInfo);
+    console.log(data);
+    // console.log(receiverInfo);
     $("ul.request-list").append(
         `<li class="${sendFlag ? 'sent' : ''}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
             <a data-bs-toggle="modal" data-bs-target="#detailRequestModal">
