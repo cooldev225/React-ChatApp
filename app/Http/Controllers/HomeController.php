@@ -14,6 +14,7 @@ use App\Models\City;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Contact;
+use App\Models\PhotoRequest;
 class HomeController extends Controller
 {
     public function __construct()
@@ -182,6 +183,13 @@ class HomeController extends Controller
         );
     }
     
+    public function getPhotoRequest(Request $request)
+    {
+        $id = Auth::id();
+        $requestData = PhotoRequest::where("from", $id)->orWhere("to", $id)->orderBy('created_at', 'desc')->limit(100)->get();
+        return array('state'=>'true', 'data'=>$requestData);
+    }
+
     public function sendPhotoRequest(Request $request) 
     {
         $id = Auth::id();
@@ -190,7 +198,7 @@ class HomeController extends Controller
         $description = $request->input('description');
         $price = $request->input('price');
         $type = $request->input('type');
-        $request = new Request;
+        $request = new PhotoRequest;
         $request->from = $id;
         $request->to = $to;
         $request->title = $title;

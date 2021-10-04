@@ -1,6 +1,8 @@
-$(document).ready(function () {
 
+$(document).ready(function () {
+    getRequestList();
     socket.on('receive:request', data => {
+        console.log(data);
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         addRequestItem(senderInfo, receiverInfo, data.data);
@@ -67,7 +69,45 @@ $(document).ready(function () {
         $('#detailRequestModal').modal("hide");
         socket.emit('reject:request', );
     });
+
 });
+
+function getRequestList() {
+    $('.icon-btn[data-tippy-content="PhotoRequest"]').on('click', () => {
+        if ($('.document-tab.dynemic-sidebar').hasClass('active')) {
+            var form_data = new FormData();
+            $.ajax({
+                url: '/home/getPhotoRequest',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state == 'true') {
+                        let target = 'ul.request-list';
+                        $(target).empty();
+
+                        res.data.forEach(item => {
+                            let senderInfo = getCertainUserInfoById(item.from);
+                            let receiverInfo = getCertainUserInfoById(item.to);
+                            let sendFlag = currentUserId == item.from ? true : false;
+                            addRequestItem(senderInfo, receiverInfo, item, sendFlag);
+                        });
+                    }
+
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+    });
+}
 
 function sendPhotoRequest() {
     let title = $('#photoRequestModal .title').val();
@@ -82,12 +122,6 @@ function sendPhotoRequest() {
         type,
         to
     };
-    // console.log(data);
-    // let form_data = new FormData();
-    // form_data.append('title', title);
-    // form_data.append('description', description);
-    // form_data.append('price', price);
-    // form_data.append('type', 0);
     socket.emit('send:request', data);
     let senderInfo = getCertainUserInfoById(currentUserId);
     let receiverInfo = getCertainUserInfoById(to);
@@ -108,43 +142,12 @@ function sendPhotoRequest() {
             </div>
         </div>
     </li>`);
-    // let to = currentContactId;
-    // var form_data = new FormData();
-    // form_data.append('title', title);
-    // form_data.append('description', description);
-    // form_data.append('price', price);
-    // form_data.append('type', price);
-    // $.ajax({
-    //     url: '/home/sendRequest',
-    //     headers: {
-    //         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    //     },
-    //     data: form_data,
-    //     cache: false,
-    //     contentType: false,
-    //     processData: false,
-    //     type: 'POST',
-    //     dataType: "json",
-    //     success: function (res) {
-    //         if (res.state == 'true') {
-    //             let data = res.data;
-
-    //         } else {
-
-    //         }
-    //     },
-    //     error: function (response) {
-    //         alert('The operation is failed');
-    //     }
-    // });
-
 }
 
 function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
-    console.log(data);
     // console.log(receiverInfo);
     $("ul.request-list").append(
-        `<li class="${sendFlag ? 'sent' : ''}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
+        `<li class="${sendFlag ? 'sent' : ''}" key="${data.id}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
             <a data-bs-toggle="modal" data-bs-target="#detailRequestModal">
                 <div class="chat-box">
                     <div class="profile bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
