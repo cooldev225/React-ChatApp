@@ -66,8 +66,6 @@ class HomeController extends Controller
     }
 
 
-
-
     public function getRecentChatData(Request $request) {
         
     }

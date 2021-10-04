@@ -109,7 +109,6 @@ function getRecentChatUsers() {
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
                 setCurrentChatContent(lastChatUserId);
             } else {
-                console.log(currentContactId);
                 $('.section-py-space').css('display', 'block');
                 $('#content').css('display', 'none');
                 $('.app-list').css('display', 'none');

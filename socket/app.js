@@ -9,11 +9,19 @@ const io = require('socket.io')(server, {
     origins: '*',
   }
 });
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "chitchat_db",
+// });
+
 const db = mysql.createConnection({
   host: "localhost",
-  user: "root",
-  password: "",
-  database: "chitchat_db",
+  user: "ldahkumy_ojochat",
+  password: "tempP@ss123",
+  database: "ldahkumy_ojochat",
 });
 
 let user_socketMap = new Map();
@@ -47,6 +55,7 @@ io.on('connection', (socket) => {
           io.sockets.sockets.get(socketId).emit('message', message);
 
           db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.message}")`, (error, message) => {
+            console.log(message);
             console.log(message.insertId);
           });
       }

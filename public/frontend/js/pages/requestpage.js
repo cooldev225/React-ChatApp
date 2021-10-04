@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     socket.on('receive:request', data => {
-
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         addRequestItem(senderInfo, receiverInfo, data.data);
@@ -22,7 +21,6 @@ $(document).ready(function () {
                 </div>
             </div>
         </li>`);
-
     });
 
     $('ul.chat-main.request-list').on('click', 'li', (e) => {
