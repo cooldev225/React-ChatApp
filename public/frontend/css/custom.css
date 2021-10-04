@@ -10,6 +10,7 @@
     width: 50px;
     height: 50px;
 }
+
 #profileImageUploadBtn {
     background-color: gray;
     border-radius: 50%;
@@ -20,19 +21,24 @@
     top: 0;
     cursor: pointer;
 }
+
 .contact-list-tab li .chat-box .date-status {
     top: 0px;
 }
+
 .emojis-main .contact-poll .contact-poll-content {
     left: 0px;
     bottom: 80px;
 }
+
 .chitchat-main .message-input input {
     flex: 1;
 }
+
 .chat-main li .chat-box .date-status {
     top: 10px;
 }
+
 #detailRequestModal .modal-footer {
     display: flex;
     justify-content: center;
@@ -41,15 +47,19 @@
 #detailRequestModal .modal-footer .btn-sm {
     padding: 5px 20px;
 }
+
 .d-flex {
     display: flex;
 }
+
 .justify-between {
     justify-content: space-between;
 }
+
 .justify-center {
     justify-content: center;
 }
+
 #detailRequestModal .request-description {
     height: 150px;
     font-size: 14px;
@@ -57,35 +67,42 @@
     border: 1px solid lightgray;
     padding: 10px 20px;
 }
+
 #detailRequestModal .request-title,
 #detailRequestModal .request-price {
     font-size: 20px;
     color: darkgreen;
 }
+
 #detailRequestModal .sender-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     border: 2px solid salmon;
 }
+
 .section-py-space {
     display: none;
     width: 100%;
     text-align: center;
 }
+
 .section-py-space .custom-container {
     margin-top: 45px;
     border-left: 1px solid lightgray;
 }
+
 .sidebar-active .chitchat-container .chitchat-main.section-py-space {
     width: 100%;
 }
+
 @media (max-width: 1366px) {
 
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
     }
 }
+
 ul.request-list li {
     background-color: #d5c5d6;
     border: 1px solid #83bb83;
@@ -93,9 +110,11 @@ ul.request-list li {
     border-radius: 5px;
     margin-bottom: 2px;
 }
+
 ul.request-list li.sent {
     background-color: #ddf0fc;
 }
+
 .contact-chat>ul>li.replies.photo-request .msg-box li h5 {
     border-radius: 15px 0 0 15px;
     border-right: 5px solid darkorange;
@@ -106,5 +125,25 @@ ul.request-list li.sent {
     border-radius: 0px 15px 15px 0px;
     border-left: 5px solid darkorange;
     background-color: darkseagreen;
+}
 
+ul.chatappend i.camera-icon {
+    font-size: 50px;
+    opacity: 0.6;
+    color: darkgreen;
+}
+ul.chatappend span.price-value {
+    font-size: 19px;
+    width: 60px;
+    text-align: center;
+    line-height: 50px;
+    position: relative;
+    right: -55px;
+    top: 2px;
+    color: #3a1616;
+}
+ul.chatappend .sent span.price-value {
+    left: -56px;
+    top: -9px;
+    display: inline-block;
 }

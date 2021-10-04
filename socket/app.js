@@ -55,7 +55,6 @@ io.on('connection', (socket) => {
           io.sockets.sockets.get(socketId).emit('message', message);
 
           db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.message}")`, (error, message) => {
-            console.log(message);
             console.log(message.insertId);
           });
       }
@@ -67,15 +66,16 @@ io.on('connection', (socket) => {
     if (data.to) {
       let socketId = user_socketMap.get(data.to.toString());
       if (socketId) {
-        let message = {
-          from: currentUserId, 
-          data
-        }
+        
         if (io.sockets.sockets.get(socketId)) {
-          io.sockets.sockets.get(socketId).emit('receive:request', message);
-          db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${currentUserId}", "${data.to}", "${data.price}")`, (error, message) => {
-            console.log(message.insertId);
+          let message = {
+            from: currentUserId, 
+            data
+          }
+          db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${currentUserId}", "${data.to}", "${data.price}", 1)`, (error, data) => {
+            message.id = data.insertId;
           });
+          io.sockets.sockets.get(socketId).emit('receive:request', message);
         }
       }
     }

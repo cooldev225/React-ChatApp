@@ -24,10 +24,9 @@ $(document).ready(() => {
                     let currentContactorInfo = usersList.find(item => item.id == currentContactId);
                     let userListTarget = $('.recent-default .recent-chat-list');
                     addChatUserListItem(userListTarget, currentContactorInfo);
-
                 }
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-                    console.log('aaa');
+                console.log('aaa');
                 console.log($(`ul.chat-main li[key=${currentContactId}]`).length);
                 setCurrentChatContent(currentContactId, resolve);
             }).then(() => {
@@ -186,7 +185,7 @@ function setCurrentChatContent(contactorId, resolve) {
                             data.username = contactorInfo.username;
                             data.avatar = contactorInfo.avatar;
                         }
-
+                        data.kind = item.kind;
                         data.content = item.content;
                         addChatItem(target, data);
                     });
@@ -380,7 +379,8 @@ function addChatItem(target, data) {
                     <h5>${data.username}</h5>
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        <li><h5>${data.content}</h5></li>
+                        ${!data.kind ? '<li><h5>'+ data.content + '</h5></li>' : '<li><i class="fa fa-camera camera-icon"></i><span class="price-value">$' + data.content + '</span></li>'}
+                        
                     </ul>
                 </div>
             </div>

@@ -15,7 +15,7 @@ $(document).ready(function () {
                         <h5>${senderInfo.username}</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
-                            <li><h5>You received Photo Request from ${senderInfo.username} as ${data.data.price}$</h5></li>
+                            <li><i class="fa fa-camera camera-icon"></i><span class="price-value">$${data.data.price}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ function sendPhotoRequest() {
                     <h5>${senderInfo.username}</h5>
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        <li><h5>You sent Photo Request to ${receiverInfo.username} as ${data.price}$</h5></li>
+                        <li><i class="fa fa-camera camera-icon"></i><span class="price-value">$${data.price}</span></li>
                     </ul>
                 </div>
             </div>
