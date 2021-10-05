@@ -74,8 +74,10 @@ $(document).ready(function () {
 
 function getRequestList() {
     $('.icon-btn[data-tippy-content="PhotoRequest"]').on('click', () => {
+        console.log('aaa');
         if ($('.document-tab.dynemic-sidebar').hasClass('active')) {
             var form_data = new FormData();
+            console.log('bbb');
             $.ajax({
                 url: '/home/getPhotoRequest',
                 headers: {
@@ -88,10 +90,11 @@ function getRequestList() {
                 type: 'POST',
                 dataType: "json",
                 success: function (res) {
+                    console.log(res);
                     if (res.state == 'true') {
                         let target = 'ul.request-list';
                         $(target).empty();
-
+                        console.log(res.data);
                         res.data.forEach(item => {
                             let senderInfo = getCertainUserInfoById(item.from);
                             let receiverInfo = getCertainUserInfoById(item.to);
