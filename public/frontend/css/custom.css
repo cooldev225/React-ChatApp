@@ -93,13 +93,6 @@
     width: 100%;
 }
 
-@media (max-width: 1366px) {
-
-    .sidebar-active .chitchat-container .chitchat-main.section-py-space {
-        width: 100%;
-    }
-}
-
 ul.request-list li {
     background-color: #d5c5d6;
     border: 1px solid #83bb83;
@@ -115,11 +108,12 @@ ul.request-list li.sent {
 ul.request-list li .chat-box .date-status {
     top: -4px;
 }
+
 ul.request-list li .chat-box .date-status .status {
     padding-top: 0;
 }
 
-ul.request-list li .date-status div{
+ul.request-list li .date-status div {
     font-size: 20px;
     font-weight: bold;
     color: darkred;
@@ -148,4 +142,26 @@ ul.chatappend .msg-box div {
     line-height: 55px;
     font-weight: bold;
     color: darkred;
+}
+
+@media (max-width: 1366px) {
+
+    .sidebar-active .chitchat-container .chitchat-main.section-py-space {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 1199.98px) {    
+    .chitchat-main .messages .contact-details .left.media .media-body {
+        display: block;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .chitchat-main .messages .contact-details .media-body h5,
+    .chitchat-main .messages .contact-details .media-body .h5 {
+        display: block;
+    }
 }
