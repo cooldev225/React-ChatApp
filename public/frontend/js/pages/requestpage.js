@@ -17,7 +17,7 @@ $(document).ready(function () {
                         <h5>${senderInfo.username}</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
-                            <li><i class="fa fa-camera camera-icon"></i><span class="price-value">$${data.data.price}</span></li>
+                            <li><div>$${data.data.price}</div></li>
                         </ul>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ function sendPhotoRequest() {
                     <h5>${senderInfo.username}</h5>
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        <li><i class="fa fa-camera camera-icon"></i><span class="price-value">$${data.price}</span></li>
+                        <li><div>$${data.price}</div></li>
                     </ul>
                 </div>
             </div>
@@ -165,9 +165,10 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
                     </div>
                     <div class="date-status">
                         <a>
-                        <i class="read-status fa ${!data.unread ? 'fa-eye-slash' : 'fa-eye'}"></i>
+                            <i class="read-status fa ${!data.unread ? 'fa-eye-slash' : 'fa-eye'}"></i>
                             <i class="fa ${sendFlag ? 'fa-arrow-circle-o-right' : 'fa-arrow-circle-o-left'}"></i>
                         </a>
+                        <div>$${data.price}</div>
                         <h6 class="font-success status" request-status="4"> Completed</h6>
                     </div>
                 </div>

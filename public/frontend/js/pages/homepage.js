@@ -379,8 +379,7 @@ function addChatItem(target, data) {
                     <h5>${data.username}</h5>
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        ${!data.kind ? '<li><h5>'+ data.content + '</h5></li>' : '<li><i class="fa fa-camera camera-icon"></i><span class="price-value">$' + data.content + '</span></li>'}
-                        
+                        ${!data.kind ? '<li><h5>'+ data.content + '</h5></li>' : '<li><div>$' + data.content + '</div></li>'}
                     </ul>
                 </div>
             </div>

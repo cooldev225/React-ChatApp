@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Message;
 use App\Models\Contact;
 use App\Models\PhotoRequest;
+
 class HomeController extends Controller
 {
     public function __construct()
