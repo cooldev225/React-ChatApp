@@ -1,5 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @inject('dateFormat', 'App\Services\DateService')
+@include('frontend.photorequest')
 @section('content')
     <script>
         var currentUserId = {{ Auth::id() }};
@@ -34,8 +35,9 @@
                     </li>
                     <li>
                         <div class="dot-danger grow photo-request-icon">
-                            <a class="icon-btn btn-light button-effect" href="request"
-                                data-tippy-content="PhotoRequest"> <i class="fa fa-image"></i></a></div>
+                            <a class="icon-btn btn-light button-effect" href="request" data-tippy-content="PhotoRequest"> <i
+                                    class="fa fa-image"></i></a>
+                        </div>
                     </li>
                     <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"
                             data-intro="You can change settings by clicking here"> <i class="fa fa-cog"></i></a></li>
@@ -97,13 +99,13 @@
                 </div>
                 <div class="chat custom-scroll">
                     <!-- <ul class="chat-cont-setting">
-                                <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                    <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
-                                    <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
-                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                    <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
-                            </ul> -->
+                                    <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
+                                        <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
+                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
+                                        <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
+                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
+                                        <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
+                                </ul> -->
                     <div class="theme-title">
                         <div class="media">
                             <div>
@@ -215,26 +217,26 @@
                 </div>
             </div>
             <!-- <div class="fevorite-tab dynemic-sidebar" id="favourite">
-                        <div class="theme-title">
-                            <div class="media">
-                                <div> 
-                                <h2>Favourite</h2>
-                                <h4>Last Recent</h4>
-                                </div>
-                                <div class="media-body text-end">  <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
-                                <form class="form-inline search-form">
-                                    <div class="form-group">
-                                    <input class="form-control-plaintext" type="search" placeholder="Search.."/>
-                                    <div class="icon-close close-search"></div>
+                            <div class="theme-title">
+                                <div class="media">
+                                    <div> 
+                                    <h2>Favourite</h2>
+                                    <h4>Last Recent</h4>
                                     </div>
-                                </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#addcallmodal"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+                                    <div class="media-body text-end">  <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
+                                    <form class="form-inline search-form">
+                                        <div class="form-group">
+                                        <input class="form-control-plaintext" type="search" placeholder="Search.."/>
+                                        <div class="icon-close close-search"></div>
+                                        </div>
+                                    </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#addcallmodal"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <ul class="chat-main">
-                            
-                        </ul>
-                    </div> -->
+                            <ul class="chat-main">
+                                
+                            </ul>
+                        </div> -->
             <div class="document-tab dynemic-sidebar" id="request">
                 <div class="theme-title">
                     <div class="media">
@@ -3276,9 +3278,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                <h5>Contact number</h5>
-                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                </div> -->
+                                                                    <h5>Contact number</h5>
+                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                    </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3489,8 +3491,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success button-effect btn-sm" type="button"
-                        data-bs-dismiss="modal">Accept</button>
+                    <button class="btn btn-success button-effect btn-sm" type="button" data-bs-dismiss="modal"
+                        data-bs-toggle="modal" data-bs-target="#createPhoto">Accept</button>
                     <button class="btn btn-primary button-effect btn-sm" type="button"
                         data-bs-dismiss="modal ">Raise</button>
                     <button class="btn btn-warning button-effect btn-sm" type="button"
@@ -3501,7 +3503,30 @@
             </div>
         </div>
     </div>
+    <div class="modal fade add-popup request-modal" id="createPhoto" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Photo Creation</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="request-detail">
+                        @yield('photorequest')
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success button-effect btn-sm" type="button"
+                        data-bs-dismiss="modal">Send</button>
+                    <button class="btn btn-danger button-effect btn-sm" type="button"
+                        data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
 
 @endsection
+

@@ -26,6 +26,8 @@ $(document).ready(function () {
     });
 
     $('ul.chat-main.request-list').on('click', 'li', (e) => {
+        $('#detailRequestModal').find('.btn-success').css('display', 'block');
+
         let from = $(e.currentTarget).data('from');
         let to = $(e.currentTarget).data('to');
         $('#detailRequestModal .request-title').text($(e.currentTarget).find('.title').text());
