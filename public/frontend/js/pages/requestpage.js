@@ -1,5 +1,10 @@
-
 $(document).ready(function () {
+    document.getElementById("input_btn")
+        .addEventListener('click', function () {
+            document.getElementById("input_file").click();
+        }, false);
+
+
     getRequestList();
     socket.on('receive:request', data => {
         console.log(data);
@@ -39,7 +44,6 @@ $(document).ready(function () {
         setCurrentChatContent(currentContactId);
 
         if (e.currentTarget.className.includes('sent')) {
-            console.log('aaa');
             $('#detailRequestModal').find('.btn-success').css('display', 'none');
         }
     });
@@ -76,10 +80,8 @@ $(document).ready(function () {
 
 function getRequestList() {
     $('.icon-btn[data-tippy-content="PhotoRequest"]').on('click', () => {
-        console.log('aaa');
         if ($('.document-tab.dynemic-sidebar').hasClass('active')) {
             var form_data = new FormData();
-            console.log('bbb');
             $.ajax({
                 url: '/home/getPhotoRequest',
                 headers: {
@@ -92,11 +94,9 @@ function getRequestList() {
                 type: 'POST',
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
                     if (res.state == 'true') {
                         let target = 'ul.request-list';
                         $(target).empty();
-                        console.log(res.data);
                         res.data.forEach(item => {
                             let senderInfo = getCertainUserInfoById(item.from);
                             let receiverInfo = getCertainUserInfoById(item.to);
@@ -177,4 +177,20 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
             </a>    
         </li>`
     );
+}
+
+
+function displayPhoto() {
+    let profileImageBtn = $('#profileImageUploadBtn')
+    let avatarImage = $('#profileImage');
+
+    profileImageBtn.on('change', (e) => {
+        let reader = new FileReader();
+        files = e.target.files;
+        reader.onload = () => {
+            avatarImage.attr('src', reader.result);
+            avatarImage.parent().css('background-image', `url("${reader.result}")`);
+        }
+        reader.readAsDataURL(files[0]);
+    });
 }
