@@ -146,15 +146,7 @@ ul.chatappend .msg-box div {
 .input-file {
     display: none;
 }
-.dropdown-menu .input-btn {
-    width: 30px;
-    height: 25px;
-}
-.dropdown-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;    
-}
+
 .input-btn {
     width: 50px;
     height: 40px;

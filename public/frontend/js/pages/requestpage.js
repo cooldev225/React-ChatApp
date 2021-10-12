@@ -1,19 +1,27 @@
 let globalImage;
-let canvas = new fabric.Canvas('back_canvas', {width: 350, height:350});
-canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
+let canvas = new fabric.Canvas('back_canvas', {
+    width: 350,
+    height: 350
+});
+canvas.setDimensions({
+    width: '350px',
+    height: '350px'
+}, {
+    cssOnly: true
+});
 
 $(document).ready(function () {
 
+    getRequestList();
     displayPhoto();
     blurPhoto();
+    addEmojisOnPhoto();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
         }, false);
 
-
-    getRequestList();
-        socket.on('receive:request', data => {
+    socket.on('receive:request', data => {
         console.log(data);
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
@@ -157,7 +165,6 @@ function sendPhotoRequest() {
 }
 
 function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
-    // console.log(receiverInfo);
     $("ul.request-list").append(
         `<li class="${sendFlag ? 'sent' : ''}" key="${data.id}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
             <a data-bs-toggle="modal" data-bs-target="#detailRequestModal">
@@ -194,17 +201,27 @@ function displayPhoto() {
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
-            fabric.Image.fromURL(reader.result, function(oImg) {
+            fabric.Image.fromURL(reader.result, function (oImg) {
                 globalImage = oImg;
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
                 if (imgWidth > 350 && imgHeight > 350) {
-                    canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
+                    canvas.setDimensions({
+                        width: '350px',
+                        height: '350px'
+                    }, {
+                        cssOnly: true
+                    });
                     // alert('Too big image choosed, Please choose smaller image');
                     // return;
                 }
                 if (imgWidth < 350 && imgHeight < 350) {
-                    canvas.setDimensions({width: imgWidth+'px', height: imgHeight+'px'}, {cssOnly: true});
+                    canvas.setDimensions({
+                        width: imgWidth + 'px',
+                        height: imgHeight + 'px'
+                    }, {
+                        cssOnly: true
+                    });
                     // alert('Too big image choosed, Please choose smaller image');
                     // return;
                 }
@@ -213,35 +230,25 @@ function displayPhoto() {
 
                 let imgRatio = imgWidth / imgHeight;
                 let canvasRatio = canvasWidth / canvasHeight;
-                // let canvasRatio = 1;
-                console.log(imgRatio);
                 if (imgRatio <= canvasRatio) {
-                    // if(imgHeight > canvasHeight){
-                        oImg.scaleToHeight(canvasHeight);
-                    // }
+                    oImg.scaleToHeight(canvasHeight);
                 } else {
-                    // if(imgWidth >= canvasWidth){
-                        console.log('width')
-                        oImg.scaleToWidth(canvasWidth);
-                    // }
+                    oImg.scaleToWidth(canvasWidth);
                 }
-                console.log(oImg);
                 canvas.clear();
                 canvas.add(oImg);
                 canvas.centerObject(oImg);
             });
-            
+
         }
         reader.readAsDataURL(files[0]);
-        
+
     });
 }
 
 function blurPhoto() {
-
-    $('.blur-range').on('change', e => {
+    $('.blur-range').on('input', e => {
         let obj = Object.assign(globalImage);
-
         let filter = new fabric.Image.filters.Blur({
             blur: e.currentTarget.value
         });
@@ -249,6 +256,12 @@ function blurPhoto() {
         obj.applyFilters();
         canvas.renderAll();
         obj.filters = [];
-        console.log(obj);
+    })
+}
+
+function addEmojisOnPhoto() {
+    $('.emojis img').on('click' ,e => {
+        console.log('aaa');
+        // console.log(e.target);
     })
 }
