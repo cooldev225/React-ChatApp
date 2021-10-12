@@ -1,5 +1,7 @@
 let globalImage;
-let canvas = new fabric.Canvas('back_canvas');
+let canvas = new fabric.Canvas('back_canvas', {width: 350, height:350});
+canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
+
 $(document).ready(function () {
 
     displayPhoto();
@@ -11,7 +13,7 @@ $(document).ready(function () {
 
 
     getRequestList();
-    socket.on('receive:request', data => {
+        socket.on('receive:request', data => {
         console.log(data);
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
@@ -187,7 +189,6 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
 
 function displayPhoto() {
     let photoFileInput = $('#input_file')
-    canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
     // var canvas = new fabric.Canvas('back_canvas');
     photoFileInput.on('change', (e) => {
         let reader = new FileReader();
@@ -197,26 +198,34 @@ function displayPhoto() {
                 globalImage = oImg;
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
+                if (imgWidth > 350 && imgHeight > 350) {
+                    canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
+                    // alert('Too big image choosed, Please choose smaller image');
+                    // return;
+                }
+                if (imgWidth < 350 && imgHeight < 350) {
+                    canvas.setDimensions({width: imgWidth+'px', height: imgHeight+'px'}, {cssOnly: true});
+                    // alert('Too big image choosed, Please choose smaller image');
+                    // return;
+                }
                 let canvasWidth = canvas.getWidth();
                 let canvasHeight = canvas.getHeight();
 
                 let imgRatio = imgWidth / imgHeight;
-                // let canvasRatio = canvasWidth / canvasHeight;
-                let canvasRatio = 1;
+                let canvasRatio = canvasWidth / canvasHeight;
+                // let canvasRatio = 1;
                 console.log(imgRatio);
-                console.log(canvasRatio);
                 if (imgRatio <= canvasRatio) {
-                    console.log('aaa');
-                    if(imgHeight > canvasHeight){
+                    // if(imgHeight > canvasHeight){
                         oImg.scaleToHeight(canvasHeight);
-                    }
+                    // }
                 } else {
-                    console.log('bbb');
-                    if(imgWidth > canvasWidth){
+                    // if(imgWidth >= canvasWidth){
+                        console.log('width')
                         oImg.scaleToWidth(canvasWidth);
-                    }
+                    // }
                 }
-
+                console.log(oImg);
                 canvas.clear();
                 canvas.add(oImg);
                 canvas.centerObject(oImg);
@@ -239,6 +248,7 @@ function blurPhoto() {
         obj.filters.push(filter);
         obj.applyFilters();
         canvas.renderAll();
-        console.log(e.currentTarget.value);
+        obj.filters = [];
+        console.log(obj);
     })
 }

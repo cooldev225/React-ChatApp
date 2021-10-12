@@ -146,26 +146,44 @@ ul.chatappend .msg-box div {
 .input-file {
     display: none;
 }
-
+.dropdown-menu .input-btn {
+    width: 30px;
+    height: 25px;
+}
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
 .input-btn {
     width: 50px;
     height: 40px;
-    margin: 5px 15px;
+    margin: 5px 20px;
     cursor: pointer;
 }
 
 #back_canvas {
-    width: 350px;
-    height: 350px;
-    background-color: rgba(0, 0, 0, 0.1);
+    
     border: 1px solid gray;
 }
 .canvas-container {
     flex-shrink: 0;
+    width: 350px !important;
+    height: 350px !important;
+    /* background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid gray; */
+}
+#back_canvas, .upper-canvas {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
 }
 
 #createPhoto .modal-header {
     justify-content: flex-start;
+}
+#createPhoto .modal-title {
+    margin-right: 25px;
 }
 .request-container {
     position: relative;

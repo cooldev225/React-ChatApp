@@ -3510,10 +3510,15 @@
                 <div class="modal-header">
                     <h2 class="modal-title">Photo Creation</h2>
                     <div class="btn-group d-flex">
-                        <input class="input-file" type="file" id="input_file">
-                        <img class="input-btn" id="input_btn" src="/images/gallery.png"></button>
-                        <img class="input-btn" id="" src="/images/camera-icon.png"></button>
-                        <img class="input-btn" id="" src="/images/reset.png"></button>
+                        <div class="dropdown">
+                              <img class="input-btn dropdown-toggle" id="" src="/images/gallery.png" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <input class="input-file" type="file" id="input_file">
+                                <a class="dropdown-item" id="input_btn" href="#">Photo Gallery<img class="input-btn"  src="/images/gallery.png"></a>
+                                <a class="dropdown-item" href="#">Take a Photo<img class="input-btn" id="" src="/images/camera-icon.png"></a>
+                            </div>
+                          </div>
+                        <img class="input-btn" id="" src="/images/reset.png">
                     </div>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>

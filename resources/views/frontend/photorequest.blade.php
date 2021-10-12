@@ -4,7 +4,7 @@
     <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script>
 
     <div class="request-container">
-        <canvas id="back_canvas">
+        <canvas id="back_canvas" width="350" height="350">
 
         </canvas>
         <div id="image-processing">
@@ -22,7 +22,7 @@
             </div>
             <div class="blur">
                 <img src="/images/blur.png" alt="Blur">
-                <input type="range" orient="vertical" class="custom-range blur-range" step="0.1" value="0" min="0" max="1">
+                <input type="range" orient="vertical" class="custom-range blur-range" step="0.1" value="0" min="0" max="0.5">
             </div>
             <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="send-photo">
                 <i data-feather="send"></i>
