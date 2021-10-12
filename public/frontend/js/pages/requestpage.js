@@ -1,5 +1,9 @@
+let globalImage;
+let canvas = new fabric.Canvas('back_canvas');
 $(document).ready(function () {
+
     displayPhoto();
+    blurPhoto();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -182,31 +186,33 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
 
 
 function displayPhoto() {
-    
-    
     let photoFileInput = $('#input_file')
-    var canvas = new fabric.Canvas('back_canvas');
     canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
     // var canvas = new fabric.Canvas('back_canvas');
     photoFileInput.on('change', (e) => {
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
-
             fabric.Image.fromURL(reader.result, function(oImg) {
+                globalImage = oImg;
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
                 let canvasWidth = canvas.getWidth();
                 let canvasHeight = canvas.getHeight();
 
                 let imgRatio = imgWidth / imgHeight;
-                let canvasRatio = canvasWidth / canvasHeight;
-                if(imgRatio <= canvasRatio){
-                    if(imgHeight> canvasHeight){
+                // let canvasRatio = canvasWidth / canvasHeight;
+                let canvasRatio = 1;
+                console.log(imgRatio);
+                console.log(canvasRatio);
+                if (imgRatio <= canvasRatio) {
+                    console.log('aaa');
+                    if(imgHeight > canvasHeight){
                         oImg.scaleToHeight(canvasHeight);
                     }
-                } else{
-                    if(imgWidth> canvasWidth){
+                } else {
+                    console.log('bbb');
+                    if(imgWidth > canvasWidth){
                         oImg.scaleToWidth(canvasWidth);
                     }
                 }
@@ -220,4 +226,19 @@ function displayPhoto() {
         reader.readAsDataURL(files[0]);
         
     });
+}
+
+function blurPhoto() {
+
+    $('.blur-range').on('change', e => {
+        let obj = Object.assign(globalImage);
+
+        let filter = new fabric.Image.filters.Blur({
+            blur: e.currentTarget.value
+        });
+        obj.filters.push(filter);
+        obj.applyFilters();
+        canvas.renderAll();
+        console.log(e.currentTarget.value);
+    })
 }

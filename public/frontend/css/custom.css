@@ -178,7 +178,7 @@ ul.chatappend .msg-box div {
 }
 
 .emojis {
-    width: 60px;
+    width: 70px;
     height: 350px;
     overflow: auto;
 }
@@ -192,20 +192,20 @@ ul.chatappend .msg-box div {
     border-radius: 50%;
     position: absolute;
     top: 35px;
-    right: 0;
-
+    right: -5px;
 }
 .blur .blur-range {
     -webkit-appearance: slider-vertical;
     width: 30px;
+    height: 180px;
     position: absolute;
     top: 75px;
-    right: 0;
+    right: -5px;
 }
 #send-photo {
     position: absolute;
     bottom: 10px;
-    right: -5px;
+    right: -10px;
 }
 
 @media (max-width: 1366px) {

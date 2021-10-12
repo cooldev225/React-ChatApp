@@ -22,7 +22,7 @@
             </div>
             <div class="blur">
                 <img src="/images/blur.png" alt="Blur">
-                <input type="range" orient="vertical" class="custom-range blur-range" value="0" min="0" max="10">
+                <input type="range" orient="vertical" class="custom-range blur-range" step="0.1" value="0" min="0" max="1">
             </div>
             <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="send-photo">
                 <i data-feather="send"></i>

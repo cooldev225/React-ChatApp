@@ -1347,11 +1347,12 @@
                                 </ul>
                             </div>
                         </div>
-                        <input class="setemoj" id="setemoj" type="text" placeholder="Write your message..." /><a
-                            class="icon-btn btn-outline-primary button-effect me-3 ms-3" href="#"><i data-feather="mic">
-                            </i></a>
-                        <button class="submit icon-btn btn-primary disabled" id="send-msg" disabled="disabled"><i
-                                data-feather="send"> </i></button>
+                        <input class="setemoj" id="setemoj" type="text" placeholder="Write your message..." />
+                        <a class="icon-btn btn-outline-primary button-effect me-3 ms-3" href="#">
+                            <i data-feather="mic"></i>
+                        </a>
+                        <button class="submit icon-btn btn-primary disabled" id="send-msg" disabled="disabled">
+                            <i data-feather="send"></i></button>
 
                     </div>
                 </div>
