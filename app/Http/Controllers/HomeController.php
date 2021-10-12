@@ -176,7 +176,7 @@ class HomeController extends Controller
             $path = $request->file('avatar')->store('upload/avatar');
             $user->avatar = $path;
         }
-        // dd($path);
+        dd($path);
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
         return array(
