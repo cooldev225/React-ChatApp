@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    displayPhoto();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -181,16 +182,42 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
 
 
 function displayPhoto() {
-    let profileImageBtn = $('#profileImageUploadBtn')
-    let avatarImage = $('#profileImage');
-
-    profileImageBtn.on('change', (e) => {
+    
+    
+    let photoFileInput = $('#input_file')
+    var canvas = new fabric.Canvas('back_canvas');
+    canvas.setDimensions({width: '350px', height: '350px'}, {cssOnly: true});
+    // var canvas = new fabric.Canvas('back_canvas');
+    photoFileInput.on('change', (e) => {
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
-            avatarImage.attr('src', reader.result);
-            avatarImage.parent().css('background-image', `url("${reader.result}")`);
+
+            fabric.Image.fromURL(reader.result, function(oImg) {
+                let imgWidth = oImg.width;
+                let imgHeight = oImg.height;
+                let canvasWidth = canvas.getWidth();
+                let canvasHeight = canvas.getHeight();
+
+                let imgRatio = imgWidth / imgHeight;
+                let canvasRatio = canvasWidth / canvasHeight;
+                if(imgRatio <= canvasRatio){
+                    if(imgHeight> canvasHeight){
+                        oImg.scaleToHeight(canvasHeight);
+                    }
+                } else{
+                    if(imgWidth> canvasWidth){
+                        oImg.scaleToWidth(canvasWidth);
+                    }
+                }
+
+                canvas.clear();
+                canvas.add(oImg);
+                canvas.centerObject(oImg);
+            });
+            
         }
         reader.readAsDataURL(files[0]);
+        
     });
 }

@@ -143,6 +143,70 @@ ul.chatappend .msg-box div {
     font-weight: bold;
     color: darkred;
 }
+.input-file {
+    display: none;
+}
+
+.input-btn {
+    width: 50px;
+    height: 40px;
+    margin: 5px 15px;
+    cursor: pointer;
+}
+
+#back_canvas {
+    width: 350px;
+    height: 350px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid gray;
+}
+.canvas-container {
+    flex-shrink: 0;
+}
+
+#createPhoto .modal-header {
+    justify-content: flex-start;
+}
+.request-container {
+    position: relative;
+}
+#image-processing {
+    width: 105px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.emojis {
+    width: 60px;
+    height: 350px;
+    overflow: auto;
+}
+.emojis img {
+    margin-bottom: 5px;
+}
+
+.blur img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 35px;
+    right: 0;
+
+}
+.blur .blur-range {
+    -webkit-appearance: slider-vertical;
+    width: 30px;
+    position: absolute;
+    top: 75px;
+    right: 0;
+}
+#send-photo {
+    position: absolute;
+    bottom: 10px;
+    right: -5px;
+}
 
 @media (max-width: 1366px) {
 

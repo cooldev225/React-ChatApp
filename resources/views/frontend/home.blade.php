@@ -3508,6 +3508,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title">Photo Creation</h2>
+                    <div class="btn-group d-flex">
+                        <input class="input-file" type="file" id="input_file">
+                        <img class="input-btn" id="input_btn" src="/images/gallery.png"></button>
+                        <img class="input-btn" id="" src="/images/camera-icon.png"></button>
+                        <img class="input-btn" id="" src="/images/reset.png"></button>
+                    </div>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -3516,12 +3522,7 @@
                         @yield('photorequest')
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success button-effect btn-sm" type="button"
-                        data-bs-dismiss="modal">Send</button>
-                    <button class="btn btn-danger button-effect btn-sm" type="button"
-                        data-bs-dismiss="modal">Cancel</button>
-                </div>
+                
             </div>
         </div>
     </div>
