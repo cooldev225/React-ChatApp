@@ -1,7 +1,8 @@
 let globalImage;
 let canvas = new fabric.Canvas('back_canvas', {
     width: 350,
-    height: 350
+    height: 350,
+    preserveObjectStacking:true
 });
 canvas.setDimensions({
     width: '350px',
@@ -11,7 +12,7 @@ canvas.setDimensions({
 });
 
 $(document).ready(function () {
-
+  
     getRequestList();
     displayPhoto();
     blurPhoto();
@@ -238,6 +239,7 @@ function displayPhoto() {
                 canvas.clear();
                 canvas.add(oImg);
                 canvas.centerObject(oImg);
+                
             });
 
         }
@@ -260,8 +262,23 @@ function blurPhoto() {
 }
 
 function addEmojisOnPhoto() {
-    $('.emojis img').on('click' ,e => {
-        console.log('aaa');
-        // console.log(e.target);
-    })
+    var touchtime = 0;
+    $(".emojis img").on("click", e => {
+        if (touchtime == 0) {
+            touchtime = new Date().getTime();
+        } else {
+            if (((new Date().getTime()) - touchtime) < 800) {
+                fabric.Image.fromURL(e.target.src, function (oImg) {
+                    canvas.add(oImg);
+                    canvas.centerObject(oImg);
+                });
+
+
+                touchtime = 0;
+            } else {
+                // not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
+    });
 }
