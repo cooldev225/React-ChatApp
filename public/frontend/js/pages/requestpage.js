@@ -57,6 +57,7 @@ $(document).ready(function () {
         // addRequestItem(senderInfo, receiverInfo, data.data);
         // $('.photo-request-icon').addClass('dot-btn');
         let target = '.contact-chat ul.chatappend';
+        
         $(target).append(`<li class="sent">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
