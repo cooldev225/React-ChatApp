@@ -217,6 +217,9 @@ ul.chatappend .msg-box div {
     bottom: 10px;
     right: -10px;
 }
+.receive_photo {
+    cursor: pointer;
+}
 
 @media (max-width: 1366px) {
 

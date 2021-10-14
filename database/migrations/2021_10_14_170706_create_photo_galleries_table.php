@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePhotoGalleryTable extends Migration
+class CreatePhotoGalleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,25 @@ class CreatePhotoGalleryTable extends Migration
      */
     public function up()
     {
-        Schema::create('photo_gallery', function (Blueprint $table) {
+        Schema::create('photo_galleries', function (Blueprint $table) {
             $table->id();
             $table->integer('from')->default(0);
             $table->integer('to')->default(0)->nullable();
-            $table->string('back')->default('')->nullable();
-            $table->integer('width')->default(0)->nullable();
-            $table->integer('height')->default(0)->nullable();
-            $table->double('blur')->default(0)->nullable();
-            $table->string('emojis')->default('')->nullable();
+            $table->binary('content')->default('')->nullable();
+            $table->string('extra')->default('')->nullable();
+
+            
+            // $table->integer('width')->default(0)->nullable();
+            // $table->integer('height')->default(0)->nullable();
+            // $table->double('blur')->default(0)->nullable();
+            // $table->string('emojis')->default('')->nullable();
             
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
+        DB::statement('ALTER TABLE `photo_galleries` CHANGE `content` `content` MEDIUMBLOB NULL DEFAULT NULL;');
     }
 
     /**
@@ -37,6 +41,6 @@ class CreatePhotoGalleryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo_gallery');
+        Schema::dropIfExists('photo_galleries');
     }
 }

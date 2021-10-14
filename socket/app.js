@@ -89,13 +89,16 @@ io.on('connection', (socket) => {
     socket.on('send:photo', data => {
         if (data.to) {
             let socketId = user_socketMap.get(data.to.toString());
-            if (socketId) {
-                if (io.sockets.sockets.get(socketId)) {
-                    setTimeout(() => {
-                      io.sockets.sockets.get(socketId).emit('receive:photo', data);
-                    }, 500);
+            console.log(data.content.length);
+            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.content)})`, (error, item) => {
+                data.id = item.insertId;
+                if (socketId) {
+                    if (io.sockets.sockets.get(socketId)) {
+                        io.sockets.sockets.get(socketId).emit('receive:photo', data);
+                    }
                 }
-            }
+            });
+            
         }
         
     });

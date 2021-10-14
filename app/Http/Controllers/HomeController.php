@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Message;
 use App\Models\Contact;
 use App\Models\PhotoRequest;
+use App\Models\PhotoGallery;
 
 class HomeController extends Controller
 {
@@ -208,5 +209,15 @@ class HomeController extends Controller
         $request->type = $type;
         $request->save();
         return;
+    }
+    public function getPhotoData(Request $request)
+    {
+        $photoId = $request->input('id');
+        $photoData = PhotoGallery::where('id', $photoId)->get();
+        if (count($photoData)) {
+            return array('state'=>'true', 'data'=>$photoData);
+        }
+        return array('state'=>'false');
+
     }
 }

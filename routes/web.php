@@ -34,6 +34,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/saveProfileInfo', 'HomeController@saveProfileInfo');
     Route::post('/home/getPhotoRequest', 'HomeController@getPhotoRequest');
     Route::post('/home/sendRequest', 'HomeController@sendRequest');
+    Route::post('/home/getPhotoData', 'HomeController@getPhotoData');
 });
 
 Route::group(['middleware' => ['admin']], function () {

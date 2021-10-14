@@ -16,17 +16,17 @@ canvas.setDimensions({
 $(document).ready(function () {
 
     getRequestList();
-    displayPhoto();
+    selectBackPhoto();
     blurPhoto();
     addEmojisOnPhoto();
     sendPhoto();
+    showPhoto();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
         }, false);
 
     socket.on('receive:request', data => {
-        console.log(data);
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         addRequestItem(senderInfo, receiverInfo, data.data);
@@ -50,15 +50,11 @@ $(document).ready(function () {
     });
 
     socket.on('receive:photo', data => {
-        console.log(data);
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
-
-        // addRequestItem(senderInfo, receiverInfo, data.data);
-        // $('.photo-request-icon').addClass('dot-btn');
         let target = '.contact-chat ul.chatappend';
         
-        $(target).append(`<li class="sent">
+        $(target).append(`<li class="sent" key="${data.id}">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
                 </div>
@@ -67,7 +63,7 @@ $(document).ready(function () {
                         <h5>${senderInfo.username}</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
-                            <img src="${data.photo}">
+                            <img class="receive_photo" src="${data.photo}">
                         </ul>
                     </div>
                 </div>
@@ -223,8 +219,7 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
     );
 }
 
-
-function displayPhoto() {
+function selectBackPhoto() {
     let photoFileInput = $('#input_file')
     // var canvas = new fabric.Canvas('back_canvas');
     photoFileInput.on('change', (e) => {
@@ -232,7 +227,6 @@ function displayPhoto() {
         files = e.target.files;
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function (oImg) {
-                console.log(reader.result);
                 globalImage = oImg;
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
@@ -334,6 +328,48 @@ function sendPhoto() {
         // data.blur_value = $('.blur-range').val();
         data.content = JSON.stringify(canvas._objects)
         socket.emit('send:photo', data);
+
+    });
+}
+function showPhoto() {
+    $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
+        let id = $(e.currentTarget).closest('li').attr('key');
+        var form_data = new FormData();
+        form_data.append('id', id);
+        $.ajax({
+            url: '/home/getPhotoData',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 'true') {
+                    console.log(res.data[0].content.slice(-30));
+                    let data = JSON.parse(res.data[0].content);
+                    console.log(data);
+                    $('#photo_item').modal('show');
+                    let canvas = new fabric.Canvas('photo_canvas', {
+                        width: 350,
+                        height: 350,
+                        preserveObjectStacking: true
+                    });
+                    data.forEach(item => {
+                        image = new fabric.Image(item);
+                        console.log(image);
+                        canvas._objects.push(image);
+                    })
+                    canvas.renderAll();
+                }
+            },
+            error: function (response) {
+
+            }
+        });
 
     });
 }
