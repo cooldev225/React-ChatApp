@@ -87,7 +87,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('send:photo', data => {
-        console.log(data.photo);
         if (data.to) {
             let socketId = user_socketMap.get(data.to.toString());
             if (socketId) {
