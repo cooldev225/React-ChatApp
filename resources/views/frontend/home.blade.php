@@ -3513,7 +3513,7 @@
                         <input class="input-file" type="file" id="input_file">
                         <img class="input-btn" id="input_btn" src="/images/gallery.png"></button>
                         {{-- <img class="input-btn" id="" src="/images/camera-icon.png"></button> --}}
-                        <img class="input-btn" id="" src="/images/reset.png"></button>
+                        <img class="input-btn" id="input_reset" src="/images/reset.png"></button>
                     </div>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>

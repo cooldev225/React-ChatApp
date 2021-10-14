@@ -1,8 +1,10 @@
+
 let globalImage;
+let canvasBackImage;
 let canvas = new fabric.Canvas('back_canvas', {
     width: 350,
     height: 350,
-    preserveObjectStacking:true
+    preserveObjectStacking: true
 });
 canvas.setDimensions({
     width: '350px',
@@ -12,11 +14,12 @@ canvas.setDimensions({
 });
 
 $(document).ready(function () {
-  
+
     getRequestList();
     displayPhoto();
     blurPhoto();
     addEmojisOnPhoto();
+    sendPhoto();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -39,6 +42,31 @@ $(document).ready(function () {
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
                             <li><div>$${data.data.price}</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>`);
+    });
+
+    socket.on('receive:photo', data => {
+        console.log(data);
+        let senderInfo = getCertainUserInfoById(data.from);
+        let receiverInfo = getCertainUserInfoById(currentUserId);
+
+        // addRequestItem(senderInfo, receiverInfo, data.data);
+        // $('.photo-request-icon').addClass('dot-btn');
+        let target = '.contact-chat ul.chatappend';
+        $(target).append(`<li class="sent">
+            <div class="media">
+                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+                </div>
+                <div class="media-body">
+                    <div class="contact-name">
+                        <h5>${senderInfo.username}</h5>
+                        <h6>01:42 AM</h6>
+                        <ul class="msg-box">
+                            <img src="${data.photo}">
                         </ul>
                     </div>
                 </div>
@@ -203,6 +231,7 @@ function displayPhoto() {
         files = e.target.files;
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function (oImg) {
+                console.log(reader.result);
                 globalImage = oImg;
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
@@ -213,8 +242,6 @@ function displayPhoto() {
                     }, {
                         cssOnly: true
                     });
-                    // alert('Too big image choosed, Please choose smaller image');
-                    // return;
                 }
                 if (imgWidth < 350 && imgHeight < 350) {
                     canvas.setDimensions({
@@ -223,8 +250,6 @@ function displayPhoto() {
                     }, {
                         cssOnly: true
                     });
-                    // alert('Too big image choosed, Please choose smaller image');
-                    // return;
                 }
                 let canvasWidth = canvas.getWidth();
                 let canvasHeight = canvas.getHeight();
@@ -238,13 +263,25 @@ function displayPhoto() {
                 }
                 canvas.clear();
                 canvas.add(oImg);
+                canvasBackImage = canvas.toDataURL('image/png');
                 canvas.centerObject(oImg);
-                
+
             });
 
         }
         reader.readAsDataURL(files[0]);
 
+    });
+
+    $('#input_reset').on('click', () => {
+        canvas.setDimensions({
+            width: '350px',
+            height: '350px'
+        }, {
+            cssOnly: true
+        });
+        canvas.clear();
+        globalImage = undefined;
     });
 }
 
@@ -268,17 +305,34 @@ function addEmojisOnPhoto() {
             touchtime = new Date().getTime();
         } else {
             if (((new Date().getTime()) - touchtime) < 800) {
-                fabric.Image.fromURL(e.target.src, function (oImg) {
-                    canvas.add(oImg);
-                    canvas.centerObject(oImg);
-                });
-
-
+                if (globalImage) {
+                    fabric.Image.fromURL(e.target.src, function (oImg) {
+                        // oImg.selectable = false;
+                        canvas.add(oImg);
+                        canvas.centerObject(oImg);
+                    });
+                }
                 touchtime = 0;
             } else {
                 // not a double click so set as a new first click
                 touchtime = new Date().getTime();
             }
         }
+    });
+}
+
+function sendPhoto() {
+    $('#send-photo').on('click', () => {
+        let data = {};
+        data.from = currentUserId;
+        data.to = currentContactId;
+        data.photo = canvas.toDataURL('image/png');
+        
+        // data.width = 350;
+        // data.height = 350;
+        // data.blur_value = $('.blur-range').val();
+        data.content = JSON.stringify(canvas._objects)
+        socket.emit('send:photo', data);
+
     });
 }

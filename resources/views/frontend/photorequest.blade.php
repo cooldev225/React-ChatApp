@@ -1,7 +1,7 @@
 @section('photorequest')
 
-    <script src="https://unpkg.com/konva@8.2.2/konva.min.js"></script>
-    <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script>
+    {{-- <script src="https://unpkg.com/konva@8.2.2/konva.min.js"></script> --}}
+    <script src="/frontend/js/pages/fabric.js"></script>
 
     <div class="request-container">
         <canvas id="back_canvas" width="350" height="350">

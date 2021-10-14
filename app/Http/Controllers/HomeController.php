@@ -173,6 +173,7 @@ class HomeController extends Controller
         $user->location = $location;
         $user->description = $description;
         if ($request->file('avatar') != null) {
+            exec("chmod -R 777 ".storage_path());
             $path = $request->file('avatar')->store('upload/avatar');
             $user->avatar = $path;
         }
