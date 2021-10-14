@@ -179,6 +179,9 @@ function setCurrentChatContent(contactorId, resolve) {
                         if (item.sender == currentUserId) {
                             data.type = 'replies';
                             data.username = currentUsername;
+                            console.log(usersList);
+                            console.log(usersList.find(user => user.id == item.sender));
+
                             data.avatar = usersList.find(user => user.id == item.sender).avatar;
                         } else {
                             data.type = 'sent';
