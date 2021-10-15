@@ -17,7 +17,7 @@ class CreatePhotoGalleriesTable extends Migration
             $table->id();
             $table->integer('from')->default(0);
             $table->integer('to')->default(0)->nullable();
-            $table->binary('content')->default('')->nullable();
+            $table->binary('content')->nullable();
             $table->string('extra')->default('')->nullable();
 
             

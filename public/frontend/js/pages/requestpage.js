@@ -358,12 +358,9 @@ function showPhoto() {
                         height: 350,
                         preserveObjectStacking: true
                     });
-                    data.forEach(item => {
-                        image = new fabric.Image(item);
-                        console.log(image);
-                        canvas._objects.push(image);
-                    })
-                    canvas.renderAll();
+                    fabric.Image.fromURL(data[0].src, function (oImg) {
+                        canvas.add(oImg);
+                    });
                 }
             },
             error: function (response) {
