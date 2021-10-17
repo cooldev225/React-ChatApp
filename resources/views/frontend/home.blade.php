@@ -3530,8 +3530,7 @@
     <div class="modal fade add-popup request-modal" id="photo_item" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <canvas id="photo_canvas" width="350" height="350">
-                {{-- <img src="" alt=""> --}}
+                <img src="" alt="">
             </div>
         </div>
     </div>

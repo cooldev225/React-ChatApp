@@ -1,6 +1,5 @@
-
 let globalImage;
-let canvasBackImage;
+let ori_image;
 let canvas = new fabric.Canvas('back_canvas', {
     width: 350,
     height: 350,
@@ -53,7 +52,7 @@ $(document).ready(function () {
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         let target = '.contact-chat ul.chatappend';
-        
+
         $(target).append(`<li class="sent" key="${data.id}">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
@@ -80,9 +79,11 @@ $(document).ready(function () {
         $('#detailRequestModal .request-description').text($(e.currentTarget).find('.description').val());
         $('#detailRequestModal .request-price').text($(e.currentTarget).find('.price').val() + "$");
         $('.photo-request-icon').removeClass('dot-btn');
-        $('.read-status').removeClass('fa-eye-slash');
-        $('.read-status').addClass('fa-eye');
-        setCurrentChatContent(currentContactId);
+        $(e.currentTarget).find('.read-status').removeClass('fa-eye-slash');
+        $(e.currentTarget).find('.read-status').addClass('fa-eye');
+        // currentContactId = to;
+        if (currentContactId)
+            setCurrentChatContent(currentContactId);
 
         if (e.currentTarget.className.includes('sent')) {
             $('#detailRequestModal').find('.btn-success').css('display', 'none');
@@ -227,7 +228,9 @@ function selectBackPhoto() {
         files = e.target.files;
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function (oImg) {
+                ori_image = reader.result;
                 globalImage = oImg;
+
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
                 if (imgWidth > 350 && imgHeight > 350) {
@@ -258,7 +261,6 @@ function selectBackPhoto() {
                 }
                 canvas.clear();
                 canvas.add(oImg);
-                canvasBackImage = canvas.toDataURL('image/png');
                 canvas.centerObject(oImg);
 
             });
@@ -286,10 +288,10 @@ function blurPhoto() {
         let filter = new fabric.Image.filters.Blur({
             blur: e.currentTarget.value
         });
+        obj.filters = [];
         obj.filters.push(filter);
         obj.applyFilters();
         canvas.renderAll();
-        obj.filters = [];
     })
 }
 
@@ -322,15 +324,13 @@ function sendPhoto() {
         data.from = currentUserId;
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
-        
-        // data.width = 350;
-        // data.height = 350;
-        // data.blur_value = $('.blur-range').val();
-        data.content = JSON.stringify(canvas._objects)
+        data.blur = $('.blur-range').val();
+        data.content = getEmojisInfo(canvas._objects);
         socket.emit('send:photo', data);
 
     });
 }
+
 function showPhoto() {
     $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
         let id = $(e.currentTarget).closest('li').attr('key');
@@ -349,18 +349,32 @@ function showPhoto() {
             dataType: "json",
             success: function (res) {
                 if (res.state == 'true') {
-                    console.log(res.data[0].content.slice(-30));
+                    console.log(res.data);       
                     let data = JSON.parse(res.data[0].content);
-                    console.log(data);
+                    let image = res.data[0].photo
                     $('#photo_item').modal('show');
-                    let canvas = new fabric.Canvas('photo_canvas', {
-                        width: 350,
-                        height: 350,
-                        preserveObjectStacking: true
-                    });
-                    fabric.Image.fromURL(data[0].src, function (oImg) {
-                        canvas.add(oImg);
-                    });
+                    $('#photo_item .modal-content img').attr('src', image);
+                    // let canvas = new fabric.Canvas('photo_canvas', {
+                    //     width: 350,
+                    //     height: 350,
+                    //     preserveObjectStacking: true
+                    // });
+                    // canvas.setDimensions({ width: '350px', height: '350px' }, { cssOnly: true });
+                    // data.forEach(item => {
+                    //     console.log(item)
+                    //     new Promise(resolve => {
+                    //         fabric.Image.fromURL(item.src, function (oImg) {
+                    //             oImg.left = item.position[0]
+                    //             oImg.top = item.position[1]
+                    //             oImg.scaleX = item.size[0]
+                    //             oImg.scaleY = item.size[1]
+                    //             oImg.selectable = false;
+                    //             canvas.add(oImg);
+                    //             resolve();
+                    //         });
+                    //     });
+                    //     console.log('aaa');
+                    // });
                 }
             },
             error: function (response) {
@@ -369,4 +383,14 @@ function showPhoto() {
         });
 
     });
+}
+
+function getEmojisInfo(obj) {
+    return JSON.stringify(obj.map((item, index) => {
+        return {
+            src: item._element.src,
+            size: [item.scaleX, item.scaleY],
+            position: [item.left, item.top]
+        }
+    }));
 }

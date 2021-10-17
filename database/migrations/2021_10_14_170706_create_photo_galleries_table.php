@@ -17,13 +17,14 @@ class CreatePhotoGalleriesTable extends Migration
             $table->id();
             $table->integer('from')->default(0);
             $table->integer('to')->default(0)->nullable();
+            $table->binary('photo')->nullable();
+            $table->double('blur')->default(0)->nullable();
             $table->binary('content')->nullable();
             $table->string('extra')->default('')->nullable();
 
             
             // $table->integer('width')->default(0)->nullable();
             // $table->integer('height')->default(0)->nullable();
-            // $table->double('blur')->default(0)->nullable();
             // $table->string('emojis')->default('')->nullable();
             
             $table->integer('created_by')->nullable();
@@ -32,6 +33,7 @@ class CreatePhotoGalleriesTable extends Migration
             $table->timestamp('updated_at')->useCurrent();
         });
         DB::statement('ALTER TABLE `photo_galleries` CHANGE `content` `content` MEDIUMBLOB NULL DEFAULT NULL;');
+        DB::statement('ALTER TABLE `photo_galleries` CHANGE `photo` `photo` MEDIUMBLOB NULL DEFAULT NULL;');
     }
 
     /**
