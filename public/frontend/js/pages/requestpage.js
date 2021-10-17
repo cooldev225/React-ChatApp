@@ -62,7 +62,7 @@ $(document).ready(function () {
                         <h5>${senderInfo.username}</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
-                            <img class="receive_photo" src="${data.photo}">
+                            <li><img class="receive_photo" src="${data.photo}"></li>
                         </ul>
                     </div>
                 </div>
@@ -328,6 +328,24 @@ function sendPhoto() {
         data.content = getEmojisInfo(canvas._objects);
         socket.emit('send:photo', data);
 
+        let target = '.contact-chat ul.chatappend';
+        let senderInfo = getCertainUserInfoById(currentUserId);
+        $(target).append(`<li class="replies" key="">
+            <div class="media">
+                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+                </div>
+                <div class="media-body">
+                    <div class="contact-name">
+                        <h5>${senderInfo.username}</h5>
+                        <h6>01:42 AM</h6>
+                        <ul class="msg-box">
+                            <li><img class="receive_photo" src="${data.photo}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>`);
+
     });
 }
 
@@ -349,7 +367,7 @@ function showPhoto() {
             dataType: "json",
             success: function (res) {
                 if (res.state == 'true') {
-                    console.log(res.data);       
+                    console.log(res.data);
                     let data = JSON.parse(res.data[0].content);
                     let image = res.data[0].photo
                     $('#photo_item').modal('show');
@@ -375,6 +393,10 @@ function showPhoto() {
                     //     });
                     //     console.log('aaa');
                     // });
+                } else {
+                    $('#photo_item').modal('show');
+                    let image = $(e.currentTarget).attr('src');
+                    $('#photo_item .modal-content img').attr('src', image);
                 }
             },
             error: function (response) {
@@ -393,4 +415,38 @@ function getEmojisInfo(obj) {
             position: [item.left, item.top]
         }
     }));
+}
+
+function getPhotoSrcById(id, target) {
+    let form_data = new FormData();
+    form_data.append('id', id);
+    new Promise(resolve => {
+        $.ajax({
+            url: '/home/getPhotoData',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                if (res.state == 'true') {
+                    let data = JSON.parse(res.data[0].content);
+                    // return res.data[0].photo;
+                    resolve(res.data[0].photo);
+                } else {
+                    // return'/chat/images/contact/2.jpg';
+                }
+            },
+            error: function (response) {
+
+            }
+        });
+    }).then(v => {
+        target.find('.receive_photo').src = v;
+    });
 }

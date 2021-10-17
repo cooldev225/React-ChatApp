@@ -91,6 +91,8 @@ io.on('connection', (socket) => {
             let socketId = user_socketMap.get(data.to.toString());
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
+                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, data) => {
+                });
                 if (socketId) {
                     if (io.sockets.sockets.get(socketId)) {
                         io.sockets.sockets.get(socketId).emit('receive:photo', data);

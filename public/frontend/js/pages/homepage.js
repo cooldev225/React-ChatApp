@@ -379,12 +379,14 @@ function addChatItem(target, data) {
                     <h5>${data.username}</h5>
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
-                        ${!data.kind ? '<li><h5>'+ data.content + '</h5></li>' : '<li><div>$' + data.content + '</div></li>'}
+
+                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' : data.kind == 1 ? '<li><div>$' + data.content + '</div></li>' : '<li><img class="receive_photo" src="' + data.content +'"></li>'}
                     </ul>
                 </div>
             </div>
         </div>
     </li>`);
+
 }
 
 function changeProfileImageAjax() {

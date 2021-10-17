@@ -65,7 +65,15 @@ class HomeController extends Controller
         $contactorInfo = User::where('id', $contactorId)->get();
         $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
             ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(100)->get();
-        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messageData);
+        $messages = $messageData->map(function($item) {
+            if ($item['kind'] != 2) 
+                return $item;
+            $temp = PhotoGallery::where('id', $item['content'])->get();
+            $item['content'] = $temp[0]['photo'];
+            return $item;
+        });
+
+        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messages);
     }
 
 
