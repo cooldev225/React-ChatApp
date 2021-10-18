@@ -11,6 +11,13 @@ canvas.setDimensions({
 }, {
     cssOnly: true
 });
+let photo_canvas = new fabric.Canvas('photo_canvas', {
+    width: 350,
+    height: 350,
+    preserveObjectStacking: true
+});
+photo_canvas.setDimensions({ width: '350px', height: '350px' }, { cssOnly: true });
+
 
 $(document).ready(function () {
 
@@ -62,7 +69,7 @@ $(document).ready(function () {
                         <h5>${senderInfo.username}</h5>
                         <h6>01:42 AM</h6>
                         <ul class="msg-box">
-                            <li><img class="receive_photo" src="${data.photo}"></li>
+                            <li key="${data.id}"><img class="receive_photo" src="${data.photo}"></li>
                         </ul>
                     </div>
                 </div>
@@ -305,6 +312,7 @@ function addEmojisOnPhoto() {
                 if (globalImage) {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
                         // oImg.selectable = false;
+                        oImg.price = $('.emojis-price').val();
                         canvas.add(oImg);
                         canvas.centerObject(oImg);
                     });
@@ -367,32 +375,40 @@ function showPhoto() {
             dataType: "json",
             success: function (res) {
                 if (res.state == 'true') {
-                    console.log(res.data);
                     let data = JSON.parse(res.data[0].content);
-                    let image = res.data[0].photo
+                    
                     $('#photo_item').modal('show');
-                    $('#photo_item .modal-content img').attr('src', image);
-                    // let canvas = new fabric.Canvas('photo_canvas', {
-                    //     width: 350,
-                    //     height: 350,
-                    //     preserveObjectStacking: true
-                    // });
-                    // canvas.setDimensions({ width: '350px', height: '350px' }, { cssOnly: true });
-                    // data.forEach(item => {
-                    //     console.log(item)
-                    //     new Promise(resolve => {
-                    //         fabric.Image.fromURL(item.src, function (oImg) {
-                    //             oImg.left = item.position[0]
-                    //             oImg.top = item.position[1]
-                    //             oImg.scaleX = item.size[0]
-                    //             oImg.scaleY = item.size[1]
-                    //             oImg.selectable = false;
-                    //             canvas.add(oImg);
-                    //             resolve();
-                    //         });
-                    //     });
-                    //     console.log('aaa');
-                    // });
+                    photo_canvas.clear();
+
+                    // $('#photo_item .modal-content img').attr('src', image);
+                    new Promise(resolve => {
+                        let item = data[0];
+                        fabric.Image.fromURL(item.src, function (oImg) {
+                            oImg.left = item.position[0]
+                            oImg.top = item.position[1]
+                            oImg.scaleX = item.size[0]
+                            oImg.scaleY = item.size[1]
+                            oImg.selectable = false;
+                            photo_canvas.add(oImg);
+                            resolve();
+                        });
+                    }).then(() => {
+                        data.filter((item, index) => index != 0).forEach(item => {
+                            fabric.Image.fromURL(item.src, function (oImg) {
+                                oImg.left = item.position[0]
+                                oImg.top = item.position[1]
+                                oImg.scaleX = item.size[0]
+                                oImg.scaleY = item.size[1]
+                                console.log(item.price);
+                                if (item.price > 0) {
+                                    oImg.selectable = false;
+                                }
+                                photo_canvas.add(oImg);
+                            });
+                        });
+                    });
+                   
+
                 } else {
                     $('#photo_item').modal('show');
                     let image = $(e.currentTarget).attr('src');
@@ -412,7 +428,8 @@ function getEmojisInfo(obj) {
         return {
             src: item._element.src,
             size: [item.scaleX, item.scaleY],
-            position: [item.left, item.top]
+            position: [item.left, item.top],
+            price: item.price
         }
     }));
 }

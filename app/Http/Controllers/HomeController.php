@@ -69,7 +69,7 @@ class HomeController extends Controller
             if ($item['kind'] != 2) 
                 return $item;
             $temp = PhotoGallery::where('id', $item['content'])->get();
-            $item['content'] = $temp[0]['photo'];
+            $item['content'] = array($temp[0]['id'], $temp[0]['photo']);
             return $item;
         });
 

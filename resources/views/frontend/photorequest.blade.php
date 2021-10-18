@@ -8,6 +8,12 @@
 
         </canvas>
         <div id="image-processing">
+            <select class="form-select-sm emojis-price" aria-label="Default select example">
+                <option value="0" selected>$0</option>
+                <option value="1">$1</option>
+                <option value="2">$2</option>
+                <option value="3">$5</option>
+            </select>
             <div class="emojis">
                 <img src="/images/emojis1.png" draggable="true" />
                 <img src="/images/emojis2.png" draggable="true" />

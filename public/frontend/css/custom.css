@@ -190,10 +190,15 @@ ul.chatappend .msg-box div {
     right: 0px;
     top: 0px;
 }
-
+.emojis-price {
+    background-color: darkgrey;
+    font-size: 15px;
+    padding: 2px 13px;
+}
 .emojis {
     width: 70px;
-    height: 350px;
+    height: 315px;
+    margin-top: 8px;
     overflow: auto;
 }
 .emojis img {

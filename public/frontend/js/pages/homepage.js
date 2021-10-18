@@ -26,8 +26,6 @@ $(document).ready(() => {
                     addChatUserListItem(userListTarget, currentContactorInfo);
                 }
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-                console.log('aaa');
-                console.log($(`ul.chat-main li[key=${currentContactId}]`).length);
                 setCurrentChatContent(currentContactId, resolve);
             }).then(() => {
                 let target = '.contact-chat ul.chatappend';
@@ -380,13 +378,12 @@ function addChatItem(target, data) {
                     <h6>01:42 AM</h6>
                     <ul class="msg-box">
 
-                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' : data.kind == 1 ? '<li><div>$' + data.content + '</div></li>' : '<li><img class="receive_photo" src="' + data.content +'"></li>'}
+                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' : data.kind == 1 ? '<li><div>$' + data.content + '</div></li>' : '<li key="' + data.content[0] +'"><img class="receive_photo" src="' + data.content[1] +'"></li>'}
                     </ul>
                 </div>
             </div>
         </div>
     </li>`);
-
 }
 
 function changeProfileImageAjax() {
