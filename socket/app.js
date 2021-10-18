@@ -89,8 +89,10 @@ io.on('connection', (socket) => {
     socket.on('send:photo', data => {
         if (data.to) {
             let socketId = user_socketMap.get(data.to.toString());
+            console.log("socketId: ", socketId)
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
+                console.log('Gallery', data.id);
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, data) => {
                 });
                 if (socketId) {

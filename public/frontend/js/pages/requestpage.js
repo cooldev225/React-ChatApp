@@ -59,7 +59,7 @@ $(document).ready(function () {
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         let target = '.contact-chat ul.chatappend';
-
+        console.log(data.id);
         $(target).append(`<li class="sent" key="${data.id}">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
