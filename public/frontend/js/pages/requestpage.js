@@ -327,8 +327,6 @@ function addEmojisOnPhoto() {
                             console.log(oImg.left, oImg.top);
                             ctx1.font = "20px Arial";
                             ctx1.fillText("$" + oImg.price, oImg.left, oImg.top);
-                            ctx1.restore();
-                            ctx1.save();
                             // ctx1.fillText("$" + oImg.price, 10, 30);
                         });
                         canvas.add(oImg);
@@ -417,6 +415,8 @@ function showPhoto() {
                                 oImg.top = item.position[1];
                                 oImg.scaleX = item.size[0];
                                 oImg.scaleY = item.size[1];
+                                oImg.angle = item.angle;
+                                console.log(oImg.angle);
                                 oImg.on('mouseup', e => {
                                     console.log(item.price);
                                     ctx2.font = "20px Arial";
@@ -448,6 +448,7 @@ function getEmojisInfo(obj) {
             src: item._element.src,
             size: [item.scaleX, item.scaleY],
             position: [item.left, item.top],
+            angle: item.angle,
             price: item.price
         }
     }));
