@@ -22,6 +22,9 @@ photo_canvas.setDimensions({
 }, {
     cssOnly: true
 });
+let ctx1 = canvas.getContext("2d");
+let ctx2 = photo_canvas.getContext("2d");
+
 
 
 $(document).ready(function () {
@@ -321,15 +324,11 @@ function addEmojisOnPhoto() {
                         oImg.price = $('.emojis-price').val();
                         oImg.on('mousedown', () => {
                             console.log(oImg.price);
-                            
-                            // ctx.beginPath();
-                            // ctx.fillStyle = "#000000";
-                            // ctx.arc(Xcoord, Ycoord, 50, 0, 2 * Math.PI, false);
-                            // ctx.fill();
-                            // ctx.lineWidth = "4";
-                            // ctx.strokeStyle = "#000000";
-                            // ctx.stroke();
-                            // ctx.closePath();
+                            console.log(oImg.left, oImg.top);
+                            ctx1.font = "20px Arial";
+                            ctx1.fillText("$" + oImg.price, oImg.left, oImg.top);
+
+                            // ctx1.fillText("$" + oImg.price, 10, 30);
                         });
                         canvas.add(oImg);
                         canvas.centerObject(oImg);
@@ -419,6 +418,8 @@ function showPhoto() {
                                 oImg.scaleY = item.size[1];
                                 oImg.on('mousedown', e => {
                                     console.log(item.price);
+                                    ctx2.font = "20px Arial";
+                                    ctx2.fillText("$" + item.price, oImg.left, oImg.top);
                                 });
                                 if (item.price > 0) {
                                     oImg.selectable = false;
@@ -427,8 +428,6 @@ function showPhoto() {
                             });
                         });
                     });
-
-
                 } else {
                     $('#photo_item').modal('show');
                     let image = $(e.currentTarget).attr('src');
@@ -439,7 +438,6 @@ function showPhoto() {
 
             }
         });
-
     });
 }
 
