@@ -16,7 +16,12 @@ let photo_canvas = new fabric.Canvas('photo_canvas', {
     height: 350,
     preserveObjectStacking: true
 });
-photo_canvas.setDimensions({ width: '350px', height: '350px' }, { cssOnly: true });
+photo_canvas.setDimensions({
+    width: '350px',
+    height: '350px'
+}, {
+    cssOnly: true
+});
 
 
 $(document).ready(function () {
@@ -27,6 +32,7 @@ $(document).ready(function () {
     addEmojisOnPhoto();
     sendPhoto();
     showPhoto();
+    showPhotoPriceAndOption();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -313,6 +319,18 @@ function addEmojisOnPhoto() {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
                         // oImg.selectable = false;
                         oImg.price = $('.emojis-price').val();
+                        oImg.on('mousedown', () => {
+                            console.log(oImg.price);
+                            
+                            // ctx.beginPath();
+                            // ctx.fillStyle = "#000000";
+                            // ctx.arc(Xcoord, Ycoord, 50, 0, 2 * Math.PI, false);
+                            // ctx.fill();
+                            // ctx.lineWidth = "4";
+                            // ctx.strokeStyle = "#000000";
+                            // ctx.stroke();
+                            // ctx.closePath();
+                        });
                         canvas.add(oImg);
                         canvas.centerObject(oImg);
                     });
@@ -376,7 +394,7 @@ function showPhoto() {
             success: function (res) {
                 if (res.state == 'true') {
                     let data = JSON.parse(res.data[0].content);
-                    
+
                     $('#photo_item').modal('show');
                     photo_canvas.clear();
 
@@ -395,11 +413,13 @@ function showPhoto() {
                     }).then(() => {
                         data.filter((item, index) => index != 0).forEach(item => {
                             fabric.Image.fromURL(item.src, function (oImg) {
-                                oImg.left = item.position[0]
-                                oImg.top = item.position[1]
-                                oImg.scaleX = item.size[0]
-                                oImg.scaleY = item.size[1]
-                                console.log(item.price);
+                                oImg.left = item.position[0];
+                                oImg.top = item.position[1];
+                                oImg.scaleX = item.size[0];
+                                oImg.scaleY = item.size[1];
+                                oImg.on('mousedown', e => {
+                                    console.log(item.price);
+                                });
                                 if (item.price > 0) {
                                     oImg.selectable = false;
                                 }
@@ -407,7 +427,7 @@ function showPhoto() {
                             });
                         });
                     });
-                   
+
 
                 } else {
                     $('#photo_item').modal('show');
@@ -433,6 +453,13 @@ function getEmojisInfo(obj) {
         }
     }));
 }
+
+function showPhotoPriceAndOption() {
+    // canvas.on('selection:updated', function () {
+    //     console.log('Event object:moving Triggered');
+    // });
+}
+
 
 function getPhotoSrcById(id, target) {
     let form_data = new FormData();
