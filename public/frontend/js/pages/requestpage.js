@@ -322,12 +322,13 @@ function addEmojisOnPhoto() {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
                         // oImg.selectable = false;
                         oImg.price = $('.emojis-price').val();
-                        oImg.on('mousedown', () => {
+                        oImg.on('mouseup', () => {
                             console.log(oImg.price);
                             console.log(oImg.left, oImg.top);
                             ctx1.font = "20px Arial";
                             ctx1.fillText("$" + oImg.price, oImg.left, oImg.top);
-
+                            ctx1.restore();
+                            ctx1.save();
                             // ctx1.fillText("$" + oImg.price, 10, 30);
                         });
                         canvas.add(oImg);
@@ -416,7 +417,7 @@ function showPhoto() {
                                 oImg.top = item.position[1];
                                 oImg.scaleX = item.size[0];
                                 oImg.scaleY = item.size[1];
-                                oImg.on('mousedown', e => {
+                                oImg.on('mouseup', e => {
                                     console.log(item.price);
                                     ctx2.font = "20px Arial";
                                     ctx2.fillText("$" + item.price, oImg.left, oImg.top);
