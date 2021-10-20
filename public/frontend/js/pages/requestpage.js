@@ -327,6 +327,9 @@ function addEmojisOnPhoto() {
                             console.log(oImg.left, oImg.top);
                             ctx1.font = "20px Arial";
                             ctx1.fillText("$" + oImg.price, oImg.left, oImg.top);
+                            if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
+                                canvas.remove(canvas.getActiveObject());
+                            }
                             // ctx1.fillText("$" + oImg.price, 10, 30);
                         });
                         canvas.add(oImg);
@@ -404,6 +407,7 @@ function showPhoto() {
                             oImg.top = item.position[1]
                             oImg.scaleX = item.size[0]
                             oImg.scaleY = item.size[1]
+                            oImg.angle = item.angle;
                             oImg.selectable = false;
                             photo_canvas.add(oImg);
                             resolve();
@@ -416,11 +420,12 @@ function showPhoto() {
                                 oImg.scaleX = item.size[0];
                                 oImg.scaleY = item.size[1];
                                 oImg.angle = item.angle;
-                                console.log(oImg.angle);
                                 oImg.on('mouseup', e => {
-                                    console.log(item.price);
                                     ctx2.font = "20px Arial";
                                     ctx2.fillText("$" + item.price, oImg.left, oImg.top);
+                                    if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                        photo_canvas.remove(photo_canvas.getActiveObject());
+                                    }
                                 });
                                 if (item.price > 0) {
                                     oImg.selectable = false;
