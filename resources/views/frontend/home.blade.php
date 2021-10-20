@@ -1342,7 +1342,7 @@
                                 <ul>
                                     <li><a data-bs-toggle="modal" data-bs-target="#photoRequestModal"><i
                                                 data-feather="camera"></i>Photo Request</a></li>
-                                    <li><a href="#"><i data-feather="image"></i>Media</a></li>
+                                    <li><a data-bs-toggle="modal" data-bs-target="#createPhoto"><i data-feather="image"></i>Media</a></li>
                                     <li><a href="#"><i data-feather="clipboard"> </i>File</a></li>
                                 </ul>
                             </div>
