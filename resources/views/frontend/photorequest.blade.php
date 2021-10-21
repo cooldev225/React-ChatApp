@@ -10,12 +10,13 @@
         <div id="image-processing">
             <ul class="switch-list">
                 <li>
-                    <input class="js-switch5 emojis-price" type="checkbox" />
+                    <input class="infinite-switch" type="checkbox" />
                     <h5>Infinite</h5>
                 </li>
             </ul>
-            <select class="form-select-sm emojis-price" aria-label="Default select example">
-                <option value="0" selected>$0</option>
+            <select class="form-select-sm emojis-price d-none" aria-label="Default select example">
+                <option value="-1" selected>Infinite</option>
+                <option value="0" selected>Free</option>
                 <option value="1">$1</option>
                 <option value="2">$2</option>
                 <option value="3">$5</option>

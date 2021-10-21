@@ -65,6 +65,14 @@ $(document).ready(() => {
             $('.chitchat-container').toggleClass("mobile-menu");
         }
     });
+    //createPhoto by click Media
+    $('#createPhotoBtn').on('click', () => {
+        $('#createPhoto').modal('show');
+        $('#createPhoto .switch-list').addClass('d-none');
+        $('#createPhoto .emojis-price').removeClass('d-none');
+        
+    });
+
 
     // $('ul.chat-main.request-list').on('click', 'li', (e) => {
     //     let from = $(e.currentTarget).data('from');

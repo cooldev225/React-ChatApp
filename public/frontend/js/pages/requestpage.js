@@ -25,10 +25,11 @@ photo_canvas.setDimensions({
 let ctx1 = canvas.getContext("2d");
 let ctx2 = photo_canvas.getContext("2d");
 
-
-
 $(document).ready(function () {
 
+    var elem = document.querySelector('.infinite-switch');
+    var init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
+    
     getRequestList();
     selectBackPhoto();
     blurPhoto();
