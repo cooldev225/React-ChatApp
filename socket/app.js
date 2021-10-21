@@ -10,19 +10,19 @@ const io = require('socket.io')(server, {
     }
 });
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "ldahkumy_ojochat",
-});
-
 // const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "ldahkumy_ojochat",
-//   password: "tempP@ss123",
-//   database: "ldahkumy_ojochat",
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "ldahkumy_ojochat",
 // });
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "ldahkumy_ojochat",
+  password: "tempP@ss123",
+  database: "ldahkumy_ojochat",
+});
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
