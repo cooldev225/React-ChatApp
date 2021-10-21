@@ -22,16 +22,14 @@
                 <option value="3">$5</option>
             </select>
             <div class="emojis">
-                <img src="/images/emojis/emojis1.png" draggable="true" />
-                <img src="/images/emojis/emojis2.png" draggable="true" />
-                <img src="/images/emojis/emojis1.png" draggable="true" />
-                <img src="/images/emojis/emojis2.png" draggable="true" />
-                <img src="/images/emojis/emojis1.png" draggable="true" />
-                <img src="/images/emojis/emojis2.png" draggable="true" />
-                <img src="/images/emojis/emojis1.png" draggable="true" />
-                <img src="/images/emojis/emojis2.png" draggable="true" />
-                <img src="/images/emojis/emojis1.png" draggable="true" />
-                <img src="/images/emojis/emojis2.png" draggable="true" />
+                <img src="/images/emojis/1 (1).png" draggable="true" />
+                <img src="/images/emojis/1 (2).png" draggable="true" />
+                <img src="/images/emojis/1 (3).png" draggable="true" />
+                <img src="/images/emojis/1 (4).png" draggable="true" />
+                <img src="/images/emojis/1 (5).png" draggable="true" />
+                <img src="/images/emojis/1 (6).png" draggable="true" />
+                <img src="/images/emojis/1 (7).png" draggable="true" />
+                <img src="/images/emojis/1 (8).png" draggable="true" />
             </div>
             <div class="blur">
                 <img src="/images/blur.png" alt="Blur">
