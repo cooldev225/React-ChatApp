@@ -8,6 +8,12 @@
 
         </canvas>
         <div id="image-processing">
+            <ul class="switch-list">
+                <li>
+                    <input class="js-switch5 emojis-price" type="checkbox" />
+                    <h5>Infinite</h5>
+                </li>
+            </ul>
             <select class="form-select-sm emojis-price" aria-label="Default select example">
                 <option value="0" selected>$0</option>
                 <option value="1">$1</option>
