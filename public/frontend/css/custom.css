@@ -48,6 +48,7 @@
 .d-flex {
     display: flex;
 }
+
 .d-none {
     display: none;
 }
@@ -111,7 +112,8 @@ ul.request-list li.sent {
 ul.request-list li .chat-box .date-status {
     top: -4px;
 }
-ul.request-list li .chat-box .date-status i{
+
+ul.request-list li .chat-box .date-status i {
     font-size: 15px;
     margin-left: 10px;
 }
@@ -150,6 +152,7 @@ ul.chatappend .msg-box div {
     font-weight: bold;
     color: darkred;
 }
+
 .input-file {
     display: none;
 }
@@ -161,10 +164,12 @@ ul.chatappend .msg-box div {
     cursor: pointer;
 }
 
-#back_canvas {
-    
+#back_canvas,
+#photo_canvas {
+
     border: 1px solid gray;
 }
+
 .canvas-container {
     flex-shrink: 0;
     width: 350px !important;
@@ -172,7 +177,10 @@ ul.chatappend .msg-box div {
     /* background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid gray; */
 }
-#back_canvas, .upper-canvas {
+
+#back_canvas,
+#photo_canvas,
+.upper-canvas {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%);
@@ -181,32 +189,39 @@ ul.chatappend .msg-box div {
 #createPhoto .modal-header {
     justify-content: flex-start;
 }
+
 #createPhoto .modal-title {
     margin-right: 25px;
 }
+
 .request-container {
     position: relative;
 }
+
 #image-processing {
     width: 105px;
     position: absolute;
     right: 0px;
     top: 0px;
 }
+
 .switch-list {
     margin-top: 0;
 }
+
 .emojis-price {
     background-color: darkgrey;
     font-size: 15px;
     padding: 2px 13px;
 }
+
 .emojis {
     width: 70px;
     height: 305px;
     margin-top: 8px;
     overflow: auto;
 }
+
 .emojis img {
     margin-bottom: 5px;
 }
@@ -219,6 +234,7 @@ ul.chatappend .msg-box div {
     top: 50px;
     right: -5px;
 }
+
 .blur .blur-range {
     -webkit-appearance: slider-vertical;
     width: 30px;
@@ -227,11 +243,13 @@ ul.chatappend .msg-box div {
     top: 90px;
     right: -5px;
 }
+
 #send-photo {
     position: absolute;
     bottom: 10px;
     right: -10px;
 }
+
 .receive_photo {
     cursor: pointer;
 }
@@ -245,7 +263,7 @@ ul.chatappend .msg-box div {
 }
 
 
-@media (max-width: 1199.98px) {    
+@media (max-width: 1199.98px) {
     .chitchat-main .messages .contact-details .left.media .media-body {
         display: block;
     }

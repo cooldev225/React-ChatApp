@@ -4,7 +4,7 @@
     <script src="/frontend/js/pages/fabric.js"></script>
 
     <div class="request-container">
-        <canvas id="back_canvas" width="350" height="350">
+        <canvas id="back_canvas">
 
         </canvas>
         <div id="image-processing">

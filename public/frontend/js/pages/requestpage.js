@@ -5,22 +5,10 @@ let canvas = new fabric.Canvas('back_canvas', {
     height: 350,
     preserveObjectStacking: true
 });
-canvas.setDimensions({
-    width: '350px',
-    height: '350px'
-}, {
-    cssOnly: true
-});
 let photo_canvas = new fabric.Canvas('photo_canvas', {
     width: 350,
     height: 350,
     preserveObjectStacking: true
-});
-photo_canvas.setDimensions({
-    width: '350px',
-    height: '350px'
-}, {
-    cssOnly: true
 });
 let ctx1 = canvas.getContext("2d");
 let ctx2 = photo_canvas.getContext("2d");
@@ -29,7 +17,7 @@ $(document).ready(function () {
 
     var elem = document.querySelector('.infinite-switch');
     var init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
-    
+
     getRequestList();
     selectBackPhoto();
     blurPhoto();
@@ -132,7 +120,7 @@ $(document).ready(function () {
             </li>`);
         };
         $('#detailRequestModal').modal("hide");
-        socket.emit('reject:request', );
+        socket.emit('reject:request',);
     });
 
 });
@@ -246,39 +234,44 @@ function selectBackPhoto() {
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function (oImg) {
                 ori_image = reader.result;
+                console.log(typeof ori_image);
                 globalImage = oImg;
 
                 let imgWidth = oImg.width;
                 let imgHeight = oImg.height;
-                if (imgWidth > 350 && imgHeight > 350) {
-                    canvas.setDimensions({
-                        width: '350px',
-                        height: '350px'
-                    }, {
-                        cssOnly: true
-                    });
-                }
-                if (imgWidth < 350 && imgHeight < 350) {
-                    canvas.setDimensions({
-                        width: imgWidth + 'px',
-                        height: imgHeight + 'px'
-                    }, {
-                        cssOnly: true
-                    });
-                }
-                let canvasWidth = canvas.getWidth();
-                let canvasHeight = canvas.getHeight();
-
                 let imgRatio = imgWidth / imgHeight;
-                let canvasRatio = canvasWidth / canvasHeight;
-                if (imgRatio <= canvasRatio) {
-                    oImg.scaleToHeight(canvasHeight);
+
+                if (imgWidth > 350 || imgHeight > 350) {
+                    if (imgWidth > imgHeight) {
+                        var width = 350;
+                        var height = width / imgRatio;
+                    } else {
+                        var height = 350;
+                        var width = height * imgRatio;
+                    }
+
                 } else {
-                    oImg.scaleToWidth(canvasWidth);
+                    var width = imgWidth;
+                    var height = imgHeight;
                 }
-                canvas.clear();
-                canvas.add(oImg);
-                canvas.centerObject(oImg);
+                canvas.setWidth(width);
+                canvas.setHeight(height);
+
+                canvas.setBackgroundImage(oImg, canvas.renderAll.bind(canvas), {
+                    scaleX: width / oImg.width,
+                    scaleY: height / oImg.height
+                });
+                ori_image = canvas.toDataURL('image/png');
+
+
+                // if (imgRatio < 0) {
+                //     oImg.scaleToHeight(canvas.getHeight());
+                // } else {
+                //     oImg.scaleToWidth(canvas.getWidth());
+                // }
+                // canvas.clear();
+                // canvas.add(oImg);
+                // canvas.centerObject(oImg);
 
             });
 
@@ -321,7 +314,24 @@ function addEmojisOnPhoto() {
             if (((new Date().getTime()) - touchtime) < 800) {
                 if (globalImage) {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
-                        // oImg.selectable = false;
+
+
+                        //defalut Scale
+                        // let defalutScaleX = 1;
+                        // let defalutScaleY = 1;
+                        // if (back.width < canvas.width && back.height < canvas.height) {
+                        //     defalutScaleX = parseFloat(canvas.width / back.width)
+                        //     defalutScaleY = parseFloat(canvas.height / back.height)
+                        // } else if (back.width > back.height) {
+                        //     defalutScaleY = parseFloat(back.width / back.height)
+                        // } else {
+                        //     defalutScaleX = parseFloat(back.height / back.width)
+                        // }
+                        // oImg.scaleX = defalutScaleX
+                        // oImg.scaleY = defalutScaleY
+
+                        // canvas.renderAll()
+
                         oImg.price = $('.emojis-price').val();
                         oImg.on('mouseup', () => {
                             console.log(oImg.price);
@@ -333,9 +343,12 @@ function addEmojisOnPhoto() {
                             }
                             // ctx1.fillText("$" + oImg.price, 10, 30);
                         });
+
                         canvas.add(oImg);
                         canvas.centerObject(oImg);
                     });
+                } else {
+                    console.log('Please choose Background Image first.');
                 }
                 touchtime = 0;
             } else {
@@ -352,6 +365,7 @@ function sendPhoto() {
         data.from = currentUserId;
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
+        data.back = ori_image;
         data.blur = $('.blur-range').val();
         data.content = getEmojisInfo(canvas._objects);
         socket.emit('send:photo', data);
@@ -373,78 +387,78 @@ function sendPhoto() {
                 </div>
             </div>
         </li>`);
-
     });
 }
 
 function showPhoto() {
     $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
         let id = $(e.currentTarget).closest('li').attr('key');
-        var form_data = new FormData();
-        form_data.append('id', id);
-        $.ajax({
-            url: '/home/getPhotoData',
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: "json",
-            success: function (res) {
-                if (res.state == 'true') {
-                    let data = JSON.parse(res.data[0].content);
+        if (id) {
+            var form_data = new FormData();
+            form_data.append('id', id);
+            $.ajax({
+                url: '/home/getPhotoData',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state == 'true') {
+                        console.log(res.data);
+                        let emojis = JSON.parse(res.data[0].content);
 
-                    $('#photo_item').modal('show');
-                    photo_canvas.clear();
-
-                    // $('#photo_item .modal-content img').attr('src', image);
-                    new Promise(resolve => {
-                        let item = data[0];
-                        fabric.Image.fromURL(item.src, function (oImg) {
-                            oImg.left = item.position[0]
-                            oImg.top = item.position[1]
-                            oImg.scaleX = item.size[0]
-                            oImg.scaleY = item.size[1]
-                            oImg.angle = item.angle;
-                            oImg.selectable = false;
-                            photo_canvas.add(oImg);
-                            resolve();
-                        });
-                    }).then(() => {
-                        data.filter((item, index) => index != 0).forEach(item => {
-                            fabric.Image.fromURL(item.src, function (oImg) {
-                                oImg.left = item.position[0];
-                                oImg.top = item.position[1];
-                                oImg.scaleX = item.size[0];
-                                oImg.scaleY = item.size[1];
-                                oImg.angle = item.angle;
-                                oImg.on('mouseup', e => {
-                                    ctx2.font = "20px Arial";
-                                    ctx2.fillText("$" + item.price, oImg.left, oImg.top);
-                                    if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
-                                        photo_canvas.remove(photo_canvas.getActiveObject());
+                        $('#photo_item').modal('show');
+                        photo_canvas.clear();
+                        console.log(typeof res.data[0].back);
+                        // $('#photo_item .modal-content img').attr('src', image);
+                        new Promise(resolve => {
+                            fabric.Image.fromURL(res.data[0].back, function (oImg) {
+                                photo_canvas.setWidth(oImg.width);
+                                photo_canvas.setHeight(oImg.height);
+                                photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
+                                resolve();
+                            });
+                        }).then(() => {
+                            emojis.forEach(item => {
+                                fabric.Image.fromURL(item.src, function (oImg) {
+                                    oImg.left = item.position[0];
+                                    oImg.top = item.position[1];
+                                    oImg.scaleX = item.size[0];
+                                    oImg.scaleY = item.size[1];
+                                    oImg.angle = item.angle;
+                                    oImg.on('mouseup', e => {
+                                        ctx2.font = "20px Arial";
+                                        ctx2.fillText("$" + item.price, oImg.left, oImg.top);
+                                        if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                            photo_canvas.remove(photo_canvas.getActiveObject());
+                                        }
+                                    });
+                                    if (item.price > 0) {
+                                        oImg.selectable = false;
                                     }
+                                    photo_canvas.add(oImg);
                                 });
-                                if (item.price > 0) {
-                                    oImg.selectable = false;
-                                }
-                                photo_canvas.add(oImg);
                             });
                         });
-                    });
-                } else {
-                    $('#photo_item').modal('show');
-                    let image = $(e.currentTarget).attr('src');
-                    $('#photo_item .modal-content img').attr('src', image);
-                }
-            },
-            error: function (response) {
+                    } else {
+                        $('#photo_item').modal('show');
+                        let image = $(e.currentTarget).attr('src');
+                        $('#photo_item .modal-content img').attr('src', image);
+                    }
+                },
+                error: function (response) {
 
-            }
-        });
+                }
+            });
+        } else {
+            $('#createPhoto').modal('show');
+        }
+
     });
 }
 
