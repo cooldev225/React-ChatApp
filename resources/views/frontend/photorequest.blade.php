@@ -22,6 +22,8 @@
                 <option value="3">$5</option>
             </select>
             <div class="emojis">
+                <img src="/images/emojis/2.svg" draggable="true" />
+                <img src="/images/emojis/4.svg" draggable="true" />
                 <img src="/images/emojis/1 (1).png" draggable="true" />
                 <img src="/images/emojis/1 (2).png" draggable="true" />
                 <img src="/images/emojis/1 (3).png" draggable="true" />

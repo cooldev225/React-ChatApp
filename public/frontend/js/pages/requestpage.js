@@ -10,8 +10,22 @@ let photo_canvas = new fabric.Canvas('photo_canvas', {
     height: 350,
     preserveObjectStacking: true
 });
-let ctx1 = canvas.getContext("2d");
-let ctx2 = photo_canvas.getContext("2d");
+// let ctx1 = canvas.getContext("2d");
+// let ctx2 = photo_canvas.getContext("2d");
+let lockImage;
+let unlockImage;
+let priceImage;
+fabric.Image.fromURL('/images/lock.png', (oImg) => {
+    lockImage = oImg;
+});
+fabric.Image.fromURL('/images/unlock.png', (oImg) => {
+    unlockImage = oImg;
+});
+fabric.Image.fromURL('/images/normal.png', (oImg) => {
+    priceImage = oImg;
+});
+
+
 
 $(document).ready(function () {
 
@@ -227,7 +241,6 @@ function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
 
 function selectBackPhoto() {
     let photoFileInput = $('#input_file')
-    // var canvas = new fabric.Canvas('back_canvas');
     photoFileInput.on('change', (e) => {
         let reader = new FileReader();
         files = e.target.files;
@@ -262,16 +275,6 @@ function selectBackPhoto() {
                     scaleY: height / oImg.height
                 });
                 ori_image = canvas.toDataURL('image/png');
-
-
-                // if (imgRatio < 0) {
-                //     oImg.scaleToHeight(canvas.getHeight());
-                // } else {
-                //     oImg.scaleToWidth(canvas.getWidth());
-                // }
-                // canvas.clear();
-                // canvas.add(oImg);
-                // canvas.centerObject(oImg);
 
             });
 
@@ -314,34 +317,20 @@ function addEmojisOnPhoto() {
             if (((new Date().getTime()) - touchtime) < 800) {
                 if (globalImage) {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
-
-
-                        //defalut Scale
-                        // let defalutScaleX = 1;
-                        // let defalutScaleY = 1;
-                        // if (back.width < canvas.width && back.height < canvas.height) {
-                        //     defalutScaleX = parseFloat(canvas.width / back.width)
-                        //     defalutScaleY = parseFloat(canvas.height / back.height)
-                        // } else if (back.width > back.height) {
-                        //     defalutScaleY = parseFloat(back.width / back.height)
-                        // } else {
-                        //     defalutScaleX = parseFloat(back.height / back.width)
-                        // }
-                        // oImg.scaleX = defalutScaleX
-                        // oImg.scaleY = defalutScaleY
-
-                        // canvas.renderAll()
-
                         oImg.price = $('.emojis-price').val();
                         oImg.on('mouseup', () => {
                             console.log(oImg.price);
                             console.log(oImg.left, oImg.top);
-                            ctx1.font = "20px Arial";
-                            ctx1.fillText("$" + oImg.price, oImg.left, oImg.top);
                             if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
                                 canvas.remove(canvas.getActiveObject());
                             }
-                            // ctx1.fillText("$" + oImg.price, 10, 30);
+                            lockImage.scale(0.5);
+                            lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
+                            lockImage.top = oImg.top - 0.25 * lockImage.height;
+                            canvas.add(lockImage);
+                            setTimeout(() => {
+                                canvas.remove(lockImage);
+                            }, 1500);
                         });
 
                         canvas.add(oImg);
@@ -432,11 +421,21 @@ function showPhoto() {
                                     oImg.scaleY = item.size[1];
                                     oImg.angle = item.angle;
                                     oImg.on('mouseup', e => {
-                                        ctx2.font = "20px Arial";
-                                        ctx2.fillText("$" + item.price, oImg.left, oImg.top);
                                         if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
                                             photo_canvas.remove(photo_canvas.getActiveObject());
+                                            alert('item is removed');
                                         }
+                                        // ctx2.font = "20px Arial";
+                                        // ctx2.fillText("$" + item.price, oImg.left, oImg.top);
+                                        lockImage.scale(0.5);
+                                        lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
+                                        lockImage.top = oImg.top - 0.25 * lockImage.height;
+                                        photo_canvas.add(lockImage);
+                                        setTimeout(() => {
+                                            photo_canvas.remove(lockImage);
+                                        }, 1500);
+
+
                                     });
                                     if (item.price > 0) {
                                         oImg.selectable = false;
