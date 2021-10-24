@@ -195,14 +195,14 @@ ul.chatappend .msg-box div {
 }
 
 .request-container {
-    position: relative;
+    display: flex;
 }
 
 #image-processing {
-    width: 105px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
 }
 
 .switch-list {
@@ -212,13 +212,13 @@ ul.chatappend .msg-box div {
 .emojis-price {
     background-color: darkgrey;
     font-size: 15px;
-    padding: 2px 13px;
+    padding: 2px 0px;
 }
 
 .emojis {
     width: 70px;
-    height: 305px;
-    margin-top: 8px;
+    height: 325px;
+    margin-right: 5px;    
     overflow: auto;
 }
 
@@ -228,28 +228,8 @@ ul.chatappend .msg-box div {
     height: 50px;
 }
 
-.blur img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50px;
-    right: -5px;
-}
-
-.blur .blur-range {
-    -webkit-appearance: slider-vertical;
-    width: 30px;
-    height: 180px;
-    position: absolute;
-    top: 90px;
-    right: -5px;
-}
-
-#send-photo {
-    position: absolute;
-    bottom: 10px;
-    right: -10px;
+.save-send button {
+    margin: 25px 0;
 }
 
 .receive_photo {

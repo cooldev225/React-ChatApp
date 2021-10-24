@@ -324,6 +324,7 @@ function addEmojisOnPhoto() {
                             if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
                                 canvas.remove(canvas.getActiveObject());
                             }
+                            
                             lockImage.scale(0.5);
                             lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
                             lockImage.top = oImg.top - 0.25 * lockImage.height;
