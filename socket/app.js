@@ -29,9 +29,9 @@ let socket_userMap = new Map();
 
 const cors = require('cors');
 
-app.use(cors({
-    origin: '*'
-}));
+// app.use(cors({
+//     origin: '*'
+// }));
 
 io.on('connection', (socket) => {
     let currentUserId = socket.handshake.query.currentUserId;
