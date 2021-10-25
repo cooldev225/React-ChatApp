@@ -343,6 +343,9 @@ function addEmojisOnPhoto() {
                             tempImage.scale(0.5);
                             tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
                             tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                            if (oImg.aCoords.tr.y < 30)
+                                tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
+
                             canvas.add(tempImage);
                             if (oImg.price > 0) {
                                 ctx1.font = "50px Arial";
