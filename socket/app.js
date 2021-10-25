@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
     socket.on('send:photo', data => {
         if (data.to) {
             let socketId = user_socketMap.get(data.to.toString());
-            console.log(data);
+            console.log(data.to);
             console.log("socketId: ", socketId)
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
