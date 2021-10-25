@@ -11,19 +11,19 @@ const io = require('socket.io')(server, {
     }
 });
 
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "ldahkumy_ojochat",
-// });
-
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "ldahkumy_ojochat",
-  password: "tempP@ss123",
-  database: "ldahkumy_ojochat",
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "ldahkumy_ojochat",
 });
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "ldahkumy_ojochat",
+//   password: "tempP@ss123",
+//   database: "ldahkumy_ojochat",
+// });
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
@@ -90,8 +90,10 @@ io.on('connection', (socket) => {
     socket.on('send:photo', data => {
         if (data.to) {
             let socketId = user_socketMap.get(data.to.toString());
-            console.log(data.to);
-            console.log("socketId: ", socketId)
+            console.log(data.blur);
+            data.blur = 0;
+            console.log("socketId: ", socketId);
+            
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
                 console.log('Gallery', data.id);
