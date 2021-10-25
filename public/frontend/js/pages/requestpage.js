@@ -343,6 +343,9 @@ function addEmojisOnPhoto() {
                             tempImage.scale(0.5);
                             tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
                             tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                            if (oImg.aCoords.tr.x + 30 > canvas.width) {
+                                tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
+                            }
                             if (oImg.aCoords.tr.y < 30)
                                 tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
 
