@@ -348,9 +348,9 @@ function addEmojisOnPhoto() {
                                 ctx1.font = "50px Arial";
                                 ctx1.fillText("$" + oImg.price, 100, 50);
                             }
-                            // setTimeout(() => {
-                            //     canvas.remove(tempImage);
-                            // }, timeout);
+                            setTimeout(() => {
+                                canvas.remove(tempImage);
+                            }, timeout);
                         });
 
                         canvas.add(oImg);
