@@ -354,6 +354,9 @@ function addEmojisOnPhoto() {
                                 ctx1.font = "50px Arial";
                                 ctx1.fillText("$" + oImg.price, 100, 50);
                             }
+                            if (oImg.price == -1) {
+                                oImg.selectable = false;
+                            }
                             setTimeout(() => {
                                 canvas.remove(tempImage);
                             }, timeout);
@@ -446,27 +449,58 @@ function showPhoto() {
                                     oImg.scaleX = item.size[0];
                                     oImg.scaleY = item.size[1];
                                     oImg.angle = item.angle;
-                                    oImg.on('mouseup', e => {
-                                        if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
-                                            photo_canvas.remove(photo_canvas.getActiveObject());
-                                            alert('item is removed');
-                                        }
-                                        // ctx2.font = "20px Arial";
-                                        // ctx2.fillText("$" + item.price, oImg.left, oImg.top);
-                                        lockImage.scale(0.5);
-                                        lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
-                                        lockImage.top = oImg.top - 0.25 * lockImage.height;
-                                        photo_canvas.add(lockImage);
-                                        setTimeout(() => {
-                                            photo_canvas.remove(lockImage);
-                                        }, 1500);
-
-
-                                    });
-                                    if (item.price > 0) {
+                                    oImg.price = item.price;
+                                    console.log(item.price)
+                                    if (item.price != 0) {
                                         oImg.selectable = false;
                                     }
                                     photo_canvas.add(oImg);
+                                    oImg.on('mouseup', e => {
+                                        // if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                        //     photo_canvas.remove(photo_canvas.getActiveObject());
+                                        //     alert('item is removed');
+                                        // }
+                                        // // ctx2.font = "20px Arial";
+                                        // // ctx2.fillText("$" + item.price, oImg.left, oImg.top);
+                                        // lockImage.scale(0.5);
+                                        // lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
+                                        // lockImage.top = oImg.top - 0.25 * lockImage.height;
+                                        // photo_canvas.add(lockImage);
+                                        // setTimeout(() => {
+                                        //     photo_canvas.remove(lockImage);
+                                        // }, 1500);
+                                        let tempImage;
+                                        let timeout = 1500;
+                                        
+                                        if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                            photo_canvas.remove(photo_canvas.getActiveObject());
+                                        }
+                                        if (oImg.price == -1) tempImage = lockImage;
+                                        else if (oImg.price == 0) tempImage = unlockImage;
+                                        else {
+                                            tempImage = priceImage;
+                                            timeout = 5000;
+                                        }
+                                        tempImage.scale(0.5);
+                                        tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
+                                        tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                                        if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
+                                            tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
+                                        }
+                                        if (oImg.aCoords.tr.y < 30)
+                                            tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
+
+                                        photo_canvas.add(tempImage);
+                                        if (oImg.price > 0) {
+                                            ctx1.font = "50px Arial";
+                                            ctx1.fillText("$" + oImg.price, 100, 50);
+                                        }
+                                        setTimeout(() => {
+                                            photo_canvas.remove(tempImage);
+                                        }, timeout);
+
+
+                                    });
                                 });
                             });
                         });
@@ -494,7 +528,8 @@ function getEmojisInfo(obj) {
             size: [item.scaleX, item.scaleY],
             position: [item.left, item.top],
             angle: item.angle,
-            price: item.price
+            price: item.price,
+            selectable: item.selectable
         }
     }));
 }
