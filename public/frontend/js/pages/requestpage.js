@@ -340,14 +340,8 @@ function addEmojisOnPhoto() {
                                 tempImage = priceImage;
                                 timeout = 5000;
                             }
-                            console.log(oImg.angle.toFixed(2));
-                            let radius = Math.sqrt(Math.pow(oImg.width, 2) + Math.pow(oImg.height, 2)) / 2;
-                            let topDelta = (1 - Math.cos(oImg.angle * Math.PI / 180)) * radius;
-                            let leftDelta = Math.sin(oImg.angle * Math.PI / 180) * radius;
-                            console.log(topDelta.toFixed(2));
-                            console.log(leftDelta.toFixed(2));
                             tempImage.scale(0.5);
-                            tempImage.left = oImg.aCoords.tr.x + oImg.width * oImg.scaleX - 0.25 * tempImage.width;
+                            tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
                             tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
                             canvas.add(tempImage);
                             if (oImg.price > 0) {
