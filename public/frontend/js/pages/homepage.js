@@ -69,8 +69,12 @@ $(document).ready(() => {
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
         $('#createPhoto .switch-list').addClass('d-none');
-        $('#createPhoto .emojis-price').removeClass('d-none');
-        
+        $('#createPhoto .emojis-price').removeClass('d-none');   
+    });
+    $('#acceptPhotoRequestBtn').on('click', () => {
+        // $('#createPhoto').modal('show');
+        $('#createPhoto .switch-list').removeClass('d-none');
+        $('#createPhoto .emojis-price').addClass('d-none');   
     });
 
 

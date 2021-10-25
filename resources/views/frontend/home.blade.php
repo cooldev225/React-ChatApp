@@ -3493,7 +3493,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success button-effect btn-sm" type="button" data-bs-dismiss="modal"
+                    <button class="btn btn-success button-effect btn-sm" id="acceptPhotoRequestBtn" type="button" data-bs-dismiss="modal"
                         data-bs-toggle="modal" data-bs-target="#createPhoto">Accept</button>
                     <button class="btn btn-primary button-effect btn-sm" type="button"
                         data-bs-dismiss="modal ">Raise</button>

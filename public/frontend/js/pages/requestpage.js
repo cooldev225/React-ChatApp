@@ -10,8 +10,8 @@ let photo_canvas = new fabric.Canvas('photo_canvas', {
     height: 350,
     preserveObjectStacking: true
 });
-// let ctx1 = canvas.getContext("2d");
-// let ctx2 = photo_canvas.getContext("2d");
+let ctx1 = canvas.getContext("2d");
+let ctx2 = photo_canvas.getContext("2d");
 let lockImage;
 let unlockImage;
 let priceImage;
@@ -101,8 +101,12 @@ $(document).ready(function () {
         $(e.currentTarget).find('.read-status').removeClass('fa-eye-slash');
         $(e.currentTarget).find('.read-status').addClass('fa-eye');
         // currentContactId = to;
-        if (currentContactId)
-            setCurrentChatContent(currentContactId);
+        if (currentUserId == from && currentContactId != to) {
+            setCurrentChatContent(to);
+        } else if (currentUserId == to && currentContactId != from) {
+            setCurrentChatContent(from);
+        }
+        currentUserId == from ? setCurrentChatContent(to) : setCurrentChatContent(from);
 
         if (e.currentTarget.className.includes('sent')) {
             $('#detailRequestModal').find('.btn-success').css('display', 'none');
@@ -317,21 +321,40 @@ function addEmojisOnPhoto() {
             if (((new Date().getTime()) - touchtime) < 800) {
                 if (globalImage) {
                     fabric.Image.fromURL(e.target.src, function (oImg) {
-                        oImg.price = $('.emojis-price').val();
+                        if ($('#createPhoto .switch-list').hasClass('d-none')) {
+                            oImg.price = $('.emojis-price').val();
+                        } else {
+                            $('.infinite-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+                        }
+                        console.log(oImg.price);
+
                         oImg.on('mouseup', () => {
-                            console.log(oImg.price);
-                            console.log(oImg.left, oImg.top);
+                            let tempImage;
+                            let timeout = 1500;
                             if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
                                 canvas.remove(canvas.getActiveObject());
                             }
-                            
-                            lockImage.scale(0.5);
-                            lockImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * lockImage.width;
-                            lockImage.top = oImg.top - 0.25 * lockImage.height;
-                            canvas.add(lockImage);
-                            setTimeout(() => {
-                                canvas.remove(lockImage);
-                            }, 1500);
+                            if (oImg.price == -1) tempImage = lockImage;
+                            else if (oImg.price == 0) tempImage = unlockImage;
+                            else {
+                                tempImage = priceImage;
+                                timeout = 5000;
+                            }
+                            console.log(oImg.angle);
+                            console.log(Math.sin(oImg.angle * Math.PI / 180));
+                            let topDelta = Math.sin(oImg.angle * Math.PI / 180) * oImg.width;
+                            console.log(topDelta);
+                            tempImage.scale(0.5);
+                            tempImage.left = oImg.left + oImg.width * oImg.scaleX - 0.25 * tempImage.width;
+                            tempImage.top = oImg.top - 0.25 * tempImage.height + topDelta;
+                            canvas.add(tempImage);
+                            if (oImg.price > 0) {
+                                ctx1.font = "50px Arial";
+                                ctx1.fillText("$" + oImg.price, 100, 50);
+                            }
+                            // setTimeout(() => {
+                            //     canvas.remove(tempImage);
+                            // }, timeout);
                         });
 
                         canvas.add(oImg);
