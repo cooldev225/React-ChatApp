@@ -498,8 +498,6 @@ function showPhoto() {
                                         setTimeout(() => {
                                             photo_canvas.remove(tempImage);
                                         }, timeout);
-
-
                                     });
                                 });
                             });

@@ -107,7 +107,6 @@ function getRecentChatUsers() {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
-               
                 let { recentChatUsers, lastChatUserId } = res;
                 currentContactId = lastChatUserId;
                 let userListTarget = $('.recent-default .recent-chat-list');
@@ -197,6 +196,7 @@ function setCurrentChatContent(contactorId, resolve) {
                         }
                         data.kind = item.kind;
                         data.content = item.content;
+                        data.created_at = item.created_at;
                         addChatItem(target, data);
                     });
                 }
@@ -380,6 +380,8 @@ function typingMessage() {
 
 
 function addChatItem(target, data) {
+    let time = new Date(data.created_at);
+    console.log(time);
     $(target).append(`<li class="${data.type}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
@@ -387,7 +389,7 @@ function addChatItem(target, data) {
             <div class="media-body">
                 <div class="contact-name">
                     <h5>${data.username}</h5>
-                    <h6>01:42 AM</h6>
+                    <h6>${time.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
 
                         ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' : data.kind == 1 ? '<li><div>$' + data.content + '</div></li>' : '<li key="' + data.content[0] +'"><img class="receive_photo" src="' + data.content[1] +'"></li>'}
