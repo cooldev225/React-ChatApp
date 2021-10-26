@@ -343,7 +343,7 @@ function addContact() {
 function newMessage() {
     let data = usersList.find(user => user.id == currentUserId);
     var message = $('.message-input input').val();
-
+    let date = new Date();
     if ($.trim(message) == '') {
         return false;
     }
@@ -354,7 +354,7 @@ function newMessage() {
             <div class="media-body">
                 <div class="contact-name">
                     <h5>${currentUsername}</h5>
-                    <h6>01:42 AM</h6>
+                    <h6>${date.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
                         <li><h5>${message}</h5></li>
                     </ul>
