@@ -381,7 +381,6 @@ function typingMessage() {
 
 function addChatItem(target, data) {
     let time = new Date(data.created_at);
-    console.log(time);
     $(target).append(`<li class="${data.type}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">

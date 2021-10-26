@@ -71,7 +71,6 @@ $(document).ready(function () {
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
         let target = '.contact-chat ul.chatappend';
-        console.log(data.id);
         $(target).append(`<li class="sent" key="${data.id}">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
@@ -251,7 +250,6 @@ function selectBackPhoto() {
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function (oImg) {
                 ori_image = reader.result;
-                console.log(typeof ori_image);
                 globalImage = oImg;
 
                 let imgWidth = oImg.width;
@@ -326,7 +324,6 @@ function addEmojisOnPhoto() {
                         } else {
                             $('.infinite-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                         }
-                        console.log(oImg.price);
 
                         oImg.on('mouseup', () => {
                             let tempImage;
@@ -348,7 +345,7 @@ function addEmojisOnPhoto() {
                             }
                             if (oImg.aCoords.tr.y < 30)
                                 tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-
+                            tempImage.kind = 'temp';
                             canvas.add(tempImage);
                             if (oImg.price > 0) {
                                 ctx1.font = "50px Arial";
@@ -379,6 +376,7 @@ function addEmojisOnPhoto() {
 
 function sendPhoto() {
     $('#send-photo').on('click', () => {
+        canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
         let data = {};
         data.from = currentUserId;
         data.to = currentContactId;
@@ -427,12 +425,10 @@ function showPhoto() {
                 dataType: "json",
                 success: function (res) {
                     if (res.state == 'true') {
-                        console.log(res.data);
                         let emojis = JSON.parse(res.data[0].content);
 
                         $('#photo_item').modal('show');
                         photo_canvas.clear();
-                        console.log(typeof res.data[0].back);
                         // $('#photo_item .modal-content img').attr('src', image);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
@@ -450,7 +446,6 @@ function showPhoto() {
                                     oImg.scaleY = item.size[1];
                                     oImg.angle = item.angle;
                                     oImg.price = item.price;
-                                    console.log(item.price)
                                     if (item.price != 0) {
                                         oImg.selectable = false;
                                     }
@@ -479,7 +474,7 @@ function showPhoto() {
                                         else if (oImg.price == 0) tempImage = unlockImage;
                                         else {
                                             tempImage = priceImage;
-                                            timeout = 5000;
+                                            timeout = 2000;
                                         }
                                         tempImage.scale(0.5);
                                         tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
@@ -489,7 +484,7 @@ function showPhoto() {
                                         }
                                         if (oImg.aCoords.tr.y < 30)
                                             tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-
+                                        tempImage.kind="temp";
                                         photo_canvas.add(tempImage);
                                         if (oImg.price > 0) {
                                             ctx1.font = "50px Arial";
@@ -520,7 +515,7 @@ function showPhoto() {
 }
 
 function getEmojisInfo(obj) {
-    return JSON.stringify(obj.map((item, index) => {
+    return JSON.stringify(obj.filter((item => item.kind != 'temp')).map((item, index) => {
         return {
             src: item._element.src,
             size: [item.scaleX, item.scaleY],
@@ -555,7 +550,6 @@ function getPhotoSrcById(id, target) {
             type: 'POST',
             dataType: "json",
             success: function (res) {
-                console.log(res);
                 if (res.state == 'true') {
                     let data = JSON.parse(res.data[0].content);
                     // return res.data[0].photo;
