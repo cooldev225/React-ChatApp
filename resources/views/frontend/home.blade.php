@@ -3531,8 +3531,14 @@
     <div class="modal fade add-popup request-modal" id="photo_item" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                {{-- <img src="" alt=""> --}}
-                <canvas id="photo_canvas" width="350" height="350"></canvas>
+                
+                <canvas id="photo_canvas"></canvas>
+                <div class="btn-group">
+                    <div class="photo-price">$10</div>
+                    <a class="btn btn-primary" href="#" target="">Pay</a>
+                    <a class="btn btn-primary" href="#" target="">Share</a>
+                    <a class="btn btn-primary" href="#" target="">Cancel</a>
+                </div>
             </div>
         </div>
     </div>

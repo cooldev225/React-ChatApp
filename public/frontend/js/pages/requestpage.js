@@ -482,7 +482,7 @@ function showPhoto() {
                                     photo_canvas.add(oImg);
                                     oImg.on({
                                         'mouseup': () => {
-                                            let timeout = 1500;
+                                            let timeout = 2000;
                                             if (tempImage) photo_canvas.remove(tempImage);
                                             if (text) photo_canvas.remove(text);
 
@@ -525,8 +525,6 @@ function showPhoto() {
                                                 photo_canvas.add(text);
                                                 text.on('mouseup', () => {
                                                     console.log(oImg.price);
-
-
                                                 });
                                             }
 
