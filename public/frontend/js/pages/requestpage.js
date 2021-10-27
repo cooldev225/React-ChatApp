@@ -1,5 +1,7 @@
 let globalImage;
 let ori_image;
+let tempImage;
+let text;
 let canvas = new fabric.Canvas('back_canvas', {
     width: 350,
     height: 350,
@@ -39,6 +41,8 @@ $(document).ready(function () {
     sendPhoto();
     showPhoto();
     showPhotoPriceAndOption();
+    showPayButtonOnCanvas();
+
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -327,16 +331,19 @@ function addEmojisOnPhoto() {
 
                         oImg.on({
                             'mouseup': () => {
-                                let tempImage;
+                                if (tempImage) canvas.remove(tempImage);
+                                if (text) canvas.remove(text);
                                 let timeout = 1500;
                                 if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
                                     canvas.remove(canvas.getActiveObject());
+                                    canvas.remove(tempImage);
+                                    canvas.remove(text);
                                 }
                                 if (oImg.price == -1) tempImage = lockImage;
                                 else if (oImg.price == 0) tempImage = unlockImage;
                                 else {
                                     tempImage = priceImage;
-                                    timeout = 5000;
+                                    timeout = 3000;
                                 }
                                 tempImage.scale(0.5);
                                 tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
@@ -351,7 +358,7 @@ function addEmojisOnPhoto() {
                                 tempImage.hasControls = false;
                                 canvas.add(tempImage);
                                 if (oImg.price > 0) {
-                                    var text = new fabric.Text('$' + oImg.price, {
+                                    text = new fabric.Text('$' + oImg.price, {
                                         left: tempImage.left + 2,
                                         top: tempImage.top + 2,
                                         fontFamily: 'Ubuntu',
@@ -360,6 +367,8 @@ function addEmojisOnPhoto() {
                                         fontSize: '20'
                                     });
                                     text.kind = 'temp';
+                                    text.selectable = false;
+                                    text.hasControls = false;
                                     canvas.add(text);
                                 }
                                 if (oImg.price == -1) {
@@ -369,8 +378,14 @@ function addEmojisOnPhoto() {
                                     canvas.remove(tempImage);
                                     canvas.remove(text);
                                 }, timeout);
+                            },
+                            'moving': () => {
+                                if (tempImage)
+                                    canvas.remove(tempImage);
+                                if (text)
+                                    canvas.remove(text);
                             }
-                        
+
                         });
 
                         canvas.add(oImg);
@@ -464,44 +479,60 @@ function showPhoto() {
                                         oImg.selectable = false;
                                     }
                                     photo_canvas.add(oImg);
-                                    oImg.on('mouseup', e => {
+                                    oImg.on({
+                                        'mouseup': () => {
+                                            let timeout = 1500;
+                                            if (tempImage) photo_canvas.remove(tempImage);
+                                            if (text) photo_canvas.remove(text);
 
-                                        let tempImage;
-                                        let timeout = 1500;
+                                            if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                                photo_canvas.remove(photo_canvas.getActiveObject());
+                                                photo_canvas.remove(tempImage);
+                                                photo_canvas.remove(text);
+                                            }
+                                            if (oImg.price == -1) tempImage = lockImage;
+                                            else if (oImg.price == 0) tempImage = unlockImage;
+                                            else {
+                                                tempImage = priceImage;
+                                                timeout = 3000;
+                                            }
+                                            tempImage.scale(0.5);
+                                            tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
+                                            tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                                            if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
+                                                tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
+                                            }
+                                            if (oImg.aCoords.tr.y < 30)
+                                                tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
+                                            tempImage.kind = "temp";
+                                            tempImage.selectable = false;
+                                            tempImage.hasControls = false;
+                                            photo_canvas.add(tempImage);
+                                            if (oImg.price > 0) {
+                                                text = new fabric.Text('$' + oImg.price, {
+                                                    left: tempImage.left + 2,
+                                                    top: tempImage.top + 2,
+                                                    fontFamily: 'Ubuntu',
+                                                    fontWeight: 'bold',
+                                                    fontStyle: 'italic',
+                                                    fontSize: '20'
+                                                });
+                                                text.kind = 'temp';
+                                                text.selectable = false;
+                                                text.hasControls = false;
+                                                photo_canvas.add(text);
+                                            }
 
-                                        if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
-                                            photo_canvas.remove(photo_canvas.getActiveObject());
-                                        }
-                                        if (oImg.price == -1) tempImage = lockImage;
-                                        else if (oImg.price == 0) tempImage = unlockImage;
-                                        else {
-                                            tempImage = priceImage;
-                                            timeout = 2000;
-                                        }
-                                        tempImage.scale(0.5);
-                                        tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
-                                        tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
-                                        if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
-                                            tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
-                                        }
-                                        if (oImg.aCoords.tr.y < 30)
-                                            tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-                                        tempImage.kind = "temp";
-                                        photo_canvas.add(tempImage);
-                                        if (oImg.price > 0) {
-                                            let text = new fabric.Text('$' + oImg.price, {
-                                                left: 10,
-                                                top: 20,
-                                                fontFamily: 'Ubuntu',
-                                                fontWeight: 'bold',
-                                                fontStyle: 'italic',
-                                                fontSize: '20'
-                                            });
-                                            canvas.add(text);
-                                        }
-                                        setTimeout(() => {
+                                            setTimeout(() => {
+                                                photo_canvas.remove(tempImage);
+                                                photo_canvas.remove(text);
+
+                                            }, timeout);
+                                        },
+                                        'moving': () => {
                                             photo_canvas.remove(tempImage);
-                                        }, timeout);
+                                            photo_canvas.remove(text);
+                                        }
                                     });
                                 });
                             });
@@ -542,7 +573,6 @@ function showPhotoPriceAndOption() {
     // });
 }
 
-
 function getPhotoSrcById(id, target) {
     let form_data = new FormData();
     form_data.append('id', id);
@@ -574,4 +604,8 @@ function getPhotoSrcById(id, target) {
     }).then(v => {
         target.find('.receive_photo').src = v;
     });
+}
+
+function showPayButtonOnCanvas() {
+
 }
