@@ -20,7 +20,11 @@
                     <option value="0" selected>Free</option>
                     <option value="1">$1</option>
                     <option value="2">$2</option>
-                    <option value="3">$5</option>
+                    <option value="5">$5</option>
+                    <option value="10">$10</option>
+                    <option value="15">$15</option>
+                    <option value="20">$20</option>
+                    <option value="25">$25</option>
                 </select>
                 <div class="emojis">
                     <img src="/images/emojis/1 (1).svg" draggable="true" />

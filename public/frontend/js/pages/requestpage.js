@@ -346,6 +346,7 @@ function addEmojisOnPhoto() {
                                     timeout = 3000;
                                 }
                                 tempImage.scale(0.5);
+                                if (oImg.price > 9) tempImage.scaleX *= 1.2;
                                 tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
                                 tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
                                 if (oImg.aCoords.tr.x + 30 > canvas.width) {
@@ -359,12 +360,12 @@ function addEmojisOnPhoto() {
                                 canvas.add(tempImage);
                                 if (oImg.price > 0) {
                                     text = new fabric.Text('$' + oImg.price, {
-                                        left: tempImage.left + 2,
-                                        top: tempImage.top + 2,
+                                        left: tempImage.left + 3,
+                                        top: tempImage.top + 3,
                                         fontFamily: 'Ubuntu',
                                         fontWeight: 'bold',
                                         fontStyle: 'italic',
-                                        fontSize: '20'
+                                        fontSize: '15'
                                     });
                                     text.kind = 'temp';
                                     text.selectable = false;
@@ -494,9 +495,10 @@ function showPhoto() {
                                             else if (oImg.price == 0) tempImage = unlockImage;
                                             else {
                                                 tempImage = priceImage;
-                                                timeout = 3000;
+                                                timeout = 5000;
                                             }
                                             tempImage.scale(0.5);
+                                            if (oImg.price > 9) tempImage.scaleX *= 1.2;
                                             tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
                                             tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
                                             if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
@@ -510,17 +512,22 @@ function showPhoto() {
                                             photo_canvas.add(tempImage);
                                             if (oImg.price > 0) {
                                                 text = new fabric.Text('$' + oImg.price, {
-                                                    left: tempImage.left + 2,
-                                                    top: tempImage.top + 2,
+                                                    left: tempImage.left + 3,
+                                                    top: tempImage.top + 3,
                                                     fontFamily: 'Ubuntu',
                                                     fontWeight: 'bold',
                                                     fontStyle: 'italic',
-                                                    fontSize: '20'
+                                                    fontSize: '15'
                                                 });
                                                 text.kind = 'temp';
                                                 text.selectable = false;
                                                 text.hasControls = false;
                                                 photo_canvas.add(text);
+                                                text.on('mouseup', () => {
+                                                    console.log(oImg.price);
+
+
+                                                });
                                             }
 
                                             setTimeout(() => {
