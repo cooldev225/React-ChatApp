@@ -3535,9 +3535,9 @@
                 <canvas id="photo_canvas"></canvas>
                 <div class="btn-group">
                     <div class="photo-price">$10</div>
-                    <a class="btn btn-primary" href="#" target="">Pay</a>
-                    <a class="btn btn-primary" href="#" target="">Share</a>
-                    <a class="btn btn-primary" href="#" target="">Cancel</a>
+                    <a class="btn btn-primary payWholePriceBtn" href="#" target="">Pay</a>
+                    <a class="btn btn-primary sharePhotoBtn" href="#" target="">Share</a>
+                    <a class="btn btn-primary" href="#" data-bs-dismiss="modal">Cancel</a>
                 </div>
             </div>
         </div>

@@ -31,6 +31,7 @@
   </head>
   <body class="sidebar-active">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>
+    <script src="/frontend/js/pages/fabric.js"></script>
     <script src="/frontend/js/constant.js"></script>
 
     @yield('content')

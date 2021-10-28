@@ -28,7 +28,6 @@ fabric.Image.fromURL('/images/normal.png', (oImg) => {
 });
 
 
-
 $(document).ready(function () {
 
     var elem = document.querySelector('.infinite-switch');
@@ -41,7 +40,7 @@ $(document).ready(function () {
     sendPhoto();
     showPhoto();
     showPhotoPriceAndOption();
-    showPayButtonOnCanvas();
+    payWholePhotoPrice();
 
     document.getElementById("input_btn")
         .addEventListener('click', function () {
@@ -459,7 +458,6 @@ function showPhoto() {
 
                         $('#photo_item').modal('show');
                         photo_canvas.clear();
-                        // $('#photo_item .modal-content img').attr('src', image);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
                                 photo_canvas.setWidth(oImg.width);
@@ -468,6 +466,7 @@ function showPhoto() {
                                 resolve();
                             });
                         }).then(() => {
+                            let photoPrice = 0;
                             emojis.forEach(item => {
                                 fabric.Image.fromURL(item.src, function (oImg) {
                                     oImg.left = item.position[0];
@@ -540,12 +539,18 @@ function showPhoto() {
                                         }
                                     });
                                 });
+                                if (item.price > 0) {
+                                    photoPrice += Number(item.price);
+                                }
+                                
                             });
+                            $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
+                            
                         });
                     } else {
                         $('#photo_item').modal('show');
-                        let image = $(e.currentTarget).attr('src');
-                        $('#photo_item .modal-content img').attr('src', image);
+                        // let image = $(e.currentTarget).attr('src');
+                        // $('#photo_item .modal-content img').attr('src', image);
                     }
                 },
                 error: function (response) {
@@ -611,6 +616,18 @@ function getPhotoSrcById(id, target) {
     });
 }
 
-function showPayButtonOnCanvas() {
-
+function payWholePhotoPrice() {
+    $('.payWholePriceBtn').on('click', () => {
+        if (confirm("Do you pay really")) {
+            photo_canvas._objects.forEach(item => {
+                console.log(item.price);
+                if (item.price > 0) {
+                    item.price = 0;
+                    item.selectable = true;
+                    photo_canvas.renderAll();
+                }
+            });
+            alert('You can control emojis which you paid');
+        }
+    });
 }
