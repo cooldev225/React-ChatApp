@@ -618,7 +618,7 @@ function getPhotoSrcById(id, target) {
 
 function payWholePhotoPrice() {
     $('.payWholePriceBtn').on('click', () => {
-        if (confirm("Do you pay really")) {
+        if (confirm("Do you want to really pay?")) {
             photo_canvas._objects.forEach(item => {
                 console.log(item.price);
                 if (item.price > 0) {
