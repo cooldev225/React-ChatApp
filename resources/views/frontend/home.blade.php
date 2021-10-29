@@ -3535,13 +3535,31 @@
                 <canvas id="photo_canvas"></canvas>
                 <div class="btn-group">
                     <div class="photo-price">$10</div>
-                    <a class="btn btn-primary payWholePriceBtn" href="#" target="">Pay</a>
-                    <a class="btn btn-primary sharePhotoBtn" href="#" target="">Share</a>
-                    <a class="btn btn-primary" href="#" data-bs-dismiss="modal">Cancel</a>
+                    <div class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
+                    <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
+                    <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div>
                 </div>
+                <div class="selected-emojis"></div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">Photo Operation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3>Do you want reall pay?</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
 

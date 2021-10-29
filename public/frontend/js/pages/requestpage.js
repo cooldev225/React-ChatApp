@@ -2,6 +2,7 @@ let globalImage;
 let ori_image;
 let tempImage;
 let text;
+let selectedEmojis = [];
 let canvas = new fabric.Canvas('back_canvas', {
     width: 350,
     height: 350,
@@ -320,80 +321,78 @@ function addEmojisOnPhoto() {
             touchtime = new Date().getTime();
         } else {
             if (((new Date().getTime()) - touchtime) < 800) {
-                if (globalImage) {
-                    fabric.Image.fromURL(e.target.src, function (oImg) {
-                        if ($('#createPhoto .switch-list').hasClass('d-none')) {
-                            oImg.price = $('.emojis-price').val();
-                        } else {
-                            $('.infinite-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+
+                fabric.Image.fromURL(e.target.src, function (oImg) {
+                    if ($('#createPhoto .switch-list').hasClass('d-none')) {
+                        oImg.price = $('.emojis-price').val();
+                    } else {
+                        $('.infinite-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+                    }
+
+                    oImg.on({
+                        'mouseup': () => {
+                            if (tempImage) canvas.remove(tempImage);
+                            if (text) canvas.remove(text);
+                            let timeout = 1500;
+                            if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
+                                canvas.remove(canvas.getActiveObject());
+                                canvas.remove(tempImage);
+                                canvas.remove(text);
+                            }
+                            if (oImg.price == -1) tempImage = lockImage;
+                            else if (oImg.price == 0) tempImage = unlockImage;
+                            else {
+                                tempImage = priceImage;
+                                timeout = 3000;
+                            }
+                            tempImage.scale(0.5);
+                            if (oImg.price > 9) tempImage.scaleX *= 1.2;
+                            tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
+                            tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                            if (oImg.aCoords.tr.x + 30 > canvas.width) {
+                                tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
+                            }
+                            if (oImg.aCoords.tr.y < 30)
+                                tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
+                            tempImage.kind = 'temp';
+                            tempImage.selectable = false;
+                            tempImage.hasControls = false;
+                            canvas.add(tempImage);
+                            if (oImg.price > 0) {
+                                text = new fabric.Text('$' + oImg.price, {
+                                    left: tempImage.left + 3,
+                                    top: tempImage.top + 3,
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: 'bold',
+                                    fontStyle: 'italic',
+                                    fontSize: '15'
+                                });
+                                text.kind = 'temp';
+                                text.selectable = false;
+                                text.hasControls = false;
+                                canvas.add(text);
+                            }
+                            if (oImg.price == -1) {
+                                oImg.selectable = false;
+                            }
+                            setTimeout(() => {
+                                canvas.remove(tempImage);
+                                canvas.remove(text);
+                            }, timeout);
+                        },
+                        'moving': () => {
+                            if (tempImage)
+                                canvas.remove(tempImage);
+                            if (text)
+                                canvas.remove(text);
                         }
 
-                        oImg.on({
-                            'mouseup': () => {
-                                if (tempImage) canvas.remove(tempImage);
-                                if (text) canvas.remove(text);
-                                let timeout = 1500;
-                                if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
-                                    canvas.remove(canvas.getActiveObject());
-                                    canvas.remove(tempImage);
-                                    canvas.remove(text);
-                                }
-                                if (oImg.price == -1) tempImage = lockImage;
-                                else if (oImg.price == 0) tempImage = unlockImage;
-                                else {
-                                    tempImage = priceImage;
-                                    timeout = 3000;
-                                }
-                                tempImage.scale(0.5);
-                                if (oImg.price > 9) tempImage.scaleX *= 1.2;
-                                tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
-                                tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
-                                if (oImg.aCoords.tr.x + 30 > canvas.width) {
-                                    tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
-                                }
-                                if (oImg.aCoords.tr.y < 30)
-                                    tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-                                tempImage.kind = 'temp';
-                                tempImage.selectable = false;
-                                tempImage.hasControls = false;
-                                canvas.add(tempImage);
-                                if (oImg.price > 0) {
-                                    text = new fabric.Text('$' + oImg.price, {
-                                        left: tempImage.left + 3,
-                                        top: tempImage.top + 3,
-                                        fontFamily: 'Ubuntu',
-                                        fontWeight: 'bold',
-                                        fontStyle: 'italic',
-                                        fontSize: '15'
-                                    });
-                                    text.kind = 'temp';
-                                    text.selectable = false;
-                                    text.hasControls = false;
-                                    canvas.add(text);
-                                }
-                                if (oImg.price == -1) {
-                                    oImg.selectable = false;
-                                }
-                                setTimeout(() => {
-                                    canvas.remove(tempImage);
-                                    canvas.remove(text);
-                                }, timeout);
-                            },
-                            'moving': () => {
-                                if (tempImage)
-                                    canvas.remove(tempImage);
-                                if (text)
-                                    canvas.remove(text);
-                            }
-
-                        });
-
-                        canvas.add(oImg);
-                        canvas.centerObject(oImg);
                     });
-                } else {
-                    console.log('Please choose Background Image first.');
-                }
+
+                    canvas.add(oImg);
+                    canvas.centerObject(oImg);
+                });
+
                 touchtime = 0;
             } else {
                 // not a double click so set as a new first click
@@ -538,14 +537,42 @@ function showPhoto() {
                                             photo_canvas.remove(text);
                                         }
                                     });
+                                    // add to cart
+                                    var touchtime = 0;
+                                    oImg.on("mouseup", e => {
+                                        if (touchtime == 0) {
+                                            touchtime = new Date().getTime();
+                                        } else {
+                                            if (((new Date().getTime()) - touchtime) < 800) {
+                                                if (oImg.price == -1) {
+                                                    alert('This is static Emoji')
+                                                    return;
+                                                }
+                                                if (selectedEmojis.find(item => item == oImg.cacheKey)) {
+                                                    $(`.selected-emojis img[key=${oImg.cacheKey}]`).remove();
+                                                    selectedEmojis = selectedEmojis.filter(item => item != oImg.cacheKey);
+                                                } else {
+                                                    selectedEmojis.push(oImg.cacheKey);
+                                                    var img = document.createElement('img');
+                                                    img.src = oImg.getSrc();
+                                                    $(img).attr('key', oImg.cacheKey);
+                                                    $('.selected-emojis').append(img);
+                                                }
+                                                touchtime = 0;
+                                            } else {
+                                                // not a double click so set as a new first click
+                                                touchtime = new Date().getTime();
+                                            }
+                                        }
+                                    });
                                 });
                                 if (item.price > 0) {
                                     photoPrice += Number(item.price);
                                 }
-                                
+
                             });
                             $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
-                            
+
                         });
                     } else {
                         $('#photo_item').modal('show');
@@ -618,7 +645,17 @@ function getPhotoSrcById(id, target) {
 
 function payWholePhotoPrice() {
     $('.payWholePriceBtn').on('click', () => {
-        if (confirm("Do you want to really pay?")) {
+        if (selectedEmojis.length) {
+            photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey)).forEach(item => {
+                console.log(item.price);
+                if (item.price > 0) {
+                    item.price = 0;
+                    item.selectable = true;
+                    photo_canvas.renderAll();
+                }
+            });
+            alert(`You can control ${selectedEmojis.length} emojis which you selected`);
+        } else {
             photo_canvas._objects.forEach(item => {
                 console.log(item.price);
                 if (item.price > 0) {
@@ -627,7 +664,6 @@ function payWholePhotoPrice() {
                     photo_canvas.renderAll();
                 }
             });
-            alert('You can control emojis which you paid');
         }
     });
 }
