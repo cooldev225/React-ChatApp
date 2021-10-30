@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
   </head>
   <body class="sidebar-active">
     <script src="/chat/js/jquery-3.3.1.min.js"></script>

@@ -3531,7 +3531,9 @@
     <div class="modal fade add-popup request-modal" id="photo_item" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                
+                <div class="photoRating">
+                    <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                </div>
                 <canvas id="photo_canvas"></canvas>
                 <div class="btn-group">
                     <div class="photo-price">$10</div>

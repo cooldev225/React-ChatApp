@@ -239,6 +239,8 @@ ul.chatappend .msg-box div {
 
 #photo_item .modal-content {
     flex-direction: row;
+    padding: 10px;
+    padding-left: 0;
 }
 
 #photo_item .modal-content .photo-price {
@@ -265,7 +267,7 @@ ul.chatappend .msg-box div {
     height: 45px;
     box-shadow: 1px 1px 3px rgb(0 0 0 / 80%);
     border-radius: 5px;
-    padding: 5px 20px;
+    padding: 5px 15px;
 }
 #photo_item .modal-content .btn-group .btn img:hover {
     transform: scale(1.1);
@@ -274,7 +276,7 @@ ul.chatappend .msg-box div {
 #photo_item .modal-content .selected-emojis {
     position: absolute;
     top: 3px;
-    left: 355px;
+    left: 390px;
 }
 #photo_item .modal-content .selected-emojis img {
     width: 20px;

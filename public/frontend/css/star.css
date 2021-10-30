@@ -1,0 +1,16 @@
+.photoRating {
+    padding: 0px 5px;
+    line-height: 25px;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+.photoRating div.checked,
+.photoRating div.checked ~ div{
+    color: #ffc700;
+}
+.photoRating div:hover,
+.photoRating div:hover ~ div {
+    color: #deb217;
+}

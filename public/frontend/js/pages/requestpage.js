@@ -31,6 +31,7 @@ fabric.Image.fromURL('/images/normal.png', (oImg) => {
 
 $(document).ready(function () {
 
+
     var elem = document.querySelector('.infinite-switch');
     var init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
 
@@ -42,7 +43,7 @@ $(document).ready(function () {
     showPhoto();
     showPhotoPriceAndOption();
     payWholePhotoPrice();
-
+    setPhotoRate();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -437,6 +438,8 @@ function sendPhoto() {
 function showPhoto() {
     $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
         let id = $(e.currentTarget).closest('li').attr('key');
+        $('.selected-emojis').empty();
+        selectedEmojis = [];
         if (id) {
             var form_data = new FormData();
             form_data.append('id', id);
@@ -456,7 +459,9 @@ function showPhoto() {
                         let emojis = JSON.parse(res.data[0].content);
 
                         $('#photo_item').modal('show');
+                        $('#photo_item .modal-content').attr('key', id);
                         photo_canvas.clear();
+                        getPhotoRate(res.data[0].rate);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
                                 photo_canvas.setWidth(oImg.width);
@@ -558,6 +563,10 @@ function showPhoto() {
                                                     $(img).attr('key', oImg.cacheKey);
                                                     $('.selected-emojis').append(img);
                                                 }
+                                                let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item).price) + total, 0);
+                                                price == 0 ? price = photoPrice : '';
+                                                $('#photo_item .modal-content .photo-price').text('$' + price)
+                                                console.log(price);
                                                 touchtime = 0;
                                             } else {
                                                 // not a double click so set as a new first click
@@ -645,6 +654,8 @@ function getPhotoSrcById(id, target) {
 
 function payWholePhotoPrice() {
     $('.payWholePriceBtn').on('click', () => {
+        // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
+        // console.log(price);
         if (selectedEmojis.length) {
             photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey)).forEach(item => {
                 console.log(item.price);
@@ -665,5 +676,49 @@ function payWholePhotoPrice() {
                 }
             });
         }
+    });
+}
+
+function getPhotoRate(rate) {
+    $(`.photoRating div`).removeClass('checked');
+    $(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
+}
+ 
+function setPhotoRate() {
+    $(".photoRating div").click(function (e) {
+        let rate = 5 - $(this).index();
+        $(`.photoRating div`).removeClass('checked');
+        $(this).toggleClass('checked');
+        if ($('#photo_item').hasClass('show')) {
+            var photoId = $('#photo_item .modal-content').attr('key');
+        } else {
+            var photoId = $(this).closest('li').attr('key');
+        }
+        console.log(photoId);
+        let form_data = new FormData();
+        form_data.append('id', photoId);
+        form_data.append('rate', rate);
+        $.ajax({
+            url: '/home/setPhotoRate',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 'true') {
+                    console.log('OK');
+                } else {
+
+                }
+            },
+            error: function (response) {
+
+            }
+        });
     });
 }

@@ -228,4 +228,16 @@ class HomeController extends Controller
         return array('state'=>'false');
 
     }
+    public function setPhotoRate(Request $request)
+    {
+        $id = $request->input('id');
+        $rate = $request->input('rate');
+        $photo = PhotoGallery::find($id);
+        $photo->rate = $rate;
+        $photo->updated_at = date('Y-m-d H:i:s');
+        $photo->save();
+        return array(
+            'state' => 'true'
+        );
+    }
 }
