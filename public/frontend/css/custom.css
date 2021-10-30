@@ -298,7 +298,8 @@ canvas {
 .msg-box .photoRating {
     display: flex;
     flex-direction: row-reverse;
-    width: 130px;
+    width: 110px;
+    font-size:25px;
 }
 .msg-box .receive_photo {
     display: block;
