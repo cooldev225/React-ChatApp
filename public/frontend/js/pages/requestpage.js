@@ -680,7 +680,7 @@ function payWholePhotoPrice() {
 }
 
 function getPhotoRate(target, rate) {
-    console.log(target);
+    console.log(rate);
     $(target).find(`.photoRating div`).removeClass('checked');
     $(target).find(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
 }
