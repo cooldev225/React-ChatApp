@@ -141,7 +141,7 @@ ul.request-list li .date-status div {
     background-color: darkseagreen;
 }
 
-ul.chatappend .msg-box div {
+ul.chatappend .msg-box .camera-icon {
     width: 60px;
     height: 50px;
     background-image: url(/images/camera-icon.png);
@@ -295,7 +295,20 @@ canvas {
         width: 100%;
     }
 }
-
+.msg-box .photoRating {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 130px;
+}
+.msg-box .receive_photo {
+    display: block;
+}
+.msg-box .photo {
+    display: block !important;
+}
+.contact-chat .chatappend .replies .msg-box {
+    display: flex;
+}
 
 @media (max-width: 1199.98px) {
     .chitchat-main .messages .contact-details .left.media .media-body {

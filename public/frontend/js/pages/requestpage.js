@@ -461,7 +461,7 @@ function showPhoto() {
                         $('#photo_item').modal('show');
                         $('#photo_item .modal-content').attr('key', id);
                         photo_canvas.clear();
-                        getPhotoRate(res.data[0].rate);
+                        getPhotoRate('#photo_item', res.data[0].rate);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
                                 photo_canvas.setWidth(oImg.width);
@@ -679,15 +679,16 @@ function payWholePhotoPrice() {
     });
 }
 
-function getPhotoRate(rate) {
-    $(`.photoRating div`).removeClass('checked');
-    $(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
+function getPhotoRate(target, rate) {
+    console.log(target);
+    $(target).find(`.photoRating div`).removeClass('checked');
+    $(target).find(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
 }
  
 function setPhotoRate() {
-    $(".photoRating div").click(function (e) {
+    $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
-        $(`.photoRating div`).removeClass('checked');
+        $(e.target).closest('.photoRating').find('div').removeClass('checked');
         $(this).toggleClass('checked');
         if ($('#photo_item').hasClass('show')) {
             var photoId = $('#photo_item .modal-content').attr('key');

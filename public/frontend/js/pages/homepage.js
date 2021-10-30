@@ -6,8 +6,8 @@ var socket;
 
 $(document).ready(() => {
 
-    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
-    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
+    // socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
+    socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
     socket.on('message', message => {
         var contentwidth = jQuery(window).width();
@@ -197,6 +197,7 @@ function setCurrentChatContent(contactorId, resolve) {
                         data.kind = item.kind;
                         data.content = item.content;
                         data.created_at = item.created_at;
+                        data.rate = item.rate;
                         addChatItem(target, data);
                     });
                 }
@@ -380,7 +381,7 @@ function typingMessage() {
 
 
 function addChatItem(target, data) {
-    let time = new Date(data.created_at);
+     let time = new Date(data.created_at);
     $(target).append(`<li class="${data.type}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
@@ -390,13 +391,22 @@ function addChatItem(target, data) {
                     <h5>${data.username}</h5>
                     <h6>${time.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
-
-                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' : data.kind == 1 ? '<li><div>$' + data.content + '</div></li>' : '<li key="' + data.content[0] +'"><img class="receive_photo" src="' + data.content[1] +'"></li>'}
+                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' 
+                            : data.kind == 1 ? '<li><div class="camera-icon">$' + data.content + '</div></li>' 
+                            : `<li class="photo" key="${data.content[0]}">
+                                    <div class="photoRating">
+                                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                    </div>
+                                    <img class="receive_photo" src="${data.content[1]}">
+                                </li>`}
                     </ul>
                 </div>
             </div>
         </div>
     </li>`);
+    if (data.rate) {
+        getPhotoRate(`.msg-box li[key="${data.content[0]}"]`, data.rate)
+    }
 }
 
 function changeProfileImageAjax() {

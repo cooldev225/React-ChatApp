@@ -70,6 +70,7 @@ class HomeController extends Controller
                 return $item;
             $temp = PhotoGallery::where('id', $item['content'])->get();
             $item['content'] = array($temp[0]['id'], $temp[0]['photo']);
+            $item['rate'] = $temp[0]['rate'];
             return $item;
         });
 
