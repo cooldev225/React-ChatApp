@@ -299,7 +299,7 @@ canvas {
     display: flex;
     flex-direction: row-reverse;
     width: 110px;
-    font-size:25px;
+    font-size:20px;
 }
 .msg-box .receive_photo {
     display: block;
