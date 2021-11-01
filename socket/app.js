@@ -54,6 +54,7 @@ io.on('connection', (socket) => {
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
             if (data.currentContactId) {
+                console.log(data);
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
                 io.sockets.sockets.get(senderSocketId).emit('message', message);
