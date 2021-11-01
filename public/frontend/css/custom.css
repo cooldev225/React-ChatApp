@@ -175,7 +175,7 @@ ul.chatappend .msg-box .camera-icon {
 
 .canvas-container {
     flex-shrink: 0;
-    /* width: 350px !important; */
+    min-width: 300px !important;
     height: 350px !important;
     /* background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid gray; */
