@@ -175,7 +175,7 @@ ul.chatappend .msg-box .camera-icon {
 
 .canvas-container {
     flex-shrink: 0;
-    width: 350px !important;
+    /* width: 350px !important; */
     height: 350px !important;
     /* background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid gray; */
@@ -290,28 +290,11 @@ canvas {
 }
 
 
-
-
 @media (max-width: 1366px) {
 
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
     }
-}
-.msg-box .photoRating {
-    display: flex;
-    flex-direction: row-reverse;
-    width: 110px;
-    font-size:20px;
-}
-.msg-box .receive_photo {
-    display: block;
-}
-.msg-box .photo {
-    display: block !important;
-}
-.contact-chat .chatappend .replies .msg-box {
-    display: flex;
 }
 
 @media (max-width: 1199.98px) {
@@ -321,9 +304,13 @@ canvas {
 }
 
 @media (max-width: 1024px) {
-
     .chitchat-main .messages .contact-details .media-body h5,
     .chitchat-main .messages .contact-details .media-body .h5 {
         display: block;
+    }
+}
+@media (max-width: 767.98px) {
+    .modal-dialog-centered .modal-content {
+        overflow: auto;
     }
 }

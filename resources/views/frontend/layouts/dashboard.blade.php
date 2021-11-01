@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/tableselection/styles/tableselection.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
+    {{-- <link rel="stylesheet" type="text/css" href="/frontend/css/normalize.css"> --}}
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
   </head>

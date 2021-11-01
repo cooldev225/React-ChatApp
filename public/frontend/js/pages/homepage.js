@@ -1,3 +1,4 @@
+
 var $contact_active;
 var currentContactId;
 var contactorInfo = {};
@@ -14,34 +15,23 @@ $(document).ready(() => {
         if (contentwidth <= '768') {
             $('.chitchat-container').toggleClass("mobile-menu");
         }
-        if (currentContactId != message.from) {
-            new Promise(resolve => {
-                if (currentContactId) {
-                    $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
-                }
-                currentContactId = Number(message.from);
-                if (!$(`ul.chat-main li[key=${currentContactId}]`).length) {
-                    let currentContactorInfo = usersList.find(item => item.id == currentContactId);
-                    let userListTarget = $('.recent-default .recent-chat-list');
-                    addChatUserListItem(userListTarget, currentContactorInfo);
-                }
-                $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-                setCurrentChatContent(currentContactId, resolve);
-            }).then(() => {
-                let target = '.contact-chat ul.chatappend';
-                let data = usersList.find(item => item.id == message.from);
-                data.type = 'sent';
-                data.content = message.message;
-                addChatItem(target, data);
-            });
+        let target = '.contact-chat ul.chatappend';
+        message.from = Number(message.from);
+        if (message.from == currentUserId || message.from == currentContactId) {
+            addChatItem(target, message.from, message);
         } else {
-            let target = '.contact-chat ul.chatappend';
-            let data = usersList.find(item => item.id == message.from);
-            data.type = 'sent';
-            data.content = message.message;
-            addChatItem(target, data);
+            if (currentContactId) {
+                $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+            }
+            currentContactId = Number(message.from);
+            if (!$(`ul.chat-main li[key=${currentContactId}]`).length) {
+                let currentContactorInfo = usersList.find(item => item.id == currentContactId);
+                let userListTarget = $('.recent-default .recent-chat-list');
+                addChatUserListItem(userListTarget, currentContactorInfo);
+            }
+            $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+            setCurrentChatContent(currentContactId);
         }
-
     });
 
     getRecentChatUsers();
@@ -69,12 +59,13 @@ $(document).ready(() => {
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
         $('#createPhoto .switch-list').addClass('d-none');
-        $('#createPhoto .emojis-price').removeClass('d-none');   
+        $('#createPhoto .emojis-price').removeClass('d-none');
     });
+
     $('#acceptPhotoRequestBtn').on('click', () => {
         // $('#createPhoto').modal('show');
         $('#createPhoto .switch-list').removeClass('d-none');
-        $('#createPhoto .emojis-price').addClass('d-none');   
+        $('#createPhoto .emojis-price').addClass('d-none');
     });
 
 
@@ -120,7 +111,7 @@ function getRecentChatUsers() {
                 $('.section-py-space').css('display', 'block');
                 $('#content').css('display', 'none');
                 $('.app-list').css('display', 'none');
-                
+
             }
         },
         error: function (res) {
@@ -129,10 +120,7 @@ function getRecentChatUsers() {
     });
 }
 
-function setCurrentChatContent(contactorId, resolve) {
-    let data = [currentUserId, currentContactId];
-    // socket = io.connect("http://localhost:3000", { query: { currentUserId, currentContactId } });
-
+function setCurrentChatContent(contactorId) {
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
     $.ajax({
@@ -152,6 +140,9 @@ function setCurrentChatContent(contactorId, resolve) {
                 [contactorInfo] = res.contactorInfo;
 
                 currentContactId = contactorId;
+                $('.section-py-space').css('display', 'none');
+                $('.app-list').css('display', 'block');
+                $('#content').css('display', 'block');
                 //profile info display
                 $('.chat-content .contactor-name').html(contactorInfo.username);
                 if (contactorInfo.logout) {
@@ -167,6 +158,7 @@ function setCurrentChatContent(contactorId, resolve) {
                     $('.chat-content .contactor-status').addClass('badge-success');
                     $('.chat-content .contactor-status').removeClass('badge-dark');
                 }
+
                 if (contactorInfo.avatar) {
                     $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
                     $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
@@ -179,30 +171,15 @@ function setCurrentChatContent(contactorId, resolve) {
                 $('.contact-profile .name h6').html(contactorInfo.description)
 
                 //Chat data display
-                $('.contact-chat ul.chatappend').html('');
+                $('.contact-chat ul.chatappend').empty();
 
                 if (messageData) {
                     let target = '.contact-chat ul.chatappend';
                     messageData.reverse().forEach(item => {
-                        let data = {};
-                        if (item.sender == currentUserId) {
-                            data.type = 'replies';
-                            data.username = currentUsername;
-                            data.avatar = getCertainUserInfoById(currentUserId).avatar;
-                        } else {
-                            data.type = 'sent';
-                            data.username = contactorInfo.username;
-                            data.avatar = contactorInfo.avatar;
-                        }
-                        data.kind = item.kind;
-                        data.content = item.content;
-                        data.created_at = item.created_at;
-                        data.rate = item.rate;
-                        addChatItem(target, data);
+                        item.messageId = item.id;
+                        addChatItem(target, item.sender, item);
                     });
                 }
-                if (resolve) resolve();
-
             }
         },
         error: function (response) {
@@ -342,30 +319,21 @@ function addContact() {
 }
 
 function newMessage() {
-    let data = usersList.find(user => user.id == currentUserId);
+    // let target = '.contact-chat ul.chatappend';
+    // let data = usersList.find(user => user.id == currentUserId);
     var message = $('.message-input input').val();
-    let date = new Date();
     if ($.trim(message) == '') {
         return false;
     }
-    $(`<li class="replies">
-        <div class="media">
-            <div class="profile mr-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/1.jpg"}); background-size: cover; background-position: center center;">
-            </div>
-            <div class="media-body">
-                <div class="contact-name">
-                    <h5>${currentUsername}</h5>
-                    <h6>${date.toLocaleTimeString()}</h6>
-                    <ul class="msg-box">
-                        <li><h5>${message}</h5></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </li>`).appendTo($('.messages .chatappend'));
+    // data.type = "replies";
+    // data.kind = 0;
+    // data.create_at = new Date();
+    // data.content = message;
+    // addChatItem(target, data);
+
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     socket.emit('message', { currentContactId, message });
 };
 
@@ -380,25 +348,30 @@ function typingMessage() {
 }
 
 
-function addChatItem(target, data) {
-     let time = new Date(data.created_at);
-    $(target).append(`<li class="${data.type}">
+function addChatItem(target, senderId, data) {
+    let senderInfo = getCertainUserInfoById(senderId);
+    let type = senderInfo.id == currentUserId ? "replies" : "sent";
+    let time = new Date(data.created_at);
+
+    $(target).append(`<li class="${type}">
         <div class="media">
-            <div class="profile me-4 bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+            <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
             </div>
             <div class="media-body">
                 <div class="contact-name">
-                    <h5>${data.username}</h5>
+                    <h5>${senderInfo.username}</h5>
                     <h6>${time.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
-                        ${data.kind == 0 ? '<li><h5>'+ data.content + '</h5></li>' 
-                            : data.kind == 1 ? '<li><div class="camera-icon">$' + data.content + '</div></li>' 
-                            : `<li class="photo" key="${data.content[0]}">
-                                    <div class="photoRating">
-                                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
-                                    </div>
-                                    <img class="receive_photo" src="${data.content[1]}">
-                                </li>`}
+                        <li key="${data.messageId}">
+                            <div class="photoRating">
+                                <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                            </div>
+                            ${data.kind == 0 ?
+                                `<h5>${data.content}</h5>`
+                                : data.kind == 1 ?
+                                    `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                                    : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                        </li>
                     </ul>
                 </div>
             </div>

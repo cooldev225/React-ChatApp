@@ -1,11 +1,15 @@
-.photoRating {
-    padding: 0px 5px;
-    line-height: 25px;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
+.contact-chat>ul>li.replies .msg-box li:last-child {
+    flex-direction: column;
+    align-items:flex-end;
 }
-
+.msg-box .photoRating {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 0px;
+    margin-left: 80px;
+    font-size:20px;
+    cursor: pointer;
+}
 .photoRating div.checked,
 .photoRating div.checked ~ div{
     color: #ffc700;
@@ -14,3 +18,23 @@
 .photoRating div:hover ~ div {
     color: #deb217;
 }
+
+
+/* .msg-box .receive_photo {
+    display: block;
+}
+.msg-box .photo {
+    display: block !important;
+}
+.contact-chat .chatappend .replies .msg-box {
+    display: flex;
+} */
+
+.photoRating {
+    padding: 0px 5px;
+    line-height: 25px;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+

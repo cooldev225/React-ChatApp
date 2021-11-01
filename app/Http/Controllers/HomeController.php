@@ -66,11 +66,17 @@ class HomeController extends Controller
         $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
             ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(100)->get();
         $messages = $messageData->map(function($item) {
-            if ($item['kind'] != 2) 
+            if ($item['kind'] == 0) 
                 return $item;
+            if ($item['kind'] == 1) {
+                $temp = PhotoRequest::where('id', $item['content'])->get();
+                $item['requestId'] = $temp[0]['id'];
+                $item['content'] = $temp[0]['price'];
+                return $item;
+            }
             $temp = PhotoGallery::where('id', $item['content'])->get();
-            $item['content'] = array($temp[0]['id'], $temp[0]['photo']);
-            $item['rate'] = $temp[0]['rate'];
+            $item['photoId'] = $temp[0]['id'];
+            $item['content'] = $temp[0]['photo'];
             return $item;
         });
 
@@ -139,13 +145,6 @@ class HomeController extends Controller
         // $contactIds = array(array('contact_id' => $contactIds));
         $result = array();
         foreach ($contactIds as $contactId) {
-            // $msg = Message::where(function($query) use($id, $contactId) {
-            //     $query->where('sender', $id)
-            //         ->where('recipient', $contactId['contact_id']);
-            // })->orWhere(function($query) use($id, $contactId) {
-            //     $query->where('recipient', $id)
-            //         ->where('sender', $contactId['contact_id']);
-            // });
             $msg = Message::whereRaw("sender = ".$id." AND recipient = ".$contactId['contact_id'])
             ->orWhereRaw("sender = ".$contactId['contact_id']." AND recipient = ".$id);
             $message = $msg->count() ? $msg->orderBy('created_at')->get() : '';
@@ -221,10 +220,14 @@ class HomeController extends Controller
     }
     public function getPhotoData(Request $request)
     {
-        $photoId = $request->input('id');
-        $photoData = PhotoGallery::where('id', $photoId)->get();
-        if (count($photoData)) {
-            return array('state'=>'true', 'data'=>$photoData);
+        $messageId = $request->input('id');
+        $messageData = Message::where('id', $messageId)->get();
+        if (count($messageData)) {
+            $photoData = PhotoGallery::where('id', $messageData[0]['content'])->get();
+            if (count($photoData)) {
+                $photoData[0]['rate'] = $messageData[0]['rate'];
+                return array('state'=>'true', 'data'=>$photoData);
+            }
         }
         return array('state'=>'false');
 

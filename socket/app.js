@@ -47,66 +47,82 @@ io.on('connection', (socket) => {
         let message = {
             from: currentUserId,
             to: data.currentContactId,
-            message: data.message
+            content: data.message,
+            kind: 0,
+            created_at: new Date()
         }
-        db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.message}")`, (error, message) => {
-            console.log(message.insertId);
-        });
-        if (data.currentContactId) {
-            let socketId = user_socketMap.get(data.currentContactId.toString());
-            if (socketId) {
-                console.log(message);
-                if (io.sockets.sockets.get(socketId))
-                    io.sockets.sockets.get(socketId).emit('message', message);
+        db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
+            message.messageId = item.insertId;
+            if (data.currentContactId) {
+                let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+                let senderSocketId = user_socketMap.get(currentUserId.toString());
+                io.sockets.sockets.get(senderSocketId).emit('message', message);
+                if (recipientSocketId) {
+                    if (io.sockets.sockets.get(recipientSocketId))
+                        io.sockets.sockets.get(recipientSocketId).emit('message', message);
+                }
             }
-        }
+        });
     });
 
     socket.on('send:request', data => {
         if (data.to) {
             let message = {
                 from: currentUserId,
-                data
+                ...data,
+                content: data.price,
+                kind: 1,
+                created_at: new Date()
             }
-            db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${currentUserId}", "${data.to}", "${data.price}", 1)`, (error, data) => {
-                message.id = data.insertId;
+            db.query(`INSERT INTO photo_requests (\`from\`, \`to\`, title, description, price) VALUES ("${currentUserId}", "${data.to}", "${data.title}", "${data.description}", "${data.price}")`, (error, requestItem) => {
+                message.requestId = requestItem.insertId;
+                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${currentUserId}", "${data.to}", "${message.requestId}", 1)`, (error, messageItem) => {
+                    message.messageId = messageItem.insertId;
+                    let recipientSocketId = user_socketMap.get(data.to.toString());
+                    let senderSocketId = user_socketMap.get(currentUserId.toString());
+                    io.sockets.sockets.get(senderSocketId).emit('message', message);
+                    io.sockets.sockets.get(senderSocketId).emit('receive:request', message);
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId)) {
+                            io.sockets.sockets.get(recipientSocketId).emit('message', message);
+                            io.sockets.sockets.get(recipientSocketId).emit('receive:request', message);
+                        }
+                    }
+                });
             });
-            db.query(`INSERT INTO photo_requests (\`from\`, \`to\`, title, description, price) VALUES ("${currentUserId}", "${data.to}", "${data.title}", "${data.description}", "${data.price}")`, (error, data) => {
-                if (error) console.log(error);
-                message.requestId = data.insertId;
-                console.log(data);
-            }); 
-            let socketId = user_socketMap.get(data.to.toString());
-            if (socketId) {
-                if (io.sockets.sockets.get(socketId)) {
-                    setTimeout(() => {
-                      io.sockets.sockets.get(socketId).emit('receive:request', message);
-                    }, 500);
-                }
-            }
         }
     });
 
     socket.on('send:photo', data => {
         if (data.to) {
-            let socketId = user_socketMap.get(data.to.toString());
-            console.log(data.blur);
             data.blur = 0;
-            console.log("socketId: ", socketId);
-            
+            let senderSocketId = user_socketMap.get(currentUserId.toString());
+            let recipientSocketId = user_socketMap.get(data.to.toString());
+            let message = {
+                from: data.from,
+                to: data.to,
+                content: data.photo,
+                kind: 2,
+                created_at: new Date()
+            }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
-                console.log('Gallery', data.id);
-                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, data) => {
-                });
-                if (socketId) {
-                    if (io.sockets.sockets.get(socketId)) {
-                        io.sockets.sockets.get(socketId).emit('receive:photo', data);
+                message.photoId = item.insertId
+                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {
+                    message.messageId = messageItem.insertId;
+                    
+                    io.sockets.sockets.get(senderSocketId).emit('message', message);
+                    io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId)) {
+                            io.sockets.sockets.get(recipientSocketId).emit('message', message);
+                            io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+                        }
                     }
-                }
+                });
             });
         }
-        
+
     });
 });
 

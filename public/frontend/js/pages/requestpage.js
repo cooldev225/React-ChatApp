@@ -52,45 +52,13 @@ $(document).ready(function () {
     socket.on('receive:request', data => {
         let senderInfo = getCertainUserInfoById(data.from);
         let receiverInfo = getCertainUserInfoById(currentUserId);
-        addRequestItem(senderInfo, receiverInfo, data.data);
-        $('.photo-request-icon').addClass('dot-btn');
-        let target = '.contact-chat ul.chatappend';
-        $(target).append(`<li class="sent photo-request">
-            <div class="media">
-                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
-                </div>
-                <div class="media-body">
-                    <div class="contact-name">
-                        <h5>${senderInfo.username}</h5>
-                        <h6>01:42 AM</h6>
-                        <ul class="msg-box">
-                            <li><div>$${data.data.price}</div></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>`);
+        addRequestItem(senderInfo, receiverInfo, data);
+        if (data.from != currentUserId)
+            $('.photo-request-icon').addClass('dot-btn');
     });
 
     socket.on('receive:photo', data => {
-        let senderInfo = getCertainUserInfoById(data.from);
-        let receiverInfo = getCertainUserInfoById(currentUserId);
-        let target = '.contact-chat ul.chatappend';
-        $(target).append(`<li class="sent" key="${data.id}">
-            <div class="media">
-                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
-                </div>
-                <div class="media-body">
-                    <div class="contact-name">
-                        <h5>${senderInfo.username}</h5>
-                        <h6>01:42 AM</h6>
-                        <ul class="msg-box">
-                            <li key="${data.id}"><img class="receive_photo" src="${data.photo}"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>`);
+        console.log(data);
     });
 
     $('ul.chat-main.request-list').on('click', 'li', (e) => {
@@ -169,8 +137,7 @@ function getRequestList() {
                         res.data.forEach(item => {
                             let senderInfo = getCertainUserInfoById(item.from);
                             let receiverInfo = getCertainUserInfoById(item.to);
-                            let sendFlag = currentUserId == item.from ? true : false;
-                            addRequestItem(senderInfo, receiverInfo, item, sendFlag);
+                            addRequestItem(senderInfo, receiverInfo, item);
                         });
                     }
 
@@ -197,30 +164,36 @@ function sendPhotoRequest() {
         to
     };
     socket.emit('send:request', data);
-    let senderInfo = getCertainUserInfoById(currentUserId);
-    let receiverInfo = getCertainUserInfoById(to);
-    addRequestItem(senderInfo, receiverInfo, data, true);
-    let target = '.contact-chat ul.chatappend';
-    $(target).append(`<li class="replies photo-request">
-        <div class="media">
-            <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
-            </div>
-            <div class="media-body">
-                <div class="contact-name">
-                    <h5>${senderInfo.username}</h5>
-                    <h6>01:42 AM</h6>
-                    <ul class="msg-box">
-                        <li><div>$${data.price}</div></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </li>`);
+    // let  senderInfo = getCertainUserInfoById(currentUserId);
+    // let receiverInfo = getCertainUserInfoById(to);
+    // // addRequestItem(senderInfo, receiverInfo, data, true);
+    // let target = '.contact-chat ul.chatappend';
+    // $(target).append(`<li class="replies photo-request">
+    //     <div class="media">
+    //         <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+    //         </div>
+    //         <div class="media-body">
+    //             <div class="contact-name">
+    //                 <h5>${senderInfo.username}</h5>
+    //                 <h6>01:42 AM</h6>
+    //                 <ul class="msg-box">
+    //                     <li>
+    //                         <div class="photoRating">
+    //                             <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+    //                         </div>
+    //                         <div class="camera-icon">$${data.price}</div>
+    //                     </li>
+    //                 </ul>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </li>`);
 }
 
-function addRequestItem(senderInfo, receiverInfo, data, sendFlag) {
+function addRequestItem(senderInfo, receiverInfo, data) {
+    let sendFlag = senderInfo.id == currentUserId ? true : false;
     $("ul.request-list").append(
-        `<li class="${sendFlag ? 'sent' : ''}" key="${data.id}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
+        `<li class="${sendFlag ? 'sent' : ''}" key="${data.id || data.requestId}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
             <a data-bs-toggle="modal" data-bs-target="#detailRequestModal">
                 <div class="chat-box">
                     <div class="profile bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
@@ -414,24 +387,6 @@ function sendPhoto() {
         data.blur = $('.blur-range').val();
         data.content = getEmojisInfo(canvas._objects);
         socket.emit('send:photo', data);
-
-        let target = '.contact-chat ul.chatappend';
-        let senderInfo = getCertainUserInfoById(currentUserId);
-        $(target).append(`<li class="replies" key="">
-            <div class="media">
-                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
-                </div>
-                <div class="media-body">
-                    <div class="contact-name">
-                        <h5>${senderInfo.username}</h5>
-                        <h6>01:42 AM</h6>
-                        <ul class="msg-box">
-                            <li><img class="receive_photo" src="${data.photo}"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>`);
     });
 }
 
@@ -455,6 +410,7 @@ function showPhoto() {
                 type: 'POST',
                 dataType: "json",
                 success: function (res) {
+                    console.log(res);
                     if (res.state == 'true') {
                         let emojis = JSON.parse(res.data[0].content);
 
@@ -655,10 +611,8 @@ function getPhotoSrcById(id, target) {
 function payWholePhotoPrice() {
     $('.payWholePriceBtn').on('click', () => {
         // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
-        // console.log(price);
         if (selectedEmojis.length) {
             photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey)).forEach(item => {
-                console.log(item.price);
                 if (item.price > 0) {
                     item.price = 0;
                     item.selectable = true;
@@ -668,7 +622,6 @@ function payWholePhotoPrice() {
             alert(`You can control ${selectedEmojis.length} emojis which you selected`);
         } else {
             photo_canvas._objects.forEach(item => {
-                console.log(item.price);
                 if (item.price > 0) {
                     item.price = 0;
                     item.selectable = true;
@@ -680,11 +633,10 @@ function payWholePhotoPrice() {
 }
 
 function getPhotoRate(target, rate) {
-    console.log(rate);
     $(target).find(`.photoRating div`).removeClass('checked');
     $(target).find(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
 }
- 
+
 function setPhotoRate() {
     $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
@@ -695,7 +647,6 @@ function setPhotoRate() {
         } else {
             var photoId = $(this).closest('li').attr('key');
         }
-        console.log(photoId);
         let form_data = new FormData();
         form_data.append('id', photoId);
         form_data.append('rate', rate);
