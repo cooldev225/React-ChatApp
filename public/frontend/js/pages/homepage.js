@@ -349,6 +349,8 @@ function typingMessage() {
 
 
 function addChatItem(target, senderId, data) {
+    console.log(senderId);
+    console.log(data);
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = new Date(data.created_at);
