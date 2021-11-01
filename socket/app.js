@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {
                     message.messageId = messageItem.insertId;
-                    
+                    console.log(message);
                     io.sockets.sockets.get(senderSocketId).emit('message', message);
                     io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
                     if (recipientSocketId) {
