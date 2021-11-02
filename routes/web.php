@@ -35,7 +35,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getPhotoRequest', 'HomeController@getPhotoRequest');
     Route::post('/home/sendRequest', 'HomeController@sendRequest');
     Route::post('/home/getPhotoData', 'HomeController@getPhotoData');
-    Route::post('/home/setPhotoRate', 'HomeController@setPhotoRate');
+    Route::post('/home/setContentRate', 'HomeController@setContentRate');
 });
 
 Route::group(['middleware' => ['admin']], function () {

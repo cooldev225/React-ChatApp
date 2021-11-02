@@ -226,20 +226,21 @@ class HomeController extends Controller
             $photoData = PhotoGallery::where('id', $messageData[0]['content'])->get();
             if (count($photoData)) {
                 $photoData[0]['rate'] = $messageData[0]['rate'];
+                $photoData[0]['messageId'] = $messageData[0]['id'];
                 return array('state'=>'true', 'data'=>$photoData);
             }
         }
         return array('state'=>'false');
 
     }
-    public function setPhotoRate(Request $request)
+    public function setContentRate(Request $request)
     {
-        $id = $request->input('id');
+        $messageId = $request->input('messageId');
         $rate = $request->input('rate');
-        $photo = PhotoGallery::find($id);
-        $photo->rate = $rate;
-        $photo->updated_at = date('Y-m-d H:i:s');
-        $photo->save();
+        $message = Message::find($messageId);
+        $message->rate = $rate;
+        $message->updated_at = date('Y-m-d H:i:s');
+        $message->save();
         return array(
             'state' => 'true'
         );

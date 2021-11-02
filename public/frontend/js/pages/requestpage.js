@@ -43,7 +43,7 @@ $(document).ready(function () {
     showPhoto();
     showPhotoPriceAndOption();
     payWholePhotoPrice();
-    setPhotoRate();
+    setContentRate();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -164,30 +164,6 @@ function sendPhotoRequest() {
         to
     };
     socket.emit('send:request', data);
-    // let  senderInfo = getCertainUserInfoById(currentUserId);
-    // let receiverInfo = getCertainUserInfoById(to);
-    // // addRequestItem(senderInfo, receiverInfo, data, true);
-    // let target = '.contact-chat ul.chatappend';
-    // $(target).append(`<li class="replies photo-request">
-    //     <div class="media">
-    //         <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
-    //         </div>
-    //         <div class="media-body">
-    //             <div class="contact-name">
-    //                 <h5>${senderInfo.username}</h5>
-    //                 <h6>01:42 AM</h6>
-    //                 <ul class="msg-box">
-    //                     <li>
-    //                         <div class="photoRating">
-    //                             <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
-    //                         </div>
-    //                         <div class="camera-icon">$${data.price}</div>
-    //                     </li>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </li>`);
 }
 
 function addRequestItem(senderInfo, receiverInfo, data) {
@@ -416,8 +392,13 @@ function showPhoto() {
 
                         $('#photo_item').modal('show');
                         $('#photo_item .modal-content').attr('key', id);
+                        $('#photo_item .modal-content').removeClass('sent');
+                        if (res.data[0].from == currentUserId) {
+                            $('#photo_item .modal-content').addClass('sent');
+                        }
+
                         photo_canvas.clear();
-                        getPhotoRate('#photo_item', res.data[0].rate);
+                        getContentRate('#photo_item', res.data[0].rate);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
                                 photo_canvas.setWidth(oImg.width);
@@ -632,45 +613,51 @@ function payWholePhotoPrice() {
     });
 }
 
-function getPhotoRate(target, rate) {
+function getContentRate(target, rate) {
     $(target).find(`.photoRating div`).removeClass('checked');
     $(target).find(`.photoRating div:nth-child(${6 - rate})`).addClass('checked');
 }
 
-function setPhotoRate() {
+function setContentRate() {
     $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
-        $(e.target).closest('.photoRating').find('div').removeClass('checked');
-        $(this).toggleClass('checked');
-        if ($('#photo_item').hasClass('show')) {
-            var photoId = $('#photo_item .modal-content').attr('key');
+        
+        if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
+            var messageId = $('#photo_item .modal-content').attr('key');
+            
         } else {
-            var photoId = $(this).closest('li').attr('key');
+            var messageId = $(this).parents('li.sent').find('.msg-box>li').attr('key');
         }
-        let form_data = new FormData();
-        form_data.append('id', photoId);
-        form_data.append('rate', rate);
-        $.ajax({
-            url: '/home/setPhotoRate',
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: "json",
-            success: function (res) {
-                if (res.state == 'true') {
-                    console.log('OK');
-                } else {
-
+        console.log(messageId);
+        console.log(rate);
+        if (messageId) {
+            $(e.target).closest('.photoRating').find('div').removeClass('checked');
+            $(this).toggleClass('checked');
+            let form_data = new FormData();
+            form_data.append('messageId', messageId);
+            form_data.append('rate', rate);
+            $.ajax({
+                url: '/home/setContentRate',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state == 'true') {
+                        console.log('OK');
+                    } else {
+    
+                    }
+                },
+                error: function (response) {
+    
                 }
-            },
-            error: function (response) {
-
-            }
-        });
+            });
+        }
     });
 }

@@ -10,6 +10,7 @@ $(document).ready(() => {
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
+
     socket.on('message', message => {
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
@@ -60,12 +61,15 @@ $(document).ready(() => {
         $('#createPhoto').modal('show');
         $('#createPhoto .switch-list').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
+        $('#createPhoto .save-send').css('margin-left', '0px');
     });
 
     $('#acceptPhotoRequestBtn').on('click', () => {
         // $('#createPhoto').modal('show');
         $('#createPhoto .switch-list').removeClass('d-none');
         $('#createPhoto .emojis-price').addClass('d-none');
+        $('#createPhoto .save-send').css('margin-left', '-20px');
+        
     });
 
 
@@ -349,8 +353,6 @@ function typingMessage() {
 
 
 function addChatItem(target, senderId, data) {
-    console.log(senderId);
-    console.log(data);
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = new Date(data.created_at);
@@ -380,8 +382,10 @@ function addChatItem(target, senderId, data) {
         </div>
     </li>`);
     if (data.rate) {
-        getPhotoRate(`.msg-box li[key="${data.content[0]}"]`, data.rate)
+        getContentRate(`.msg-box li[key="${data.messageId}"]`, data.rate)
     }
+    $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+
 }
 
 function changeProfileImageAjax() {

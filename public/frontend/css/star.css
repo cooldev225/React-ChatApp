@@ -14,8 +14,10 @@
 .photoRating div.checked ~ div{
     color: #ffc700;
 }
-.photoRating div:hover,
-.photoRating div:hover ~ div {
+.modal-content:not(.sent) .photoRating div:hover,
+.modal-content:not(.sent) .photoRating div:hover ~ div,
+.sent .msg-box .photoRating div:hover,
+.sent .msg-box .photoRating div:hover ~ div {
     color: #deb217;
 }
 
