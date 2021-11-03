@@ -1,4 +1,3 @@
-
 var $contact_active;
 var currentContactId;
 var contactorInfo = {};

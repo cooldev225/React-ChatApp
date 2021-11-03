@@ -1,6 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @inject('dateFormat', 'App\Services\DateService')
-@include('frontend.photorequest')
+@include('frontend.photoCreation')
 @section('content')
     <script>
         var currentUserId = {{ Auth::id() }};
@@ -3521,7 +3521,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="request-detail">
-                        @yield('photorequest')
+                        @yield('photoCreation')
                     </div>
                 </div>
                 
@@ -3534,7 +3534,13 @@
                 <div class="photoRating">
                     <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                 </div>
-                <canvas id="photo_canvas"></canvas>
+                <div>
+                    <canvas id="photo_canvas"></canvas>
+                    <div class="blur-tool">
+                        <img src="/images/blur.png" alt="">
+                        <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0">
+                    </div>
+                </div>
                 <div class="btn-group">
                     <div class="photo-price">$10</div>
                     <div class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>

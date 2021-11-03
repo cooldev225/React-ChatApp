@@ -3,21 +3,10 @@ let ori_image;
 let tempImage;
 let text;
 let selectedEmojis = [];
-let canvas = new fabric.Canvas('back_canvas', {
-    width: 350,
-    height: 350,
-    preserveObjectStacking: true
-});
-let photo_canvas = new fabric.Canvas('photo_canvas', {
-    width: 350,
-    height: 350,
-    preserveObjectStacking: true
-});
-let ctx1 = canvas.getContext("2d");
-let ctx2 = photo_canvas.getContext("2d");
 let lockImage;
 let unlockImage;
 let priceImage;
+
 fabric.Image.fromURL('/images/lock.png', (oImg) => {
     lockImage = oImg;
 });
@@ -28,13 +17,34 @@ fabric.Image.fromURL('/images/normal.png', (oImg) => {
     priceImage = oImg;
 });
 
+var viewportWidth = jQuery(window).width();
+
+if (viewportWidth >= 768) {
+    var canvasDimension = 400
+} else if (viewportWidth >= 650) {
+    var canvasDimension = 350
+} else {
+    var canvasDimension = 300
+}
+var canvas = new fabric.Canvas('back_canvas', {
+    width: canvasDimension,
+    height: canvasDimension,
+    preserveObjectStacking: true
+});
+var photo_canvas = new fabric.Canvas('photo_canvas', {
+    width: canvasDimension,
+    height: canvasDimension,
+    preserveObjectStacking: true
+});
+var fonts = ["Pacifico", "VT323", "Quicksand", "Inconsolata"];
 
 $(document).ready(function () {
 
+    let elem = document.querySelector('.sticky-switch');
+    let init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
 
-    var elem = document.querySelector('.infinite-switch');
-    var init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
 
+    addFont();
     getRequestList();
     selectBackPhoto();
     blurPhoto();
@@ -57,9 +67,10 @@ $(document).ready(function () {
             $('.photo-request-icon').addClass('dot-btn');
     });
 
-    socket.on('receive:photo', data => {
-        console.log(data);
-    });
+    // socket.on('receive:photo', data => {
+    //     console.log(data);
+    // });
+    
     socket.on('get:rate', data => {
         let target = $('.chatappend').find(`.replies .msg-box>li[key=${data.messageId}]`);
         getContentRate(target, data.rate);
@@ -119,6 +130,17 @@ $(document).ready(function () {
 
 });
 
+function addFont() {
+    fonts.unshift('Times New Roman');
+    // Populate the fontFamily select
+    var select = document.getElementById("font-family");
+    fonts.forEach(function(font) {
+        var option = document.createElement('option');
+        option.innerHTML = font;
+        option.value = font;
+        select.appendChild(option);
+    });
+}
 function getRequestList() {
     $('.icon-btn[data-tippy-content="PhotoRequest"]').on('click', () => {
         if ($('.document-tab.dynemic-sidebar').hasClass('active')) {
@@ -214,12 +236,12 @@ function selectBackPhoto() {
                 let imgHeight = oImg.height;
                 let imgRatio = imgWidth / imgHeight;
 
-                if (imgWidth > 350 || imgHeight > 350) {
+                if (imgWidth > 400 || imgHeight > 400) {
                     if (imgWidth > imgHeight) {
-                        var width = 350;
+                        var width = 400;
                         var height = width / imgRatio;
                     } else {
-                        var height = 350;
+                        var height = 400;
                         var width = height * imgRatio;
                     }
 
@@ -245,8 +267,8 @@ function selectBackPhoto() {
 
     $('#input_reset').on('click', () => {
         canvas.setDimensions({
-            width: '350px',
-            height: '350px'
+            width: '400px',
+            height: '400px'
         }, {
             cssOnly: true
         });
@@ -256,16 +278,31 @@ function selectBackPhoto() {
 }
 
 function blurPhoto() {
-    $('.blur-range').on('input', e => {
-        let obj = Object.assign(globalImage);
-        let filter = new fabric.Image.filters.Blur({
-            blur: e.currentTarget.value
-        });
-        obj.filters = [];
-        obj.filters.push(filter);
-        obj.applyFilters();
-        canvas.renderAll();
+    $('#blurRange').on('input', e => {
+        if (globalImage) {
+
+            let obj = Object.assign(globalImage);
+            let filter = new fabric.Image.filters.Blur({
+                blur: e.currentTarget.value
+            });
+            obj.filters = [];
+            obj.filters.push(filter);
+            obj.applyFilters();
+            canvas.renderAll();
+        }
     })
+    $('#removeBlur').on('input', e => {
+        let obj = photo_canvas.backgroundImage;
+        if (obj) {
+            let filter = new fabric.Image.filters.Blur({
+                blur: e.currentTarget.value
+            });
+            obj.filters = [];
+            obj.filters.push(filter);
+            obj.applyFilters();
+            photo_canvas.renderAll();
+        }
+    });
 }
 
 function addEmojisOnPhoto() {
@@ -280,7 +317,7 @@ function addEmojisOnPhoto() {
                     if ($('#createPhoto .switch-list').hasClass('d-none')) {
                         oImg.price = $('.emojis-price').val();
                     } else {
-                        $('.infinite-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+                        $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                     }
 
                     oImg.on({
@@ -364,7 +401,7 @@ function sendPhoto() {
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
         data.back = ori_image;
-        data.blur = $('.blur-range').val();
+        data.blur = $('#blurRange').val();
         data.content = getEmojisInfo(canvas._objects);
         socket.emit('send:photo', data);
     });
@@ -403,11 +440,20 @@ function showPhoto() {
 
                         photo_canvas.clear();
                         getContentRate('#photo_item', res.data[0].rate);
+                        $('#removeBlur').attr('disabled', '');
+                        $('#removeBlur').val(res.data[0].blur);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
+                                let filter = new fabric.Image.filters.Blur({
+                                    blur: res.data[0].blur
+                                });
+                                oImg.filters = [];
+                                oImg.filters.push(filter);
+                                oImg.applyFilters();
                                 photo_canvas.setWidth(oImg.width);
                                 photo_canvas.setHeight(oImg.height);
                                 photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
+                                
                                 resolve();
                             });
                         }).then(() => {
@@ -595,6 +641,7 @@ function getPhotoSrcById(id, target) {
 
 function payWholePhotoPrice() {
     $('.payWholePriceBtn').on('click', () => {
+        $('#removeBlur').removeAttr('disabled');
         // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
         if (selectedEmojis.length) {
             photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey)).forEach(item => {

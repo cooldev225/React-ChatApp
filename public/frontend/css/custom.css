@@ -63,7 +63,9 @@ body {
 .justify-center {
     justify-content: center;
 }
-
+#detailRequestModal .request-content {
+    width: 100%;
+}
 #detailRequestModal .request-description {
     height: 150px;
     font-size: 14px;
@@ -166,26 +168,10 @@ ul.chatappend .msg-box .camera-icon {
     margin: 5px 20px;
     cursor: pointer;
 }
-
-#back_canvas,
-#photo_canvas {
-    border: 1px solid gray;
-}
-
-.canvas-container {
-    flex-shrink: 0;
-    min-width: 250px !important;
-    height: 350px !important;
-    /* background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid gray; */
-}
-
-#back_canvas,
-#photo_canvas,
-.upper-canvas {
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
+#createPhoto .modal-dialog,
+#photo_item .modal-dialog
+{
+    max-width: 600px;
 }
 
 #createPhoto .modal-header {
@@ -198,51 +184,107 @@ ul.chatappend .msg-box .camera-icon {
 #createPhoto .modal-body {
     overflow: auto;
 }
-
-.request-container {
+.request-detail {
     display: flex;
 }
+.photo-container {
+    max-width: 400px;
+    margin-right: 25px;
+}
 
-#image-processing {
-    height: 350px;
+.text-tool {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.text-tool .text {
+    width: 150px;
+    height: 30px;
+}
+.text-tool .font-family {
+    width: 100px;
+    height: 30px;
+}
+.text-tool .font-style {
+    display: flex;
+}
+.text-tool .font-style span {
+    line-height: 30px;
+    font-size: 17px;
+    cursor: pointer;
+}
+.text-tool .font-style span.italic {
+    width: 15px;
+    font-style: italic;
+    margin: 0 5px;
+}
+.text-tool .font-style span.bold {
+    font-weight: bold;
+}
+.text-tool .font-style span.underline {
+    text-decoration: underline;
+}
+.text-tool .btn {
+    padding: 0 20px;
+}
+.canvas-container {
+    min-width: 400px !important;
+    min-height: 400px !important;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.blur-tool {
     display: flex;
     align-items: center;
-    margin-left: 5px;
+    margin-top: 5px;
+    padding: 0 40px;
+}
+.blur-tool img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
-.switch-list {
-    margin-top: 0;
-}
-
-.emojis-price {
-    background-color: darkgrey;
-    font-size: 15px;
-    padding: 2px 0px;
-}
-
-.emojis {
-    width: 70px;
-    height: 325px;
-    margin-right: 5px;
+.extra-tool .emojis-tool .emojis {
+    height: 400px;
     overflow: auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
 }
-
 .emojis img {
-    margin-bottom: 5px;
-    width: 50px;
-    height: 50px;
+    margin: 5px;
+}
+.save-send {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
 }
 
-.save-send button {
-    margin: 25px 0;
-    display: block;
+#back_canvas,
+#photo_canvas,
+.upper-canvas {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 
 .receive_photo {
     cursor: pointer;
     border-radius: 15px;
 }
+/* 
 
+
+#createPhoto .modal-header {
+    justify-content: flex-start;
+}
+
+
+*/
 #photo_item .modal-content {
     flex-direction: row;
     padding: 10px;
@@ -287,10 +329,7 @@ ul.chatappend .msg-box .camera-icon {
 #photo_item .modal-content .selected-emojis img {
     width: 20px;
     height: 20px;
-}
-canvas {
-    border-radius: 5px;
-}
+} 
 
 
 @media (max-width: 1366px) {
@@ -315,5 +354,59 @@ canvas {
 @media (max-width: 767.98px) {
     .modal-dialog-centered .modal-content {
         overflow: auto;
+    }
+}
+
+@media (max-width: 650px) {
+    #createPhoto .modal-dialog,
+    #photo_item .modal-dialog {
+        max-width: 500px;
+    }
+    .canvas-container {
+        min-width: 350px !important;
+        min-height: 350px !important;
+    }
+    .photo-container {
+        margin-right: 5px;
+    }
+    .extra-tool .emojis-tool .emojis {
+        height: 350px;
+        grid-gap: 2px;
+    }
+    .text-tool .text {
+        width: 120px;
+    }
+    .text-tool .font-style span.italic {
+        width: 10px;
+    }
+    .text-tool .btn {
+        padding: 0 10px;
+    }
+
+}
+
+@media (max-width: 510px) {
+    #createPhoto .modal-dialog,
+    #photo_item .modal-dialog {    
+        max-width: 500px;
+    }
+    #createPhoto .modal-body {
+        padding: 5px;
+    }
+    .canvas-container {
+        min-width: 300px !important;
+        min-height: 300px !important;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    .extra-tool .emojis-tool .emojis {
+        height: 300px;
+        grid-gap: 2px;
+    }
+    .text-tool .text {
+        width: 110px;
+    }
+    .text-tool .font-family {
+        width: 90px;
     }
 }

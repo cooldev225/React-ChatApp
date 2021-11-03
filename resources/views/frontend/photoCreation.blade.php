@@ -1,22 +1,39 @@
-@section('photorequest')
+@section('photoCreation')
 
     {{-- <script src="https://unpkg.com/konva@8.2.2/konva.min.js"></script> --}}
     {{-- <script src="/frontend/js/pages/fabric.js"></script> --}}
 
-    <div class="request-container">
+    <div class="photo-container">
+        <div class="text-tool">
+            <input type="text" class="text form-control" placeholder="">
+            <select class="form-select form-select-sm font-family" id="font-family" aria-label=".form-select-sm example">
+                
+            </select>
+            <div class="font-style">
+                <span class="bold">B</span>
+                <span class="italic">I</span>
+                <span class="underline">U</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm">Add</button>
+        </div>
         <canvas id="back_canvas">
-
         </canvas>
-        <div id="image-processing">
-            <div class="price-image">
+        <div class="blur-tool">
+            <img src="/images/blur.png" alt="">
+            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">
+        </div>
+    </div>
+    <div class="tool-box">
+        <div class="extra-tool">
+            <div class="emojis-tool">
                 <ul class="switch-list">
                     <li>
-                        <input class="infinite-switch" type="checkbox" />
-                        <h5>Infinite</h5>
+                        <input class="sticky-switch" type="checkbox" />
+                        <h5>Sticky</h5>
                     </li>
                 </ul>
-                <select class="form-select-sm emojis-price d-none" aria-label="Default select example">
-                    <option value="-1" selected>Infinite</option>
+                <select class="form-select form-select-sm emojis-price d-none" aria-label="Default select example">
+                    <option value="-1" selected>Sticky</option>
                     <option value="0" selected>Free</option>
                     <option value="1">$1</option>
                     <option value="2">$2</option>
@@ -84,14 +101,15 @@
                     <img src="/images/emojis/1 (60).png" draggable="true" />
                 </div>
             </div>
-            <div class="save-send">
-                <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="save-photo">
-                    <i data-feather="save"></i>
-                </button>
-                <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="send-photo">
-                    <i data-feather="send"></i>
-                </button>
-            </div>
+        </div>
+
+        <div class="save-send">
+            <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="save-photo">
+                <i data-feather="save"></i>
+            </button>
+            <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="send-photo">
+                <i data-feather="send"></i>
+            </button>
         </div>
     </div>
 @endsection

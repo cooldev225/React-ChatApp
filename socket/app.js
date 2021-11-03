@@ -95,7 +95,6 @@ io.on('connection', (socket) => {
 
     socket.on('send:photo', data => {
         if (data.to) {
-            data.blur = 0;
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             let message = {
