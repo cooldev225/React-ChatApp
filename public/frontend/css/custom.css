@@ -174,7 +174,7 @@ ul.chatappend .msg-box .camera-icon {
 
 .canvas-container {
     flex-shrink: 0;
-    min-width: 300px !important;
+    min-width: 250px !important;
     height: 350px !important;
     /* background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid gray; */
@@ -194,6 +194,9 @@ ul.chatappend .msg-box .camera-icon {
 
 #createPhoto .modal-title {
     margin-right: 25px;
+}
+#createPhoto .modal-body {
+    overflow: auto;
 }
 
 .request-container {
@@ -232,6 +235,7 @@ ul.chatappend .msg-box .camera-icon {
 
 .save-send button {
     margin: 25px 0;
+    display: block;
 }
 
 .receive_photo {

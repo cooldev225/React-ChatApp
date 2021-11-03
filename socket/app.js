@@ -123,6 +123,19 @@ io.on('connection', (socket) => {
         }
 
     });
+
+    socket.on('give:rate', data => {
+        console.log(data);
+        db.query(`UPDATE messages SET rate = ${data.rate} WHERE id=${data.messageId}`, (error, item) => {
+            if (error) throw error;
+            let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+            if (recipientSocketId) {
+                if (io.sockets.sockets.get(recipientSocketId)) {
+                    io.sockets.sockets.get(recipientSocketId).emit('get:rate', data);
+                }
+            }
+        })
+    })
 });
 
 server.listen(port, () => {

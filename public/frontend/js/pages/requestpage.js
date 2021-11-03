@@ -60,6 +60,10 @@ $(document).ready(function () {
     socket.on('receive:photo', data => {
         console.log(data);
     });
+    socket.on('get:rate', data => {
+        let target = $('.chatappend').find(`.replies .msg-box>li[key=${data.messageId}]`);
+        getContentRate(target, data.rate);
+    })
 
     $('ul.chat-main.request-list').on('click', 'li', (e) => {
         $('#detailRequestModal').find('.btn-success').css('display', 'block');
@@ -110,7 +114,7 @@ $(document).ready(function () {
             </li>`);
         };
         $('#detailRequestModal').modal("hide");
-        socket.emit('reject:request',);
+        socket.emit('reject:request');
     });
 
 });
@@ -621,43 +625,17 @@ function getContentRate(target, rate) {
 function setContentRate() {
     $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
-        
+
         if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
             var messageId = $('#photo_item .modal-content').attr('key');
-            
+
         } else {
             var messageId = $(this).parents('li.sent').find('.msg-box>li').attr('key');
         }
-        console.log(messageId);
-        console.log(rate);
         if (messageId) {
             $(e.target).closest('.photoRating').find('div').removeClass('checked');
             $(this).toggleClass('checked');
-            let form_data = new FormData();
-            form_data.append('messageId', messageId);
-            form_data.append('rate', rate);
-            $.ajax({
-                url: '/home/setContentRate',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: "json",
-                success: function (res) {
-                    if (res.state == 'true') {
-                        console.log('OK');
-                    } else {
-    
-                    }
-                },
-                error: function (response) {
-    
-                }
-            });
+            socket.emit('give:rate', { messageId, rate, currentContactId });
         }
     });
 }
