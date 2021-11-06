@@ -3531,19 +3531,22 @@
     <div class="modal fade add-popup request-modal" id="photo_item" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="photoRating">
-                    <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                <div class="rate-blur">
+                    <div class="photoRating">
+                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                    </div>
+                    <div class="blur-tool">
+                        <img src="/images/blur.png" alt="">
+                        {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0"> --}}
+                    </div>
                 </div>
                 <div>
                     <canvas id="photo_canvas"></canvas>
-                    <div class="blur-tool">
-                        <img src="/images/blur.png" alt="">
-                        <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0">
-                    </div>
                 </div>
                 <div class="btn-group">
                     <div class="photo-price">$10</div>
-                    <div class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
+                    <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png" alt="Pay"> </div>
+                    <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
                     <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div>
                 </div>

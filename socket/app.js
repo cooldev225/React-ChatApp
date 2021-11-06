@@ -95,6 +95,7 @@ io.on('connection', (socket) => {
 
     socket.on('send:photo', data => {
         if (data.to) {
+            console.log(data.blurPrice)
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             let message = {
@@ -104,7 +105,7 @@ io.on('connection', (socket) => {
                 kind: 2,
                 created_at: new Date()
             }
-            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${JSON.stringify(data.content)})`, (error, item) => {
+            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {

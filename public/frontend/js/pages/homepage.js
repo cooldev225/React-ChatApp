@@ -225,7 +225,7 @@ function searchAndAddRecentChatList() {
             let value = $('.new-chat-search').val();
             target.empty();
             if (value) {
-                usersList.filter(item => item.id != currentUserId && item.username.includes(value)).forEach(item => {
+                usersList.filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
                     addChatUserListItem(target, item);
                 });
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
