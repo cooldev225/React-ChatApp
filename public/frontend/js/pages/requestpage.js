@@ -26,7 +26,6 @@ if (viewportWidth > 650) {
 } else if (viewportWidth <= 650) {
     var canvasDimension = 350
 }
-console.log(canvasDimension)
 var canvas = new fabric.Canvas('back_canvas', {
     width: canvasDimension,
     height: canvasDimension,
@@ -69,10 +68,6 @@ $(document).ready(function () {
         if (data.from != currentUserId)
             $('.photo-request-icon').addClass('dot-btn');
     });
-
-    // socket.on('receive:photo', data => {
-    //     console.log(data);
-    // });
 
     socket.on('get:rate', data => {
         let target = $('.chatappend').find(`.replies .msg-box>li[key=${data.messageId}]`);
@@ -295,23 +290,11 @@ function blurPhoto() {
             canvas.renderAll();
         }
     })
-    // $('#removeBlur').on('input', e => {
-    //     let obj = photo_canvas.backgroundImage;
-    //     if (obj) {
-    //         let filter = new fabric.Image.filters.Blur({
-    //             blur: e.currentTarget.value
-    //         });
-    //         obj.filters = [];
-    //         obj.filters.push(filter);
-    //         obj.applyFilters();
-    //         photo_canvas.renderAll();
-    //     }
-    // });
 }
 
 function addEmojisOnPhoto() {
     var touchtime = 0;
-    $(".emojis-tool img").on("click", e => {
+    $(".emojis-tool img").on("click", (e) => {
         if (touchtime == 0) {
             touchtime = new Date().getTime();
         } else {
@@ -324,62 +307,7 @@ function addEmojisOnPhoto() {
                         $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                     }
 
-                    oImg.on({
-                        'mouseup': () => {
-                            if (tempImage) canvas.remove(tempImage);
-                            if (text) canvas.remove(text);
-                            let timeout = 1500;
-                            if (oImg.left < -10 || oImg.left > canvas.width || oImg.top < -10 || oImg.top > canvas.height) {
-                                canvas.remove(canvas.getActiveObject());
-                                canvas.remove(tempImage);
-                                canvas.remove(text);
-                            }
-                            if (oImg.price == -1) tempImage = lockImage;
-                            else if (oImg.price == 0) tempImage = unlockImage;
-                            else {
-                                tempImage = priceImage;
-                                timeout = 3000;
-                            }
-                            tempImage.scale(0.5);
-                            if (oImg.price > 9) tempImage.scaleX *= 1.2;
-                            tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
-                            tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
-                            if (oImg.aCoords.tr.x + 30 > canvas.width) {
-                                tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
-                            }
-                            if (oImg.aCoords.tr.y < 30)
-                                tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-                            tempImage.kind = 'temp';
-                            tempImage.selectable = false;
-                            tempImage.hasControls = false;
-                            canvas.add(tempImage);
-                            if (oImg.price > 0) {
-                                text = new fabric.Text('$' + oImg.price, {
-                                    left: tempImage.left + 3,
-                                    top: tempImage.top + 3,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: 'bold',
-                                    fontStyle: 'italic',
-                                    fontSize: '15'
-                                });
-                                text.kind = 'temp';
-                                text.selectable = false;
-                                text.hasControls = false;
-                                canvas.add(text);
-                            }
-                            setTimeout(() => {
-                                canvas.remove(tempImage);
-                                canvas.remove(text);
-                            }, timeout);
-                        },
-                        'moving': () => {
-                            if (tempImage)
-                                canvas.remove(tempImage);
-                            if (text)
-                                canvas.remove(text);
-                        }
-
-                    });
+                    addEventAction(canvas, oImg);
 
                     canvas.add(oImg);
                     canvas.centerObject(oImg);
@@ -437,7 +365,6 @@ function showPhoto() {
                 type: 'POST',
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
                     $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
                     if (res.state == 'true') {
                         let emojis = JSON.parse(res.data[0].content);
@@ -448,11 +375,15 @@ function showPhoto() {
                         if (res.data[0].from == currentUserId) {
                             $('#photo_item .modal-content').addClass('sent');
                         }
-
                         photo_canvas.clear();
+                        //add blur price 
+                        // $('#blurPrice').attr('price', res.data[0].blur_price);
+                        $('#blurPrice').on('mouseup', () => {
+                            let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item).price) + total, 0);
+                            price == 0 ? price = photoPrice : '';
+                            $('#photo_item .modal-content .photo-price').text('$' + price)
+                        })
                         getContentRate('#photo_item', res.data[0].rate);
-                        $('#removeBlur').attr('disabled', '');
-                        $('#removeBlur').val(res.data[0].blur);
                         new Promise(resolve => {
                             fabric.Image.fromURL(res.data[0].back, function (oImg) {
                                 let filter = new fabric.Image.filters.Blur({
@@ -461,11 +392,6 @@ function showPhoto() {
                                 oImg.filters = [];
                                 oImg.filters.push(filter);
                                 oImg.applyFilters();
-                                // oImg.scale(canvasDimension / oImg.width)
-                                // if (oImg.width > canvasDimension)
-                                //     oImg.width = canvasDimension;
-                                // if (oImg.height > canvasDimension)
-                                //     oImg.height = canvasDimension;
                                 photo_canvas.setWidth(oImg.width);
                                 photo_canvas.setHeight(oImg.height);
                                 photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
@@ -487,66 +413,68 @@ function showPhoto() {
                                             oImg.selectable = false;
                                         }
                                         photo_canvas.add(oImg);
-                                        oImg.on({
-                                            'mouseup': () => {
-                                                let timeout = 2000;
-                                                if (tempImage) photo_canvas.remove(tempImage);
-                                                if (text) photo_canvas.remove(text);
+                                        addEventAction(photo_canvas, oImg);
+                                        // oImg.on({
+                                        //     'mouseup': () => {
+                                        //         let timeout = 2000;
+                                        //         if (tempImage) photo_canvas.remove(tempImage);
+                                        //         if (text) photo_canvas.remove(text);
 
-                                                if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
-                                                    photo_canvas.remove(photo_canvas.getActiveObject());
-                                                    photo_canvas.remove(tempImage);
-                                                    photo_canvas.remove(text);
-                                                }
-                                                if (oImg.price == -1) tempImage = lockImage;
-                                                else if (oImg.price == 0) tempImage = unlockImage;
-                                                else {
-                                                    tempImage = priceImage;
-                                                    timeout = 5000;
-                                                }
-                                                tempImage.scale(0.5);
-                                                if (oImg.price > 9) tempImage.scaleX *= 1.2;
-                                                tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
-                                                tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
-                                                if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
-                                                    tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
-                                                }
-                                                if (oImg.aCoords.tr.y < 30)
-                                                    tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-                                                tempImage.kind = "temp";
-                                                tempImage.selectable = false;
-                                                tempImage.hasControls = false;
-                                                photo_canvas.add(tempImage);
-                                                if (oImg.price > 0) {
-                                                    text = new fabric.Text('$' + oImg.price, {
-                                                        left: tempImage.left + 3,
-                                                        top: tempImage.top + 3,
-                                                        fontFamily: 'Ubuntu',
-                                                        fontWeight: 'bold',
-                                                        fontStyle: 'italic',
-                                                        fontSize: '15'
-                                                    });
-                                                    text.kind = 'temp';
-                                                    text.selectable = false;
-                                                    text.hasControls = false;
-                                                    photo_canvas.add(text);
-                                                    text.on('mouseup', () => {
-                                                        console.log(oImg.price);
-                                                    });
-                                                }
+                                        //         if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
+                                        //             photo_canvas.remove(photo_canvas.getActiveObject());
+                                        //             photo_canvas.remove(tempImage);
+                                        //             photo_canvas.remove(text);
+                                        //         }
+                                        //         if (oImg.price == -1) tempImage = lockImage;
+                                        //         else if (oImg.price == 0) tempImage = unlockImage;
+                                        //         else {
+                                        //             tempImage = priceImage;
+                                        //             timeout = 5000;
+                                        //         }
+                                        //         tempImage.scale(0.5);
+                                        //         if (oImg.price > 9) tempImage.scaleX *= 1.2;
+                                        //         tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
+                                        //         tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
+                                        //         if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
+                                        //             tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
+                                        //         }
+                                        //         if (oImg.aCoords.tr.y < 30)
+                                        //             tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
+                                        //         tempImage.kind = "temp";
+                                        //         tempImage.selectable = false;
+                                        //         tempImage.hasControls = false;
+                                        //         photo_canvas.add(tempImage);
+                                        //         if (oImg.price > 0) {
+                                        //             text = new fabric.Text('$' + oImg.price, {
+                                        //                 left: tempImage.left + 3,
+                                        //                 top: tempImage.top + 3,
+                                        //                 fontFamily: 'Ubuntu',
+                                        //                 fontWeight: 'bold',
+                                        //                 fontStyle: 'italic',
+                                        //                 fontSize: '15'
+                                        //             });
+                                        //             text.kind = 'temp';
+                                        //             text.selectable = false;
+                                        //             text.hasControls = false;
+                                        //             photo_canvas.add(text);
+                                        //             text.on('mouseup', () => {
+                                        //                 console.log(oImg.price);
+                                        //             });
+                                        //         }
 
-                                                setTimeout(() => {
-                                                    photo_canvas.remove(tempImage);
-                                                    photo_canvas.remove(text);
+                                        //         setTimeout(() => {
+                                        //             photo_canvas.remove(tempImage);
+                                        //             photo_canvas.remove(text);
 
-                                                }, timeout);
-                                            },
-                                            'moving': () => {
-                                                photo_canvas.remove(tempImage);
-                                                photo_canvas.remove(text);
-                                            }
-                                        });
+                                        //         }, timeout);
+                                        //     },
+                                        //     'moving': () => {
+                                        //         photo_canvas.remove(tempImage);
+                                        //         photo_canvas.remove(text);
+                                        //     }
+                                        // });
                                         // add to cart
+                                        
                                         var touchtime = 0;
                                         oImg.on("mouseup", e => {
                                             if (touchtime == 0) {
@@ -554,7 +482,7 @@ function showPhoto() {
                                             } else {
                                                 if (((new Date().getTime()) - touchtime) < 800) {
                                                     if (oImg.price == -1) {
-                                                        alert('This is static Emoji')
+                                                        alert('This is static Element')
                                                         return;
                                                     }
                                                     if (selectedEmojis.find(item => item == oImg.cacheKey)) {
@@ -599,6 +527,7 @@ function showPhoto() {
                                     if (item.price != 0) {
                                         textBox.selectable = false;
                                     }
+                                    addEventAction(photo_canvas, textBox);
                                     photo_canvas.add(textBox);
 
                                 }
@@ -608,7 +537,6 @@ function showPhoto() {
 
                             });
                             $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
-
                         });
                     } else {
                         $('#photo_item').modal('show');
@@ -756,6 +684,7 @@ function setContentRate() {
         }
     });
 }
+
 function addTextOnPhoto() {
     $('.addText').on('click', function () {
         if ($('#createPhoto .switch-list').hasClass('d-none')) {
@@ -765,22 +694,16 @@ function addTextOnPhoto() {
         }
         let text = $('.text-tool .text').val();
         let textBox = new fabric.Textbox(text, {
-            left: 50,
-            top: 50,
-            with: 150,
+            // left: 50,
+            // top: 50,
+            with: 200,
             fontSize: 20,
             editable: false,
             price: price
         });
-        // textBox.on('mouseup', () => {
-        //     if (textBox.left < -10 || textBox.left > canvas.width || textBox.top < -10 || textBox.top > canvas.height) {
-        //         canvas.remove(canvas.getActiveObject());
-        //         // photo_canvas.remove(tempImage);
-        //         // photo_canvas.remove(text);
-        //     }
-        // });
+        addEventAction(canvas, textBox);
         canvas.add(textBox).setActiveObject(textBox);
-        // canvas.centerObject(textBox);
+        canvas.centerObject(textBox);
 
     });
     $('#font-family').on('change', function () {
@@ -813,5 +736,65 @@ function addTextOnPhoto() {
             $(e.target).toggleClass('active');
             canvas.requestRenderAll();
         }
+    });
+}
+
+function addEventAction(panel, element) {
+    element.on({
+        'mouseup': () => {
+            if (tempImage) panel.remove(tempImage);
+            if (text) panel.remove(text);
+            let timeout = 1500;
+            if (element.left < -10 || element.left > panel.width || element.top < -10 || element.top > panel.height) {
+                panel.remove(panel.getActiveObject());
+                panel.remove(tempImage);
+                panel.remove(text);
+                photoPrice -= element.price;
+            }
+            if (element.price == -1) tempImage = lockImage;
+            else if (element.price == 0) tempImage = unlockImage;
+            else {
+                tempImage = priceImage;
+                timeout = 5000;
+            }
+            tempImage.scale(0.5);
+            if (element.price > 9) tempImage.scaleX *= 1.2;
+            tempImage.left = element.aCoords.tr.x - 0.25 * tempImage.width;
+            tempImage.top = element.aCoords.tr.y - 0.25 * tempImage.height;
+            if (element.aCoords.tr.x + 30 > panel.width) {
+                tempImage.left = element.aCoords.tl.x - 0.25 * tempImage.width;
+            }
+            if (element.aCoords.tr.y < 30)
+                tempImage.top = element.aCoords.br.y - 0.25 * tempImage.height;
+            tempImage.kind = 'temp';
+            tempImage.selectable = false;
+            tempImage.hasControls = false;
+            panel.add(tempImage);
+            if (element.price > 0) {
+                text = new fabric.Text('$' + element.price, {
+                    left: tempImage.left + 3,
+                    top: tempImage.top + 3,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: 'bold',
+                    fontStyle: 'italic',
+                    fontSize: '15'
+                });
+                text.kind = 'temp';
+                text.selectable = false;
+                text.hasControls = false;
+                panel.add(text);
+            }
+            setTimeout(() => {
+                panel.remove(tempImage);
+                panel.remove(text);
+            }, timeout);
+        },
+        'moving': () => {
+            if (tempImage)
+                panel.remove(tempImage);
+            if (text)
+                panel.remove(text);
+        }
+
     });
 }

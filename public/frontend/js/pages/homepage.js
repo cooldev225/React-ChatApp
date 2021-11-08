@@ -322,17 +322,10 @@ function addContact() {
 }
 
 function newMessage() {
-    // let target = '.contact-chat ul.chatappend';
-    // let data = usersList.find(user => user.id == currentUserId);
     var message = $('.message-input input').val();
     if ($.trim(message) == '') {
         return false;
     }
-    // data.type = "replies";
-    // data.kind = 0;
-    // data.create_at = new Date();
-    // data.content = message;
-    // addChatItem(target, data);
 
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
