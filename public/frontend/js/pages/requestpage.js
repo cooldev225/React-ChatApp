@@ -57,6 +57,7 @@ $(document).ready(function () {
     payWholePhotoPrice();
     setContentRate();
     addTextOnPhoto();
+    calcBlurPrice();
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -378,11 +379,24 @@ function showPhoto() {
                         }
                         photo_canvas.clear();
                         //add blur price 
-                        // $('#blurPrice').attr('price', res.data[0].blur_price);
-                        $('#blurPrice').on('mouseup', () => {
-                            let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item|| oImg.text == item).price) + total, 0);
-                            price == 0 ? price = photoPrice : '';
-                            $('#photo_item .modal-content .photo-price').text('$' + price)
+                        $('#photo_item .blur-image').attr('price', res.data[0].blur_price);
+                        $('#photo_item .blur-image').on('mouseup', () => {
+                            if (res.data[0].blur_price) {
+                                if (selectedEmojis.find(item => item == 'blur')) {
+                                    $(`.selected-emojis img[key=blur]`).remove();
+                                    selectedEmojis = selectedEmojis.filter(item => item != 'blur');
+                                } else {
+                                    selectedEmojis.push('blur');
+                                    var img = document.createElement('img');
+                                    img.src = '/images/blur.png';
+                                    $(img).attr('key', 'blur');
+                                    $('.selected-emojis').append(img);
+                                }
+                                let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
+                                price == 0 ? price = photoPrice : '';
+                                $('#photo_item .modal-content .photo-price').text('$' + price)
+                            }
                         })
                         getContentRate('#photo_item', res.data[0].rate);
                         new Promise(resolve => {
@@ -436,7 +450,8 @@ function showPhoto() {
                                                         $(img).attr('key', oImg.cacheKey);
                                                         $('.selected-emojis').append(img);
                                                     }
-                                                    let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item|| oImg.text == item).price) + total, 0);
+                                                    let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item|| oImg.text == item).price) + total, 0);
+                                                    if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
                                                     price == 0 ? price = photoPrice : '';
                                                     $('#photo_item .modal-content .photo-price').text('$' + price)
                                                     console.log(price);
@@ -493,7 +508,8 @@ function showPhoto() {
                                                     
                                                 }
                                                 console.log(selectedEmojis);
-                                                let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                                let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                                if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
                                                 price == 0 ? price = photoPrice : '';
                                                 $('#photo_item .modal-content .photo-price').text('$' + price)
                                                 console.log(price);
@@ -509,8 +525,8 @@ function showPhoto() {
                                 if (item.price > 0) {
                                     photoPrice += Number(item.price);
                                 }
-
                             });
+                            if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
                             $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
                         });
                     } else {
@@ -615,7 +631,20 @@ function payWholePhotoPrice() {
                     photo_canvas.renderAll();
                 }
             });
-            alert(`You can control ${selectedEmojis.length} emojis which you selected`);
+            if (selectedEmojis.includes('blur')) {
+                let obj = photo_canvas.backgroundImage;
+                if (obj) {
+                    let filter = new fabric.Image.filters.Blur({
+                        blur: 0
+                    });
+                    obj.filters = [];
+                    obj.filters.push(filter);
+                    obj.applyFilters();
+                }
+                photo_canvas.renderAll();
+            }
+            alert(`You can control emojis which you selected`);
+            // alert(`You can control ${selectedEmojis.length} emojis which you selected`);
         } else {
             photo_canvas._objects.forEach(item => {
                 if (item.price > 0) {
@@ -669,8 +698,6 @@ function addTextOnPhoto() {
         }
         let text = $('.text-tool .text').val();
         let textBox = new fabric.Textbox(text, {
-            // left: 50,
-            // top: 50,
             with: 200,
             fontSize: 20,
             fill: '#4700B3',
@@ -780,4 +807,8 @@ function addEventAction(panel, element) {
         }
 
     });
+}
+
+function calcBlurPrice() {
+
 }

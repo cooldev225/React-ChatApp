@@ -3535,7 +3535,7 @@
                     <div class="photoRating">
                         <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                     </div>
-                    <div class="blur-tool">
+                    <div class="blur-image">
                         <img src="/images/blur.png" alt="">
                         {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0"> --}}
                     </div>

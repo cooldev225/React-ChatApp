@@ -1,6 +1,7 @@
 body {
     -webkit-text-size-adjust: 100%;
 }
+
 .config-submenu .nav-link.active {
     border-color: transparent;
     box-shadow: unset;
@@ -63,9 +64,11 @@ body {
 .justify-center {
     justify-content: center;
 }
+
 #detailRequestModal .request-content {
     width: 100%;
 }
+
 #detailRequestModal .request-description {
     height: 150px;
     font-size: 14px;
@@ -168,9 +171,9 @@ ul.chatappend .msg-box .camera-icon {
     margin: 5px 20px;
     cursor: pointer;
 }
+
 #createPhoto .modal-dialog,
-#photo_item .modal-dialog
-{
+#photo_item .modal-dialog {
     max-width: 600px;
 }
 
@@ -181,66 +184,82 @@ ul.chatappend .msg-box .camera-icon {
 #createPhoto .modal-title {
     margin-right: 25px;
 }
+
 #createPhoto .modal-body {
     overflow: auto;
 }
+
 .price-text {
     display: flex;
 }
+
 .price-tool {
     margin-right: 20px;
 }
+
 .text-tool {
     display: flex;
     justify-content: space-between;
     text-align: center;
     flex: 1;
 }
+
 .text-tool .text {
     width: 150px;
     height: 30px;
 }
+
 .text-tool .font-family {
     width: 110px;
     height: 30px;
 }
+
 .text-tool .font-style {
     display: flex;
 }
+
 .text-tool .font-style span {
     line-height: 30px;
     font-size: 17px;
     cursor: pointer;
-    padding:  0 2px;
+    padding: 0 2px;
 }
+
 .text-tool .font-style span.active {
     background-color: gray;
 }
+
 .text-tool .font-style span.italic {
     width: 15px;
     font-style: italic;
     margin-left: 5px;
 }
+
 .text-tool .font-style span.bold {
     font-weight: bold;
 }
+
 .text-tool .colorPicker {
     padding: 1px;
     width: 30px;
 }
+
 .text-tool .btn {
     padding: 0 10px;
 }
+
 .photo-container {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
+
 .canvas-container {
     min-width: 400px !important;
     min-height: 400px !important;
     border-radius: 5px;
 }
+
 .emojis-tool {
     height: 400px;
     overflow-y: auto;
@@ -248,21 +267,27 @@ ul.chatappend .msg-box .camera-icon {
     grid-template-columns: auto auto;
     grid-gap: 5px;
 }
+
 .tool-box {
     display: flex;
     justify-content: space-between;
 }
+
 .blur-tool {
     width: 60%;
     padding-left: 5%;
     display: flex;
     align-items: center;
+    text-align: center;
 }
-.blur-tool img {
+
+.blur-tool img,
+#photo_item .blur-image img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
+
 .blur-tool input {
     margin-left: 10px;
 }
@@ -293,14 +318,17 @@ ul.chatappend .msg-box .camera-icon {
     padding: 10px;
     padding-left: 0;
 }
+
 #photo_item .rate-blur {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
+
 #photo_item .blur-tool img {
     cursor: pointer;
 }
+
 #photo_item .modal-content .photo-price {
     text-align: center;
     font-size: 20px;
@@ -327,19 +355,26 @@ ul.chatappend .msg-box .camera-icon {
     border-radius: 5px;
     padding: 5px 15px;
 }
+
 #photo_item .modal-content .btn-group .btn img:hover {
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
 }
+
 #photo_item .modal-content .selected-emojis {
     position: absolute;
     top: 3px;
     left: 75%;
 }
+
 #photo_item .modal-content .selected-emojis img {
     width: 20px;
     height: 20px;
-} 
+}
+#photo_item .blur-image {
+    text-align: center;
+}
+
 
 
 @media (max-width: 1366px) {
@@ -356,11 +391,13 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 @media (max-width: 1024px) {
+
     .chitchat-main .messages .contact-details .media-body h5,
     .chitchat-main .messages .contact-details .media-body .h5 {
         display: block;
     }
 }
+
 @media (max-width: 767.98px) {
     .modal-dialog-centered .modal-content {
         overflow: auto;
@@ -368,24 +405,30 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 @media (max-width: 650px) {
+
     #createPhoto .modal-dialog,
     #photo_item .modal-dialog {
         max-width: 500px;
     }
+
     .canvas-container {
         min-width: 350px !important;
         min-height: 350px !important;
     }
+
     .emojis-tool {
         height: 350px;
         grid-gap: 2px;
     }
+
     .text-tool .text {
         width: 120px;
     }
+
     .text-tool .font-style span.italic {
         width: 10px;
     }
+
     .text-tool .btn {
         padding: 0 10px;
     }
@@ -393,26 +436,32 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 @media (max-width: 510px) {
+
     #createPhoto .modal-dialog,
-    #photo_item .modal-dialog {    
+    #photo_item .modal-dialog {
         max-width: 500px;
     }
+
     #createPhoto .modal-body {
         padding: 5px;
     }
+
     .canvas-container {
         min-width: 300px !important;
         min-height: 300px !important;
         margin-top: 10px;
         border-radius: 5px;
     }
+
     .emojis-tool {
         height: 300px;
         grid-gap: 2px;
     }
+
     .text-tool .text {
         width: 110px;
     }
+
     .text-tool .font-family {
         width: 90px;
     }
