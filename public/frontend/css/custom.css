@@ -224,7 +224,7 @@ ul.chatappend .msg-box .camera-icon {
 .text-tool .font-style span.bold {
     font-weight: bold;
 }
-.text-tool #colorPicker {
+.text-tool .colorPicker {
     padding: 1px;
     width: 30px;
 }

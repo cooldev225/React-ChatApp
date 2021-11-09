@@ -7,6 +7,7 @@ let lockImage;
 let unlockImage;
 let priceImage;
 let blurPrice = 0;
+let photoPrice = 0;
 
 fabric.Image.fromURL('/images/lock.png', (oImg) => {
     lockImage = oImg;
@@ -286,7 +287,7 @@ function blurPhoto() {
             obj.filters = [];
             obj.filters.push(filter);
             obj.applyFilters();
-            
+
             canvas.renderAll();
         }
     })
@@ -379,7 +380,7 @@ function showPhoto() {
                         //add blur price 
                         // $('#blurPrice').attr('price', res.data[0].blur_price);
                         $('#blurPrice').on('mouseup', () => {
-                            let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item).price) + total, 0);
+                            let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item|| oImg.text == item).price) + total, 0);
                             price == 0 ? price = photoPrice : '';
                             $('#photo_item .modal-content .photo-price').text('$' + price)
                         })
@@ -399,7 +400,7 @@ function showPhoto() {
                                 resolve();
                             });
                         }).then(() => {
-                            let photoPrice = 0;
+                            photoPrice = 0;
                             emojis.forEach(item => {
                                 if (item.type == 'image') {
                                     fabric.Image.fromURL(item.src, function (oImg) {
@@ -414,68 +415,8 @@ function showPhoto() {
                                         }
                                         photo_canvas.add(oImg);
                                         addEventAction(photo_canvas, oImg);
-                                        // oImg.on({
-                                        //     'mouseup': () => {
-                                        //         let timeout = 2000;
-                                        //         if (tempImage) photo_canvas.remove(tempImage);
-                                        //         if (text) photo_canvas.remove(text);
 
-                                        //         if (oImg.left < -10 || oImg.left > photo_canvas.width || oImg.top < -10 || oImg.top > photo_canvas.height) {
-                                        //             photo_canvas.remove(photo_canvas.getActiveObject());
-                                        //             photo_canvas.remove(tempImage);
-                                        //             photo_canvas.remove(text);
-                                        //         }
-                                        //         if (oImg.price == -1) tempImage = lockImage;
-                                        //         else if (oImg.price == 0) tempImage = unlockImage;
-                                        //         else {
-                                        //             tempImage = priceImage;
-                                        //             timeout = 5000;
-                                        //         }
-                                        //         tempImage.scale(0.5);
-                                        //         if (oImg.price > 9) tempImage.scaleX *= 1.2;
-                                        //         tempImage.left = oImg.aCoords.tr.x - 0.25 * tempImage.width;
-                                        //         tempImage.top = oImg.aCoords.tr.y - 0.25 * tempImage.height;
-                                        //         if (oImg.aCoords.tr.x + 30 > photo_canvas.width) {
-                                        //             tempImage.left = oImg.aCoords.tl.x - 0.25 * tempImage.width;
-                                        //         }
-                                        //         if (oImg.aCoords.tr.y < 30)
-                                        //             tempImage.top = oImg.aCoords.br.y - 0.25 * tempImage.height;
-                                        //         tempImage.kind = "temp";
-                                        //         tempImage.selectable = false;
-                                        //         tempImage.hasControls = false;
-                                        //         photo_canvas.add(tempImage);
-                                        //         if (oImg.price > 0) {
-                                        //             text = new fabric.Text('$' + oImg.price, {
-                                        //                 left: tempImage.left + 3,
-                                        //                 top: tempImage.top + 3,
-                                        //                 fontFamily: 'Ubuntu',
-                                        //                 fontWeight: 'bold',
-                                        //                 fontStyle: 'italic',
-                                        //                 fontSize: '15'
-                                        //             });
-                                        //             text.kind = 'temp';
-                                        //             text.selectable = false;
-                                        //             text.hasControls = false;
-                                        //             photo_canvas.add(text);
-                                        //             text.on('mouseup', () => {
-                                        //                 console.log(oImg.price);
-                                        //             });
-                                        //         }
-
-                                        //         setTimeout(() => {
-                                        //             photo_canvas.remove(tempImage);
-                                        //             photo_canvas.remove(text);
-
-                                        //         }, timeout);
-                                        //     },
-                                        //     'moving': () => {
-                                        //         photo_canvas.remove(tempImage);
-                                        //         photo_canvas.remove(text);
-                                        //     }
-                                        // });
-                                        // add to cart
-                                        
-                                        var touchtime = 0;
+                                        let touchtime = 0;
                                         oImg.on("mouseup", e => {
                                             if (touchtime == 0) {
                                                 touchtime = new Date().getTime();
@@ -495,7 +436,7 @@ function showPhoto() {
                                                         $(img).attr('key', oImg.cacheKey);
                                                         $('.selected-emojis').append(img);
                                                     }
-                                                    let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item).price) + total, 0);
+                                                    let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item|| oImg.text == item).price) + total, 0);
                                                     price == 0 ? price = photoPrice : '';
                                                     $('#photo_item .modal-content .photo-price').text('$' + price)
                                                     console.log(price);
@@ -522,13 +463,47 @@ function showPhoto() {
                                         fontSize: item.fontSize,
                                         fontWeight: item.fontWeight,
                                         fontStyle: item.fontStyle,
-                                        fill: item.fill
+                                        fill: item.fill,
+                                        backgroundColor: item.backgroundColor
                                     });
                                     if (item.price != 0) {
                                         textBox.selectable = false;
                                     }
                                     addEventAction(photo_canvas, textBox);
                                     photo_canvas.add(textBox);
+                                    let touchtime = 0;
+                                    textBox.on("mouseup", e => {
+                                        if (touchtime == 0) {
+                                            touchtime = new Date().getTime();
+                                        } else {
+                                            if (((new Date().getTime()) - touchtime) < 800) {
+                                                if (textBox.price == -1) {
+                                                    alert('This is static Element')
+                                                    return;
+                                                }
+                                                if (selectedEmojis.find(item => item == textBox.text)) {
+                                                    $(`.selected-emojis img[key=${textBox.text}]`).remove();
+                                                    selectedEmojis = selectedEmojis.filter(item => item != textBox.text);
+                                                } else {
+                                                    selectedEmojis.push(textBox.text);
+                                                    var img = document.createElement('img');
+                                                    img.src = '/images/text.png';
+                                                    $(img).attr('key', textBox.text);
+                                                    $('.selected-emojis').append(img);
+                                                    
+                                                }
+                                                console.log(selectedEmojis);
+                                                let price = selectedEmojis.reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                                price == 0 ? price = photoPrice : '';
+                                                $('#photo_item .modal-content .photo-price').text('$' + price)
+                                                console.log(price);
+                                                touchtime = 0;
+                                            } else {
+                                                // not a double click so set as a new first click
+                                                touchtime = new Date().getTime();
+                                            }
+                                        }
+                                    });
 
                                 }
                                 if (item.price > 0) {
@@ -582,6 +557,7 @@ function getEmojisInfo(obj) {
                 fontFamily: item.fontFamily,
                 fontSize: item.fontSize,
                 fill: item.fill,
+                backgroundColor: item.backgroundColor,
                 fontWeight: item.fontWeight,
                 fontStyle: item.fontStyle
             }
@@ -632,7 +608,7 @@ function payWholePhotoPrice() {
         // $('#removeBlur').removeAttr('disabled');
         // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
         if (selectedEmojis.length) {
-            photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey)).forEach(item => {
+            photo_canvas._objects.filter(item => selectedEmojis.includes(item.cacheKey) || selectedEmojis.includes(item.text)).forEach(item => {
                 if (item.price > 0) {
                     item.price = 0;
                     item.selectable = true;
@@ -645,7 +621,6 @@ function payWholePhotoPrice() {
                 if (item.price > 0) {
                     item.price = 0;
                     item.selectable = true;
-                    // photo_canvas.renderAll();
                 }
             });
             let obj = photo_canvas.backgroundImage;
@@ -698,6 +673,8 @@ function addTextOnPhoto() {
             // top: 50,
             with: 200,
             fontSize: 20,
+            fill: '#4700B3',
+            backgroundColor: '#C4E6C1',
             editable: false,
             price: price
         });
@@ -712,9 +689,15 @@ function addTextOnPhoto() {
             canvas.requestRenderAll();
         }
     });
-    $('#colorPicker').on('input', function () {
+    $('#fontColorPicker').on('input', function () {
         if (canvas.getActiveObject()) {
             canvas.getActiveObject().set("fill", this.value);
+            canvas.requestRenderAll();
+        }
+    });
+    $('#backColorPicker').on('input', function () {
+        if (canvas.getActiveObject()) {
+            canvas.getActiveObject().set("backgroundColor", this.value);
             canvas.requestRenderAll();
         }
     });

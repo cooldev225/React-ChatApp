@@ -32,7 +32,8 @@
                 <span class="italic">I</span>
                 {{-- <span class="underline">U</span> --}}
             </div>
-            <input type="color" class="form-control form-control-color" id="colorPicker" value="#563d7c" title="Choose your color">
+            <input type="color" class="form-control form-control-color colorPicker" id="fontColorPicker" value="#4700B3" title="Choose your color">
+            <input type="color" class="form-control form-control-color colorPicker" id="backColorPicker" value="#C4E6C1" title="Choose your color">
             <button type="button" class="btn btn-primary btn-sm addText">Add</button>
         </div>
     </div>
