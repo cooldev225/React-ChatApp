@@ -191,10 +191,11 @@ ul.chatappend .msg-box .camera-icon {
 
 .price-text {
     display: flex;
+    align-items: center;
 }
 
 .price-tool {
-    margin-right: 20px;
+    margin-right: 5px;
 }
 
 .text-tool {

@@ -4,14 +4,18 @@
     {{-- <script src="/frontend/js/pages/fabric.js"></script> --}}
     <div class="price-text">
         <div class="price-tool">
-            <ul class="switch-list">
+            {{-- <ul class="switch-list">
                 <li>
                     <input class="sticky-switch" type="checkbox" />
                     <h5>Sticky</h5>
                 </li>
-            </ul>
-            <select class="form-select form-select-sm emojis-price d-none" aria-label="Default select example">
-                <option value="-1" selected>Sticky</option>
+            </ul> --}}
+            <select class="form-select form-select-sm price-list preview-paid" aria-label="Default select example">
+                <option value="0" selected>Preview</option>
+                <option value="-2">Paid</option>
+            </select>
+            <select class="form-select form-select-sm pirce-list emojis-price d-none" aria-label="Default select example">
+                <option value="-1">Sticky</option>
                 <option value="0" selected>Free</option>
                 <option value="1">$1</option>
                 <option value="2">$2</option>
@@ -32,8 +36,8 @@
                 <span class="italic">I</span>
                 {{-- <span class="underline">U</span> --}}
             </div>
-            <input type="color" class="form-control form-control-color colorPicker" id="fontColorPicker" value="#4700B3" title="Choose your color">
-            <input type="color" class="form-control form-control-color colorPicker" id="backColorPicker" value="#C4E6C1" title="Choose your color">
+            <input type="color" class="form-control form-control-color colorPicker" format="rgba" id="fontColorPicker" value="#4700B3" title="Choose your color">
+            <input type="color" class="form-control form-control-color colorPicker" format="rgba" id="backColorPicker" value="#C4E6C1" title="Choose your color">
             <button type="button" class="btn btn-primary btn-sm addText">Add</button>
         </div>
     </div>

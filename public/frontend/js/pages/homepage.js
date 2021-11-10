@@ -58,14 +58,14 @@ $(document).ready(() => {
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
-        $('#createPhoto .switch-list').addClass('d-none');
+        $('#createPhoto .preview-paid').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
     });
 
     $('#acceptPhotoRequestBtn').on('click', () => {
         // $('#createPhoto').modal('show');
-        $('#createPhoto .switch-list').removeClass('d-none');
+        $('#createPhoto .preview-paid').removeClass('d-none');
         $('#createPhoto .emojis-price').addClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '-20px');
         
