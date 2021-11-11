@@ -689,17 +689,19 @@ function getContentRate(target, rate) {
 function setContentRate() {
     $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
-
+        
         if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
             var messageId = $('#photo_item .modal-content').attr('key');
+            var kind = 2;
 
         } else {
             var messageId = $(this).parents('li.sent').find('.msg-box>li').attr('key');
+            var kind = $(this).parents('li.sent').find('.msg-box>li').attr('kind');
         }
         if (messageId) {
             $(e.target).closest('.photoRating').find('div').removeClass('checked');
             $(this).toggleClass('checked');
-            socket.emit('give:rate', { messageId, rate, currentContactId });
+            socket.emit('give:rate', { messageId, rate, currentContactId, kind });
         }
     });
 }

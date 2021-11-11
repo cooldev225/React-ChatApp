@@ -1597,6 +1597,9 @@
                                         data-feather="x"> </i></a></div>
                         </div>
                     </div>
+                    <div class="photoRating">
+                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                    </div>
                     <div class="details">
                         <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="" />
                         </div>
@@ -1618,19 +1621,40 @@
                 <div class="document">
                     <div class="filter-block">
                         <div class="collapse-block open">
-                            <h5 class="block-title">Shared Document
+                            <h5 class="block-title">Content Ratings
                                 <label class="badge badge-success sm ms-2">3</label>
                             </h5>
                             <div class="block-content">
-                                <ul class="document-list">
-                                    <li><i class="ti-folder font-danger"></i>
-                                        <h5>Simple_practice_project-zip</h5>
+                                <ul class="document-list content-rating-list">
+                                    <li class="text-rating"><i class="ti-text font-danger" title="text"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
                                     </li>
-                                    <li><i class="ti-write font-success"></i>
-                                        <h5>Word_Map-jpg</h5>
+                                    <li class="photo-rating"><i class="ti-camera font-success" title="photo"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
                                     </li>
-                                    <li><i class="ti-zip font-primary"></i>
-                                        <h5>Latest_Design_portfolio.pdf</h5>
+                                    <li class="video-rating"><i class="ti-video-clapper font-primary" title="video"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
+                                    </li>
+                                    <li class="audio-rating"><i class="ti-music font-danger" title="audio"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
+                                    </li>
+                                    <li class="video-call-rating"><i class="ti-video-camera font-success" title="video call"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
+                                    </li>
+                                    <li class="voice-call-rating"><i class="ti-headphone-alt font-primary" title="voice call"></i>
+                                        <div class="photoRating">
+                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>

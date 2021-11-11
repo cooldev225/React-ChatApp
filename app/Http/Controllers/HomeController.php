@@ -16,6 +16,7 @@ use App\Models\Message;
 use App\Models\Contact;
 use App\Models\PhotoRequest;
 use App\Models\PhotoGallery;
+use App\Models\Rating;
 
 class HomeController extends Controller
 {
@@ -79,8 +80,9 @@ class HomeController extends Controller
             $item['content'] = $temp[0]['photo'];
             return $item;
         });
+        $rateData = Rating::where('user_id', $contactorId)->get();
 
-        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messages);
+        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messages, 'rateData'=>$rateData);
     }
 
 

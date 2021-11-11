@@ -139,7 +139,7 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
-                let { messageData } = res;
+                let { messageData, rateData } = res;
                 [contactorInfo] = res.contactorInfo;
 
                 currentContactId = contactorId;
@@ -172,7 +172,9 @@ function setCurrentChatContent(contactorId) {
                 $('.contact-profile .name h3').html(contactorInfo.username);
                 $('.contact-profile .name h5').html(contactorInfo.location);
                 $('.contact-profile .name h6').html(contactorInfo.description)
-
+                //whole rate display
+                displayProfileRate(rateData)
+               
                 //Chat data display
                 $('.contact-chat ul.chatappend').empty();
 
@@ -358,7 +360,7 @@ function addChatItem(target, senderId, data) {
                     <h5>${senderInfo.username}</h5>
                     <h6>${time.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
-                        <li key="${data.messageId}">
+                        <li key="${data.messageId}" kind="${data.kind}">
                             <div class="photoRating">
                                 <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                             </div>
@@ -393,5 +395,34 @@ function changeProfileImageAjax() {
         }
         reader.readAsDataURL(files[0]);
     });
+}
+
+function displayProfileRate(rateData) {
+    if (rateData.length) {
+        let data = rateData[0];
+        var textRate = (data.text_rate / data.text_count) || 0;
+        var photoRate = (data.photo_rate / data.photo_count) || 0;
+        var videoRate = (data.video_rate / data.video_count) || 0;
+        var audioRate = (data.audio_rate / data.audio_count) || 0;
+        var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
+        var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
+    }
+    let averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
+    getContentRate('.contact-profile', Math.round(averageRate));
+    $('.contact-profile').attr('title', averageRate.toFixed(2));
+
+    getContentRate('.content-rating-list .text-rating', Math.round(textRate));
+    getContentRate('.content-rating-list .photo-rating', Math.round(photoRate));
+    getContentRate('.content-rating-list .video-rating', Math.round(videoRate));
+    getContentRate('.content-rating-list .audio-rating', Math.round(audioRate));
+    getContentRate('.content-rating-list .video-call-rating', Math.round(videoCallRate));
+    getContentRate('.content-rating-list .voice-call-rating', Math.round(voiceCallRate));
+    $('.content-rating-list .text-rating').attr('title', textRate.toFixed(2));
+    $('.content-rating-list .photo-rating').attr('title', photoRate.toFixed(2));
+    $('.content-rating-list .video-rating').attr('title', videoRate.toFixed(2));
+    $('.content-rating-list .audio-rating').attr('title', audioRate.toFixed(2));
+    $('.content-rating-list .video-call-rating').attr('title', videoCallRate.toFixed(2));
+    $('.content-rating-list .voice-call-rating').attr('title', voiceCallRate.toFixed(2));
+
 }
 

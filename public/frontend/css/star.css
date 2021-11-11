@@ -21,22 +21,39 @@
     color: #deb217;
 }
 
-
-/* .msg-box .receive_photo {
-    display: block;
-}
-.msg-box .photo {
-    display: block !important;
-}
-.contact-chat .chatappend .replies .msg-box {
-    display: flex;
-} */
-
 .photoRating {
     padding: 0px 5px;
     line-height: 25px;
     cursor:pointer;
     font-size:30px;
     color:#ccc;
+}
+
+.contact-profile .photoRating
+ {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-top: 10px;
+}
+.chitchat-right-sidebar .contact-profile .details {
+    padding-top: 10px;
+}
+.content-rating-list .photoRating div {
+    float: right;
+    font-size: 20px;
+}
+.content-rating-list {
+    display: grid;
+    grid-template-columns: auto auto;
+
+}
+.content-rating-list li {
+    display: flex;
+    align-items: center;
+    margin: 3px 0 !important;
+}
+.content-rating-list li i {
+    position: static;
 }
 
