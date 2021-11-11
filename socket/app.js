@@ -53,9 +53,6 @@ io.on('connection', (socket) => {
         }
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
-            db.query(`INSERT INTO ratings (user_id, text_count) VALUES (${message.from}, 1) ON DUPLICATE KEY UPDATE user_id=${message.from}, text_count=text_count+1`, (error, item) => {
-                console.log("rateId: ", item.insertId);
-            });
             if (data.currentContactId) {
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
@@ -121,9 +118,6 @@ io.on('connection', (socket) => {
                             io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
                         }
                     }
-                    db.query(`INSERT INTO ratings (user_id, photo_count) VALUES (${data.from}, 1) ON DUPLICATE KEY UPDATE user_id=${data.from}, photo_count=photo_count+1`, (error, item) => {
-                        console.log("rateId: ", item.insertId);
-                    });
                 });
             });
         }
@@ -135,8 +129,15 @@ io.on('connection', (socket) => {
         if (data.kind != 1) {
             db.query(`SELECT rate FROM messages where id = ${data.messageId}`, (error, row) => {
                 let rate = data.rate - row[0].rate;
-                 db.query(`UPDATE ratings SET ${KindConstant[data.kind]}_rate=${KindConstant[data.kind]}_rate+${rate} WHERE user_id=${data.currentContactId}`, (error, item) => {
-                    console.log("rateId: ", item.insertId);
+                let count = row[0].rate ? 0 : 1;
+                db.query(`INSERT INTO ratings (user_id, ${KindConstant[data.kind]}_count, ${KindConstant[data.kind]}_rate) VALUES (${data.currentContactId}, 1, ${rate}) ON DUPLICATE KEY UPDATE user_id=${data.currentContactId}, ${KindConstant[data.kind]}_count=${KindConstant[data.kind]}_count+${count}, ${KindConstant[data.kind]}_rate=${KindConstant[data.kind]}_rate+${rate}`, (error, item) => {
+                    console.log("rate: ", item);
+                    // let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+                    // if (recipientSocketId) {
+                    //     if (io.sockets.sockets.get(recipientSocketId)) {
+                    //         io.sockets.sockets.get(recipientSocketId).emit('profile:rate', item);
+                    //     }
+                    // }
                 });
             });
         }

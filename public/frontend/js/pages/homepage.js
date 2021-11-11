@@ -407,6 +407,7 @@ function displayProfileRate(rateData) {
         var audioRate = (data.audio_rate / data.audio_count) || 0;
         var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
         var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
+        var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0 ;
     } else {
         var textRate = 0;
         var photoRate = 0;
@@ -414,9 +415,9 @@ function displayProfileRate(rateData) {
         var audioRate = 0;
         var videoCallRate = 0;
         var voiceCallRate = 0;
+        var averageRate = 0;
     }
     // var averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
-    var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0 ;
     console.log(textRate);
     console.log(photoRate);
     console.log(averageRate);
