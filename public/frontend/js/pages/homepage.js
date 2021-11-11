@@ -139,6 +139,7 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
+                console.log(res);
                 let { messageData, rateData } = res;
                 [contactorInfo] = res.contactorInfo;
 
@@ -179,7 +180,6 @@ function setCurrentChatContent(contactorId) {
                 $('.contact-chat ul.chatappend').empty();
 
                 if (messageData) {
-                    console.log(messageData);
                     let target = '.contact-chat ul.chatappend';
                     messageData.reverse().forEach(item => {
                         item.messageId = item.id;
