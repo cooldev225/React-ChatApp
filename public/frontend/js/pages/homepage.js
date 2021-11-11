@@ -417,6 +417,8 @@ function displayProfileRate(rateData) {
     }
     // var averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
     var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0 ;
+    console.log(textRate);
+    console.log(photoRate);
     console.log(averageRate);
     getContentRate('.contact-profile', Math.round(averageRate));
     $('.contact-profile').attr('title', averageRate.toFixed(2));
