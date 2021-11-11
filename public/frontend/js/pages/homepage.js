@@ -399,13 +399,22 @@ function changeProfileImageAjax() {
 
 function displayProfileRate(rateData) {
     let data = rateData[0];
-    var textRate = (data.text_rate / data.text_count) || 0;
-    var photoRate = (data.photo_rate / data.photo_count) || 0;
-    var videoRate = (data.video_rate / data.video_count) || 0;
-    var audioRate = (data.audio_rate / data.audio_count) || 0;
-    var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
-    var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
-    let averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
+    if (rateData.length) {
+        var textRate = (data.text_rate / data.text_count) || 0;
+        var photoRate = (data.photo_rate / data.photo_count) || 0;
+        var videoRate = (data.video_rate / data.video_count) || 0;
+        var audioRate = (data.audio_rate / data.audio_count) || 0;
+        var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
+        var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
+    } else {
+        var textRate = 0;
+        var photoRate = 0;
+        var videoRate = 0;
+        var audioRate = 0;
+        var videoCallRate = 0;
+        var voiceCallRate = 0;
+    }
+    var averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
     console.log(averageRate);
     getContentRate('.contact-profile', Math.round(averageRate));
     $('.contact-profile').attr('title', averageRate.toFixed(2));
