@@ -276,7 +276,7 @@ function selectBackPhoto() {
 function blurPhoto() {
     $('#blurRange').on('input', e => {
         if (globalImage) {
-            if ($('#createPhoto .switch-list').hasClass('d-none')) {
+            if ($('#createPhoto .preview-paid').hasClass('d-none')) {
                 blurPrice = $('.emojis-price').val();
             } else {
                 blurPrice = $('.preview-paid').val();
@@ -708,7 +708,7 @@ function setContentRate() {
 
 function addTextOnPhoto() {
     $('.addText').on('click', function () {
-        if ($('#createPhoto .switch-list').hasClass('d-none')) {
+        if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
         } else {
             var price = $('.preview-paid').val();
