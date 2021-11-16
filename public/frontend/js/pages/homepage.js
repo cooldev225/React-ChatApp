@@ -38,7 +38,6 @@ $(document).ready(() => {
     });
 
     socket.on('receive:typing', data => {
-        console.log(data);
         if (data == currentContactId) {
             typingMessage();
         }
@@ -350,24 +349,7 @@ function newMessage() {
 
 function displayTypingAction() {
     $('.message-input input').on('keyup', function (e) {
-        console.log(currentUserId, currentContactId)
-        // typingMessage()
-
-        // let timerId = setTimeout(() => {
-        //     console.log(timerId);
-        //     timerId = 0
-        // }, 2000);
         socket.emit('typing', { currentUserId, currentContactId });
-        // clearTimeout(timerId);
-        // if (e.which == 13) {
-        //     if (!e.target.value) {
-        //         return false
-        //     }
-        //     // typingMessage();
-        //     newMessage();
-        //     return false;
-        // }
-        // console.log('aaa');
     });
 }
 
