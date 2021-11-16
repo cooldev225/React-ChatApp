@@ -151,6 +151,7 @@ io.on('connection', (socket) => {
             }
         })
     })
+    
     socket.on('typing', data => {
         console.log(data);
         let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
