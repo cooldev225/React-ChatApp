@@ -257,7 +257,6 @@ function selectBackPhoto() {
                     scaleY: height / oImg.height
                 });
                 ori_image = canvas.toDataURL('image/png');
-
             });
 
         }
@@ -327,14 +326,18 @@ function addEmojisOnPhoto() {
 }
 
 function sendPhoto() {
-    $('#send-photo').on('click', () => {
+    $('#send-photo').on('click', (e) => {
+        if (!ori_image && !canvas._objects.length){
+            return;
+        }
         canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
         console.log(canvas._objects);
         let data = {};
         data.from = currentUserId;
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
-        data.back = ori_image;
+        data.back = ori_image || canvas.toDataURL('image/png');
+        console.log(data.back);
         data.blur = $('#blurRange').val();
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);

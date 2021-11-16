@@ -38,6 +38,7 @@ $(document).ready(() => {
     });
 
     socket.on('receive:typing', data => {
+        console.log(data);
         if (data == currentContactId) {
             typingMessage();
         }
