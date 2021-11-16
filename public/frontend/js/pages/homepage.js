@@ -3,7 +3,8 @@ var currentContactId;
 var contactorInfo = {};
 var usersList = [];
 var socket;
-
+var typingTime;
+var timerId;
 $(document).ready(() => {
 
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
@@ -19,6 +20,8 @@ $(document).ready(() => {
         message.from = Number(message.from);
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
+            $('.typing-m').remove();
+            $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
         } else {
             if (currentContactId) {
                 $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
@@ -34,10 +37,16 @@ $(document).ready(() => {
         }
     });
 
+    socket.on('receive:typing', data => {
+        if (data == currentContactId) {
+            typingMessage();
+        }
+    });
     getRecentChatUsers();
     getUsersList();
     searchAndAddRecentChatList();
     getContactList();
+    displayTypingAction();
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         $('.section-py-space').css('display', 'none');
@@ -68,7 +77,7 @@ $(document).ready(() => {
         $('#createPhoto .preview-paid').removeClass('d-none');
         $('#createPhoto .emojis-price').addClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '-20px');
-        
+
     });
 
 
@@ -82,6 +91,8 @@ $(document).ready(() => {
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
     changeProfileImageAjax();
+
+
 
 });
 function getCertainUserInfoById(id) {
@@ -175,7 +186,7 @@ function setCurrentChatContent(contactorId) {
                 $('.contact-profile .name h6').html(contactorInfo.description)
                 //whole rate display
                 displayProfileRate(rateData)
-               
+
                 //Chat data display
                 $('.contact-chat ul.chatappend').empty();
 
@@ -336,14 +347,51 @@ function newMessage() {
     socket.emit('message', { currentContactId, message });
 };
 
+function displayTypingAction() {
+    $('.message-input input').on('keyup', function (e) {
+        // typingMessage()
+
+        // let timerId = setTimeout(() => {
+        //     console.log(timerId);
+        //     timerId = 0
+        // }, 2000);
+        socket.emit('typing', { currentUserId, currentContactId });
+        // clearTimeout(timerId);
+        // if (e.which == 13) {
+        //     if (!e.target.value) {
+        //         return false
+        //     }
+        //     // typingMessage();
+        //     newMessage();
+        //     return false;
+        // }
+        // console.log('aaa');
+    });
+}
+
 function typingMessage() {
-    //   $('<li class="sent last typing-m"> <div class="media"> <div class="profile mr-4 bg-size" style="background-image: url(&quot;/chat/images/contact/2.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img class="bg-img" src="/chat/images/contact/2.jpg" alt="Avatar" style="display: none;"></div><div class="media-body"> <div class="contact-name"> <h5>Josephin water</h5> <h6>01:42 AM</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>').appendTo($('.messages .chatappend'));
-    //   $(".messages").animate({ scrollTop: $(document).height() }, "fast");   
-    //   setTimeout(function() {
-    //     $('.typing-m').hide(); 
-    //     $('<li class="sent"> <div class="media"> <div class="profile mr-4 bg-size" style="background-image: url(&quot;/chat/images/contact/2.jpg&quot;); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>Josephin water</h5> <h6>01:35 AM</h6> <ul class="msg-box"> <li> <h5> Sorry I busy right now, I will text you later </h5> <div class="badge badge-success sm ml-2"> R</div></li></ul> </div></div></div></li>').appendTo($('.messages .chatappend'));
-    //     $(".messages").animate({ scrollTop: $(document).height() }, "fast");   
-    // }, 2000);
+    if (!typingTime) {
+        typingTime = new Date();
+    }
+    // else {
+        var delta = (new Date() - typingTime);
+    // }
+    if (!$('.typing-m').length) {
+        let contactorInfo = getCertainUserInfoById(currentContactId);
+        $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
+        $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+    }
+    if (delta < 2000) {
+        typingTime = new Date();
+        clearTimeout(timerId);
+    }
+    timerId = setTimeout(() => {
+        $('.typing-m').remove();
+        $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+        typingTime = undefined;
+    }, 2000);
+
+
 }
 
 
@@ -366,10 +414,10 @@ function addChatItem(target, senderId, data) {
                                 <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                             </div>
                             ${data.kind == 0 ?
-                                `<h5>${data.content}</h5>`
-                                : data.kind == 1 ?
-                                    `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-                                    : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+            `<h5>${data.content}</h5>`
+            : data.kind == 1 ?
+                `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                         </li>
                     </ul>
                 </div>
@@ -407,7 +455,7 @@ function displayProfileRate(rateData) {
         var audioRate = (data.audio_rate / data.audio_count) || 0;
         var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
         var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
-        var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0 ;
+        var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0;
     } else {
         var textRate = 0;
         var photoRate = 0;
@@ -418,9 +466,6 @@ function displayProfileRate(rateData) {
         var averageRate = 0;
     }
     // var averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
-    console.log(textRate);
-    console.log(photoRate);
-    console.log(averageRate);
     getContentRate('.contact-profile', Math.round(averageRate));
     $('.contact-profile').attr('title', averageRate.toFixed(2));
 

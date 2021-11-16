@@ -151,6 +151,14 @@ io.on('connection', (socket) => {
             }
         })
     })
+    socket.on('typing', data => {
+        let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+            if (recipientSocketId) {
+                if (io.sockets.sockets.get(recipientSocketId)) {
+                    io.sockets.sockets.get(recipientSocketId).emit('receive:typing', data.currentUserId);
+                }
+            }
+    })
 });
 
 server.listen(port, () => {

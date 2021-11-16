@@ -715,9 +715,9 @@
         Chat 
         ==========================*/
 
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     $('.submit').on('click', function () {
-        typingMessage();
+        // typingMessage();
         newMessage();
     });
     $(window).on('keydown', function (e) {
@@ -725,7 +725,7 @@
             if (!e.target.value) {
                 return false
             }
-            typingMessage();
+            // typingMessage();
             newMessage();
             return false;
         }
