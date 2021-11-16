@@ -240,11 +240,6 @@ ul.chatappend .msg-box .camera-icon {
     font-weight: bold;
 }
 
-.text-tool .colorPicker {
-    padding: 1px;
-    width: 30px;
-}
-
 .text-tool .btn {
     padding: 0 10px;
 }
@@ -376,7 +371,20 @@ ul.chatappend .msg-box .camera-icon {
     text-align: center;
 }
 
-
+.colorPicker {
+    width: 30px;
+    height: 30px;
+    background-color: #4700B3;
+    border-radius: 5px;
+    outline: 1px solid rgba(0, 100, 0, 0.938);
+    outline-offset: 1px;
+}
+#backColorPicker {
+    background-color: #C4E6C1;
+}
+.colorpicker {
+    z-index: 2500;
+}
 
 @media (max-width: 1366px) {
 

@@ -29,15 +29,16 @@
         <div class="text-tool">
             <input type="text" class="text form-control" placeholder="">
             <select class="form-select form-select-sm font-family" id="font-family" aria-label=".form-select-sm example">
-                
+
             </select>
             <div class="font-style">
                 <span class="bold">B</span>
                 <span class="italic">I</span>
                 {{-- <span class="underline">U</span> --}}
             </div>
-            <input type="color" class="form-control form-control-color colorPicker" format="rgba" id="fontColorPicker" value="#4700B3" title="Choose your color">
-            <input type="color" class="form-control form-control-color colorPicker" format="rgba" id="backColorPicker" value="#C4E6C1" title="Choose your color">
+            <div class="colorPicker" id="fontColorPicker" value="#4700B3"></div>
+            <div class="colorPicker" id="backColorPicker" value="#4700B3"></div>
+            
             <button type="button" class="btn btn-primary btn-sm addText">Add</button>
         </div>
     </div>
@@ -46,61 +47,61 @@
         </canvas>
         <div class="emojis-tool">
             {{-- <div class="emojis"> --}}
-                <img src="/images/emojis/1 (1).svg" draggable="true" />
-                <img src="/images/emojis/1 (2).svg" draggable="true" />
-                <img src="/images/emojis/1 (3).svg" draggable="true" />
-                <img src="/images/emojis/1 (4).svg" draggable="true" />
-                <img src="/images/emojis/1 (5).svg" draggable="true" />
-                <img src="/images/emojis/1 (6).svg" draggable="true" />
-                <img src="/images/emojis/1 (1).png" draggable="true" />
-                <img src="/images/emojis/1 (2).png" draggable="true" />
-                <img src="/images/emojis/1 (3).png" draggable="true" />
-                <img src="/images/emojis/1 (4).png" draggable="true" />
-                <img src="/images/emojis/1 (5).png" draggable="true" />
-                <img src="/images/emojis/1 (6).png" draggable="true" />
-                <img src="/images/emojis/1 (7).png" draggable="true" />
-                <img src="/images/emojis/1 (9).png" draggable="true" />
-                <img src="/images/emojis/1 (10).png" draggable="true" />
-                <img src="/images/emojis/1 (11).png" draggable="true" />
-                <img src="/images/emojis/1 (12).png" draggable="true" />
-                <img src="/images/emojis/1 (13).png" draggable="true" />
-                <img src="/images/emojis/1 (14).png" draggable="true" />
-                <img src="/images/emojis/1 (15).png" draggable="true" />
-                <img src="/images/emojis/1 (16).png" draggable="true" />
-                <img src="/images/emojis/1 (17).png" draggable="true" />
-                <img src="/images/emojis/1 (18).png" draggable="true" />
-                <img src="/images/emojis/1 (19).png" draggable="true" />
-                <img src="/images/emojis/1 (20).png" draggable="true" />
-                <img src="/images/emojis/1 (31).png" draggable="true" />
-                <img src="/images/emojis/1 (32).png" draggable="true" />
-                <img src="/images/emojis/1 (33).png" draggable="true" />
-                <img src="/images/emojis/1 (34).png" draggable="true" />
-                <img src="/images/emojis/1 (35).png" draggable="true" />
-                <img src="/images/emojis/1 (36).png" draggable="true" />
-                <img src="/images/emojis/1 (37).png" draggable="true" />
-                <img src="/images/emojis/1 (38).png" draggable="true" />
-                <img src="/images/emojis/1 (39).png" draggable="true" />
-                <img src="/images/emojis/1 (40).png" draggable="true" />
-                <img src="/images/emojis/1 (41).png" draggable="true" />
-                <img src="/images/emojis/1 (42).png" draggable="true" />
-                <img src="/images/emojis/1 (43).png" draggable="true" />
-                <img src="/images/emojis/1 (44).png" draggable="true" />
-                <img src="/images/emojis/1 (45).png" draggable="true" />
-                <img src="/images/emojis/1 (46).png" draggable="true" />
-                <img src="/images/emojis/1 (47).png" draggable="true" />
-                <img src="/images/emojis/1 (48).png" draggable="true" />
-                <img src="/images/emojis/1 (49).png" draggable="true" />
-                <img src="/images/emojis/1 (50).png" draggable="true" />
-                <img src="/images/emojis/1 (51).png" draggable="true" />
-                <img src="/images/emojis/1 (52).png" draggable="true" />
-                <img src="/images/emojis/1 (53).png" draggable="true" />
-                <img src="/images/emojis/1 (54).png" draggable="true" />
-                <img src="/images/emojis/1 (55).png" draggable="true" />
-                <img src="/images/emojis/1 (56).png" draggable="true" />
-                <img src="/images/emojis/1 (57).png" draggable="true" />
-                <img src="/images/emojis/1 (58).png" draggable="true" />
-                <img src="/images/emojis/1 (59).png" draggable="true" />
-                <img src="/images/emojis/1 (60).png" draggable="true" />
+            <img src="/images/emojis/1 (1).svg" draggable="true" />
+            <img src="/images/emojis/1 (2).svg" draggable="true" />
+            <img src="/images/emojis/1 (3).svg" draggable="true" />
+            <img src="/images/emojis/1 (4).svg" draggable="true" />
+            <img src="/images/emojis/1 (5).svg" draggable="true" />
+            <img src="/images/emojis/1 (6).svg" draggable="true" />
+            <img src="/images/emojis/1 (1).png" draggable="true" />
+            <img src="/images/emojis/1 (2).png" draggable="true" />
+            <img src="/images/emojis/1 (3).png" draggable="true" />
+            <img src="/images/emojis/1 (4).png" draggable="true" />
+            <img src="/images/emojis/1 (5).png" draggable="true" />
+            <img src="/images/emojis/1 (6).png" draggable="true" />
+            <img src="/images/emojis/1 (7).png" draggable="true" />
+            <img src="/images/emojis/1 (9).png" draggable="true" />
+            <img src="/images/emojis/1 (10).png" draggable="true" />
+            <img src="/images/emojis/1 (11).png" draggable="true" />
+            <img src="/images/emojis/1 (12).png" draggable="true" />
+            <img src="/images/emojis/1 (13).png" draggable="true" />
+            <img src="/images/emojis/1 (14).png" draggable="true" />
+            <img src="/images/emojis/1 (15).png" draggable="true" />
+            <img src="/images/emojis/1 (16).png" draggable="true" />
+            <img src="/images/emojis/1 (17).png" draggable="true" />
+            <img src="/images/emojis/1 (18).png" draggable="true" />
+            <img src="/images/emojis/1 (19).png" draggable="true" />
+            <img src="/images/emojis/1 (20).png" draggable="true" />
+            <img src="/images/emojis/1 (31).png" draggable="true" />
+            <img src="/images/emojis/1 (32).png" draggable="true" />
+            <img src="/images/emojis/1 (33).png" draggable="true" />
+            <img src="/images/emojis/1 (34).png" draggable="true" />
+            <img src="/images/emojis/1 (35).png" draggable="true" />
+            <img src="/images/emojis/1 (36).png" draggable="true" />
+            <img src="/images/emojis/1 (37).png" draggable="true" />
+            <img src="/images/emojis/1 (38).png" draggable="true" />
+            <img src="/images/emojis/1 (39).png" draggable="true" />
+            <img src="/images/emojis/1 (40).png" draggable="true" />
+            <img src="/images/emojis/1 (41).png" draggable="true" />
+            <img src="/images/emojis/1 (42).png" draggable="true" />
+            <img src="/images/emojis/1 (43).png" draggable="true" />
+            <img src="/images/emojis/1 (44).png" draggable="true" />
+            <img src="/images/emojis/1 (45).png" draggable="true" />
+            <img src="/images/emojis/1 (46).png" draggable="true" />
+            <img src="/images/emojis/1 (47).png" draggable="true" />
+            <img src="/images/emojis/1 (48).png" draggable="true" />
+            <img src="/images/emojis/1 (49).png" draggable="true" />
+            <img src="/images/emojis/1 (50).png" draggable="true" />
+            <img src="/images/emojis/1 (51).png" draggable="true" />
+            <img src="/images/emojis/1 (52).png" draggable="true" />
+            <img src="/images/emojis/1 (53).png" draggable="true" />
+            <img src="/images/emojis/1 (54).png" draggable="true" />
+            <img src="/images/emojis/1 (55).png" draggable="true" />
+            <img src="/images/emojis/1 (56).png" draggable="true" />
+            <img src="/images/emojis/1 (57).png" draggable="true" />
+            <img src="/images/emojis/1 (58).png" draggable="true" />
+            <img src="/images/emojis/1 (59).png" draggable="true" />
+            <img src="/images/emojis/1 (60).png" draggable="true" />
             {{-- </div> --}}
         </div>
     </div>
@@ -118,4 +119,9 @@
             </button>
         </div>
     </div>
+    <script>
+        // $(function() {
+        //     $('#backColorPicker').colorpicker();
+        // });
+    </script>
 @endsection

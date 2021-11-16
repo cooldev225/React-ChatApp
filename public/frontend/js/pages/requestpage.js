@@ -540,6 +540,10 @@ function showPhoto() {
                                 if (item.price > 0) {
                                     photoPrice += Number(item.price);
                                 }
+                                let delay = 0;
+                                for(; delay <= 100000;){
+                                    delay += 1;
+                                }
                             });
                             if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
                             $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
@@ -707,6 +711,7 @@ function setContentRate() {
 }
 
 function addTextOnPhoto() {
+    
     $('.addText').on('click', function () {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
@@ -715,18 +720,21 @@ function addTextOnPhoto() {
             // var price = $('.sticky-switch').is(':checked') ? -1 : 0;
         }
         let text = $('.text-tool .text').val();
-        let textBox = new fabric.Textbox(text, {
-            with: 200,
-            fontSize: 20,
-            fill: '#4700B3',
-            textAlign: 'center',
-            backgroundColor: '#C4E6C1',
-            editable: false,
-            price: price
-        });
-        addEventAction(canvas, textBox);
-        canvas.add(textBox).setActiveObject(textBox);
-        canvas.centerObject(textBox);
+        if (text) {
+            let textBox = new fabric.Textbox(text, {
+                with: 200,
+                fontSize: 20,
+                fill: '#4700B3',
+                textAlign: 'center',
+                backgroundColor: '#C4E6C1',
+                editable: false,
+                price: price
+            });
+            addEventAction(canvas, textBox);
+            canvas.add(textBox).setActiveObject(textBox);
+            canvas.centerObject(textBox);
+            $('.text-tool .text').val('');
+        }
 
     });
     $('#font-family').on('change', function () {
@@ -735,18 +743,26 @@ function addTextOnPhoto() {
             canvas.requestRenderAll();
         }
     });
-    $('#fontColorPicker').on('input', function () {
+    
+    $('#backColorPicker').colorpicker().on('changeColor', e => {
+        let color = e.color.toString();
+        $('#backColorPicker').css('backgroundColor', color);
+        $('#backColorPicker').attr('value', color);
         if (canvas.getActiveObject()) {
-            canvas.getActiveObject().set("fill", this.value);
+            canvas.getActiveObject().set("backgroundColor", color);
             canvas.requestRenderAll();
         }
-    });
-    $('#backColorPicker').on('input', function () {
+    })
+    $('#fontColorPicker').colorpicker().on('changeColor', e => {
+        let color = e.color.toString();
+        $('#fontColorPicker').css('backgroundColor', color);
+        $('#fontColorPicker').attr('value', color);
         if (canvas.getActiveObject()) {
-            canvas.getActiveObject().set("backgroundColor", this.value);
+            canvas.getActiveObject().set("fill", color);
             canvas.requestRenderAll();
         }
-    });
+    })
+
     $('.font-style').on('click', function (e) {
         if (canvas.getActiveObject()) {
             if ($(e.target).hasClass('bold')) {
