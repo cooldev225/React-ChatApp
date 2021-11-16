@@ -47,8 +47,12 @@ $(document).ready(() => {
     getUsersList();
     searchAndAddRecentChatList();
     getContactList();
-    displayTypingAction();
+    // displayTypingAction();
     // displayChatData();
+    $('.message-input input').on('keyup', function (e) {
+        console.log('aa');
+        socket.emit('typing', { currentUserId, currentContactId });
+    });
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         $('.section-py-space').css('display', 'none');
         $('.app-list').css('display', 'block');
@@ -350,6 +354,7 @@ function newMessage() {
 
 function displayTypingAction() {
     $('.message-input input').on('keyup', function (e) {
+        console.log(e);
         // typingMessage()
 
         // let timerId = setTimeout(() => {
