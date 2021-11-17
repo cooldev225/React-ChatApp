@@ -7,8 +7,8 @@ var typingTime;
 var timerId;
 $(document).ready(() => {
 
-    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
-    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
+    // socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
+    socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
 
     socket.on('message', message => {
@@ -23,17 +23,17 @@ $(document).ready(() => {
             $('.typing-m').remove();
             $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
         } else {
-            if (currentContactId) {
-                $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
-            }
-            currentContactId = Number(message.from);
-            if (!$(`ul.chat-main li[key=${currentContactId}]`).length) {
-                let currentContactorInfo = usersList.find(item => item.id == currentContactId);
+            // if (currentContactId) {
+            //     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+            // }
+            // currentContactId = Number(message.from);
+            if (!$(`ul.chat-main li[key=${Number(message.from)}]`).length) {
+                let senderInfo = usersList.find(item => item.id == Number(message.from));
                 let userListTarget = $('.recent-default .recent-chat-list');
-                addChatUserListItem(userListTarget, currentContactorInfo);
+                addChatUserListItem(userListTarget, senderInfo);
             }
-            $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-            setCurrentChatContent(currentContactId);
+            // $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+            // setCurrentChatContent(currentContactId);
         }
     });
 
