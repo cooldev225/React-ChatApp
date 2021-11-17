@@ -40,7 +40,7 @@ class HomeController extends Controller
             $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
             $recentChatUsers = array();
             foreach($myData as $message) {
-                if (count($recentChatUsers) < 2) {
+                if (count($recentChatUsers) < 20) {
                     if ($message['sender'] == $id){
                         if (!in_array($message['recipient'], $recentChatUsers))
                             array_push($recentChatUsers, $message['recipient']);
