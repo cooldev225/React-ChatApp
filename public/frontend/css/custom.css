@@ -257,6 +257,20 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 .emojis-tool {
+    text-align: center;
+}
+.input_emojis {
+    margin: 3px auto;
+    border: 1px solid;
+    text-align: center;
+    padding: 5px;
+}
+.input_emojis .input-btn {
+    width: 30px;
+    height: 20px;
+    margin: 0 auto;
+}
+.emojis-tool .emojis {
     height: 400px;
     overflow-y: auto;
     display: grid;

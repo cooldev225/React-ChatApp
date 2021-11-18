@@ -3586,7 +3586,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <h3>Do you want reall pay?</h3>
+              <h3>Continue with payment?</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>

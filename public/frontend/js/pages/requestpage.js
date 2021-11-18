@@ -62,6 +62,10 @@ $(document).ready(function () {
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
         }, false);
+    document.getElementById("input_emoji_btn")
+        .addEventListener('click', function () {
+            document.getElementById("input_emoji_select").click();
+        }, false);
 
     socket.on('receive:request', data => {
         let senderInfo = getCertainUserInfoById(data.from);
@@ -323,11 +327,40 @@ function addEmojisOnPhoto() {
             }
         }
     });
+    $('#input_emoji_select').on('change', e => {
+        let reader = new FileReader();
+        files = e.target.files;
+        reader.onload = () => {
+            fabric.Image.fromURL(reader.result, function (oImg) {
+                if ($('#createPhoto .preview-paid').hasClass('d-none')) {
+                    oImg.price = $('.emojis-price').val();
+                } else {
+                    oImg.price = $('.preview-paid').val();
+                    // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+                }
+
+                console.log(oImg.width);
+                console.log(oImg.height);
+                let ratio = oImg.width / oImg.height;
+                let width = 50;
+                let height = 50 / ratio;
+                oImg.scaleX = 50 / oImg.width;
+                oImg.scaleY = 50 / ratio / oImg.height;
+                addEventAction(canvas, oImg);
+
+                canvas.add(oImg);
+                canvas.centerObject(oImg);
+            });
+
+        }
+        reader.readAsDataURL(files[0]);
+
+    })
 }
 
 function sendPhoto() {
     $('#send-photo').on('click', (e) => {
-        if (!ori_image && !canvas._objects.length){
+        if (!ori_image && !canvas._objects.length) {
             return;
         }
         canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
@@ -389,10 +422,10 @@ function showPhoto() {
                         $('#photo_item .blur-image').off().on('mouseup', () => {
                             if (touchtime == 0) {
                                 touchtime = new Date().getTime();
-                                
+
                             } else {
                                 if (((new Date().getTime()) - touchtime) < 800) {
-                                    
+
                                     if (res.data[0].blur_price) {
                                         if (selectedEmojis.find(item => item == 'blur')) {
                                             $(`.selected-emojis img[key=blur]`).remove();
@@ -516,7 +549,7 @@ function showPhoto() {
                                                         img.src = '/images/text.png';
                                                         $(img).attr('key', textBox.text);
                                                         $('.selected-emojis').append(img);
-    
+
                                                     }
                                                     let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
                                                     if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
@@ -693,7 +726,7 @@ function getContentRate(target, rate) {
 function setContentRate() {
     $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
-        
+
         if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
             var messageId = $('#photo_item .modal-content').attr('key');
             var kind = 2;
@@ -711,7 +744,7 @@ function setContentRate() {
 }
 
 function addTextOnPhoto() {
-    
+
     $('.addText').on('click', function () {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
@@ -743,7 +776,7 @@ function addTextOnPhoto() {
             canvas.requestRenderAll();
         }
     });
-    
+
     $('#backColorPicker').colorpicker().on('changeColor', e => {
         let color = e.color.toString();
         $('#backColorPicker').css('backgroundColor', color);
