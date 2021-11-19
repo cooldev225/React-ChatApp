@@ -8,8 +8,11 @@ const port = 3000;
 const io = require('socket.io')(server, {
     cors: {
         origins: '*',
-    }
+    },
+    maxHttpBufferSize: 10E7
+
 });
+
 
 // const db = mysql.createConnection({
 //     host: "localhost",
@@ -22,6 +25,13 @@ const db = mysql.createConnection({
     user: "ldahkumy_ojochat",
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
+});
+db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
+    console.log(error);
+    console.log(item);
+    db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
+        console.log(item);
+    })
 });
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
@@ -95,7 +105,8 @@ io.on('connection', (socket) => {
 
     socket.on('send:photo', data => {
         if (data.to) {
-            console.log(data.blurPrice)
+            console.log("photo is sent")
+            console.log(data.content.length);
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             let message = {

@@ -370,10 +370,10 @@ function sendPhoto() {
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
         data.back = ori_image || canvas.toDataURL('image/png');
-        console.log(data.back);
         data.blur = $('#blurRange').val();
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
+        console.log(data.content.length);
         socket.emit('send:photo', data);
     });
 }

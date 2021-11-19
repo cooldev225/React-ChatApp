@@ -184,6 +184,12 @@ ul.chatappend .msg-box .camera-icon {
 #createPhoto .modal-title {
     margin-right: 25px;
 }
+#createPhoto .price-mode {
+    position: absolute;
+    top: 70px;
+    left: 16px;
+    font-size: 16px;
+}
 
 #createPhoto .modal-body {
     overflow: auto;

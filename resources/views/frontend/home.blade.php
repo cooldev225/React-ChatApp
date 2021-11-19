@@ -3542,6 +3542,7 @@
                     </div>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
+                    <span class="price-mode">Mode:</span>
                 </div>
                 <div class="modal-body">
                     <div class="request-detail">
