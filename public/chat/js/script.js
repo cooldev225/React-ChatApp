@@ -38,13 +38,6 @@
 // var socket
 (function ($) {
     "use strict";
-    // console.log(currentUserId);
-    // socket = io.connect("http://localhost:3000", { query: { userId:currentUserId } });
-
-    // socket.on('message', (data) => {
-    //     console.log("client: ", data)
-    // });
-
     /*=====================
       01. Tooltip js
       ==========================*/
@@ -100,39 +93,39 @@
     /*=====================
       03. OwlCarousel js
       ==========================*/
-    var owl_carousel_custom_recent = {
-        init: function () {
-            var recent = $('.recent-slider');
-            recent.owlCarousel({
-                items: 3,
-                dots: false,
-                loop: true,
-                margin: 15,
-                nav: false,
-                autoplay: true,
-                autoplayTimeout: 2000,
-                autoplayHoverPause: true,
-                responsive: {
-                    768: {
-                        items: 7
-                    },
-                    800: {
-                        items: 7
-                    },
-                    801: {
-                        items: 2
-                    },
-                    1366: {
-                        items: 2
-                    },
-                    1600: {
-                        items: 3
-                    }
-                }
-            })
-        }
-    };
-    owl_carousel_custom_recent.init();
+    // var owl_carousel_custom_recent = {
+    //     init: function () {
+    //         var recent = $('.recent-slider');
+    //         recent.owlCarousel({
+    //             items: 3,
+    //             dots: false,
+    //             loop: true,
+    //             margin: 15,
+    //             nav: false,
+    //             autoplay: true,
+    //             autoplayTimeout: 2000,
+    //             autoplayHoverPause: true,
+    //             responsive: {
+    //                 768: {
+    //                     items: 7
+    //                 },
+    //                 800: {
+    //                     items: 7
+    //                 },
+    //                 801: {
+    //                     items: 2
+    //                 },
+    //                 1366: {
+    //                     items: 2
+    //                 },
+    //                 1600: {
+    //                     items: 3
+    //                 }
+    //             }
+    //         })
+    //     }
+    // };
+    // owl_carousel_custom_recent.init();
 
     var owl_carousel_custom_testimonial = {
         init: function () {

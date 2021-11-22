@@ -21,7 +21,7 @@ $(document).ready(() => {
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
-            $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+            // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
         } else {
             // if (currentContactId) {
             //     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
@@ -119,6 +119,7 @@ function getRecentChatUsers() {
                 recentChatUsers.forEach(item => {
                     addChatUserListItem(userListTarget, item);
                 });
+                displayRecentChatFriends(recentChatUsers);
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
                 setCurrentChatContent(lastChatUserId);
             } else {
@@ -197,6 +198,8 @@ function setCurrentChatContent(contactorId) {
                         addChatItem(target, item.sender, item);
                     });
                 }
+                // console.log($('.contact-chat').height());
+                $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
             }
         },
         error: function (response) {
@@ -358,7 +361,7 @@ function typingMessage() {
         typingTime = new Date();
     }
     // else {
-        var delta = (new Date() - typingTime);
+    var delta = (new Date() - typingTime);
     // }
     if (!$('.typing-m').length) {
         let contactorInfo = getCertainUserInfoById(currentContactId);
@@ -383,8 +386,7 @@ function addChatItem(target, senderId, data) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = new Date(data.created_at);
-
-    $(target).append(`<li class="${type}">
+    let item = `<li class="${type}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
             </div>
@@ -407,11 +409,11 @@ function addChatItem(target, senderId, data) {
                 </div>
             </div>
         </div>
-    </li>`);
+    </li>`;
+    $(target).append(item);
     if (data.rate) {
         getContentRate(`.msg-box li[key="${data.messageId}"]`, data.rate)
     }
-    $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
 
 }
 
@@ -466,5 +468,50 @@ function displayProfileRate(rateData) {
     $('.content-rating-list .video-call-rating').attr('title', videoCallRate.toFixed(2));
     $('.content-rating-list .voice-call-rating').attr('title', voiceCallRate.toFixed(2));
 
+}
+
+function displayRecentChatFriends(recentChatUsers) {
+    console.log(recentChatUsers);
+    $('.recent-slider').empty();
+    recentChatUsers.forEach(item => {
+        $('.recent-slider').append(`<div class="item">
+            <div class="recent-box">
+            
+                <div class="dot-btn dot-success grow"></div>
+                <div class="recent-profile"><img class="bg-img" src="${item.avatar  ?'v1/api/downloadFile?path=' + item.avatar : '/chat/images/avtar/1.jpg'}"
+                        alt="Avatar" />
+                    <h6>${item.username}</h6>
+                </div>
+            </div>
+        </div>`);
+    });
+    $('.recent-slider').owlCarousel({
+        items: 3,
+        dots: false,
+        loop: true,
+        margin: 60,
+        nav: false,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: false,
+        responsive: {
+            320: {
+                items: 1,
+                margin: 25,
+            },
+
+            601: {
+                items: 2,
+                margin: 25,
+            },
+            1070: {
+                items: 3,
+                margin: 25,
+            },
+            1600: {
+                items: 3
+            },
+        }
+    })
 }
 
