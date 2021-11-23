@@ -14,25 +14,23 @@ const io = require('socket.io')(server, {
 });
 
 
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "ldahkumy_ojochat",
+// });
 const db = mysql.createConnection({
     host: "localhost",
-    user: "root",
+    user: "ldahkumy_ojochat",
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
 });
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "ldahkumy_ojochat",
-//     password: "tempP@ss123",
-//     database: "ldahkumy_ojochat",
-// });
-db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
-    console.log(error);
-    console.log(item);
+// db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
     db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
         console.log(item);
     })
-});
+// });
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
 let user_socketMap = new Map();
