@@ -27,9 +27,9 @@ const db = mysql.createConnection({
     database: "ldahkumy_ojochat",
 });
 // db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
-    db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
-        console.log(item);
-    })
+    // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
+    //     console.log(item);
+    // })
 // });
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
