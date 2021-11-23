@@ -14,18 +14,18 @@ const io = require('socket.io')(server, {
 });
 
 
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "ldahkumy_ojochat",
-// });
 const db = mysql.createConnection({
     host: "localhost",
-    user: "ldahkumy_ojochat",
-    password: "tempP@ss123",
+    user: "root",
+    password: "",
     database: "ldahkumy_ojochat",
 });
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "ldahkumy_ojochat",
+//     password: "tempP@ss123",
+//     database: "ldahkumy_ojochat",
+// });
 db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
     console.log(error);
     console.log(item);
