@@ -707,7 +707,15 @@
 
         <div class="chitchat-main small-sidebar" id="content">
             <div class="chat-content tabto active">
+                    <div class="spining">
+                    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
+                        <!-- <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div> -->
+                    </div>
                 <div class="messages custom-scroll active" id="chating">
+                    
                     <div class="contact-details">
                         <div class="row">
                             <form class="form-inline search-form">

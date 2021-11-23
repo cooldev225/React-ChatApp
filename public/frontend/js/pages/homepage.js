@@ -21,7 +21,7 @@ $(document).ready(() => {
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
-            // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+            $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
         } else {
             // if (currentContactId) {
             //     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
@@ -136,6 +136,8 @@ function getRecentChatUsers() {
 }
 
 function setCurrentChatContent(contactorId) {
+    $('.spining').css('display', 'flex');
+
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
     $.ajax({
@@ -151,7 +153,6 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
-                console.log(res);
                 let { messageData, rateData } = res;
                 [contactorInfo] = res.contactorInfo;
 
@@ -191,15 +192,28 @@ function setCurrentChatContent(contactorId) {
                 //Chat data display
                 $('.contact-chat ul.chatappend').empty();
 
-                if (messageData) {
-                    let target = '.contact-chat ul.chatappend';
-                    messageData.reverse().forEach(item => {
-                        item.messageId = item.id;
-                        addChatItem(target, item.sender, item);
-                    });
-                }
-                // console.log($('.contact-chat').height());
-                $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
+                new Promise(resolve => {
+                    if (messageData) {
+                        let target = '.contact-chat ul.chatappend';
+                        messageData.reverse().forEach(item => {
+                            item.messageId = item.id;
+                            addChatItem(target, item.sender, item);
+                        });
+                    }
+                    resolve();
+                }).then(() => {
+                    $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
+                    setTimeout(() => {
+                        $('.spining').css('display', 'none');
+                    }, 1000);
+                    // while(true) {
+                    //     // $(".messages").scrollTop($('.contact-chat').height());
+                    //     if ($(".chatappend").height() - $(".messages").scrollTop() < 320) {
+                    //         console.log($('.contact-chat').height());
+                    //         break;
+                    //     }
+                    // }
+                });
             }
         },
         error: function (response) {
@@ -411,6 +425,8 @@ function addChatItem(target, senderId, data) {
         </div>
     </li>`;
     $(target).append(item);
+    // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
+
     if (data.rate) {
         getContentRate(`.msg-box li[key="${data.messageId}"]`, data.rate)
     }
@@ -471,14 +487,13 @@ function displayProfileRate(rateData) {
 }
 
 function displayRecentChatFriends(recentChatUsers) {
-    console.log(recentChatUsers);
     $('.recent-slider').empty();
     recentChatUsers.forEach(item => {
         $('.recent-slider').append(`<div class="item">
             <div class="recent-box">
             
                 <div class="dot-btn dot-success grow"></div>
-                <div class="recent-profile"><img class="bg-img" src="${item.avatar  ?'v1/api/downloadFile?path=' + item.avatar : '/chat/images/avtar/1.jpg'}"
+                <div class="recent-profile"><img class="bg-img" src="${item.avatar ? 'v1/api/downloadFile?path=' + item.avatar : '/chat/images/avtar/1.jpg'}"
                         alt="Avatar" />
                     <h6>${item.username}</h6>
                 </div>
@@ -505,10 +520,10 @@ function displayRecentChatFriends(recentChatUsers) {
                 margin: 25,
             },
             1070: {
-                items: 3,
+                items: 2,
                 margin: 25,
             },
-            1600: {
+            1400: {
                 items: 3
             },
         }
