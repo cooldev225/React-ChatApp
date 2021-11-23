@@ -708,7 +708,11 @@
         <div class="chitchat-main small-sidebar" id="content">
             <div class="chat-content tabto active">
                     <div class="spining">
-                    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        <div class="spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                        <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                         <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                         <!-- <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
@@ -3577,7 +3581,7 @@
                     <canvas id="photo_canvas"></canvas>
                 </div>
                 <div class="btn-group">
-                    <div class="photo-price">$10</div>
+                    <div class="photo-price"></div>
                     <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png" alt="Pay"> </div>
                     <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
