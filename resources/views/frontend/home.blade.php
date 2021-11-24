@@ -3585,6 +3585,7 @@
                     <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png" alt="Pay"> </div>
                     <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
+                    <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
                     <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div>
                 </div>
                 <div class="selected-emojis"></div>
