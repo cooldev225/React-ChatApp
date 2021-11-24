@@ -391,7 +391,7 @@ function sendPhoto() {
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
         data.back = ori_image || canvas.toDataURL('image/png');
-        data.blur = $('#blurRange').val();
+        data.blur = canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
         console.log(data.content.length);
@@ -779,6 +779,7 @@ function showPhotoContent(id) {
                 });
                 //5 star rating
                 getContentRate('#photo_item', res.data[0].rate);
+                console.log(res.data);
                 //background
                 new Promise(resolve => {
                     fabric.Image.fromURL(res.data[0].back, function (oImg) {
