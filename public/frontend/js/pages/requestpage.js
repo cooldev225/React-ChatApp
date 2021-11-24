@@ -133,6 +133,14 @@ $(document).ready(function () {
         socket.emit('reject:request');
     });
 
+    $('.restoreBtn').on('click', () => {
+        let id = $('#photo_item .modal-content').attr('key');
+        console.log(id);
+        if (id) {
+            showPhotoContent(id);
+        }
+    })
+
 });
 
 function addFont() {
@@ -404,211 +412,8 @@ function showPhoto() {
         $('.selected-emojis').empty();
         selectedEmojis = [];
         if (id) {
-            var form_data = new FormData();
-            form_data.append('id', id);
-            $.ajax({
-                url: '/home/getPhotoData',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: "json",
-                success: function (res) {
-                    $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
-                    if (res.state == 'true') {
-                        let emojis = JSON.parse(res.data[0].content);
-                        console.log(emojis);
-                        $('#photo_item').modal('show');
-                        $('#photo_item .modal-content').attr('key', id);
-                        $('#photo_item .modal-content').removeClass('sent');
-                        if (res.data[0].from == currentUserId) {
-                            $('#photo_item .modal-content').addClass('sent');
-                        }
-                        photo_canvas.clear();
-                        //add blur price 
-                        $('#photo_item .blur-image').attr('price', res.data[0].blur_price);
-                        let touchtime = 0;
-                        $('#photo_item .blur-image').off().on('mouseup', () => {
-                            if (touchtime == 0) {
-                                touchtime = new Date().getTime();
+            showPhotoContent(id);
 
-                            } else {
-                                if (((new Date().getTime()) - touchtime) < 800) {
-
-                                    if (res.data[0].blur_price) {
-                                        if (selectedEmojis.find(item => item == 'blur')) {
-                                            $(`.selected-emojis img[key=blur]`).remove();
-                                            selectedEmojis = selectedEmojis.filter(item => item != 'blur');
-                                        } else {
-                                            selectedEmojis.push('blur');
-                                            var img = document.createElement('img');
-                                            img.src = '/images/blur.png';
-                                            $(img).attr('key', 'blur');
-                                            $('.selected-emojis').append(img);
-                                        }
-                                        let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
-                                        if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
-                                        price == 0 ? price = photoPrice : '';
-                                        $('#photo_item .modal-content .photo-price').text('$' + price)
-                                    }
-                                    touchtime = 0;
-                                } else {
-                                    // not a double click so set as a new first click
-                                    touchtime = new Date().getTime();
-                                }
-                            }
-                        });
-                        //5 star rating
-                        getContentRate('#photo_item', res.data[0].rate);
-                        //background
-                        new Promise(resolve => {
-                            fabric.Image.fromURL(res.data[0].back, function (oImg) {
-                                let filter = new fabric.Image.filters.Blur({
-                                    blur: res.data[0].blur
-                                });
-                                oImg.filters = [];
-                                oImg.filters.push(filter);
-                                oImg.applyFilters();
-                                photo_canvas.setWidth(oImg.width);
-                                photo_canvas.setHeight(oImg.height);
-                                photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
-
-                                resolve();
-                            });
-                        }).then(() => {
-                            photoPrice = 0;
-                            Promise.all(emojis.map(item => {
-                                return new Promise(resolve => {
-                                    if (item.type == 'image') {
-                                        fabric.Image.fromURL(item.src, function (oImg) {
-                                            oImg.left = item.position[0];
-                                            oImg.top = item.position[1];
-                                            oImg.scaleX = item.size[0];
-                                            oImg.scaleY = item.size[1];
-                                            oImg.angle = item.angle;
-                                            oImg.price = item.price;
-                                            let filter = new fabric.Image.filters.Blur({
-                                                blur: item.blur
-                                            });
-                                            oImg.filters = [];
-                                            oImg.filters.push(filter);
-                                            oImg.applyFilters();
-                                            let touchtime = 0;
-                                            oImg.on("mouseup", e => {
-                                                if (touchtime == 0) {
-                                                    touchtime = new Date().getTime();
-                                                } else {
-                                                    if (((new Date().getTime()) - touchtime) < 800) {
-                                                        if (oImg.price == -1) {
-                                                            alert('This is static Element')
-                                                            return;
-                                                        }
-                                                        if (selectedEmojis.find(item => item == oImg.cacheKey)) {
-                                                            $(`.selected-emojis img[key=${oImg.cacheKey}]`).remove();
-                                                            selectedEmojis = selectedEmojis.filter(item => item != oImg.cacheKey);
-                                                        } else {
-                                                            selectedEmojis.push(oImg.cacheKey);
-                                                            var img = document.createElement('img');
-                                                            img.src = oImg.getSrc();
-                                                            $(img).attr('key', oImg.cacheKey);
-                                                            $('.selected-emojis').append(img);
-                                                        }
-                                                        let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
-                                                        if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
-                                                        price == 0 ? price = photoPrice : '';
-                                                        $('#photo_item .modal-content .photo-price').text('$' + price)
-                                                        touchtime = 0;
-                                                    } else {
-                                                        // not a double click so set as a new first click
-                                                        touchtime = new Date().getTime();
-                                                    }
-                                                }
-                                            });
-                                            resolve(oImg);
-                                        });
-                                    } else if (item.type == 'text') {
-                                        let textBox = new fabric.Textbox(item.text, {
-                                            width: item.width,
-                                            height: item.height,
-                                            scaleX: item.size[0],
-                                            scaleY: item.size[1],
-                                            left: item.position[0],
-                                            top: item.position[1],
-                                            angle: item.angle,
-                                            price: item.price,
-                                            fontSize: item.fontSize,
-                                            fontFamily: item.fontFamily,
-                                            fontSize: item.fontSize,
-                                            fontWeight: item.fontWeight,
-                                            fontStyle: item.fontStyle,
-                                            fill: item.fill,
-                                            backgroundColor: item.backgroundColor,
-                                            textAlign: 'center'
-                                        });
-                                        let touchtime = 0;
-                                        textBox.on("mouseup", e => {
-                                            if (touchtime == 0) {
-                                                touchtime = new Date().getTime();
-                                            } else {
-                                                if (((new Date().getTime()) - touchtime) < 800) {
-                                                    if (textBox.price == -1) {
-                                                        alert('This is static Element')
-                                                        return;
-                                                    }
-                                                    if (selectedEmojis.find(item => item == textBox.text)) {
-                                                        $(`.selected-emojis img[key=${textBox.text}]`).remove();
-                                                        selectedEmojis = selectedEmojis.filter(item => item != textBox.text);
-                                                    } else {
-                                                        selectedEmojis.push(textBox.text);
-                                                        var img = document.createElement('img');
-                                                        img.src = '/images/text.png';
-                                                        $(img).attr('key', textBox.text);
-                                                        $('.selected-emojis').append(img);
-
-                                                    }
-                                                    let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
-                                                    if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
-                                                    price == 0 ? price = photoPrice : '';
-                                                    $('#photo_item .modal-content .photo-price').text('$' + price)
-                                                    touchtime = 0;
-                                                } else {
-                                                    // not a double click so set as a new first click
-                                                    touchtime = new Date().getTime();
-                                                }
-                                            }
-                                        });
-                                        resolve(textBox);
-                                    }
-                                })
-                            })).then(objects => {
-                                for (var object of objects) {
-                                    if (+object.price != 0) {
-                                        object.selectable = false;
-                                    }
-                                    photo_canvas.add(object);
-                                    addEventAction(photo_canvas, object);
-                                    if (+object.price > 0) {
-                                        photoPrice += Number(object.price);
-                                    }
-                                    if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
-                                    $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
-                                }
-                            });
-                        });
-                    } else {
-                        $('#photo_item').modal('show');
-                        // let image = $(e.currentTarget).attr('src');
-                        // $('#photo_item .modal-content img').attr('src', image);
-                    }
-                },
-                error: function (response) {
-
-                }
-            });
         } else {
             $('#createPhoto').modal('show');
         }
@@ -912,4 +717,210 @@ function addEventAction(panel, element) {
 
 function calcBlurPrice() {
 
+}
+
+function showPhotoContent(id) {
+    var form_data = new FormData();
+    form_data.append('id', id);
+    $.ajax({
+        url: '/home/getPhotoData',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
+            if (res.state == 'true') {
+                let emojis = JSON.parse(res.data[0].content);
+                console.log(emojis);
+                $('#photo_item').modal('show');
+                $('#photo_item .modal-content').attr('key', id);
+                $('#photo_item .modal-content').removeClass('sent');
+                if (res.data[0].from == currentUserId) {
+                    $('#photo_item .modal-content').addClass('sent');
+                }
+                photo_canvas.clear();
+                //add blur price 
+                $('#photo_item .blur-image').attr('price', res.data[0].blur_price);
+                let touchtime = 0;
+                $('#photo_item .blur-image').off().on('mouseup', () => {
+                    if (touchtime == 0) {
+                        touchtime = new Date().getTime();
+
+                    } else {
+                        if (((new Date().getTime()) - touchtime) < 800) {
+
+                            if (res.data[0].blur_price) {
+                                if (selectedEmojis.find(item => item == 'blur')) {
+                                    $(`.selected-emojis img[key=blur]`).remove();
+                                    selectedEmojis = selectedEmojis.filter(item => item != 'blur');
+                                } else {
+                                    selectedEmojis.push('blur');
+                                    var img = document.createElement('img');
+                                    img.src = '/images/blur.png';
+                                    $(img).attr('key', 'blur');
+                                    $('.selected-emojis').append(img);
+                                }
+                                let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
+                                price == 0 ? price = photoPrice : '';
+                                $('#photo_item .modal-content .photo-price').text('$' + price)
+                            }
+                            touchtime = 0;
+                        } else {
+                            // not a double click so set as a new first click
+                            touchtime = new Date().getTime();
+                        }
+                    }
+                });
+                //5 star rating
+                getContentRate('#photo_item', res.data[0].rate);
+                //background
+                new Promise(resolve => {
+                    fabric.Image.fromURL(res.data[0].back, function (oImg) {
+                        let filter = new fabric.Image.filters.Blur({
+                            blur: res.data[0].blur
+                        });
+                        oImg.filters = [];
+                        oImg.filters.push(filter);
+                        oImg.applyFilters();
+                        photo_canvas.setWidth(oImg.width);
+                        photo_canvas.setHeight(oImg.height);
+                        photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
+
+                        resolve();
+                    });
+                }).then(() => {
+                    photoPrice = 0;
+                    Promise.all(emojis.map(item => {
+                        return new Promise(resolve => {
+                            if (item.type == 'image') {
+                                fabric.Image.fromURL(item.src, function (oImg) {
+                                    oImg.left = item.position[0];
+                                    oImg.top = item.position[1];
+                                    oImg.scaleX = item.size[0];
+                                    oImg.scaleY = item.size[1];
+                                    oImg.angle = item.angle;
+                                    oImg.price = item.price;
+                                    let filter = new fabric.Image.filters.Blur({
+                                        blur: item.blur
+                                    });
+                                    oImg.filters = [];
+                                    oImg.filters.push(filter);
+                                    oImg.applyFilters();
+                                    let touchtime = 0;
+                                    oImg.on("mouseup", e => {
+                                        if (touchtime == 0) {
+                                            touchtime = new Date().getTime();
+                                        } else {
+                                            if (((new Date().getTime()) - touchtime) < 800) {
+                                                if (oImg.price == -1) {
+                                                    alert('This is static Element')
+                                                    return;
+                                                }
+                                                if (selectedEmojis.find(item => item == oImg.cacheKey)) {
+                                                    $(`.selected-emojis img[key=${oImg.cacheKey}]`).remove();
+                                                    selectedEmojis = selectedEmojis.filter(item => item != oImg.cacheKey);
+                                                } else {
+                                                    selectedEmojis.push(oImg.cacheKey);
+                                                    var img = document.createElement('img');
+                                                    img.src = oImg.getSrc();
+                                                    $(img).attr('key', oImg.cacheKey);
+                                                    $('.selected-emojis').append(img);
+                                                }
+                                                let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                                if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
+                                                price == 0 ? price = photoPrice : '';
+                                                $('#photo_item .modal-content .photo-price').text('$' + price)
+                                                touchtime = 0;
+                                            } else {
+                                                // not a double click so set as a new first click
+                                                touchtime = new Date().getTime();
+                                            }
+                                        }
+                                    });
+                                    resolve(oImg);
+                                });
+                            } else if (item.type == 'text') {
+                                let textBox = new fabric.Textbox(item.text, {
+                                    width: item.width,
+                                    height: item.height,
+                                    scaleX: item.size[0],
+                                    scaleY: item.size[1],
+                                    left: item.position[0],
+                                    top: item.position[1],
+                                    angle: item.angle,
+                                    price: item.price,
+                                    fontSize: item.fontSize,
+                                    fontFamily: item.fontFamily,
+                                    fontSize: item.fontSize,
+                                    fontWeight: item.fontWeight,
+                                    fontStyle: item.fontStyle,
+                                    fill: item.fill,
+                                    backgroundColor: item.backgroundColor,
+                                    textAlign: 'center'
+                                });
+                                let touchtime = 0;
+                                textBox.on("mouseup", e => {
+                                    if (touchtime == 0) {
+                                        touchtime = new Date().getTime();
+                                    } else {
+                                        if (((new Date().getTime()) - touchtime) < 800) {
+                                            if (textBox.price == -1) {
+                                                alert('This is static Element')
+                                                return;
+                                            }
+                                            if (selectedEmojis.find(item => item == textBox.text)) {
+                                                $(`.selected-emojis img[key=${textBox.text}]`).remove();
+                                                selectedEmojis = selectedEmojis.filter(item => item != textBox.text);
+                                            } else {
+                                                selectedEmojis.push(textBox.text);
+                                                var img = document.createElement('img');
+                                                img.src = '/images/text.png';
+                                                $(img).attr('key', textBox.text);
+                                                $('.selected-emojis').append(img);
+
+                                            }
+                                            let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.cacheKey == item || oImg.text == item).price) + total, 0);
+                                            if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
+                                            price == 0 ? price = photoPrice : '';
+                                            $('#photo_item .modal-content .photo-price').text('$' + price)
+                                            touchtime = 0;
+                                        } else {
+                                            // not a double click so set as a new first click
+                                            touchtime = new Date().getTime();
+                                        }
+                                    }
+                                });
+                                resolve(textBox);
+                            }
+                        })
+                    })).then(objects => {
+                        for (var object of objects) {
+                            if (+object.price != 0) {
+                                object.selectable = false;
+                            }
+                            photo_canvas.add(object);
+                            addEventAction(photo_canvas, object);
+                            if (+object.price > 0) {
+                                photoPrice += Number(object.price);
+                            }
+                            if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
+                            $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
+                        }
+                    });
+                });
+            } else {
+                $('#photo_item').modal('show');
+            }
+        },
+        error: function (response) {
+
+        }
+    });
 }
