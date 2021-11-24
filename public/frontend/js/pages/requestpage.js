@@ -452,7 +452,6 @@ function getEmojisInfo(obj) {
                 backgroundColor: item.backgroundColor,
                 fontWeight: item.fontWeight,
                 fontStyle: item.fontStyle,
-                blur: item.filters[0] && item.filters[0].blur,
             }
     }));
 }
