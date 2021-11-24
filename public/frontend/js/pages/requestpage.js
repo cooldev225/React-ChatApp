@@ -58,6 +58,7 @@ $(document).ready(function () {
     setContentRate();
     addTextOnPhoto();
     calcBlurPrice();
+
     document.getElementById("input_btn")
         .addEventListener('click', function () {
             document.getElementById("input_file").click();
@@ -729,7 +730,7 @@ function payWholePhotoPrice() {
                     item.selectable = true;
                 }
                 let filter = new fabric.Image.filters.Blur({
-                    blur: e.currentTarget.value
+                    blur: 0
                 });
                 item.filters = [];
                 item.filters.push(filter);
