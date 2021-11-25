@@ -22,6 +22,8 @@ $(document).ready(() => {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
             $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+            $(`ul.chat-main li[key=${message.to}]`).insertBefore('ul.chat-main li:eq(0)');
+
         } else {
             // if (currentContactId) {
             //     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
@@ -31,6 +33,10 @@ $(document).ready(() => {
                 let senderInfo = usersList.find(item => item.id == Number(message.from));
                 let userListTarget = $('.recent-default .recent-chat-list');
                 addChatUserListItem(userListTarget, senderInfo);
+            } else {
+                $(`ul.chat-main li[key=${message.from}]`).insertBefore('ul.chat-main li:eq(0)');
+                $(`ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
+                $(`ul.chat-main li[key=${message.from}] .date-status`).append('<div class="badge badge-primary sm">1</div>');
             }
             // $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
             // setCurrentChatContent(currentContactId);
@@ -42,8 +48,8 @@ $(document).ready(() => {
             typingMessage();
         }
     });
-    getRecentChatUsers();
     getUsersList();
+    getRecentChatUsers();
     searchAndAddRecentChatList();
     getContactList();
     displayTypingAction();
@@ -57,7 +63,8 @@ $(document).ready(() => {
         }
         currentContactId = Number($(e.currentTarget).attr('key'));
         $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
-
+        $(`ul.chat-main li[key=${currentContactId}] h6.status`).css('display', 'block');
+        $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).css('display', 'none');
         setCurrentChatContent(currentContactId);
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
@@ -113,10 +120,12 @@ function getRecentChatUsers() {
         success: function (res) {
             if (res.state == 'true') {
                 let { recentChatUsers, lastChatUserId } = res;
+                recentChatUsers = recentChatUsers.map(item => getCertainUserInfoById(item));
+                console.log(recentChatUsers);
                 currentContactId = lastChatUserId;
                 let userListTarget = $('.recent-default .recent-chat-list');
                 userListTarget.empty();
-                recentChatUsers.forEach(item => {
+                recentChatUsers.reverse().forEach(item => {
                     addChatUserListItem(userListTarget, item);
                 });
                 displayRecentChatFriends(recentChatUsers);
@@ -206,13 +215,6 @@ function setCurrentChatContent(contactorId) {
                     setTimeout(() => {
                         $('.spining').css('display', 'none');
                     }, 1000);
-                    // while(true) {
-                    //     // $(".messages").scrollTop($('.contact-chat').height());
-                    //     if ($(".chatappend").height() - $(".messages").scrollTop() < 320) {
-                    //         console.log($('.contact-chat').height());
-                    //         break;
-                    //     }
-                    // }
                 });
             }
         },
@@ -254,9 +256,17 @@ function searchAndAddRecentChatList() {
         clearTimeout(keyuptimer);
         keyuptimer = setTimeout(function () {
             let value = $('.new-chat-search').val();
-            target.empty();
+            let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
+            // Array.from($('.recent-chat-list .details h5')).forEach(item => {
+            //     if (item.innerText.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+            //         $(item).closest('li').css('display', 'block');
+            //     } else {
+            //         $(item).closest('li').css('display', 'none');
+            //     }
+            // })
             if (value) {
-                usersList.filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
+                target.empty();
+                usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
                     addChatUserListItem(target, item);
                 });
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
@@ -268,7 +278,7 @@ function searchAndAddRecentChatList() {
 }
 
 function addChatUserListItem(target, data) {
-    $(target).append(
+    $(target).prepend(
         `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
             <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
@@ -276,7 +286,7 @@ function addChatUserListItem(target, data) {
             </div>
             <div class="details">
                 <h5>${data.username}</h5>
-                <h6>${data.description || ''}</h6>
+                <h6>${data.description || 'Hello'}</h6>
             </div>
             <div class="date-status"><i class="ti-pin2"></i>
                 <h6>22/10/19</h6>
@@ -305,7 +315,7 @@ function getContactList() {
                 success: function (res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
-                    res.forEach(item => {
+                    res.reverse().forEach(item => {
                         addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
                     });
 
@@ -487,6 +497,9 @@ function displayProfileRate(rateData) {
 }
 
 function displayRecentChatFriends(recentChatUsers) {
+    $owl = $('.recent-slider');
+    $owl.trigger('destroy.owl.carousel');
+    $owl.html($owl.find('.owl-stage-outer').html()).removeClass('owl-loaded');
     $('.recent-slider').empty();
     recentChatUsers.forEach(item => {
         $('.recent-slider').append(`<div class="item">

@@ -135,7 +135,6 @@ $(document).ready(function () {
 
     $('.restoreBtn').on('click', () => {
         let id = $('#photo_item .modal-content').attr('key');
-        console.log(id);
         if (id) {
             showPhotoContent(id);
         }
@@ -333,7 +332,6 @@ function addEmojisOnPhoto() {
                         oImg.price = $('.preview-paid').val();
                         // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                     }
-                    console.log(oImg.price);
                     addEventAction(canvas, oImg);
 
                     canvas.add(oImg);
@@ -360,8 +358,6 @@ function addEmojisOnPhoto() {
                     // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                 }
 
-                console.log(oImg.width);
-                console.log(oImg.height);
                 let ratio = oImg.width / oImg.height;
                 let width = 50;
                 let height = 50 / ratio;
@@ -385,7 +381,6 @@ function sendPhoto() {
             return;
         }
         canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
-        console.log(canvas._objects);
         let data = {};
         data.from = currentUserId;
         data.to = currentContactId;
@@ -394,7 +389,6 @@ function sendPhoto() {
         data.blur = canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
-        console.log(data.content.length);
         socket.emit('send:photo', data);
     });
 }
@@ -505,12 +499,14 @@ function payWholePhotoPrice() {
                     item.price = 0;
                     item.selectable = true;
                 }
-                let filter = new fabric.Image.filters.Blur({
-                    blur: e.currentTarget.value
-                });
-                item.filters = [];
-                item.filters.push(filter);
-                item.applyFilters();
+                if (item.blur) {
+                    let filter = new fabric.Image.filters.Blur({
+                        blur: item.blur
+                    });
+                    item.filters = [];
+                    item.filters.push(filter);
+                    item.applyFilters();
+                }
                 photo_canvas.renderAll();
             });
             if (selectedEmojis.includes('blur')) {
@@ -736,7 +732,6 @@ function showPhotoContent(id) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
-                console.log(emojis);
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
                 $('#photo_item .modal-content').removeClass('sent');
@@ -779,7 +774,6 @@ function showPhotoContent(id) {
                 });
                 //5 star rating
                 getContentRate('#photo_item', res.data[0].rate);
-                console.log(res.data);
                 //background
                 new Promise(resolve => {
                     fabric.Image.fromURL(res.data[0].back, function (oImg) {
@@ -808,7 +802,7 @@ function showPhotoContent(id) {
                                     oImg.angle = item.angle;
                                     oImg.price = item.price;
                                     let filter = new fabric.Image.filters.Blur({
-                                        blur: item.blur
+                                        blur: item.blur || 0
                                     });
                                     oImg.filters = [];
                                     oImg.filters.push(filter);

@@ -35,13 +35,12 @@ class HomeController extends Controller
         $id = Auth::id();
 
         $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
-        
         if (count($myData)) {
             $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
             $recentChatUsers = array();
             foreach($myData as $message) {
                 if (count($recentChatUsers) < 20) {
-                    if ($message['sender'] == $id){
+                    if ($message['sender'] == $id) {
                         if (!in_array($message['recipient'], $recentChatUsers))
                             array_push($recentChatUsers, $message['recipient']);
                     } else {
@@ -52,9 +51,13 @@ class HomeController extends Controller
                     break;
                 }
             }
-            $userList = User::whereIn('id', $recentChatUsers)->get();
+            // var_dump($recentChatUsers);
+            // $userList = User::whereIn('id', $recentChatUsers)->get();
+            // return array('state' => 'true',
+            //         'recentChatUsers' => $userList,
+            //         'lastChatUserId' => $lastChatUserId);
             return array('state' => 'true',
-                    'recentChatUsers' => $userList,
+                    'recentChatUsers' => $recentChatUsers,
                     'lastChatUserId' => $lastChatUserId);
         }
         return array('state' => 'false'); 

@@ -184,13 +184,16 @@ ul.chatappend .msg-box .camera-icon {
 #createPhoto .modal-title {
     margin-right: 25px;
 }
-#createPhoto .price-mode {
+#createPhoto .price-mode,
+#createPhoto .text-input {
     position: absolute;
     top: 70px;
     left: 16px;
     font-size: 16px;
 }
-
+#createPhoto .text-input {
+    left: 100px;
+}
 #createPhoto .modal-body {
     overflow: auto;
 }
@@ -277,7 +280,7 @@ ul.chatappend .msg-box .camera-icon {
     margin: 0 auto;
 }
 .emojis-tool .emojis {
-    height: 400px;
+    height: 360px;
     overflow-y: auto;
     display: grid;
     grid-template-columns: auto auto;
@@ -434,10 +437,12 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 @media (max-width: 650px) {
-
     #createPhoto .modal-dialog,
     #photo_item .modal-dialog {
         max-width: 500px;
+    }
+    .modal-body {
+        padding: 8px;
     }
 
     .canvas-container {
@@ -445,11 +450,17 @@ ul.chatappend .msg-box .camera-icon {
         min-height: 350px !important;
     }
 
-    .emojis-tool {
-        height: 350px;
-        grid-gap: 2px;
+    .emojis-tool .emojis {
+        height: 310px;
+        grid-gap: 5px;
     }
-
+    .emojis img {
+        width: 45px;
+        height: 45px;
+    }
+    .colorPicker {
+        width: 15px;
+    }
     .text-tool .text {
         width: 120px;
     }
@@ -481,10 +492,12 @@ ul.chatappend .msg-box .camera-icon {
         margin-top: 10px;
         border-radius: 5px;
     }
-
-    .emojis-tool {
-        height: 300px;
-        grid-gap: 2px;
+    #createPhoto .price-mode,
+    #createPhoto .text-input {
+        top: 55px;
+    }
+    .emojis-tool .emojis {
+        height: 260px;
     }
 
     .text-tool .text {
