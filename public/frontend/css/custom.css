@@ -294,7 +294,6 @@ ul.chatappend .msg-box .camera-icon {
 
 .blur-tool {
     width: 60%;
-    padding-left: 5%;
     display: flex;
     align-items: center;
     text-align: center;
@@ -407,6 +406,24 @@ ul.chatappend .msg-box .camera-icon {
 }
 .colorpicker {
     z-index: 2500;
+}
+.lock-tool {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lock-tool .icon-btn {
+    width: 30px;
+    height: 30px;
+}
+.lock-tool.lock .fa-lock,
+.lock-tool.unlock .fa-unlock-alt {
+    display: block;
+}
+
+.lock-tool.lock .fa-unlock-alt,
+.lock-tool.unlock .fa-lock {
+    display: none;
 }
 
 @media (max-width: 1366px) {

@@ -109,6 +109,12 @@
         </div>
     </div>
     <div class="tool-box">
+        <div class="lock-tool lock">
+            <a class="icon-btn btn-outline-danger me-4 outside" href="#">
+                <i class="fa fa-lock"></i>
+                <i class="fa fa-unlock-alt"></i>
+            </a>
+        </div>
         <div class="blur-tool">
             <img src="/images/blur.png" alt="">
             <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">

@@ -3573,9 +3573,17 @@
                     <div class="photoRating">
                         <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                     </div>
-                    <div class="blur-image">
-                        <img src="/images/blur.png" alt="">
-                        {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0"> --}}
+                    <div>
+                        <div class="lock-tool lock">
+                            <a class="icon-btn btn-outline-danger outside mb-3" href="#">
+                                <i class="fa fa-lock"></i>
+                                <i class="fa fa-unlock-alt"></i>
+                            </a>
+                        </div>
+                        <div class="blur-image">
+                            <img src="/images/blur.png" alt="">
+                            {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0"> --}}
+                        </div>
                     </div>
                 </div>
                 <div>

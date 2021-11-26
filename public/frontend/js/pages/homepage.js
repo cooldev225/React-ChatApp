@@ -7,7 +7,7 @@ var typingTime;
 var timerId;
 $(document).ready(() => {
 
-    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId});
+    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
 
@@ -36,7 +36,10 @@ $(document).ready(() => {
             } else {
                 $(`ul.chat-main li[key=${message.from}]`).insertBefore('ul.chat-main li:eq(0)');
                 $(`ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
-                $(`ul.chat-main li[key=${message.from}] .date-status`).append('<div class="badge badge-primary sm">1</div>');
+                $(`ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
+                let count = $(`ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
+                console.log(count);
+                $(`ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
             }
             // $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
             // setCurrentChatContent(currentContactId);
@@ -64,6 +67,7 @@ $(document).ready(() => {
         currentContactId = Number($(e.currentTarget).attr('key'));
         $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
         $(`ul.chat-main li[key=${currentContactId}] h6.status`).css('display', 'block');
+        $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).text('');
         $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).css('display', 'none');
         setCurrentChatContent(currentContactId);
         var contentwidth = jQuery(window).width();
@@ -74,6 +78,9 @@ $(document).ready(() => {
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
+        canvas.setWidth(canvasDimension);
+        canvas.setHeight(canvasDimension);
+        canvas.clear();
         $('#createPhoto .preview-paid').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
@@ -102,6 +109,7 @@ $(document).ready(() => {
 
 
 });
+
 function getCertainUserInfoById(id) {
     return usersList.find(item => item.id == id);
 }
@@ -117,7 +125,7 @@ function getRecentChatUsers() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             if (res.state == 'true') {
                 let { recentChatUsers, lastChatUserId } = res;
                 recentChatUsers = recentChatUsers.map(item => getCertainUserInfoById(item));
@@ -138,7 +146,7 @@ function getRecentChatUsers() {
 
             }
         },
-        error: function (res) {
+        error: function(res) {
             alert('The operation is failed');
         }
     });
@@ -160,7 +168,7 @@ function setCurrentChatContent(contactorId) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             if (res.state == 'true') {
                 let { messageData, rateData } = res;
                 [contactorInfo] = res.contactorInfo;
@@ -195,7 +203,7 @@ function setCurrentChatContent(contactorId) {
                 $('.contact-profile .name h3').html(contactorInfo.username);
                 $('.contact-profile .name h5').html(contactorInfo.location);
                 $('.contact-profile .name h6').html(contactorInfo.description)
-                //whole rate display
+                    //whole rate display
                 displayProfileRate(rateData)
 
                 //Chat data display
@@ -218,7 +226,7 @@ function setCurrentChatContent(contactorId) {
                 });
             }
         },
-        error: function (response) {
+        error: function(response) {
             alert('The operation is failed');
         }
     });
@@ -239,11 +247,11 @@ function getUsersList() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             usersList = res.data;
             let target = $('.recent-default .recent-chat-list');
         },
-        error: function (response) {
+        error: function(response) {
             alert('The operation is failed');
         }
     });
@@ -252,9 +260,9 @@ function getUsersList() {
 function searchAndAddRecentChatList() {
     let keyuptimer;
     let target = $('.recent-default .recent-chat-list');
-    $('.new-chat-search').bind('keyup', function () {
+    $('.new-chat-search').bind('keyup', function() {
         clearTimeout(keyuptimer);
-        keyuptimer = setTimeout(function () {
+        keyuptimer = setTimeout(function() {
             let value = $('.new-chat-search').val();
             let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
             // Array.from($('.recent-chat-list .details h5')).forEach(item => {
@@ -291,6 +299,7 @@ function addChatUserListItem(target, data) {
             <div class="date-status"><i class="ti-pin2"></i>
                 <h6>22/10/19</h6>
                 <h6 class="font-success status"> Seen</h6>
+                <div class="badge badge-primary sm"></div>
             </div>
             </div>
         </li>`
@@ -312,7 +321,7 @@ function getContactList() {
                 processData: false,
                 type: 'POST',
                 dataType: "json",
-                success: function (res) {
+                success: function(res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
                     res.reverse().forEach(item => {
@@ -320,7 +329,7 @@ function getContactList() {
                     });
 
                 },
-                error: function (response) {
+                error: function(response) {
 
                 }
             });
@@ -342,7 +351,7 @@ function addContact() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             if (res.insertion == false) {
                 $('.addContactError').html(res.message);
                 setTimeout(() => {
@@ -356,7 +365,7 @@ function addContact() {
                 addChatUserListItem(target, data);
             }
         },
-        error: function (response) {
+        error: function(response) {
             alert('The operation is failed');
         }
     });
@@ -375,7 +384,7 @@ function newMessage() {
 };
 
 function displayTypingAction() {
-    $('.message-input input').on('keyup', function (e) {
+    $('.message-input input').on('keyup', function(e) {
         socket.emit('typing', { currentUserId, currentContactId });
     });
 }
@@ -424,10 +433,10 @@ function addChatItem(target, senderId, data) {
                                 <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                             </div>
                             ${data.kind == 0 ?
-            `<h5>${data.content}</h5>`
-            : data.kind == 1 ?
-                `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-                : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                                `<h5>${data.content}</h5>`
+                                : data.kind == 1 ?
+                                    `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                                    : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                         </li>
                     </ul>
                 </div>
@@ -542,4 +551,3 @@ function displayRecentChatFriends(recentChatUsers) {
         }
     })
 }
-

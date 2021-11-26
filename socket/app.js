@@ -3,7 +3,7 @@ const app = express()
 const mysql = require('mysql');
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
-// const port = process.env.PORT || 4000
+    // const port = process.env.PORT || 4000
 const port = 3000;
 const io = require('socket.io')(server, {
     cors: {
@@ -27,9 +27,9 @@ const db = mysql.createConnection({
     database: "ldahkumy_ojochat",
 });
 // db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
-    // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
-    //     console.log(item);
-    // })
+// db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
+//     console.log(item);
+// })
 // });
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
