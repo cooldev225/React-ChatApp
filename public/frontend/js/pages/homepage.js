@@ -63,7 +63,8 @@ $(document).ready(() => {
         displayTypingAction();
         // deleteMessages();
     }, 2000);
-    $('.chatappend').on('click', '.deleteMessageBtn', event => {
+    $('.chatappend').off().on('click', '.deleteMessageBtn', event => {
+        console.log('aaa');
         let element = $(event.currentTarget).closest('.msg-setting-main');
         let messageId = element.attr('key');
 
