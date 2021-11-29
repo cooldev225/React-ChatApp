@@ -169,7 +169,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('delete:message', data => {
+    socket.on('deleteMessage', data => {
         console.log(data);
         db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
             if (!error) {

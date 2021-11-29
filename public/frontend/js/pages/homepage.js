@@ -579,6 +579,6 @@ function deleteMessages() {
         } else {
             console.log('not photo');
         }
-        socket.emit('delete:message', {currentContactId, messageId, photoId });
+        socket.emit('deleteMessage', {currentContactId, messageId, photoId });
     });
 }
