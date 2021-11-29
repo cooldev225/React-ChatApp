@@ -395,25 +395,34 @@ function sendPhoto() {
 }
 
 function showPhoto() {
+    let touchtime = 0;
     $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
-        console.log('aaa');
-        if ($(e.currentTarget).closest('li').parents('li').hasClass('replies')) {
-            $('.previewBtn').removeClass('d-none');
-            $('.payBtn').addClass('d-none');
-        } else {
-            $('.previewBtn').addClass('d-none');
-            $('.payBtn').removeClass('d-none');
-        }
-        let id = $(e.currentTarget).closest('li').attr('key');
-        $('.selected-emojis').empty();
-        selectedEmojis = [];
-        if (id) {
-            showPhotoContent(id);
+        if (touchtime == 0) {
+            touchtime = new Date().getTime();
 
         } else {
-            $('#createPhoto').modal('show');
-        }
+            if (((new Date().getTime()) - touchtime) < 800) {
+                if ($(e.currentTarget).closest('li').parents('li').hasClass('replies')) {
+                    $('.previewBtn').removeClass('d-none');
+                    $('.payBtn').addClass('d-none');
+                } else {
+                    $('.previewBtn').addClass('d-none');
+                    $('.payBtn').removeClass('d-none');
+                }
+                let id = $(e.currentTarget).closest('li').attr('key');
+                $('.selected-emojis').empty();
+                selectedEmojis = [];
+                if (id) {
+                    showPhotoContent(id);
 
+                } else {
+                    $('#createPhoto').modal('show');
+                }
+            } else {
+                // not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
     });
 }
 

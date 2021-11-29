@@ -167,6 +167,28 @@ io.on('connection', (socket) => {
                 io.sockets.sockets.get(recipientSocketId).emit('receive:typing', data.currentUserId);
             }
         }
+    });
+
+    socket.on('delete:message', data => {
+        console.log(data);
+        db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
+            if (!error) {
+                if (data.photoId) {
+                    db.query(`DELETE FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
+                        if (!error) console.log(data.photoId, ': photo deleted')
+                    });
+                }
+                if (data.currentContactId) {
+                    let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+                    let senderSocketId = user_socketMap.get(currentUserId.toString());
+                    io.sockets.sockets.get(senderSocketId).emit('delete:message', data.messageId);
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId))
+                            io.sockets.sockets.get(recipientSocketId).emit('delete:message', data.messageId);
+                    }
+                }
+            }
+        });
     })
 });
 

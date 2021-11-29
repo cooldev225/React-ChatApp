@@ -51,6 +51,10 @@ $(document).ready(() => {
             typingMessage();
         }
     });
+    socket.on('delete:message', data => {
+        let element = $('.chatappend').find(`[key=${data}]`).parents('li');
+        element.length ? element.remove() : '';
+    })
     getUsersList();
     getRecentChatUsers();
     searchAndAddRecentChatList();
@@ -79,9 +83,6 @@ $(document).ready(() => {
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
-        // canvas.setWidth(canvasDimension);
-        // canvas.setHeight(canvasDimension);
-        // canvas.clear();
         $('#createPhoto .preview-paid').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
@@ -149,6 +150,7 @@ function getRecentChatUsers() {
         },
         error: function(res) {
             alert('The operation is failed');
+            document.location.href = '/login';
         }
     });
 }
@@ -561,17 +563,20 @@ function displayRecentChatFriends(recentChatUsers) {
 }
 function deleteMessages() {
     $('.chatappend').on('click', '.deleteMessageBtn', event => {
+        console.log(event.type);
         let element = $(event.currentTarget).closest('.msg-setting-main');
-        console.log(element.attr('key'));
+        let messageId = element.attr('key');
+        
         if (element.attr('kind') == '2' ) {
-            console.log(element.find('.receive_photo').attr('photoid'));
+            var photoId = element.find('.receive_photo').attr('photoid');
             let price = element.find('.receive_photo').attr('price');
             if (price) {
                 alert("You can't delete this photo");
             }
-
+            
         } else {
             console.log('not photo');
         }
+        socket.emit('delete:message', {currentContactId, messageId, photoId });
     });
 }
