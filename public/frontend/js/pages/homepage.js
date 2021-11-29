@@ -440,7 +440,7 @@ function addChatItem(target, senderId, data) {
                                     : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                             <div class="msg-dropdown-main">
                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                <div class="msg-dropdown" style="display: block;"> 
+                                <div class="msg-dropdown"> 
                                     <ul>
                                         <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
                                         <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
