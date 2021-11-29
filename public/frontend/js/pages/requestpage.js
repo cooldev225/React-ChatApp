@@ -396,6 +396,7 @@ function sendPhoto() {
 
 function showPhoto() {
     $('.contact-chat ul.chatappend').on('click', '.receive_photo', e => {
+        console.log('aaa');
         if ($(e.currentTarget).closest('li').parents('li').hasClass('replies')) {
             $('.previewBtn').removeClass('d-none');
             $('.payBtn').addClass('d-none');
@@ -924,7 +925,6 @@ function lockResizeEmojis() {
         $(event.currentTarget).find('.icon-btn').toggleClass('btn-outline-success');
         let myCanvas = $('#photo_item').hasClass('show') ? photo_canvas : canvas;
         let lock = $(event.currentTarget).hasClass('lock');
-        console.log(lock);
         if (myCanvas.getActiveObject()) {
             myCanvas.getActiveObject().lockScalingX = lock;
             myCanvas.getActiveObject().lockScalingY = lock;

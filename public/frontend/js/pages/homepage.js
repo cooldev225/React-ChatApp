@@ -56,6 +56,7 @@ $(document).ready(() => {
     searchAndAddRecentChatList();
     getContactList();
     displayTypingAction();
+    deleteMessages();
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         $('.section-py-space').css('display', 'none');
@@ -78,9 +79,9 @@ $(document).ready(() => {
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
-        canvas.setWidth(canvasDimension);
-        canvas.setHeight(canvasDimension);
-        canvas.clear();
+        // canvas.setWidth(canvasDimension);
+        // canvas.setHeight(canvasDimension);
+        // canvas.clear();
         $('#createPhoto .preview-paid').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
@@ -428,15 +429,22 @@ function addChatItem(target, senderId, data) {
                     <h5>${senderInfo.username}</h5>
                     <h6>${time.toLocaleTimeString()}</h6>
                     <ul class="msg-box">
-                        <li key="${data.messageId}" kind="${data.kind}">
-                            <div class="photoRating">
-                                <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
-                            </div>
+                        <li class="msg-setting-main" key="${data.messageId}" kind="${data.kind}">
+                            
                             ${data.kind == 0 ?
                                 `<h5>${data.content}</h5>`
                                 : data.kind == 1 ?
                                     `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
                                     : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                            <div class="msg-dropdown-main">
+                                <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                <div class="msg-dropdown" style="display: block;"> 
+                                    <ul>
+                                        <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                </div>
+                        </div>
                         </li>
                     </ul>
                 </div>
@@ -550,4 +558,20 @@ function displayRecentChatFriends(recentChatUsers) {
             },
         }
     })
+}
+function deleteMessages() {
+    $('.chatappend').on('click', '.deleteMessageBtn', event => {
+        let element = $(event.currentTarget).closest('.msg-setting-main');
+        console.log(element.attr('key'));
+        if (element.attr('kind') == '2' ) {
+            console.log(element.find('.receive_photo').attr('photoid'));
+            let price = element.find('.receive_photo').attr('price');
+            if (price) {
+                alert("You can't delete this photo");
+            }
+
+        } else {
+            console.log('not photo');
+        }
+    });
 }

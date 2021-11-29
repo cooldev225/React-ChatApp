@@ -39,7 +39,6 @@ body {
     flex: 1;
 }
 
-
 #detailRequestModal .modal-footer {
     display: flex;
     justify-content: center;
@@ -136,7 +135,6 @@ ul.request-list li .date-status div {
     color: darkred;
 }
 
-
 .contact-chat>ul>li.replies.photo-request .msg-box li h5 {
     border-radius: 15px 0 0 15px;
     border-right: 5px solid darkorange;
@@ -184,6 +182,7 @@ ul.chatappend .msg-box .camera-icon {
 #createPhoto .modal-title {
     margin-right: 25px;
 }
+
 #createPhoto .price-mode,
 #createPhoto .text-input {
     position: absolute;
@@ -191,9 +190,11 @@ ul.chatappend .msg-box .camera-icon {
     left: 16px;
     font-size: 16px;
 }
+
 #createPhoto .text-input {
     left: 100px;
 }
+
 #createPhoto .modal-body {
     overflow: auto;
 }
@@ -268,17 +269,20 @@ ul.chatappend .msg-box .camera-icon {
 .emojis-tool {
     text-align: center;
 }
+
 .input_emojis {
     margin: 3px auto;
     border: 1px solid;
     text-align: center;
     padding: 5px;
 }
+
 .input_emojis .input-btn {
     width: 30px;
     height: 20px;
     margin: 0 auto;
 }
+
 .emojis-tool .emojis {
     height: 360px;
     overflow-y: auto;
@@ -389,6 +393,7 @@ ul.chatappend .msg-box .camera-icon {
     width: 20px;
     height: 20px;
 }
+
 #photo_item .blur-image {
     text-align: center;
 }
@@ -401,21 +406,26 @@ ul.chatappend .msg-box .camera-icon {
     outline: 1px solid rgba(0, 100, 0, 0.938);
     outline-offset: 1px;
 }
+
 #backColorPicker {
     background-color: #C4E6C1;
 }
+
 .colorpicker {
     z-index: 2500;
 }
+
 .lock-tool {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .lock-tool .icon-btn {
     width: 30px;
     height: 30px;
 }
+
 .lock-tool.lock .fa-lock,
 .lock-tool.unlock .fa-unlock-alt {
     display: block;
@@ -426,8 +436,19 @@ ul.chatappend .msg-box .camera-icon {
     display: none;
 }
 
-@media (max-width: 1366px) {
+.msg-box>li h5,
+.msg-box>li .h5,
+.msg-box>li .document,
+.msg-box>li .auto-gallery {
+    display: inline-block;
+    padding: 16px 25px;
+    background-color: #1c9dea;
+    color: #fff;
+    border-radius: 0 25px 25px 0;
+    font-weight: 600;
+}
 
+@media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
     }
@@ -440,7 +461,6 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 @media (max-width: 1024px) {
-
     .chitchat-main .messages .contact-details .media-body h5,
     .chitchat-main .messages .contact-details .media-body .h5 {
         display: block;
@@ -461,12 +481,10 @@ ul.chatappend .msg-box .camera-icon {
     .modal-body {
         padding: 8px;
     }
-
     .canvas-container {
         min-width: 350px !important;
         min-height: 350px !important;
     }
-
     .emojis-tool .emojis {
         height: 310px;
         grid-gap: 5px;
@@ -481,28 +499,22 @@ ul.chatappend .msg-box .camera-icon {
     .text-tool .text {
         width: 120px;
     }
-
     .text-tool .font-style span.italic {
         width: 10px;
     }
-
     .text-tool .btn {
         padding: 0 10px;
     }
-
 }
 
 @media (max-width: 510px) {
-
     #createPhoto .modal-dialog,
     #photo_item .modal-dialog {
         max-width: 500px;
     }
-
     #createPhoto .modal-body {
         padding: 5px;
     }
-
     .canvas-container {
         min-width: 300px !important;
         min-height: 300px !important;
@@ -516,11 +528,9 @@ ul.chatappend .msg-box .camera-icon {
     .emojis-tool .emojis {
         height: 260px;
     }
-
     .text-tool .text {
         width: 110px;
     }
-
     .text-tool .font-family {
         width: 90px;
     }
