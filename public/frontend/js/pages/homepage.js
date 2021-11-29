@@ -56,9 +56,11 @@ $(document).ready(() => {
         element.length ? element.remove() : '';
     })
     getUsersList();
-    getRecentChatUsers();
-    searchAndAddRecentChatList();
-    getContactList();
+    setTimeout(() => {
+        getRecentChatUsers();
+        searchAndAddRecentChatList();
+        getContactList();
+    }, 2000);
     displayTypingAction();
     deleteMessages();
     // displayChatData();
