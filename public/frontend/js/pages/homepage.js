@@ -63,7 +63,8 @@ $(document).ready(() => {
         displayTypingAction();
         // deleteMessages();
     }, 2000);
-    $('.chatappend').off().on('click', '.deleteMessageBtn', event => {
+
+    $('.chatappend').on('click', '.deleteMessageBtn', event => {
         console.log('aaa');
         let element = $(event.currentTarget).closest('.msg-setting-main');
         let messageId = element.attr('key');
@@ -78,6 +79,7 @@ $(document).ready(() => {
         } else {
             console.log('not photo');
         }
+        console.log(messageId, photoId)
         socket.emit('deleteMessage', { currentContactId, messageId, photoId });
     });
     // displayChatData();
