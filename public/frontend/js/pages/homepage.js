@@ -60,9 +60,9 @@ $(document).ready(() => {
         getRecentChatUsers();
         searchAndAddRecentChatList();
         getContactList();
+        displayTypingAction();
+        deleteMessages();
     }, 2000);
-    displayTypingAction();
-    deleteMessages();
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         $('.section-py-space').css('display', 'none');
@@ -565,7 +565,7 @@ function displayRecentChatFriends(recentChatUsers) {
 }
 function deleteMessages() {
     $('.chatappend').on('click', '.deleteMessageBtn', event => {
-        console.log(event.type);
+        console.log(socket);
         let element = $(event.currentTarget).closest('.msg-setting-main');
         let messageId = element.attr('key');
         
