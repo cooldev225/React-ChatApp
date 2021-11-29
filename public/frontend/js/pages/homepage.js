@@ -61,8 +61,24 @@ $(document).ready(() => {
         searchAndAddRecentChatList();
         getContactList();
         displayTypingAction();
-        deleteMessages();
+        // deleteMessages();
     }, 2000);
+    $('.chatappend').on('click', '.deleteMessageBtn', event => {
+        let element = $(event.currentTarget).closest('.msg-setting-main');
+        let messageId = element.attr('key');
+
+        if (element.attr('kind') == '2') {
+            var photoId = element.find('.receive_photo').attr('photoid');
+            let price = element.find('.receive_photo').attr('price');
+            if (price) {
+                alert("You can't delete this photo");
+            }
+
+        } else {
+            console.log('not photo');
+        }
+        socket.emit('deleteMessage', { currentContactId, messageId, photoId });
+    });
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
         $('.section-py-space').css('display', 'none');
@@ -419,7 +435,6 @@ function typingMessage() {
 
 }
 
-
 function addChatItem(target, senderId, data) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
@@ -563,22 +578,7 @@ function displayRecentChatFriends(recentChatUsers) {
         }
     })
 }
+
 function deleteMessages() {
-    $('.chatappend').on('click', '.deleteMessageBtn', event => {
-        console.log(socket);
-        let element = $(event.currentTarget).closest('.msg-setting-main');
-        let messageId = element.attr('key');
-        
-        if (element.attr('kind') == '2' ) {
-            var photoId = element.find('.receive_photo').attr('photoid');
-            let price = element.find('.receive_photo').attr('price');
-            if (price) {
-                alert("You can't delete this photo");
-            }
-            
-        } else {
-            console.log('not photo');
-        }
-        socket.emit('deleteMessage', {currentContactId, messageId, photoId });
-    });
+    
 }
