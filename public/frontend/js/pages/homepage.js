@@ -6,7 +6,12 @@ var socket;
 var typingTime;
 var timerId;
 $(document).ready(() => {
-
+    tippy('.content-rating-list .text-rating', { content: "0.00" });
+    tippy('.content-rating-list .photo-rating', { content: "0.00" });
+    tippy('.content-rating-list .video-rating', { content: "0.00" });
+    tippy('.content-rating-list .audio-rating', { content: "0.00" });
+    tippy('.content-rating-list .video-call-rating', { content: "0.00" });
+    tippy('.content-rating-list .voice-call-rating', { content: "0.00" });
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
@@ -52,17 +57,21 @@ $(document).ready(() => {
         }
     });
     socket.on('delete:message', data => {
-        let element = $('.chatappend').find(`[key=${data}]`).parents('li');
+        let element = $('.chatappend').find(`[key=${data}]`).closest('li.msg-item');
         element.length ? element.remove() : '';
     })
-    getUsersList();
-    setTimeout(() => {
-        getRecentChatUsers();
-        searchAndAddRecentChatList();
-        getContactList();
-        displayTypingAction();
-        deleteMessages();
-    }, 2000);
+    new Promise(resolve => {
+        getUsersList(resolve);
+    }).then(() => {
+        setTimeout(() => {
+            getRecentChatUsers();
+            searchAndAddRecentChatList();
+            getContactList();
+            displayTypingAction();
+            deleteMessages();
+            displayRate();
+        }, 2000);
+    });
 
 
     // displayChatData();
@@ -99,7 +108,9 @@ $(document).ready(() => {
         $('#createPhoto .save-send').css('margin-left', '-20px');
 
     });
-
+    $('.selfProfileBtn').on('click', () => {
+        displayProfileContent(currentUserId);
+    });
 
     // $('ul.chat-main.request-list').on('click', 'li', (e) => {
     //     let from = $(e.currentTarget).data('from');
@@ -177,9 +188,8 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function(res) {
             if (res.state == 'true') {
-                let { messageData, rateData } = res;
-                [contactorInfo] = res.contactorInfo;
-
+                let { messageData } = res;
+                let contactorInfo = getCertainUserInfoById(contactorId);
                 currentContactId = contactorId;
                 $('.section-py-space').css('display', 'none');
                 $('.app-list').css('display', 'block');
@@ -202,16 +212,12 @@ function setCurrentChatContent(contactorId) {
 
                 if (contactorInfo.avatar) {
                     $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
-                    $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
                 } else {
                     $('.profile.menu-trigger').css('background-image', `url("/chat/images/contact/1.jpg")`);
-                    $('.contact-top').css('background-image', `url("/chat/images/contact/1.jpg")`);
                 }
-                $('.contact-profile .name h3').html(contactorInfo.username);
-                $('.contact-profile .name h5').html(contactorInfo.location);
-                $('.contact-profile .name h6').html(contactorInfo.description)
-                    //whole rate display
-                displayProfileRate(rateData)
+                //whole rate display
+                // displayProfileContent(rateData)
+                displayProfileContent(contactorId)
 
                 //Chat data display
                 $('.contact-chat ul.chatappend').empty();
@@ -241,8 +247,9 @@ function setCurrentChatContent(contactorId) {
 
 }
 
-function getUsersList() {
+function getUsersList(resolve) {
     var form_data = new FormData();
+
     $.ajax({
         url: '/home/getUsersList',
         headers: {
@@ -256,7 +263,7 @@ function getUsersList() {
         dataType: "json",
         success: function(res) {
             usersList = res.data;
-            let target = $('.recent-default .recent-chat-list');
+            if (resolve) resolve();
         },
         error: function(response) {
             alert('The operation is failed');
@@ -425,7 +432,7 @@ function addChatItem(target, senderId, data) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = new Date(data.created_at);
-    let item = `<li class="${type}">
+    let item = `<li class="${type} msg-item" key="${data.messageId}" kind="${data.kind}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
             </div>
@@ -433,9 +440,11 @@ function addChatItem(target, senderId, data) {
                 <div class="contact-name">
                     <h5>${senderInfo.username}</h5>
                     <h6>${time.toLocaleTimeString()}</h6>
+                    <div class="photoRating">
+                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                    </div>
                     <ul class="msg-box">
-                        <li class="msg-setting-main" key="${data.messageId}" kind="${data.kind}">
-                            
+                        <li class="msg-setting-main">
                             ${data.kind == 0 ?
                                 `<h5>${data.content}</h5>`
                                 : data.kind == 1 ?
@@ -460,7 +469,7 @@ function addChatItem(target, senderId, data) {
     // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
 
     if (data.rate) {
-        getContentRate(`.msg-box li[key="${data.messageId}"]`, data.rate)
+        getContentRate(`li.msg-item[key="${data.messageId}"]`, data.rate)
     }
 
 }
@@ -480,42 +489,71 @@ function changeProfileImageAjax() {
     });
 }
 
-function displayProfileRate(rateData) {
-    let data = rateData[0];
-    if (rateData.length) {
-        var textRate = (data.text_rate / data.text_count) || 0;
-        var photoRate = (data.photo_rate / data.photo_count) || 0;
-        var videoRate = (data.video_rate / data.video_count) || 0;
-        var audioRate = (data.audio_rate / data.audio_count) || 0;
-        var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
-        var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
-        var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0;
+function displayProfileContent(userId) {
+    let userInfo = getCertainUserInfoById(userId)
+    if (userInfo.avatar) {
+        $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${userInfo.avatar}")`);
     } else {
-        var textRate = 0;
-        var photoRate = 0;
-        var videoRate = 0;
-        var audioRate = 0;
-        var videoCallRate = 0;
-        var voiceCallRate = 0;
-        var averageRate = 0;
+        $('.contact-top').css('background-image', `url("/chat/images/contact/1.jpg")`);
     }
-    // var averageRate = (textRate + photoRate + videoRate + audioRate + videoCallRate + voiceCallRate) / 6;
-    getContentRate('.contact-profile', Math.round(averageRate));
-    $('.contact-profile').attr('title', averageRate.toFixed(2));
+    $('.contact-profile .name h3').html(userInfo.username);
+    $('.contact-profile .name h5').html(userInfo.location);
+    $('.contact-profile .name h6').html(userInfo.description);
 
-    getContentRate('.content-rating-list .text-rating', Math.round(textRate));
-    getContentRate('.content-rating-list .photo-rating', Math.round(photoRate));
-    getContentRate('.content-rating-list .video-rating', Math.round(videoRate));
-    getContentRate('.content-rating-list .audio-rating', Math.round(audioRate));
-    getContentRate('.content-rating-list .video-call-rating', Math.round(videoCallRate));
-    getContentRate('.content-rating-list .voice-call-rating', Math.round(voiceCallRate));
-    $('.content-rating-list .text-rating').attr('title', textRate.toFixed(2));
-    $('.content-rating-list .photo-rating').attr('title', photoRate.toFixed(2));
-    $('.content-rating-list .video-rating').attr('title', videoRate.toFixed(2));
-    $('.content-rating-list .audio-rating').attr('title', audioRate.toFixed(2));
-    $('.content-rating-list .video-call-rating').attr('title', videoCallRate.toFixed(2));
-    $('.content-rating-list .voice-call-rating').attr('title', voiceCallRate.toFixed(2));
-
+    var form_data = new FormData();
+    form_data.append('userId', userId);
+    $.ajax({
+        url: '/home/getRateData',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function(res) {
+            if (res.state == 'true') {
+                let [data] = res.rateData;
+                console.log(data);
+                if (res.rateData.length) {
+                    var textRate = (data.text_rate / data.text_count) || 0;
+                    var photoRate = (data.photo_rate / data.photo_count) || 0;
+                    var videoRate = (data.video_rate / data.video_count) || 0;
+                    var audioRate = (data.audio_rate / data.audio_count) || 0;
+                    var videoCallRate = (data.video_call_rate / data.video_call_count) || 0;
+                    var voiceCallRate = (data.voice_call_rate / data.voice_call_count) || 0;
+                    var averageRate = ((data.text_rate + data.photo_rate) / (data.text_count + data.photo_count)) || 0;
+                } else {
+                    var textRate = 0;
+                    var photoRate = 0;
+                    var videoRate = 0;
+                    var audioRate = 0;
+                    var videoCallRate = 0;
+                    var voiceCallRate = 0;
+                    var averageRate = 0;
+                }
+                getContentRate('.contact-profile', Math.round(averageRate));
+                tippy('.contact-profile .photoRating', {content: averageRate.toFixed(2)});
+                getContentRate('.content-rating-list .text-rating', Math.round(textRate));
+                getContentRate('.content-rating-list .photo-rating', Math.round(photoRate));
+                getContentRate('.content-rating-list .video-rating', Math.round(videoRate));
+                getContentRate('.content-rating-list .audio-rating', Math.round(audioRate));
+                getContentRate('.content-rating-list .video-call-rating', Math.round(videoCallRate));
+                getContentRate('.content-rating-list .voice-call-rating', Math.round(voiceCallRate));
+                document.querySelector('.content-rating-list .text-rating')._tippy.setContent(textRate.toFixed(2))
+                document.querySelector('.content-rating-list .photo-rating')._tippy.setContent(photoRate.toFixed(2))
+                document.querySelector('.content-rating-list .video-rating')._tippy.setContent(videoRate.toFixed(2))
+                document.querySelector('.content-rating-list .audio-rating')._tippy.setContent(audioRate.toFixed(2))
+                document.querySelector('.content-rating-list .video-call-rating')._tippy.setContent(videoCallRate.toFixed(2))
+                document.querySelector('.content-rating-list .voice-call-rating')._tippy.setContent(voiceCallRate.toFixed(2))
+            }
+        },
+        error: function(response) {
+            alert('Rate Data Error');
+        }
+    });
 }
 
 function displayRecentChatFriends(recentChatUsers) {
@@ -567,7 +605,7 @@ function displayRecentChatFriends(recentChatUsers) {
 
 function deleteMessages() {
     $('.chatappend').on('click', '.deleteMessageBtn', event => {
-        let element = $(event.currentTarget).closest('.msg-setting-main');
+        let element = $(event.currentTarget).closest('.msg-item');
         let messageId = element.attr('key');
 
         if (element.attr('kind') == '2') {
@@ -581,5 +619,17 @@ function deleteMessages() {
         }
         console.log(messageId, photoId)
         socket.emit('deleteMessage', { currentContactId, messageId, photoId });
+        $(this).closest('.msg-dropdown').hide();
+    });
+}
+
+function displayRate() {
+    $('.chatappend').on('click', '.rateBtn', event => {
+        let element = $(event.currentTarget).closest('.msg-item');
+        element.find('.photoRating').css('display', 'flex');
+        $(this).closest('.msg-dropdown').hide();
+        setTimeout(() => {
+            element.find('.photoRating').css('display', 'none');
+        }, 5000);
     });
 }

@@ -3,13 +3,24 @@
     align-items: flex-end;
 } */
 
-.msg-box .photoRating {
+.chatappend .photoRating,
+.content-rating-list .photoRating {
     display: flex;
     flex-direction: row-reverse;
-    width: 0px;
-    margin-left: 80px;
     font-size: 20px;
     cursor: pointer;
+}
+
+.content-rating-list .photoRating {
+    margin-left: 10px;
+}
+
+.chatappend .photoRating {
+    display: none;
+}
+
+.chatappend .sent .photoRating {
+    width: fit-content;
 }
 
 .photoRating div.checked,
@@ -19,13 +30,12 @@
 
 .modal-content:not(.sent) .photoRating div:hover,
 .modal-content:not(.sent) .photoRating div:hover~div,
-.sent .msg-box .photoRating div:hover,
-.sent .msg-box .photoRating div:hover~div {
+.sent .photoRating div:hover,
+.sent .photoRating div:hover~div {
     color: #deb217;
 }
 
 .photoRating {
-    padding: 0px 5px;
     line-height: 25px;
     cursor: pointer;
     font-size: 30px;
@@ -41,11 +51,6 @@
 
 .chitchat-right-sidebar .contact-profile .details {
     padding-top: 10px;
-}
-
-.content-rating-list .photoRating div {
-    float: right;
-    font-size: 20px;
 }
 
 .content-rating-list {

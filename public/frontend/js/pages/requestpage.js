@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
 
     socket.on('get:rate', data => {
-        let target = $('.chatappend').find(`.replies .msg-box>li[key=${data.messageId}]`);
+        let target = $('.chatappend').find(`.replies .msg-item[key=${data.messageId}]`);
         getContentRate(target, data.rate);
     })
 
@@ -402,14 +402,14 @@ function showPhoto() {
 
         } else {
             if (((new Date().getTime()) - touchtime) < 800) {
-                if ($(e.currentTarget).closest('li').parents('li').hasClass('replies')) {
+                if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
                     $('.previewBtn').removeClass('d-none');
                     $('.payBtn').addClass('d-none');
                 } else {
                     $('.previewBtn').addClass('d-none');
                     $('.payBtn').removeClass('d-none');
                 }
-                let id = $(e.currentTarget).closest('li').attr('key');
+                let id = $(e.currentTarget).closest('li.msg-item').attr('key');
                 $('.selected-emojis').empty();
                 selectedEmojis = [];
                 if (id) {
@@ -576,8 +576,8 @@ function setContentRate() {
             var kind = 2;
 
         } else {
-            var messageId = $(this).parents('li.sent').find('.msg-box>li').attr('key');
-            var kind = $(this).parents('li.sent').find('.msg-box>li').attr('kind');
+            var messageId = $(this).parents('li.sent').attr('key');
+            var kind = $(this).parents('li.sent').attr('kind');
         }
         if (messageId) {
             $(e.target).closest('.photoRating').find('div').removeClass('checked');

@@ -64,6 +64,10 @@ body {
     justify-content: center;
 }
 
+.selfProfileBtn {
+    cursor: pointer;
+}
+
 #detailRequestModal .request-content {
     width: 100%;
 }
@@ -448,13 +452,14 @@ ul.chatappend .msg-box .camera-icon {
     font-weight: 600;
 }
 
-.chatappend .sent .msg-dropdown .deleteMessageBtn {
+
+/* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;
 }
 
 .chatappend .sent .msg-dropdown .rateBtn {
     margin-bottom: 0;
-}
+} */
 
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {

@@ -46,12 +46,12 @@
         placement: 'right-end',
         arrow: false
     });
-    tippy('.user-popup', {
-        content: "Status",
-        theme: 'gradienttooltip',
-        placement: 'right-end',
-        arrow: false
-    });
+    // tippy('.user-popup', {
+    //     content: "Status",
+    //     theme: 'gradienttooltip',
+    //     placement: 'right-end',
+    //     arrow: false
+    // });
     tippy('.calls  > li > .icon-btn', {
         placement: 'bottom-end',
         arrow: true
@@ -560,6 +560,9 @@
     $('.chatappend').on('click', '.msg-setting', function(event) {
         event.stopPropagation();
         $(this).siblings('.msg-dropdown').toggle();
+        setTimeout(() => {
+            $(this).siblings('.msg-dropdown').hide();
+        }, 5000);
     });
     $(".favourite").on('click', function() {
         $(this).toggleClass("btn-outline-primary").toggleClass("btn-primary");
@@ -661,7 +664,7 @@
     /*=====================
            27. profile open close
            ==========================*/
-    $('.menu-trigger, .close-profile').on('click', function(e) {
+    $('.selfProfileBtn, .menu-trigger, .close-profile').on('click', function(e) {
         $('body').toggleClass('menu-active'); //add class
         $('.app-sidebar').toggleClass('active'); //remove
         $('.chitchat-main').toggleClass("small-sidebar"); //remove
@@ -714,17 +717,15 @@
         Chat 
         ==========================*/
 
-    // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     $('.submit').on('click', function() {
-        // typingMessage();
         newMessage();
     });
-    $(window).on('keydown', function(e) {
+    $('.message-input input').on('keydown', function(e) {
+        console.log('aaa');
         if (e.which == 13) {
             if (!e.target.value) {
                 return false
             }
-            // typingMessage();
             newMessage();
             return false;
         }

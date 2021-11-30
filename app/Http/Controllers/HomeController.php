@@ -51,11 +51,6 @@ class HomeController extends Controller
                     break;
                 }
             }
-            // var_dump($recentChatUsers);
-            // $userList = User::whereIn('id', $recentChatUsers)->get();
-            // return array('state' => 'true',
-            //         'recentChatUsers' => $userList,
-            //         'lastChatUserId' => $lastChatUserId);
             return array('state' => 'true',
                     'recentChatUsers' => $recentChatUsers,
                     'lastChatUserId' => $lastChatUserId);
@@ -66,7 +61,6 @@ class HomeController extends Controller
     public function getCurrentChatContent(Request $request) {
         $id = Auth::id();
         $contactorId = $request->input('currentContactorId');
-        $contactorInfo = User::where('id', $contactorId)->get();
         $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
             ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(10)->get();
         $messages = $messageData->map(function($item) {
@@ -83,9 +77,14 @@ class HomeController extends Controller
             $item['content'] = $temp[0]['photo'];
             return $item;
         });
-        $rateData = Rating::where('user_id', $contactorId)->get();
-
-        return array('state'=>'true', 'contactorInfo'=>$contactorInfo, 'messageData'=>$messages, 'rateData'=>$rateData);
+        
+        return array('state'=>'true','messageData'=>$messages);
+    }
+    
+    public function getRateData(Request $request) {
+        $userId = $request->input('userId');
+        $rateData = Rating::where('user_id', $userId)->get();
+        return array('state'=>'true', 'rateData'=>$rateData);
     }
 
 

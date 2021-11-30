@@ -36,6 +36,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/sendRequest', 'HomeController@sendRequest');
     Route::post('/home/getPhotoData', 'HomeController@getPhotoData');
     Route::post('/home/setContentRate', 'HomeController@setContentRate');
+    Route::post('/home/getRateData', 'HomeController@getRateData');
 });
 
 Route::group(['middleware' => ['admin']], function () {

@@ -17,13 +17,13 @@
             <div class="sidebar-main">
                 <ul class="sidebar-top">
                     <li>
-                        <a class="button-effect" data-intro="Check Status here">
-                            <div class="user-popup status one">
-                                <div> <img class="bg-img"
-                                        src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
-                                        alt="Avatar" /></div>
+                        <!-- <a class="button-effect" data-intro="Check Status here"> -->
+                            <div class="user-popup status one selfProfileBtn">
+                                <div>
+                                    <img class="bg-img" src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}" alt="Avatar" />
+                                </div>
                             </div>
-                        </a>
+                        <!-- </a> -->
                     </li>
                     <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li> -->
 
