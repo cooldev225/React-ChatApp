@@ -264,7 +264,7 @@ function getUsersList(resolve) {
             if (resolve) resolve();
         },
         error: function(response) {
-            window.location.href = '/';
+            document.location.href = '/';
             // alert('The operation is failed');
         }
     });
@@ -379,7 +379,7 @@ function addContact() {
             }
         },
         error: function(response) {
-            window.location.href = '/';
+            document.location.href = '/';
             // alert('The operation is failed');
         }
     });
