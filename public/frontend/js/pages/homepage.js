@@ -162,8 +162,8 @@ function getRecentChatUsers() {
             }
         },
         error: function(res) {
-            // alert('The operation is failed');
-            document.location.href = '/login';
+            alert('The operation is failed');
+            // document.location.href = '/login';
         }
     });
 }
@@ -264,8 +264,8 @@ function getUsersList(resolve) {
             if (resolve) resolve();
         },
         error: function(response) {
-            document.location.href = '/';
-            // alert('The operation is failed');
+            // document.location.href = '/';
+            alert('The operation is failed');
         }
     });
 }
@@ -379,8 +379,8 @@ function addContact() {
             }
         },
         error: function(response) {
-            document.location.href = '/';
-            // alert('The operation is failed');
+            // document.location.href = '/';
+            alert('The operation is failed');
         }
     });
 }
