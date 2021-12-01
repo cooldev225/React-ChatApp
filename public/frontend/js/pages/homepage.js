@@ -237,9 +237,7 @@ function setCurrentChatContent(contactorId) {
                 });
             }
         },
-        error: function(response) {
-            window.location.href = '/';
-        }
+        error: function(response) {}
     });
 
 
@@ -552,7 +550,6 @@ function displayProfileContent(userId) {
             }
         },
         error: function(response) {
-            window.location.href = '/';
         }
     });
 }
