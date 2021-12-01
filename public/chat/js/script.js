@@ -68,6 +68,13 @@
     //     placement: 'top-end',
     //     arrow: true
     // });
+    tippy('.contact-profile .photoRating', { content: "0.00" });
+    tippy('.content-rating-list .text-rating', { content: "0.00" });
+    tippy('.content-rating-list .photo-rating', { content: "0.00" });
+    tippy('.content-rating-list .video-rating', { content: "0.00" });
+    tippy('.content-rating-list .audio-rating', { content: "0.00" });
+    tippy('.content-rating-list .video-call-rating', { content: "0.00" });
+    tippy('.content-rating-list .voice-call-rating', { content: "0.00" });
 
     /*=====================
       02. Background Image js

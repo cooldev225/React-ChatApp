@@ -452,6 +452,11 @@ ul.chatappend .msg-box .camera-icon {
     font-weight: 600;
 }
 
+.chitchat-container .chitchat-left-sidebar .recent-default .recent .recent-slider .recent-box .recent-profile {
+    overflow: hidden;
+    border-radius: 15px;
+}
+
 
 /* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;

@@ -6,15 +6,8 @@ var socket;
 var typingTime;
 var timerId;
 $(document).ready(() => {
-    tippy('.content-rating-list .text-rating', { content: "0.00" });
-    tippy('.content-rating-list .photo-rating', { content: "0.00" });
-    tippy('.content-rating-list .video-rating', { content: "0.00" });
-    tippy('.content-rating-list .audio-rating', { content: "0.00" });
-    tippy('.content-rating-list .video-call-rating', { content: "0.00" });
-    tippy('.content-rating-list .voice-call-rating', { content: "0.00" });
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
-
 
     socket.on('message', message => {
         var contentwidth = jQuery(window).width();
@@ -111,6 +104,11 @@ $(document).ready(() => {
     $('.selfProfileBtn').on('click', () => {
         displayProfileContent(currentUserId);
     });
+    $('.menu-trigger').on('click', () => {
+        if (currentContactId)
+            displayProfileContent(currentContactId);
+    })
+
 
     // $('ul.chat-main.request-list').on('click', 'li', (e) => {
     //     let from = $(e.currentTarget).data('from');
@@ -164,7 +162,7 @@ function getRecentChatUsers() {
             }
         },
         error: function(res) {
-            alert('The operation is failed');
+            // alert('The operation is failed');
             document.location.href = '/login';
         }
     });
@@ -240,7 +238,7 @@ function setCurrentChatContent(contactorId) {
             }
         },
         error: function(response) {
-            alert('The operation is failed');
+            window.location.href = '/';
         }
     });
 
@@ -266,7 +264,8 @@ function getUsersList(resolve) {
             if (resolve) resolve();
         },
         error: function(response) {
-            alert('The operation is failed');
+            window.location.href = '/';
+            // alert('The operation is failed');
         }
     });
 }
@@ -380,7 +379,8 @@ function addContact() {
             }
         },
         error: function(response) {
-            alert('The operation is failed');
+            window.location.href = '/';
+            // alert('The operation is failed');
         }
     });
 }
@@ -535,7 +535,8 @@ function displayProfileContent(userId) {
                     var averageRate = 0;
                 }
                 getContentRate('.contact-profile', Math.round(averageRate));
-                tippy('.contact-profile .photoRating', {content: averageRate.toFixed(2)});
+                document.querySelector('.contact-profile .photoRating')._tippy.setContent(averageRate.toFixed(2))
+
                 getContentRate('.content-rating-list .text-rating', Math.round(textRate));
                 getContentRate('.content-rating-list .photo-rating', Math.round(photoRate));
                 getContentRate('.content-rating-list .video-rating', Math.round(videoRate));
@@ -551,7 +552,7 @@ function displayProfileContent(userId) {
             }
         },
         error: function(response) {
-            alert('Rate Data Error');
+            window.location.href = '/';
         }
     });
 }
@@ -574,7 +575,7 @@ function displayRecentChatFriends(recentChatUsers) {
         </div>`);
     });
     $('.recent-slider').owlCarousel({
-        items: 3,
+        items: 2,
         dots: false,
         loop: true,
         margin: 60,
@@ -596,7 +597,7 @@ function displayRecentChatFriends(recentChatUsers) {
                 items: 2,
                 margin: 25,
             },
-            1400: {
+            1500: {
                 items: 3
             },
         }
