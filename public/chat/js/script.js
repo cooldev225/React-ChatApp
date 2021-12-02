@@ -728,7 +728,6 @@
         newMessage();
     });
     $('.message-input input').on('keydown', function(e) {
-        console.log('aaa');
         if (e.which == 13) {
             if (!e.target.value) {
                 return false
