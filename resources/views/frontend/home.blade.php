@@ -40,7 +40,7 @@
                         </div>
                     </li>
                     <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"
-                            data-intro="You can change settings by clicking here"> <i class="fa fa-cog"></i></a></li>
+                           > <i class="fa fa-cog"></i></a></li>
                 </ul>
                 <ul class="sidebar-bottom">
                     <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"
@@ -360,6 +360,21 @@
                         </div>
                         <div class="theme-according" id="accordion">
                             <div class="card">
+                                <div class="card-header" id="headingSeven" role="heading" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                    <a><i class="fa fa-angle-down"></i> Payment</a>
+                                </div>
+                                <div class="collapse" id="collapseSeven" aria-labelledby="headingSeven"
+                                    data-parent="#accordion">
+                                    <div class="card-body">
+                                        <a class="p-0 font-primary" href="#"> Show History </a>
+                                        <a class="p-0 font-primary" href="#"> Connect Payment </a>
+                                        <a class="p-0 font-primary" href="#"> Connect Payment </a>
+                                        <p> <b>Note :</b>You can deposit the balance of OJOChat or withdraw money.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
                                 <div class="card-header" id="headingTwo" role="heading" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     <a>Security<i class="fa fa-angle-down"></i></a>
@@ -513,6 +528,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="media">
@@ -3592,7 +3608,7 @@
                 <div class="btn-group">
                     <div class="photo-price"></div>
                     <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png" alt="Pay"> </div>
-                    <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#confirmModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
+                    <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
                     <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
                     <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div>
@@ -3601,25 +3617,70 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+            <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmModalLabel">Photo Operation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="checkoutModalLabel">Photo Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <h3>Continue with payment?</h3>
+                <div>
+                    <span class="">To: </span>
+                    <span class="recipientName">Cool Dev</span>
+                </div>
+                <div>
+                    <span class="">Mail:</span>
+                    <span class="recipientMail">cooldev225@outlook.com</span>
+                </div>
+                <div>
+                    <div class="product-list">
+                        <!-- <div class="product-item">
+                            <img src="/images/emojis/1 (1).svg" />
+                            <span>$5</span>
+                        </div>
+                        <div class="product-item">
+                            <img src="/images/emojis/1 (1).svg" />
+                            <span>$5</span>
+                        </div> -->
+                    </div>
+                    <div class="payment-options">
+                        <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="6RNT8A4HBBJRE">
+                            <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
+                            <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form> -->
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Photo Operation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3>Continue with payment?</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
+    <script src="/frontend/js/pages/payment.js"></script>
 
 @endsection
 

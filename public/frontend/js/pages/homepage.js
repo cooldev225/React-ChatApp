@@ -144,7 +144,6 @@ function getRecentChatUsers() {
             if (res.state == 'true') {
                 let { recentChatUsers, lastChatUserId } = res;
                 recentChatUsers = recentChatUsers.map(item => getCertainUserInfoById(item));
-                console.log(recentChatUsers);
                 currentContactId = lastChatUserId;
                 let userListTarget = $('.recent-default .recent-chat-list');
                 userListTarget.empty();
@@ -514,7 +513,6 @@ function displayProfileContent(userId) {
         success: function(res) {
             if (res.state == 'true') {
                 let [data] = res.rateData;
-                console.log(data);
                 if (res.rateData.length) {
                     var textRate = (data.text_rate / data.text_count) || 0;
                     var photoRate = (data.photo_rate / data.photo_count) || 0;
@@ -582,7 +580,7 @@ function displayRecentChatFriends(recentChatUsers) {
         autoplayHoverPause: false,
         responsive: {
             320: {
-                items: 1,
+                items: 2,
                 margin: 25,
             },
 

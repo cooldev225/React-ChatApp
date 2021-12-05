@@ -25685,7 +25685,8 @@ ul.grop-icon li img {
 .theme-according .card .card-header i {
     padding: 8px 10px;
     position: absolute;
-    top: 7px;
+    top: 3px;
+    /* top: 7px; */
     border-radius: 100%;
     background-color: #1c9dea;
     color: #fff;

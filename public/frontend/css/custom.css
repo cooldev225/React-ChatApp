@@ -457,6 +457,10 @@ ul.chatappend .msg-box .camera-icon {
     border-radius: 15px;
 }
 
+#collapseSeven>div>a {
+    display: block;
+}
+
 
 /* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;
