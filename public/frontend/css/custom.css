@@ -461,6 +461,35 @@ ul.chatappend .msg-box .camera-icon {
     display: block;
 }
 
+#checkoutModal .product-payment {
+    display: grid;
+    grid-template-columns: 150px auto;
+}
+
+#checkoutModal .product-item,
+#checkoutModal .total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#checkoutModal span {
+    font-size: 15px;
+}
+
+#checkoutModal .payment-options {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 5px 60px;
+    grid-gap: 10px;
+    margin-left: 10px;
+}
+
+#checkoutModal .product-list img {
+    width: 30px;
+    height: 30px;
+}
+
 
 /* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;

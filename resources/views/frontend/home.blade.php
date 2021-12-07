@@ -3627,22 +3627,20 @@
             <div class="modal-body">
                 <div>
                     <span class="">To: </span>
-                    <span class="recipientName">Cool Dev</span>
+                    <span class="recipientName"></span>
                 </div>
                 <div>
                     <span class="">Mail:</span>
-                    <span class="recipientMail">cooldev225@outlook.com</span>
+                    <span class="recipientMail"></span>
                 </div>
-                <div>
+                <div class="product-payment">
                     <div class="product-list">
-                        <!-- <div class="product-item">
-                            <img src="/images/emojis/1 (1).svg" />
-                            <span>$5</span>
+                        <hr>
+                        <hr class="bottom-hr">
+                        <div class="total-price">
+                            <span>Total: </span>
+                            <span> </span>
                         </div>
-                        <div class="product-item">
-                            <img src="/images/emojis/1 (1).svg" />
-                            <span>$5</span>
-                        </div> -->
                     </div>
                     <div class="payment-options">
                         <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
@@ -3651,13 +3649,18 @@
                             <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
                             <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                         </form> -->
+                        <button type="button" class="btn btn-primary">Balance</button>
+                        <button type="button" class="btn btn-primary">Paypal</button>
+                        <button type="button" class="btn btn-primary">Card</button>
+                        <button type="button" class="btn btn-primary">Crypto</button>
+
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
+            </div> -->
             </div>
         </div>
     </div>
