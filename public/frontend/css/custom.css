@@ -499,6 +499,15 @@ ul.chatappend .msg-box .camera-icon {
     margin-bottom: 0;
 } */
 
+#paypal-animation-content>div.paypal-button-container.paypal-button-layout-horizontal.paypal-button-shape-pill.paypal-button-branding-branded.paypal-button-number-single.paypal-button-env-sandbox.paypal-should-focus {
+    min-width: fit-content;
+    max-width: fit-content;
+}
+
+.content {
+    position: static;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;

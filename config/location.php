@@ -66,11 +66,11 @@ return [
 
         'web' => [
 
-            'enabled' => true,
+            'enabled' => false,
 
-            'user_id' => env('IP_USER_ID',''),
+            'user_id' => '',
 
-            'license_key' => env('IP_LICENSE_KEY',''),
+            'license_key' => '',
 
             'options' => [
 
@@ -134,7 +134,7 @@ return [
 
         'enabled' => env('LOCATION_TESTING', true),
 
-        'ip' => '132.248.255.255',
+        'ip' => '66.102.0.0',
 
     ],
 

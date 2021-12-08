@@ -1,6 +1,7 @@
 @extends('frontend.layouts.dashboard')
 @inject('dateFormat', 'App\Services\DateService')
 @include('frontend.photoCreation')
+@include('checkout')
 @section('content')
     <script>
         var currentUserId = {{ Auth::id() }};
@@ -3649,10 +3650,12 @@
                             <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
                             <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                         </form> -->
-                        <button type="button" class="btn btn-primary">Balance</button>
+                        @yield('checkout')
+                        <!-- <div id="paypal-button"></div> -->
+                        <!-- <button type="button" class="btn btn-primary">Balance</button>
                         <button type="button" class="btn btn-primary">Paypal</button>
                         <button type="button" class="btn btn-primary">Card</button>
-                        <button type="button" class="btn btn-primary">Crypto</button>
+                        <button type="button" class="btn btn-primary">Crypto</button> -->
 
                     </div>
                 </div>
@@ -3683,6 +3686,8 @@
     </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
+    <!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
+    
     <script src="/frontend/js/pages/payment.js"></script>
 
 @endsection
