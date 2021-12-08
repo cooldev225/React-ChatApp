@@ -8,6 +8,7 @@ $(document).ready(function() {
             photo_canvas._objects.filter(item => item.kind != 'temp').forEach(item => selectedEmojis.push(item.id));
         }
         let totalPrice = 0;
+        $('#checkoutModal .product-list .product-item').remove();
         photo_canvas._objects.filter(oImg => selectedEmojis.includes(oImg.id)).forEach(item => {
             $('#checkoutModal .product-list .bottom-hr').before(
                 `<div class="product-item mt-2 mb-2">
