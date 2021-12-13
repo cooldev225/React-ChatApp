@@ -508,6 +508,8 @@ function getPhotoSrcById(id, target) {
 }
 
 function payWholePhotoPrice() {
+    let messageId = $('#photo_item .modal-content').attr('key');
+    let photoId = $('#photo_item .modal-content').attr('photoId');
     // $('#removeBlur').removeAttr('disabled');
     // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
     if (!selectedEmojis.length) {
@@ -726,12 +728,14 @@ function showPhotoContent(id) {
                 let emojis = JSON.parse(res.data[0].content);
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
+                $('#photo_item .modal-content').attr('photoId', res.data[0].id);
                 $('#photo_item .modal-content').removeClass('sent');
                 if (res.data[0].from == currentUserId) {
                     $('#photo_item .modal-content').addClass('sent');
                 }
                 photo_canvas.clear();
                 selectedEmojis = [];
+                $('.selected-emojis').empty();
                 //add blur price 
                 $('#photo_item .blur-image').attr('price', res.data[0].blur_price);
                 let touchtime = 0;
@@ -786,7 +790,6 @@ function showPhotoContent(id) {
                         return new Promise(resolve => {
                             if (item.type == 'image') {
                                 fabric.Image.fromURL(item.src, function(oImg) {
-                                    console.log(item.blur);
                                     oImg.id = item.id;
                                     oImg.left = item.position[0];
                                     oImg.top = item.position[1];
@@ -899,9 +902,9 @@ function showPhotoContent(id) {
                             if (+object.price > 0) {
                                 photoPrice += Number(object.price);
                             }
-                            if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
-                            $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
                         }
+                        if (res.data[0].blur_price) photoPrice += res.data[0].blur_price;
+                        $('#photo_item .modal-content .photo-price').text('$' + photoPrice);
                     });
                 });
             } else {

@@ -103,8 +103,7 @@ io.on('connection', (socket) => {
 
     socket.on('send:photo', data => {
         if (data.to) {
-            console.log("photo is sent")
-            console.log(data.content.length);
+            console.log(data.blurPrice);
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             let message = {
@@ -190,7 +189,30 @@ io.on('connection', (socket) => {
                 }
             }
         });
+    });
+
+    socket.on('pay:photo', data => {
+        console.log(data);
+        // db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
+        //     if (!error) {
+        //         if (data.photoId) {
+        //             db.query(`DELETE FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
+        //                 if (!error) console.log(data.photoId, ': photo deleted')
+        //             });
+        //         }
+        //         if (data.currentContactId) {
+        //             let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+        //             let senderSocketId = user_socketMap.get(currentUserId.toString());
+        //             io.sockets.sockets.get(senderSocketId).emit('delete:message', data.messageId);
+        //             if (recipientSocketId) {
+        //                 if (io.sockets.sockets.get(recipientSocketId))
+        //                     io.sockets.sockets.get(recipientSocketId).emit('delete:message', data.messageId);
+        //             }
+        //         }
+        //     }
+        // });
     })
+
 });
 
 server.listen(port, () => {
