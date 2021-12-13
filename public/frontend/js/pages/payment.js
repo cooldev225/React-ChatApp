@@ -7,9 +7,18 @@ $(document).ready(function() {
         let userInfo = getCertainUserInfoById(currentContactId);
         $('#checkoutModal .recipientName').text(userInfo.username);
         $('#checkoutModal .recipientMail').text(userInfo.email);
+        let blurPrice = $('#photo_item .blur-image').attr('price');
+        if (blurPrice) {
+            $('#checkoutModal .product-list .bottom-hr').before(
+                `<div class="product-item mt-2 mb-2">
+                    <img src="/images/blur.png" />
+                    <span>$${blurPrice}</span>
+                </div>`);
+            totalPrice += Number(blurPrice);
+            selectedEmojis.push('blur');
+        }
         if (!selectedEmojis.length) {
             photo_canvas._objects.filter(item => item.kind != 'temp').forEach(item => selectedEmojis.push(item.id));
-            selectedEmojis.push('blur');
         }
         $('#checkoutModal .product-list .product-item').remove();
         photo_canvas._objects.filter(oImg => selectedEmojis.includes(oImg.id) && oImg.price > 0).forEach(item => {
@@ -21,15 +30,7 @@ $(document).ready(function() {
             totalPrice += Number(item.price);
         });
         console.log(totalPrice);
-        let blurPrice = $('#photo_item .blur-image').attr('price');
-        if (selectedEmojis.includes('blur')) {
-            $('#checkoutModal .product-list .bottom-hr').before(
-                `<div class="product-item mt-2 mb-2">
-                    <img src="/images/blur.png" />
-                    <span>$${blurPrice}</span>
-                </div>`);
-            totalPrice += Number(blurPrice);
-        }
+
         $('#checkoutModal .total-price span:last-child').text(`$${totalPrice}`);
         // let messageId = $('#photo_item .modal-content').attr('key');
         // let photoId = $('#photo_item .modal-content').attr('photoId');

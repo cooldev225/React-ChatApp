@@ -514,7 +514,6 @@ function payWholePhotoPrice() {
     // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
     if (!selectedEmojis.length) {
         photo_canvas._objects.filter(item => item.kind != 'temp').forEach(item => selectedEmojis.push(item.id));
-        selectedEmojis.push('blur');
     }
     photo_canvas._objects.filter(item => selectedEmojis.includes(item.id)).forEach(item => {
         if (item.price > 0) {
