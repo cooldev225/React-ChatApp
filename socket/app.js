@@ -25,6 +25,7 @@ const db = mysql.createConnection({
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
 });
+
 // db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
 // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
 //     console.log(item);
