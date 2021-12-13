@@ -13,7 +13,6 @@ const io = require('socket.io')(server, {
 
 });
 
-
 // const db = mysql.createConnection({
 //     host: "localhost",
 //     user: "root",
@@ -60,6 +59,7 @@ io.on('connection', (socket) => {
             created_at: new Date()
         }
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
+
             message.messageId = item.insertId;
             if (data.currentContactId) {
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
@@ -115,6 +115,7 @@ io.on('connection', (socket) => {
                 created_at: new Date()
             }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+                console.log(error);
                 data.id = item.insertId;
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {

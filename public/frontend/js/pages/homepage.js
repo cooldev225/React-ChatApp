@@ -10,10 +10,10 @@ $(document).ready(() => {
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
     socket.on('message', message => {
-        var contentwidth = jQuery(window).width();
-        if (contentwidth <= '768') {
-            $('.chitchat-container').toggleClass("mobile-menu");
-        }
+        // var contentwidth = jQuery(window).width();
+        // if (contentwidth <= '768') {
+        //     $('.chitchat-container').toggleClass("mobile-menu");
+        // }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
         if (message.from == currentUserId || message.from == currentContactId) {

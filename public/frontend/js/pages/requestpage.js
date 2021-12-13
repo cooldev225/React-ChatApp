@@ -54,7 +54,6 @@ $(document).ready(function() {
     sendPhoto();
     showPhoto();
     showPhotoPriceAndOption();
-    payWholePhotoPrice();
     setContentRate();
     addTextOnPhoto();
     lockResizeEmojis();
@@ -139,6 +138,9 @@ $(document).ready(function() {
             showPhotoContent(id);
         }
     })
+    $('.payWholePriceBtn').on('click', () => {
+        payWholePhotoPrice();
+    });
 
 });
 
@@ -430,6 +432,7 @@ function showPhoto() {
 
 function getEmojisInfo(obj) {
     return JSON.stringify(obj.filter((item => item.kind != 'temp')).map((item, index) => {
+        console.log(item.blur);
         if (item.type == 'image')
             return {
                 id: item.id,
@@ -439,7 +442,7 @@ function getEmojisInfo(obj) {
                 position: [item.left, item.top],
                 angle: item.angle,
                 price: item.price,
-                blur: item.filters[0] && item.filters[0].blur,
+                blur: item.blur,
                 // selectable: item.selectable
             }
         else
@@ -505,65 +508,42 @@ function getPhotoSrcById(id, target) {
 }
 
 function payWholePhotoPrice() {
-    $('.payWholePriceBtn').on('click', () => {
-        // $('#removeBlur').removeAttr('disabled');
-        // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
-        if (selectedEmojis.length) {
-            photo_canvas._objects.filter(item => selectedEmojis.includes(item.id)).forEach(item => {
-                if (item.price > 0) {
-                    item.price = 0;
-                    item.selectable = true;
-                }
-                if (item.blur) {
-                    let filter = new fabric.Image.filters.Blur({
-                        blur: item.blur
-                    });
-                    item.filters = [];
-                    item.filters.push(filter);
-                    item.applyFilters();
-                }
-                photo_canvas.renderAll();
-            });
-            if (selectedEmojis.includes('blur')) {
-                let obj = photo_canvas.backgroundImage;
-                if (obj) {
-                    let filter = new fabric.Image.filters.Blur({
-                        blur: 0
-                    });
-                    obj.filters = [];
-                    obj.filters.push(filter);
-                    obj.applyFilters();
-                }
-                photo_canvas.renderAll();
-            }
-            alert(`You can control emojis which you selected`);
-            // alert(`You can control ${selectedEmojis.length} emojis which you selected`);
-        } else {
-            photo_canvas._objects.forEach(item => {
-                if (item.price > 0) {
-                    item.price = 0;
-                    item.selectable = true;
-                }
-                let filter = new fabric.Image.filters.Blur({
-                    blur: 0
-                });
-                item.filters = [];
-                item.filters.push(filter);
-                item.applyFilters();
-                photo_canvas.renderAll();
-            });
-            let obj = photo_canvas.backgroundImage;
-            if (obj) {
-                let filter = new fabric.Image.filters.Blur({
-                    blur: 0
-                });
-                obj.filters = [];
-                obj.filters.push(filter);
-                obj.applyFilters();
-            }
-            photo_canvas.renderAll();
+    // $('#removeBlur').removeAttr('disabled');
+    // let price = selectedEmojis.reduce((total, item) => photo_canvas._objects.find(oImg => oImg.cacheKey == item).price + sum, 0);
+    if (!selectedEmojis.length) {
+        photo_canvas._objects.filter(item => item.kind != 'temp').forEach(item => selectedEmojis.push(item.id));
+        selectedEmojis.push('blur');
+    }
+    photo_canvas._objects.filter(item => selectedEmojis.includes(item.id)).forEach(item => {
+        if (item.price > 0) {
+            item.price = 0;
+            item.selectable = true;
         }
+        if (item.blur) {
+            let filter = new fabric.Image.filters.Blur({
+                blur: 0
+            });
+            item.filters = [];
+            item.filters.push(filter);
+            item.applyFilters();
+        }
+        photo_canvas.renderAll();
     });
+    if (selectedEmojis.includes('blur')) {
+        let obj = photo_canvas.backgroundImage;
+        if (obj) {
+            let filter = new fabric.Image.filters.Blur({
+                blur: 0
+            });
+            obj.filters = [];
+            obj.filters.push(filter);
+            obj.applyFilters();
+        }
+        photo_canvas.renderAll();
+    }
+    // alert(`You can control emojis which you selected`);
+    // alert(`You can control ${selectedEmojis.length} emojis which you selected`);
+
 }
 
 function getContentRate(target, rate) {
@@ -758,7 +738,6 @@ function showPhotoContent(id) {
                 $('#photo_item .blur-image').off().on('mouseup', () => {
                     if (touchtime == 0) {
                         touchtime = new Date().getTime();
-
                     } else {
                         if (((new Date().getTime()) - touchtime) < 800) {
 
@@ -799,7 +778,6 @@ function showPhotoContent(id) {
                         photo_canvas.setWidth(oImg.width);
                         photo_canvas.setHeight(oImg.height);
                         photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
-
                         resolve();
                     });
                 }).then(() => {
@@ -808,6 +786,7 @@ function showPhotoContent(id) {
                         return new Promise(resolve => {
                             if (item.type == 'image') {
                                 fabric.Image.fromURL(item.src, function(oImg) {
+                                    console.log(item.blur);
                                     oImg.id = item.id;
                                     oImg.left = item.position[0];
                                     oImg.top = item.position[1];
@@ -818,6 +797,7 @@ function showPhotoContent(id) {
                                     let filter = new fabric.Image.filters.Blur({
                                         blur: item.blur || 0
                                     });
+                                    oImg.blur = item.blur;
                                     oImg.filters = [];
                                     oImg.filters.push(filter);
                                     oImg.applyFilters();

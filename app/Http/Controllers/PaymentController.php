@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -7,7 +6,6 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\Auth;
-
 use App\Http\Clients\PayPalClient;
 use Exception;
 use PayPal\Api\Amount;
@@ -21,9 +19,9 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Api\WebProfile;
-
 class PaymentController extends Controller
 {
+   
     const CURRENCY = 'USD';
     
     protected $payer;
@@ -71,24 +69,29 @@ class PaymentController extends Controller
         $this->details          = $details;
     }
     
-    public function createPayment()
+    public function createPayment(Request $request)
     {
+        $totalPrice = $request->input('totalPrice');
         $this->payer->setPaymentMethod("paypal");
-        $this->itemList->setItems($this->getPayPalItems());
-        $subTotalAmount = $this->getTotalAmount();
-        /*$this->details->setShipping(1.2)
-            ->setTax(1.3)
-            ->setSubtotal($subTotalAmount);*/
+        // $this->itemList->setItems($this->getPayPalItems());
+        // $subTotalAmount = $this->getTotalAmount();
+        // $this->details->setShipping(1.2)
+        //     ->setTax(1.3)
+        //     ->setSubtotal($subTotalAmount);
+        // $this->amount->setCurrency(self::CURRENCY)
+        //     ->setTotal($subTotalAmount);
         $this->amount->setCurrency(self::CURRENCY)
-            ->setTotal($subTotalAmount);
+            ->setTotal($totalPrice);
           /*  ->setDetails($this->details);*/
         $this->transaction->setAmount($this->amount)
-            ->setItemList($this->itemList)
+            // ->setItemList($this->itemList)
             ->setDescription("Payment description")
             ->setInvoiceNumber(uniqid());
         $this->redirectUrls
-            ->setReturnUrl("http://laravel-api.test/")
-            ->setCancelUrl("http://laravel-api.test/");
+            // ->setReturnUrl("http://laravel-api.test/")
+            // ->setCancelUrl("http://laravel-api.test/");
+            ->setReturnUrl("http://localhost:8000/payment/success")
+            ->setCancelUrl("http://localhost:8000/payment/err");
         // Add NO SHIPPING OPTION
         $inputFields = new InputFields();
         $inputFields->setNoShipping(1);
@@ -96,9 +99,9 @@ class PaymentController extends Controller
         $webProfileId = $this->webProfile->create($this->paypalClient->context())->getId();
         $this->payment->setExperienceProfileId($webProfileId);
         $this->payment->setIntent("sale")
-            ->setPayer($this->payer)
-            ->setRedirectUrls($this->redirectUrls)
-            ->setTransactions(array($this->transaction));
+        ->setPayer($this->payer)
+        ->setRedirectUrls($this->redirectUrls)
+        ->setTransactions(array($this->transaction));
         try {
             $this->payment->create($this->paypalClient->context());
         } catch (Exception $ex) {
@@ -111,14 +114,14 @@ class PaymentController extends Controller
     {
         $purchaseItems = array();
         $items = $this->getItems();
+
         foreach ($items as $item) {
             $payPalItem = new Item();
             $payPalItem->setName($item['name'])
                 ->setCurrency(self::CURRENCY)
                 ->setQuantity($item['quantity'])
                 ->setPrice($item['price']);
-            array_push($purchaseItems, $payPalItem);
-            // $purchaseItems[] = $payPalItem;
+            $purchaseItems[] = $payPalItem;
         }
         return $purchaseItems;
     }
@@ -133,14 +136,14 @@ class PaymentController extends Controller
         return $totalAmount;
     }
     protected function getItems()
-   {
+    {
         return [
-          ['name' => 'Item1', 'quantity' => 1, 'price' => 10],
-          ['name' => 'Item2', 'quantity' => 1, 'price' => 10],
-          ['name' => 'Item3', 'quantity' => 1, 'price' => 10],
+          ['name' => 'Item1', 'quantity' => 2, 'price' => 100],
+          ['name' => 'Item2', 'quantity' => 4, 'price' => 100],
+          ['name' => 'Item3', 'quantity' => 3, 'price' => 100],
         ];
-   }
-    public function confirmPayment(Request $request)
+    }
+public function confirmPayment(Request $request)
     {
         $paymentId = $request->get('payment_id');
         $payerID   = $request->get('payer_id');

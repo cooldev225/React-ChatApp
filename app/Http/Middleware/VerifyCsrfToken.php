@@ -15,6 +15,8 @@ class VerifyCsrfToken extends Middleware
         '/v1/api/*',
         '/login', '/ads','/ads/*',
         '/admin/login','/admin/login/*',
-        '/images/*'
+        '/images/*',
+        '/api/create-paypal-transaction',
+        '/api/confirm-paypal-transaction',
     ];
 }
