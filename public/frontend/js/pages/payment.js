@@ -73,7 +73,6 @@ $(document).ready(function() {
                     socket.emit('pay:photo', { photoId, selectedEmojis });
                     payWholePhotoPrice();
                     alert('Payment successfully done!!');
-
                     // 3. Show the buyer a confirmation message.
                 })
         }
