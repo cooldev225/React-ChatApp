@@ -813,6 +813,8 @@ function showPhotoContent(id) {
                                                     alert('This is static Element')
                                                     return;
                                                 }
+                                                if (oImg.price == 0)
+                                                    return;
                                                 if (selectedEmojis.find(item => item == oImg.id)) {
                                                     $(`.selected-emojis img[key=${oImg.id}]`).remove();
                                                     selectedEmojis = selectedEmojis.filter(item => item != oImg.id);
@@ -866,6 +868,8 @@ function showPhotoContent(id) {
                                                 alert('This is static Element')
                                                 return;
                                             }
+                                            if (textBox.price == 0)
+                                                return;
                                             if (selectedEmojis.find(item => item == textBox.id)) {
                                                 $(`.selected-emojis img[key=${textBox.id}]`).remove();
                                                 selectedEmojis = selectedEmojis.filter(item => item != textBox.id);
@@ -875,7 +879,6 @@ function showPhotoContent(id) {
                                                 img.src = '/images/text.png';
                                                 $(img).attr('key', textBox.id);
                                                 $('.selected-emojis').append(img);
-
                                             }
                                             let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.id == item).price) + total, 0);
                                             if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
