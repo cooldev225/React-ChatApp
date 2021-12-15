@@ -490,6 +490,19 @@ ul.chatappend .msg-box .camera-icon {
     height: 30px;
 }
 
+.chitchat-container .main-nav .logo-warpper {
+    padding-bottom: 5px;
+}
+
+.balance {
+    margin-top: 5px;
+}
+
+.balance-amount {
+    font-size: 13px;
+    color: green;
+}
+
 
 /* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;

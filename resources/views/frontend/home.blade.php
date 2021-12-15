@@ -14,7 +14,14 @@
     </div>
     <div class="chitchat-container sidebar-toggle">
         <nav class="main-nav on custom-scroll">
-            <div class="logo-warpper"><a href="/home"><img src="/chat/images/logo/logo.png" alt="logo" /></a></div>
+            <div class="logo-warpper">
+                <a href="/paymentHistories">
+                    <img src="/chat/images/logo/logo.png" alt="logo" />
+                </a>
+                <div class="balance">
+                    <span class="balance-amount">$0.00</span>
+                </div>
+            </div>
             <div class="sidebar-main">
                 <ul class="sidebar-top">
                     <li>

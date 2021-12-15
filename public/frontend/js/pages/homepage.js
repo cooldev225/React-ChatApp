@@ -36,7 +36,6 @@ $(document).ready(() => {
                 $(`ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
                 $(`ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
                 let count = $(`ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
-                console.log(count);
                 $(`ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
             }
             // $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
@@ -56,14 +55,13 @@ $(document).ready(() => {
     new Promise(resolve => {
         getUsersList(resolve);
     }).then(() => {
-        setTimeout(() => {
-            getRecentChatUsers();
-            searchAndAddRecentChatList();
-            getContactList();
-            displayTypingAction();
-            deleteMessages();
-            displayRate();
-        }, 2000);
+        $('.balance-amount').text(`$${getCertainUserInfoById(currentUserId).balances.toFixed(2)}`)
+        getRecentChatUsers();
+        searchAndAddRecentChatList();
+        getContactList();
+        displayTypingAction();
+        deleteMessages();
+        displayRate();
     });
 
 

@@ -209,9 +209,16 @@ io.on('connection', (socket) => {
                     item[0].content = JSON.stringify(content);
                 }
             });
-            db.query(`UPDATE photo_galleries SET blur = ${item[0].blur}, blur_price = ${item[0].blur_price}, content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, item) => {
+            db.query(`UPDATE photo_galleries SET blur = ${item[0].blur}, blur_price = ${item[0].blur_price}, content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
-                console.log('OK')
+                db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
+                    console.log(item);
+                });
+                db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${item[0].to}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
+                    if (error) throw error;
+                    console.log(historyItem);
+                    console.log('OK');
+                });
             })
         });
     })

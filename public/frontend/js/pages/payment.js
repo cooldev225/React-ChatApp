@@ -76,6 +76,7 @@ $(document).ready(function() {
 function tempAction() {
     let messageId = $('#photo_item .modal-content').attr('key');
     let photoId = $('#photo_item .modal-content').attr('photoId');
-    socket.emit('pay:photo', { photoId, selectedEmojis });
+    let addBalance = totalPrice * 0.7;
+    socket.emit('pay:photo', { photoId, selectedEmojis, addBalance });
     payWholePhotoPrice();
 }
