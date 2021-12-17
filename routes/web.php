@@ -39,7 +39,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getRateData', 'HomeController@getRateData');
     Route::post('/api/create-paypal-transaction', 'PaymentController@createPayment');
     Route::post('/api/confirm-paypal-transaction', 'PaymentController@confirmPayment');
-    Route::get('/home/paymentHistories', 'HomeController@getPaymentHistories');
+    Route::post('/home/getPaymentHistories', 'HomeController@getPaymentHistories');
     Route::get('/stripe', 'StripeController@stripe');
     Route::post('/stripe', 'StripeController@stripePost')->name('stripe.post');
 });

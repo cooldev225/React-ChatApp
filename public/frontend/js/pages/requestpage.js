@@ -432,7 +432,6 @@ function showPhoto() {
 
 function getEmojisInfo(obj) {
     return JSON.stringify(obj.filter((item => item.kind != 'temp')).map((item, index) => {
-        console.log(item.blur);
         if (item.type == 'image')
             return {
                 id: item.id,

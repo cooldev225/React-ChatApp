@@ -17,6 +17,7 @@ use App\Models\Contact;
 use App\Models\PhotoRequest;
 use App\Models\PhotoGallery;
 use App\Models\Rating;
+use App\Models\PaymentHistory;
 
 class HomeController extends Controller
 {
@@ -247,6 +248,15 @@ class HomeController extends Controller
         $message->save();
         return array(
             'state' => 'true'
+        );
+    }
+    public function getPaymentHistories(Request $request)
+    {
+        $userId = $request->input('userId');
+        $data = PaymentHistory::where("sender", $userId)->orWhere("recipient", $userId)->orderBy('created_at', 'desc')->get();
+        return array(
+            'state' => 'true',
+            'data' => $data
         );
     }
 }

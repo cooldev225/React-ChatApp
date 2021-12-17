@@ -503,6 +503,14 @@ ul.chatappend .msg-box .camera-icon {
     color: green;
 }
 
+.history-list li .chat-box .date-status {
+    top: 10px;
+}
+
+.history-list li .date-status span {
+    font-size: 13px;
+}
+
 
 /* .chatappend .sent .msg-dropdown .deleteMessageBtn {
     display: none;

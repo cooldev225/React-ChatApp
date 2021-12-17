@@ -15,7 +15,7 @@
     <div class="chitchat-container sidebar-toggle">
         <nav class="main-nav on custom-scroll">
             <div class="logo-warpper">
-                <a href="/paymentHistories">
+                <a class="button-effect" href="payment-histories">
                     <img src="/chat/images/logo/logo.png" alt="logo" />
                 </a>
                 <div class="balance">
@@ -26,11 +26,13 @@
                 <ul class="sidebar-top">
                     <li>
                         <!-- <a class="button-effect" data-intro="Check Status here"> -->
-                            <div class="user-popup status one selfProfileBtn">
-                                <div>
-                                    <img class="bg-img" src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}" alt="Avatar" />
-                                </div>
+                        <div class="user-popup status one selfProfileBtn">
+                            <div>
+                                <img class="bg-img"
+                                    src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
+                                    alt="Avatar" />
                             </div>
+                        </div>
                         <!-- </a> -->
                     </li>
                     <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li> -->
@@ -47,8 +49,8 @@
                                     class="fa fa-image"></i></a>
                         </div>
                     </li>
-                    <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"
-                           > <i class="fa fa-cog"></i></a></li>
+                    <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"> <i
+                                class="fa fa-cog"></i></a></li>
                 </ul>
                 <ul class="sidebar-bottom">
                     <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"
@@ -107,13 +109,13 @@
                 </div>
                 <div class="chat custom-scroll">
                     <!-- <ul class="chat-cont-setting">
-                                    <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                        <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
-                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
-                                        <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
-                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                        <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
-                                </ul> -->
+                                                                                                                                            <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
+                                                                                                                                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
+                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
+                                                                                                                                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
+                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
+                                                                                                                                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
+                                                                                                                                        </ul> -->
                     <div class="theme-title">
                         <div class="media">
                             <div>
@@ -180,7 +182,8 @@
                                     <ul class="nav nav-tabs" id="contactTab" role="tablist">
                                         <li class="nav-item"><a class="nav-link active" id="con1-tab"
                                                 data-bs-toggle="tab" href="#con1" role="tab" aria-controls="con1"
-                                                aria-selected="true">All</a></li>
+                                                aria-selected="true">All</a>
+                                        </li>
                                         <li class="nav-item"><a class="nav-link" id="con3-tab"
                                                 data-bs-toggle="tab" href="#con3" role="tab" aria-controls="con3"
                                                 aria-selected="false"> <i data-feather="phone-incoming"></i></a></li>
@@ -224,27 +227,30 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="fevorite-tab dynemic-sidebar" id="favourite">
-                            <div class="theme-title">
-                                <div class="media">
-                                    <div> 
-                                    <h2>Favourite</h2>
-                                    <h4>Last Recent</h4>
-                                    </div>
-                                    <div class="media-body text-end">  <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#"> <i data-feather="search"></i></a>
-                                    <form class="form-inline search-form">
-                                        <div class="form-group">
-                                        <input class="form-control-plaintext" type="search" placeholder="Search.."/>
-                                        <div class="icon-close close-search"></div>
-                                        </div>
-                                    </form><a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-bs-toggle="modal" data-bs-target="#addcallmodal"><i data-feather="plus">                              </i></a><a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
-                                    </div>
+            <div class="fevorite-tab dynemic-sidebar" id="payment-histories">
+                <div class="theme-title">
+                    <div class="media">
+                        <div>
+                            <h2>Histories</h2>
+                            <h4>Last Recent</h4>
+                        </div>
+                        <div class="media-body text-end"> <a class="icon-btn btn-outline-light btn-sm m-r-15 search"
+                                href="#"> <i data-feather="search"></i></a>
+                            <form class="form-inline search-form">
+                                <div class="form-group">
+                                    <input class="form-control-plaintext" type="search" placeholder="Search.." />
+                                    <div class="icon-close close-search"></div>
                                 </div>
-                            </div>
-                            <ul class="chat-main">
-                                
-                            </ul>
-                        </div> -->
+                            </form>
+
+                            <a class="icon-btn btn-outline-light btn-sm close-panel" href="#"><i data-feather="x"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="chat-main history-list">
+
+                </ul>
+            </div>
             <div class="document-tab dynemic-sidebar" id="request">
                 <div class="theme-title">
                     <div class="media">
@@ -536,7 +542,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="media">
@@ -731,19 +737,19 @@
 
         <div class="chitchat-main small-sidebar" id="content">
             <div class="chat-content tabto active">
-                    <div class="spining">
-                        <div class="spinner">
-                            <div class="double-bounce1"></div>
-                            <div class="double-bounce2"></div>
-                        </div>
-                        <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
-                        <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
-                        <!-- <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div> -->
+                <div class="spining">
+                    <div class="spinner">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
                     </div>
+                    <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
+                    <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
+                    <!-- <div class="spinner-border" role="status">
+                                                                                                                                    <span class="sr-only">Loading...</span>
+                                                                                                                                </div> -->
+                </div>
                 <div class="messages custom-scroll active" id="chating">
-                    
+
                     <div class="contact-details">
                         <div class="row">
                             <form class="form-inline search-form">
@@ -1007,7 +1013,8 @@
                                                         <div class="media-body"><a
                                                                 class="icon-btn btn-outline-primary btn-sm" href="#"
                                                                 data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a></div>
+                                                                    class="fa fa-plus"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -1023,7 +1030,8 @@
                                                         <div class="media-body"><a
                                                                 class="icon-btn btn-outline-primary btn-sm" href="#"
                                                                 data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a></div>
+                                                                    class="fa fa-plus"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -1039,7 +1047,8 @@
                                                         <div class="media-body"><a
                                                                 class="icon-btn btn-outline-primary btn-sm" href="#"
                                                                 data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a></div>
+                                                                    class="fa fa-plus"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -1055,7 +1064,8 @@
                                                         <div class="media-body"><a
                                                                 class="icon-btn btn-outline-primary btn-sm" href="#"
                                                                 data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a></div>
+                                                                    class="fa fa-plus"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -1378,7 +1388,8 @@
                                 <ul>
                                     <li><a data-bs-toggle="modal" data-bs-target="#photoRequestModal"><i
                                                 data-feather="camera"></i>Photo Request</a></li>
-                                    {{-- <li><a data-bs-toggle="modal" data-bs-target="#createPhoto"><i data-feather="image"></i>Media</a></li> --}}
+                                    {{-- <li><a data-bs-toggle="modal" data-bs-target="#createPhoto"><i
+                                            data-feather="image"></i>Media</a></li> --}}
                                     <li><a id="createPhotoBtn"><i data-feather="image"></i>Media</a></li>
                                     <li><a href="#"><i data-feather="clipboard"> </i>File</a></li>
                                 </ul>
@@ -1406,7 +1417,8 @@
                                 <ul>
                                     <li><i class="fa fa-twitch"></i>massage</li>
                                     <li><i class="fa fa-phone" data-bs-toggle="modal"
-                                            data-bs-target="#audiocall"></i>voice call</li>
+                                            data-bs-target="#audiocall"></i>voice
+                                        call</li>
                                     <li><i class="fa fa-video-camera" data-bs-toggle="modal"
                                             data-bs-target="#videocall"></i>video call</li>
                                 </ul>
@@ -1456,7 +1468,8 @@
                             </div>
                         </div>
                         <div class="call-log-clear"> <i class="ti-trash font-danger"></i><span
-                                class="font-danger">Delete call log</span></div>
+                                class="font-danger">Delete
+                                call log</span></div>
                     </div>
                 </div>
             </div>
@@ -1634,7 +1647,11 @@
                         </div>
                     </div>
                     <div class="photoRating">
-                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
                     </div>
                     <div class="details">
                         <div class="contact-top"><img class="bg-img" src="/chat/images/avtar/2.jpg" alt="" />
@@ -1650,7 +1667,8 @@
                             <li><a class="icon-btn btn-primary button-effect" href="#"><i class="fa fa-twitter"></i></a>
                             </li>
                             <li><a class="icon-btn btn-facebook button-effect" href="#"><i
-                                        class="fa fa-facebook-f"></i></a></li>
+                                        class="fa fa-facebook-f"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1664,32 +1682,58 @@
                                 <ul class="document-list content-rating-list">
                                     <li class="text-rating"><i class="ti-text font-danger" title="text"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
                                     <li class="photo-rating"><i class="ti-camera font-success" title="photo"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
                                     <li class="video-rating"><i class="ti-video-clapper font-primary" title="video"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
                                     <li class="audio-rating"><i class="ti-music font-danger" title="audio"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
-                                    <li class="video-call-rating"><i class="ti-video-camera font-success" title="video call"></i>
+                                    <li class="video-call-rating"><i class="ti-video-camera font-success"
+                                            title="video call"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
-                                    <li class="voice-call-rating"><i class="ti-headphone-alt font-primary" title="voice call"></i>
+                                    <li class="voice-call-rating"><i class="ti-headphone-alt font-primary"
+                                            title="voice call"></i>
                                         <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
+                                            <div>★</div>
                                         </div>
                                     </li>
                                 </ul>
@@ -3191,7 +3235,8 @@
                 <div class="videocall call-modal"><img class="bg-img"
                         src="/chat/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
                     <div class="small-image"><img class="bg-img" src="/chat/images/avtar/big/videocall.jpg"
-                            alt="Avatar" /></div>
+                            alt="Avatar" />
+                    </div>
                     <div class="media videocall-details">
                         <div class="usersprof">
                             <div class="profile"><img class="bg-img" src="/chat/images/avtar/2.jpg"
@@ -3340,9 +3385,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                    <h5>Contact number</h5>
-                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                    </div> -->
+                                                                                                                                                                            <h5>Contact number</h5>
+                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                            </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3553,8 +3598,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success button-effect btn-sm" id="acceptPhotoRequestBtn" type="button" data-bs-dismiss="modal"
-                        data-bs-toggle="modal" data-bs-target="#createPhoto">Accept</button>
+                    <button class="btn btn-success button-effect btn-sm" id="acceptPhotoRequestBtn" type="button"
+                        data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#createPhoto">Accept</button>
                     <button class="btn btn-primary button-effect btn-sm" type="button"
                         data-bs-dismiss="modal ">Raise</button>
                     <button class="btn btn-warning button-effect btn-sm" type="button"
@@ -3586,7 +3631,7 @@
                         @yield('photoCreation')
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -3595,7 +3640,11 @@
             <div class="modal-content">
                 <div class="rate-blur">
                     <div class="photoRating">
-                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
+                        <div>★</div>
                     </div>
                     <div>
                         <div class="lock-tool unlock">
@@ -3606,7 +3655,8 @@
                         </div>
                         <div class="blur-image">
                             <img src="/images/blur.png" alt="">
-                            {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1" value="0"> --}}
+                            {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1"
+                            value="0"> --}}
                         </div>
                     </div>
                 </div>
@@ -3615,11 +3665,14 @@
                 </div>
                 <div class="btn-group">
                     <div class="photo-price"></div>
-                    <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png" alt="Pay"> </div>
-                    <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
+                    <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png"
+                            alt="Pay"> </div>
+                    <div class="btn payBtn" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Pay"><img
+                            src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
                     <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
-                    <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div>
+                    <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img
+                            src="/images/cancel.png" alt="Cancel"></div>
                 </div>
                 <div class="selected-emojis"></div>
             </div>
@@ -3628,74 +3681,73 @@
     <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="checkoutModalLabel">Photo Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <span class="">To: </span>
-                    <span class="recipientName"></span>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkoutModalLabel">Photo Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div>
-                    <span class="">Mail:</span>
-                    <span class="recipientMail"></span>
-                </div>
-                <div class="product-payment">
-                    <div class="product-list">
-                        <hr>
-                        <hr class="bottom-hr">
-                        <div class="total-price">
-                            <span>Total: </span>
-                            <span> </span>
+                <div class="modal-body">
+                    <div>
+                        <span class="">To: </span>
+                        <span class="recipientName"></span>
+                    </div>
+                    <div>
+                        <span class="">Mail:</span>
+                        <span class="recipientMail"></span>
+                    </div>
+                    <div class="product-payment">
+                        <div class="product-list">
+                            <hr>
+                            <hr class="bottom-hr">
+                            <div class="total-price">
+                                <span>Total: </span>
+                                <span> </span>
+                            </div>
+                        </div>
+                        <div class="payment-options">
+                            <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                                                                                                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                                                                                                                    <input type="hidden" name="hosted_button_id" value="6RNT8A4HBBJRE">
+                                                                                                                                    <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
+                                                                                                                                    <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                                                                                                                </form> -->
+                            @yield('checkout')
+                            <!-- <div id="paypal-button"></div> -->
+                            <!-- <button type="button" class="btn btn-primary">Balance</button>
+                                                                                                                                <button type="button" class="btn btn-primary">Paypal</button>
+                                                                                                                                <button type="button" class="btn btn-primary">Card</button>
+                                                                                                                                <button type="button" class="btn btn-primary">Crypto</button> -->
+
                         </div>
                     </div>
-                    <div class="payment-options">
-                        <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="6RNT8A4HBBJRE">
-                            <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
-                            <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form> -->
-                        @yield('checkout')
-                        <!-- <div id="paypal-button"></div> -->
-                        <!-- <button type="button" class="btn btn-primary">Balance</button>
-                        <button type="button" class="btn btn-primary">Paypal</button>
-                        <button type="button" class="btn btn-primary">Card</button>
-                        <button type="button" class="btn btn-primary">Crypto</button> -->
-
-                    </div>
                 </div>
-            </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div> -->
+                <!-- <div class="modal-footer">
+                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                    </div> -->
             </div>
         </div>
     </div>
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Photo Operation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h3>Continue with payment?</h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Photo Operation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Continue with payment?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
 
     <script src="/frontend/js/pages/payment.js"></script>
 
 @endsection
-

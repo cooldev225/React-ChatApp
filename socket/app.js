@@ -193,7 +193,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('pay:photo', data => {
-        console.log(data);
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             data.selectedEmojis.forEach(id => {
                 let content = JSON.parse(item[0].content);
@@ -202,8 +201,6 @@ io.on('connection', (socket) => {
                     item[0].blur_price = 0;
                 } else {
                     let index = content.findIndex(emojiInfo => emojiInfo.id == id);
-                    console.log(index)
-                    console.log(content[index].price);
                     content[index].price = 0;
                     content[index].blur = 0;
                     item[0].content = JSON.stringify(content);
@@ -212,11 +209,10 @@ io.on('connection', (socket) => {
             db.query(`UPDATE photo_galleries SET blur = ${item[0].blur}, blur_price = ${item[0].blur_price}, content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
-                    console.log(item);
+                    if (error) throw error;
                 });
                 db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${item[0].to}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
                     if (error) throw error;
-                    console.log(historyItem);
                     console.log('OK');
                 });
             })

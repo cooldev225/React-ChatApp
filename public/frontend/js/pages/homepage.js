@@ -106,6 +106,9 @@ $(document).ready(() => {
         if (currentContactId)
             displayProfileContent(currentContactId);
     })
+    $('.logo-warpper a').on('click', () => {
+        displayPaymentHistory(currentUserId);
+    })
 
 
     // $('ul.chat-main.request-list').on('click', 'li', (e) => {
@@ -118,8 +121,6 @@ $(document).ready(() => {
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
     changeProfileImageAjax();
-
-
 
 });
 
@@ -625,5 +626,60 @@ function displayRate() {
         setTimeout(() => {
             element.find('.photoRating').css('display', 'none');
         }, 5000);
+    });
+}
+
+function displayPaymentHistory(userId) {
+    var form_data = new FormData();
+    form_data.append('userId', userId);
+    $.ajax({
+        url: '/home/getPaymentHistories',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function(res) {
+            if (res.state == 'true') {
+                console.log(res.data);
+                $('.history-list').empty();
+                res.data.forEach(item => {
+                    let status = ['Holding', 'Completed'];
+                    let senderInfo = getCertainUserInfoById(item.sender);
+                    let receiverInfo = getCertainUserInfoById(item.recipient);
+                    let sendFlag = item.sender == currentUserId ? true : false;
+                    console.log(sendFlag)
+                    let avatar = sendFlag ? receiverInfo.avatar : senderInfo.avatar;
+                    let amount = sendFlag ? (item.amount / 0.7).toFixed(2) : (item.amount).toFixed(2);
+                    $('.history-list').append(`<li class="sent">
+                        <a>
+                            <div class="chat-box">
+                                <div class="profile bg-size"
+                                    style="background-image: url(${avatar ? 'v1/api/downloadFile?path=' + avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center
+                                    center; display: block;">
+
+                                </div>
+                                <div class="details">
+                                    <h5>${sendFlag ? receiverInfo.username : senderInfo.username}</h5>
+                                    <h6 class="title">${new Date(item.created_at).toLocaleDateString()}</h6>
+                                    
+                                </div>
+                                <div class="date-status">
+                                    <span>${sendFlag ? '-' : ''}$${amount}</span>
+                                    <h6 class="status ${item.state ? 'font-success' : 'font-warning'}" request-status="4"> ${status[item.state]}</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </li>`)
+                    
+                })
+            }
+        },
+        error: function(response) {
+        }
     });
 }
