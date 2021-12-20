@@ -390,7 +390,8 @@ function newMessage() {
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
-    socket.emit('message', { currentContactId, message });
+    let created_at = new Date();
+    socket.emit('message', { currentContactId, message, created_at });
 };
 
 function displayTypingAction() {
@@ -427,7 +428,8 @@ function typingMessage() {
 function addChatItem(target, senderId, data) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
-    let time = new Date(data.created_at);
+
+    let time = data.created_at ? new Date(data.created_at) : new Date();
     let item = `<li class="${type} msg-item" key="${data.messageId}" kind="${data.kind}">
         <div class="media">
             <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
