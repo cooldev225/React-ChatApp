@@ -518,7 +518,7 @@
         var active_class = $(this).attr("data-to");
         $('.' + active_class).addClass("active");
     });
-    $(".sidebar-top a, .balance-amount").on('click', function() {
+    $(".sidebar-top a, .logo-warpper .balance").on('click', function() {
         $(".sidebar-top  a").removeClass("active");
         $(this).addClass("active");
         $('.dynemic-sidebar').removeClass("active");
