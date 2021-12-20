@@ -661,15 +661,13 @@ function displayPaymentHistory(userId) {
                                 <div class="profile bg-size"
                                     style="background-image: url(${avatar ? 'v1/api/downloadFile?path=' + avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center
                                     center; display: block;">
-
                                 </div>
                                 <div class="details">
                                     <h5>${sendFlag ? receiverInfo.username : senderInfo.username}</h5>
                                     <h6 class="title">${new Date(item.created_at).toLocaleDateString()}</h6>
-                                    
                                 </div>
                                 <div class="date-status">
-                                    <span>${sendFlag ? '-' : ''}$${amount}</span>
+                                    <span class=${sendFlag?'font-danger':'font-success'}>${sendFlag ? '-' : ''}$${amount}</span>
                                     <h6 class="status ${item.state ? 'font-success' : 'font-warning'}" request-status="4"> ${status[item.state]}</h6>
                                 </div>
                             </div>
