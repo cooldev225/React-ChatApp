@@ -106,7 +106,7 @@ $(document).ready(() => {
         if (currentContactId)
             displayProfileContent(currentContactId);
     })
-    $('.logo-warpper a').on('click', () => {
+    $('.balance-amount').on('click', () => {
         displayPaymentHistory(currentUserId);
     })
 

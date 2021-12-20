@@ -501,6 +501,7 @@ ul.chatappend .msg-box .camera-icon {
 .balance-amount {
     font-size: 13px;
     color: green;
+    cursor: pointer;
 }
 
 .history-list li .chat-box .date-status {

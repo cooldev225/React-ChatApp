@@ -15,12 +15,14 @@
     <div class="chitchat-container sidebar-toggle">
         <nav class="main-nav on custom-scroll">
             <div class="logo-warpper">
-                <a class="button-effect" href="payment-histories">
+                <div>
                     <img src="/chat/images/logo/logo.png" alt="logo" />
-                </a>
-                <div class="balance">
-                    <span class="balance-amount">$0.00</span>
                 </div>
+                <a class="button-effect" href="payment-histories">
+                    <div class="balance">
+                        <span class="balance-amount">$0.00</span>
+                    </div>
+                </a>
             </div>
             <div class="sidebar-main">
                 <ul class="sidebar-top">
@@ -109,13 +111,13 @@
                 </div>
                 <div class="chat custom-scroll">
                     <!-- <ul class="chat-cont-setting">
-                                                                                                                                            <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                                                                                                                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
-                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
-                                                                                                                                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
-                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                                                                                                                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
-                                                                                                                                        </ul> -->
+                                                                                                                                                            <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
+                                                                                                                                                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
+                                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
+                                                                                                                                                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
+                                                                                                                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
+                                                                                                                                                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
+                                                                                                                                                        </ul> -->
                     <div class="theme-title">
                         <div class="media">
                             <div>
@@ -231,7 +233,7 @@
                 <div class="theme-title">
                     <div class="media">
                         <div>
-                            <h2>Histories</h2>
+                            <h2>Transactions</h2>
                             <h4>Last Recent</h4>
                         </div>
                         <div class="media-body text-end"> <a class="icon-btn btn-outline-light btn-sm m-r-15 search"
@@ -481,7 +483,7 @@
                                             </div>
                                         </div>
                                         <p> <b>Note : </b>For added security, enable two-step verifiation, which will
-                                            require a PIN when registering your phone number with Chitchat again.</p>
+                                            require a PIN when registering your phone number with Ojochat again.</p>
                                     </div>
                                 </div>
                             </div>
@@ -745,8 +747,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                    <span class="sr-only">Loading...</span>
-                                                                                                                                </div> -->
+                                                                                                                                                    <span class="sr-only">Loading...</span>
+                                                                                                                                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
 
@@ -1150,7 +1152,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h5>Sure, chitchat is best theme for chating project, you can it check<a
+                                                    <h5>Sure, Ojochat is best theme for chating project, you can it check<a
                                                             class="ms-1"
                                                             href="https://themeforest.net/user/pixelstrap/portfolio"
                                                             target="_blank">here.</a></h5>
@@ -3385,9 +3387,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                            <h5>Contact number</h5>
-                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                            </div> -->
+                                                                                                                                                                                            <h5>Contact number</h5>
+                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                            </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3403,7 +3405,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title">
-                        Welcome to Chitchat</h2>
+                        Welcome to Ojochat</h2>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -3705,25 +3707,25 @@
                         </div>
                         <div class="payment-options">
                             <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-                                                                                                                                    <input type="hidden" name="cmd" value="_s-xclick">
-                                                                                                                                    <input type="hidden" name="hosted_button_id" value="6RNT8A4HBBJRE">
-                                                                                                                                    <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
-                                                                                                                                    <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                                                                                                                                </form> -->
+                                                                                                                                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                                                                                                                                    <input type="hidden" name="hosted_button_id" value="6RNT8A4HBBJRE">
+                                                                                                                                                    <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
+                                                                                                                                                    <img alt="" src="https://paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                                                                                                                                </form> -->
                             @yield('checkout')
                             <!-- <div id="paypal-button"></div> -->
                             <!-- <button type="button" class="btn btn-primary">Balance</button>
-                                                                                                                                <button type="button" class="btn btn-primary">Paypal</button>
-                                                                                                                                <button type="button" class="btn btn-primary">Card</button>
-                                                                                                                                <button type="button" class="btn btn-primary">Crypto</button> -->
+                                                                                                                                                <button type="button" class="btn btn-primary">Paypal</button>
+                                                                                                                                                <button type="button" class="btn btn-primary">Card</button>
+                                                                                                                                                <button type="button" class="btn btn-primary">Crypto</button> -->
 
                         </div>
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                    </div> -->
+                                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                                    </div> -->
             </div>
         </div>
     </div>
@@ -3746,7 +3748,7 @@
     </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
-    <!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
     <script src="/frontend/js/pages/payment.js"></script>
 
