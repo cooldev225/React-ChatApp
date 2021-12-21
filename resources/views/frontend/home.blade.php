@@ -55,8 +55,8 @@
                                 class="fa fa-cog"></i></a></li>
                 </ul>
                 <ul class="sidebar-bottom">
-                    <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"
-                            data-intro="Change mode"><i class="fa fa-moon-o"></i></a></li>
+                    <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"><i
+                                class="fa fa-moon-o"></i></a></li>
                     <li><a class="icon-btn btn-light" href="/logout" data-tippy-content=" SignOut"> <i
                                 class="fa fa-power-off"> </i></a></li>
                 </ul>
@@ -111,13 +111,13 @@
                 </div>
                 <div class="chat custom-scroll">
                     <!-- <ul class="chat-cont-setting">
-                                                                                                                                                                                        <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                                                                                                                                                                            <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
-                                                                                                                                                                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
-                                                                                                                                                                                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
-                                                                                                                                                                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                                                                                                                                                                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
-                                                                                                                                                                                    </ul> -->
+                                                                                                                                                                                                    <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
+                                                                                                                                                                                                        <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
+                                                                                                                                                                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
+                                                                                                                                                                                                        <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
+                                                                                                                                                                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
+                                                                                                                                                                                                        <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
+                                                                                                                                                                                                </ul> -->
                     <div class="theme-title">
                         <div class="media">
                             <div>
@@ -142,7 +142,7 @@
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" data-to="chat-content"><a class="nav-link button-effect active"
                                     id="chat-tab" data-bs-toggle="tab" href="#chat" role="tab" aria-controls="chat"
-                                    aria-selected="true" data-intro="Start chat"><i data-feather="message-square">
+                                    aria-selected="true"><i data-feather="message-square">
                                     </i>Chat</a></li>
                             <li class="nav-item" data-to="call-content"><a class="nav-link button-effect"
                                     id="call-tab" data-bs-toggle="tab" href="#call" role="tab" aria-controls="call"
@@ -747,8 +747,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                                                                <span class="sr-only">Loading...</span>
-                                                                                                                                                                            </div> -->
+                                                                                                                                                                                            <span class="sr-only">Loading...</span>
+                                                                                                                                                                                        </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
 
@@ -3387,9 +3387,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                        <h5>Contact number</h5>
-                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                    <h5>Contact number</h5>
+                                                                                                                                                                                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                    </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3718,9 +3718,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                </div> -->
+                                                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div> -->
             </div>
         </div>
     </div>
