@@ -483,6 +483,7 @@ ul.chatappend .msg-box .camera-icon {
     padding: 5px 60px;
     grid-gap: 10px;
     margin-left: 10px;
+    align-content: start;
 }
 
 #checkoutModal .product-list img {
@@ -528,6 +529,12 @@ ul.chatappend .msg-box .camera-icon {
 
 .content {
     position: static;
+}
+
+#checkoutModal>div>div>div.modal-body>div.product-payment>div.payment-options>button {
+    line-height: 25px;
+    border-radius: 20px;
+    padding: 5px;
 }
 
 @media (max-width: 1366px) {
