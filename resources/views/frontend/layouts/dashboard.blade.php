@@ -143,7 +143,6 @@
     });
     
 </script> --}}
-<!-- start webpushr code -->
 <script>
     (function(w, d, s, id) {
         if (typeof(w.webpushr) !== 'undefined') return;
@@ -158,29 +157,10 @@
         fjs.parentNode.appendChild(js);
     }(window, document, 'script', 'webpushr-jssdk'));
     webpushr('setup', {
-        'key': 'BE-M8FzYZ5yXk3wVgfDZV_NtZr2jEh2ED6qWxtO1S5N_wYm6yp71ILacJbYr7u3Emkm0E3G9VdOSukomh6YiXIY',
+        'key': 'BEVbM4J2cI5K6A-AeJJd6ZIMRMM0fwnaRzckUnZ5Zar-EqFGnzmhNLSUzi5u2J9iA0I3pvlp4S3YKR-tsihqNtg',
         'integration': 'popup'
     });
 </script>
-<!-- end webpushr code -->
-{{-- <script>
-    (function(w, d, s, id) {
-        if (typeof(w.webpushr) !== 'undefined') return;
-        w.webpushr = w.webpushr || function() {
-            (w.webpushr.q = w.webpushr.q || []).push(arguments)
-        };
-        var js, fjs = d.getElementsByTagName(s)[0];
-        js = d.createElement(s);
-        js.id = id;
-        js.async = 1;
-        js.src = "https://cdn.webpushr.com/app.min.js";
-        fjs.parentNode.appendChild(js);
-    }(window, document, 'script', 'webpushr-jssdk'));
-    webpushr('setup', {
-        'key': 'BJPuG7l7jO-1XAR0Osmtf9j0tjhw95z3UUZMfu-xtI7pxIIRdqQWBJ0VIXfsyZ3pFwMcqobPo0OdfhIXIcooulE',
-        'integration': 'popup'
-    });
-</script> --}}
 <!-- end webpushr code -->
 
 </html>
