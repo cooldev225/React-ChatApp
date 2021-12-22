@@ -19,13 +19,8 @@ $(document).ready(() => {
         // if (contentwidth <= '768') {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
-        console.log('-----------')
-        console.log(currentUserId)
-        console.log(message.from)
-        console.log(currentUserId == message.from)
-        console.log(!currentUserId == message.from)
-        console.log('-----------')
-        if (!currentUserId == message.from) {
+
+        if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
             let content = message.kind == 2 ? 'New Photo arrived' :
