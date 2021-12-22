@@ -248,7 +248,7 @@ io.on('connection', (socket) => {
         }
     })
     socket.on('send:notification', data => {
-
+        console.log(data);
         // db.query(`SELECT * from messages WHERE id=${data.currentContactId}`)
         var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
         var options = {
