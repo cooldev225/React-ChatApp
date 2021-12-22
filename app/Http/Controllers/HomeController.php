@@ -63,7 +63,7 @@ class HomeController extends Controller
         $id = Auth::id();
         $contactorId = $request->input('currentContactorId');
         $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
-            ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(10)->get();
+            ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(20)->get();
         $messages = $messageData->map(function($item) {
             if ($item['kind'] == 0) 
                 return $item;
