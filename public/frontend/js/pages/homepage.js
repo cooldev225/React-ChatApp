@@ -22,7 +22,8 @@ $(document).ready(() => {
         console.log('-----------')
         console.log(currentUserId)
         console.log(message.from)
-        console.log(message.from == message.from)
+        console.log(currentUserId == message.from)
+        console.log(!currentUserId == message.from)
         console.log('-----------')
         if (!currentUserId == message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
