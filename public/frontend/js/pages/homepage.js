@@ -19,7 +19,6 @@ $(document).ready(() => {
         // if (contentwidth <= '768') {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
-        console.log(message);
         if (!currentUserId == message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
@@ -27,6 +26,7 @@ $(document).ready(() => {
                 message.kind == 1 ? 'PhotoRequest arrived' :
                 message.kind == 0 ? message.content : "Error Message";
 
+            console.log(message);
             socket.emit('send:notification', { from: message.from, to: message.to, senderName, sid, content });
         }
         let target = '.contact-chat ul.chatappend';
