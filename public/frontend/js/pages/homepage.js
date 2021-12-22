@@ -19,6 +19,11 @@ $(document).ready(() => {
         // if (contentwidth <= '768') {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
+        console.log('-----------')
+        console.log(currentUserId)
+        console.log(message.from)
+        console.log(message.from == message.from)
+        console.log('-----------')
         if (!currentUserId == message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
