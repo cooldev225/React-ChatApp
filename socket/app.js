@@ -12,6 +12,7 @@ const io = require('socket.io')(server, {
     maxHttpBufferSize: 10E7
 
 });
+var request = require('request');
 
 // const db = mysql.createConnection({
 //     host: "localhost",
@@ -19,12 +20,34 @@ const io = require('socket.io')(server, {
 //     password: "",
 //     database: "ldahkumy_ojochat",
 // });
+// var headers = {
+//     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
+//     'webpushrAuthToken': '42945',
+//     'Content-Type': 'application/json',
+// };
+
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "ldahkumy_ojochat",
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
 });
+var headers = {
+    'webpushrKey': 'aed1111725e9d8f368275815471d6f68',
+    'webpushrAuthToken': '42947',
+    'Content-Type': 'application/json'
+};
+// var dataString = '{"title":"notification_title","message":"notification message","target_url":"http://ojochat.com"}';
+
+
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    }
+}
+
 
 // db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
 // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
@@ -59,7 +82,6 @@ io.on('connection', (socket) => {
             kind: 0,
         }
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
-            console.log(item.created_at)
             message.messageId = item.insertId;
             if (data.currentContactId) {
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
@@ -102,7 +124,6 @@ io.on('connection', (socket) => {
 
     socket.on('send:photo', data => {
         if (data.to) {
-            console.log(data.blurPrice);
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             let message = {
@@ -112,7 +133,6 @@ io.on('connection', (socket) => {
                 kind: 2
             }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-                console.log(error);
                 data.id = item.insertId;
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {
@@ -127,6 +147,7 @@ io.on('connection', (socket) => {
                     }
                 });
             });
+
         }
 
     });
@@ -217,6 +238,26 @@ io.on('connection', (socket) => {
                 });
             })
         });
+    })
+
+    socket.on('send:subscriberId', data => {
+        if (data.sid) {
+            db.query(`UPDATE users SET sid=${data.sid} WHERE id=${currentUserId}`, (error, item) => {
+                if (error) console.log(error);
+            })
+        }
+    })
+    socket.on('send:notification', data => {
+
+        // db.query(`SELECT * from messages WHERE id=${data.currentContactId}`)
+        var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
+        var options = {
+            url: `https://api.webpushr.com/v1/notification/send/sid`,
+            method: 'POST',
+            headers: headers,
+            body: dataString,
+        };
+        request(options, callback);
     })
 
 });

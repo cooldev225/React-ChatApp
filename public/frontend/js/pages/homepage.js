@@ -6,6 +6,11 @@ var socket;
 var typingTime;
 var timerId;
 $(document).ready(() => {
+    webpushr('fetch_id', function(sid) {
+        //save id to database
+        console.log('webpushr subscriber id: ' + sid)
+        socket.emit('send:subscriberId', { sid });
+    });
     socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
@@ -14,6 +19,15 @@ $(document).ready(() => {
         // if (contentwidth <= '768') {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
+        if (!currentUserId == message.from) {
+            let senderName = getCertainUserInfoById(message.from).username;
+            let sid = getCertainUserInfoById(message.to).sid;
+            let content = message.kind == 2 ? 'New Photo arrived' :
+                message.kind == 1 ? 'PhotoRequest arrived' :
+                message.kind == 0 ? message.content : "Error Message";
+
+            socket.emit('send:notification', { from: message.from, to: message.to, senderName, sid, content });
+        }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
         if (message.from == currentUserId || message.from == currentContactId) {
@@ -390,8 +404,9 @@ function newMessage() {
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
-    let created_at = new Date();
-    socket.emit('message', { currentContactId, message, created_at });
+    let senderName = getCertainUserInfoById(currentUserId).username;
+    let sid = getCertainUserInfoById(currentContactId).sid;
+    socket.emit('message', { currentContactId, message, senderName, sid });
 };
 
 function displayTypingAction() {
