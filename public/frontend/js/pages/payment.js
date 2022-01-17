@@ -72,7 +72,7 @@ $(document).ready(function() {
     $('.payWithBalanceBtn').on('click', () => {
         let userInfo = getCertainUserInfoById(currentUserId);
         if (!totalPrice) {
-            alert('This is free photo');
+            payWholePhotoPrice();
             return;
         }
         if (userInfo.balances >= totalPrice) {
@@ -88,7 +88,11 @@ function tempAction() {
     let messageId = $('#photo_item .modal-content').attr('key');
     let photoId = $('#photo_item .modal-content').attr('photoId');
     let addBalance = totalPrice * 0.7;
-    socket.emit('pay:photo', { photoId, selectedEmojis, addBalance });
+    socket.emit('pay:photo', {
+        photoId,
+        selectedEmojis,
+        addBalance
+    });
     payWholePhotoPrice();
     $('#checkoutModal').modal('hide');
     alert('You paid Successfully');

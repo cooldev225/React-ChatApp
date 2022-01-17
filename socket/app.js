@@ -38,6 +38,7 @@ var headers = {
     'webpushrAuthToken': '42947',
     'Content-Type': 'application/json'
 };
+
 // var dataString = '{"title":"notification_title","message":"notification message","target_url":"http://ojochat.com"}';
 
 
