@@ -106,7 +106,6 @@ $(document).ready(() => {
         $('#createPhoto .preview-paid').addClass('d-none');
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
-        ori_image = null;
     });
 
     $('#acceptPhotoRequestBtn').on('click', () => {

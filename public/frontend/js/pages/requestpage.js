@@ -276,6 +276,7 @@ function selectBackPhoto() {
             });
 
         }
+
         reader.readAsDataURL(files[0]);
 
     });
@@ -285,6 +286,7 @@ function selectBackPhoto() {
         canvas.setHeight(canvasDimension);
         canvas.clear();
         globalImage = undefined;
+        ori_image = null;
     });
 }
 
