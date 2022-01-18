@@ -172,7 +172,7 @@
         init: function() {
             var recent = $('.price-slider');
             recent.owlCarousel({
-                items: 3,
+                items: 2,
                 dots: false,
                 loop: true,
                 margin: 60,
@@ -191,11 +191,11 @@
                         margin: 25,
                     },
                     1070: {
-                        items: 3,
+                        items: 2,
                         margin: 25,
                     },
                     1600: {
-                        items: 3
+                        items: 2
                     },
                 }
             })
