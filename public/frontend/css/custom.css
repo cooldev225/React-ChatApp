@@ -37,6 +37,8 @@ body {
 
 .chitchat-main .message-input input {
     flex: 1;
+    font-size: calc(13px + (14 - 13) * ((100vw - 320px) / (1920 - 320)));
+    font-weight: 600;
 }
 
 #detailRequestModal .modal-footer {

@@ -391,7 +391,7 @@ function sendPhoto() {
         data.from = currentUserId;
         data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
-        data.back = ori_image || canvas.toDataURL('image/png');
+        data.back = ori_image || '';
         data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
@@ -793,18 +793,23 @@ function showPhotoContent(id) {
                 getContentRate('#photo_item', res.data[0].rate);
                 //background
                 new Promise(resolve => {
-                    fabric.Image.fromURL(res.data[0].back, function(oImg) {
-                        let filter = new fabric.Image.filters.Blur({
-                            blur: res.data[0].blur
+                    console.log(res.data[0].back);
+                    if (res.data[0].back) {
+                        fabric.Image.fromURL(res.data[0].back, function(oImg) {
+                            let filter = new fabric.Image.filters.Blur({
+                                blur: res.data[0].blur
+                            });
+                            oImg.filters = [];
+                            oImg.filters.push(filter);
+                            oImg.applyFilters();
+                            photo_canvas.setWidth(oImg.width);
+                            photo_canvas.setHeight(oImg.height);
+                            photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
+                            resolve();
                         });
-                        oImg.filters = [];
-                        oImg.filters.push(filter);
-                        oImg.applyFilters();
-                        photo_canvas.setWidth(oImg.width);
-                        photo_canvas.setHeight(oImg.height);
-                        photo_canvas.setBackgroundImage(oImg, photo_canvas.renderAll.bind(photo_canvas));
+                    } else {
                         resolve();
-                    });
+                    }
                 }).then(() => {
                     photoPrice = 0;
                     Promise.all(emojis.map(item => {
