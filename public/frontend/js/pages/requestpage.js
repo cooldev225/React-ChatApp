@@ -245,7 +245,7 @@ function selectBackPhoto() {
         files = e.target.files;
         reader.onload = () => {
             fabric.Image.fromURL(reader.result, function(oImg) {
-                ori_image = reader.result;
+                ori_image = reader.result || '';
                 globalImage = oImg;
 
                 let imgWidth = oImg.width;
@@ -272,7 +272,7 @@ function selectBackPhoto() {
                     scaleX: width / oImg.width,
                     scaleY: height / oImg.height
                 });
-                ori_image = canvas.toDataURL('image/png');
+                // ori_image = canvas.toDataURL('image/png');
             });
 
         }
