@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
                     db.query(`SELECT * FROM users where id = ${currentUserId}`, (error, row) => {
                         if (row.length) {
                             console.log(row);
-                            let phoneNumber = '+' + row[0].phone_number;
+                            let phoneNumber = '+1' + row[0].phone_number;
                             console.log(phoneNumber);
                             let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages.`;
                             let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
