@@ -95,7 +95,6 @@ io.on('connection', (socket) => {
                     console.log('Send SMS');
                     db.query(`SELECT * FROM users where id = ${data.currentContactId}`, (error, row) => {
                         if (row.length) {
-
                             let phoneNumber = '+1' + row[0].phone_number;
                             console.log(phoneNumber);
                             let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages.`;
@@ -161,6 +160,22 @@ io.on('connection', (socket) => {
                             io.sockets.sockets.get(recipientSocketId).emit('message', message);
                             io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
                         }
+                    } else {
+                        console.log('Send SMS');
+                        db.query(`SELECT * FROM users where id = ${data.to}`, (error, row) => {
+                            if (row.length) {
+                                let phoneNumber = '+1' + row[0].phone_number;
+                                console.log(phoneNumber);
+                                let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages.`;
+                                let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
+                                const axios = require('axios');
+                                axios.get(smsUrl).then(res => {
+                                    console.log(res.url);
+                                }).catch(error => {
+                                    console.log(error);
+                                })
+                            }
+                        });
                     }
                 });
             });
