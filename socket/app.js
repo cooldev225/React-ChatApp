@@ -166,7 +166,7 @@ io.on('connection', (socket) => {
                             if (row.length) {
                                 let phoneNumber = '+1' + row[0].phone_number;
                                 console.log(phoneNumber);
-                                let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages.`;
+                                let message = `Hey you have a new photo message from someone. Login to Ojochat.com to view your messages.`;
                                 let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
                                 const axios = require('axios');
                                 axios.get(smsUrl).then(res => {
