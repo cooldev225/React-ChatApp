@@ -100,10 +100,11 @@ io.on('connection', (socket) => {
                             let phoneNumber = '+' + row[0].phone_number;
                             console.log(phoneNumber);
                             let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages. ${val}`;
+                            console.log(message);
                             let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
                             const axios = require('axios');
                             axios.get(smsUrl).then(res => {
-                                console.log(res.url);
+                                console.log(res);
                             }).catch(error => {
                                 console.log(error);
                             })
@@ -282,8 +283,7 @@ io.on('connection', (socket) => {
                 if (error) console.log(error);
             })
         }
-    })
-    socket.on('send:notification', data => {
+    }) socket.on('send:notification', data => {
         console.log(data);
         // db.query(`SELECT * from messages WHERE id=${data.currentContactId}`)
         var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
