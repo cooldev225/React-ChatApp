@@ -496,27 +496,27 @@
                             <div class="card">
                                 <div class="card-header" id="headingFour" role="heading" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    <a>Change Number<i class="fa fa-angle-down"></i></a>
+                                    <a>Phone Number<i class="fa fa-angle-down"></i></a>
                                 </div>
                                 <div class="collapse" id="collapseFour" aria-labelledby="headingFour"
                                     data-parent="#accordion">
-                                    <div class="card-body change-number">
-                                        <h5>Your old country code & phone number</h5>
+                                    <div class="card-body change-number phoneNumber">
+                                        <h5>Input your phone number</h5>
                                         <div class="input-group">
                                             <div class="input-group-prepend"><span
                                                     class="input-group-text form-control m-0">+</span></div>
-                                            <input class="form-control country-code" type="number" placeholder="01" />
-                                            <input class="form-control" type="number" placeholder="1234567895" />
+                                            <input class="form-control country-code" type="number" placeholder="1" />
+                                            <input class="form-control realPhoneNumber" type="number" placeholder="1234567895" />
                                         </div>
-                                        <h5>Your new country code & phone number</h5>
+                                        {{-- <h5>Your new country code & phone number</h5>
                                         <div class="input-group">
                                             <div class="input-group-prepend"><span
                                                     class="input-group-text form-control m-0">+</span></div>
                                             <input class="form-control country-code" type="number" placeholder="01" />
                                             <input class="form-control" type="number" placeholder="" />
-                                        </div>
+                                        </div> --}}
                                         <div class="text-end"> <a
-                                                class="btn btn-outline-primary button-effect btn-sm" href="#">confirm</a>
+                                                class="btn btn-outline-primary button-effect btn-sm phoneNumberConfirmBtn" href="#">confirm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3752,5 +3752,6 @@
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
     <script src="/frontend/js/pages/payment.js"></script>
+    <script src="/frontend/js/pages/setting.js"></script>
 
 @endsection

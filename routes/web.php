@@ -42,6 +42,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getPaymentHistories', 'HomeController@getPaymentHistories');
     Route::get('/stripe', 'StripeController@stripe');
     Route::post('/stripe', 'StripeController@stripePost')->name('stripe.post');
+    Route::post('/setting/setPhoneNumber', 'SettingController@setPhoneNumber');
 });
 
 Route::group(['middleware' => ['admin']], function () {

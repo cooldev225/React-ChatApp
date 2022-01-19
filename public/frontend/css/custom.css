@@ -539,6 +539,10 @@ ul.chatappend .msg-box .camera-icon {
     padding: 5px;
 }
 
+input.form-control::placeholder {
+    opacity: 0.5;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
