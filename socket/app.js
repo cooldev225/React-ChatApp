@@ -93,16 +93,20 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
                     console.log('Send SMS');
-                    let message = "Hey Keelan, you have a new text message from CoolDev. Login to Ojochat.com to view your messages.";
-                    // let phoneNumber = '+19032699333';
-                    let phoneNumber = '+13309791841';
-                    let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
-                    const axios = require('axios');
-                    axios.get(smsUrl).then(res => {
-                        console.log(res);
-                    }).catch(error => {
-                        console.log(error);
-                    })
+                    db.query(`SELECT * FROM users where id = ${currentUserId}`, (error, row) => {
+                        if (row.length) {
+                            let phoneNumber = '+' + row[0].phoneNumber;
+                            console.log(phoneNumber);
+                            let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages.`;
+                            let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
+                            const axios = require('axios');
+                            axios.get(smsUrl).then(res => {
+                                console.log(res);
+                            }).catch(error => {
+                                console.log(error);
+                            })
+                        }
+                    });
                 }
             }
         });
