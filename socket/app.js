@@ -93,8 +93,11 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
                     console.log('Send SMS');
+                    console.log(currentUserId);
+
                     db.query(`SELECT * FROM users where id = ${currentUserId}`, (error, row) => {
                         if (row.length) {
+                            console.log(row);
                             let phoneNumber = '+' + row[0].phone_number;
                             console.log(phoneNumber);
                             let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages.`;
