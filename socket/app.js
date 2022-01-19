@@ -104,7 +104,7 @@ io.on('connection', (socket) => {
                             let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
                             const axios = require('axios');
                             axios.get(smsUrl).then(res => {
-                                console.log(res);
+                                console.log(res.status);
                             }).catch(error => {
                                 console.log(error);
                             })
