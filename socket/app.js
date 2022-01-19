@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
                     console.log('Send SMS');
-                    let message = "Hey Keelan, you have a new text message from CoolDev. Login to Ojochat.com to view your messages.";
+                    // let message = "Hey Keelan, you have a new text message from CoolDev. Login to Ojochat.com to view your messages.";
                     // let phoneNumber = '+19032699333';
                     let phoneNumber = '+13309791841';
                     let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message.content}`
