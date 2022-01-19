@@ -93,7 +93,6 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
                     console.log('Send SMS');
-                    console.log(getCertainUserInfoById(data.currentContactId).username);
                     db.query(`SELECT * FROM users where id = ${data.currentContactId}`, (error, row) => {
                         if (row.length) {
 
