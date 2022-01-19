@@ -272,7 +272,7 @@ function selectBackPhoto() {
                     scaleX: width / oImg.width,
                     scaleY: height / oImg.height
                 });
-                // ori_image = canvas.toDataURL('image/png');
+                ori_image = canvas.toDataURL('image/png');
             });
 
         }
