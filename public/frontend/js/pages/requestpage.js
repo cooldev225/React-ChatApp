@@ -483,7 +483,7 @@ function payPhoto() {
         price == 0 ? price = photoPrice : '';
         console.log(price);
         if (price != 0) {
-            $('#cheokoutModal').modal('show');
+            $('#checkoutModal').modal('show');
             console.log('not zero');
         } else {
             console.log('zero');
