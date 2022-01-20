@@ -2,7 +2,7 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="/vuexy/app-assets/css/plugins/forms/form-validation.css">
     <link rel="stylesheet" type="text/css" href="/vuexy/app-assets/css/pages/page-auth.css">
-
+    
     <div class="login-page1">
         <div class="container-fluid p-0">
             <div class="row">

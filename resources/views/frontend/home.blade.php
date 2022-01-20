@@ -505,7 +505,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend"><span
                                                     class="input-group-text form-control m-0">+</span></div>
-                                            <input class="form-control country-code" type="number" placeholder="1" />
+                                            {{-- <input class="form-control country-code" type="number" placeholder="1" /> --}}
                                             <input class="form-control realPhoneNumber" type="number" placeholder="1234567895" />
                                         </div>
                                         {{-- <h5>Your new country code & phone number</h5>
