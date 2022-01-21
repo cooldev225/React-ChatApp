@@ -38,12 +38,16 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
     {{-- <link rel="stylesheet" type="text/css" href="/frontend/css/normalize.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/css/intlTelInput.css">
+
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
 </head>
 
 <body class="sidebar-active">
-    <script src="/chat/js/jquery-3.3.1.min.js"></script>
+    {{-- <script src="/chat/js/jquery-3.3.1.min.js"></script> --}}
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
@@ -77,8 +81,10 @@
         integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
     <script src="/chat/js/script.js"></script>
-</body>
+  </body>
+
 {{-- <script type="module">
   // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";

@@ -543,6 +543,10 @@ input.form-control::placeholder {
     opacity: 0.5;
 }
 
+select#phone {
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;

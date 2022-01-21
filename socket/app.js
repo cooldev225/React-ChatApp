@@ -97,8 +97,10 @@ io.on('connection', (socket) => {
                         if (row.length) {
                             var val = Math.floor(100000 + Math.random() * 900000);
 
-                            let phoneNumber = '+' + row[0].phone_number;
-                            console.log(phoneNumber);
+                            let phoneNumber = '+' + row[0].phone_number.replace(/[^0-9]/g, '');
+                            let dialCode = row[0].phone_number.slice(0, row[0].phoneNumber.indexOf('-'));
+                            console.log('dialCode: ', dialCode);
+                            console.log('phoneNumber: ', phoneNumber);
                             let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages. ${val}`;
                             console.log(message);
                             let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
