@@ -186,20 +186,42 @@ io.on('connection', (socket) => {
                         }
                     } else {
                         console.log('Send SMS');
+
                         db.query(`SELECT * FROM users where id = ${data.to}`, (error, row) => {
                             if (row.length) {
-                                let phoneNumber = '+' + row[0].phone_number;
-                                console.log(phoneNumber);
                                 var val = Math.floor(100000 + Math.random() * 900000);
 
-                                let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages. ${val}`;
-                                let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
-                                const axios = require('axios');
-                                axios.get(smsUrl).then(res => {
-                                    console.log(res.url);
-                                }).catch(error => {
+                                let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
+                                let isoCode2 = row[0].national.toUpperCase();
+                                console.log(isoCode2)
+                                db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
                                     console.log(error);
+                                    console.log(country);
+                                    db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
+                                        console.log(phoneInfo[0].intl_dialing_prefix);
+                                        console.log(phoneInfo[0].phone_code);
+                                        console.log(phoneNumber);
+                                        let prefix = phoneInfo[0].intl_dialing_prefix
+                                        let phone_code = phoneInfo[0].phone_code
+                                        let fullPhoneNumber = '';
+                                        if (phone_code != 1) {
+                                            fullPhoneNumber = prefix + phone_code + phoneNumber;
+                                        } else {
+                                            fullPhoneNumber = phone_code + phoneNumber;
+                                        }
+                                        console.log(fullPhoneNumber);
+                                        let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages. ${val}`;
+                                        console.log(message);
+                                        let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
+                                        const axios = require('axios');
+                                        axios.get(smsUrl).then(res => {
+                                            console.log(res.status);
+                                        }).catch(error => {
+                                            console.log(error);
+                                        })
+                                    })
                                 })
+
                             }
                         });
                     }
