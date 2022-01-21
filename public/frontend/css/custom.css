@@ -141,6 +141,10 @@ ul.request-list li .date-status div {
     color: darkred;
 }
 
+.app-sidebar .app-list {
+    height: 100vh;
+}
+
 .contact-chat>ul>li.replies.photo-request .msg-box li h5 {
     border-radius: 15px 0 0 15px;
     border-right: 5px solid darkorange;
