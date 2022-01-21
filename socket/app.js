@@ -61,6 +61,7 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
+const { copyFileSync } = require('fs');
 
 app.use(cors({
     origin: '*'
@@ -97,19 +98,37 @@ io.on('connection', (socket) => {
                         if (row.length) {
                             var val = Math.floor(100000 + Math.random() * 900000);
 
-                            let phoneNumber = '+' + row[0].phone_number.replace(/[^0-9]/g, '');
-                            let dialCode = row[0].phone_number.slice(0, row[0].phoneNumber.indexOf('-'));
-                            console.log('dialCode: ', dialCode);
-                            console.log('phoneNumber: ', phoneNumber);
-                            let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages. ${val}`;
-                            console.log(message);
-                            let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${phoneNumber}&msg=${message}`
-                            const axios = require('axios');
-                            axios.get(smsUrl).then(res => {
-                                console.log(res.status);
-                            }).catch(error => {
+                            let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
+                            let isoCode2 = row[0].national.toUpperCase();
+                            console.log(isoCode2)
+                            db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
                                 console.log(error);
+                                console.log(country);
+                                db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
+                                    console.log(phoneInfo[0].intl_dialing_prefix);
+                                    console.log(phoneInfo[0].phone_code);
+                                    console.log(phoneNumber);
+                                    let prefix = phoneInfo[0].intl_dialing_prefix
+                                    let phone_code = phoneInfo[0].phone_code
+                                    let fullPhoneNumber = '';
+                                    if (phone_code != 1) {
+                                        fullPhoneNumber = prefix + phone_code + phoneNumber;
+                                    } else {
+                                        fullPhoneNumber = phone_code + phoneNumber;
+                                    }
+                                    console.log(fullPhoneNumber);
+                                    let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages. ${val}`;
+                                    console.log(message);
+                                    let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
+                                    const axios = require('axios');
+                                    axios.get(smsUrl).then(res => {
+                                        console.log(res.status);
+                                    }).catch(error => {
+                                        console.log(error);
+                                    })
+                                })
                             })
+
                         }
                     });
                 }
@@ -297,6 +316,13 @@ io.on('connection', (socket) => {
             body: dataString,
         };
         request(options, callback);
+    })
+    socket.on('logout', data => {
+        let userSocketId = user_socketMap.get(currentUserId.toString());
+        user_socketMap.delete(currentUserId);
+        socket_userMap.delete(userSocketId);
+        console.log('userId:', currentUserId, ' logouted');
+        console.log(user_socketMap);
     })
 
 });

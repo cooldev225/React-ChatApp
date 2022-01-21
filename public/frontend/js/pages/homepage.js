@@ -78,8 +78,11 @@ $(document).ready(() => {
         displayTypingAction();
         deleteMessages();
         displayRate();
-    });
 
+    });
+    $('#logoutBtn').on('click', () => {
+        socket.emit('logout', { currentUserId });
+    });
 
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {

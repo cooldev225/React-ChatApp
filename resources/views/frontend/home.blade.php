@@ -62,7 +62,7 @@
                 <ul class="sidebar-bottom">
                     <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"><i
                                 class="fa fa-moon-o"></i></a></li>
-                    <li><a class="icon-btn btn-light" href="/logout" data-tippy-content=" SignOut"> <i
+                    <li><a class="icon-btn btn-light" id="logoutBtn" href="/logout" data-tippy-content=" SignOut"> <i
                                 class="fa fa-power-off"> </i></a></li>
                 </ul>
             </div>

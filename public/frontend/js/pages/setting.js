@@ -1,4 +1,19 @@
 $(document).ready(function() {
+    // $.ajax({
+    //     url: '/setting/getPhoneNumber',
+    //     headers: {
+    //         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false,
+    //     type: 'POST',
+    //     dataType: "json",
+    //     success: function(res) {
+    //         console.log(res);
+    //     },
+    //     error: function(response) {}
+    // });
     // $("#mobile-number").intlTelInput();
     var telInput = $("#phone"),
         errorMsg = $("#error-msg"),
@@ -34,11 +49,15 @@ $(document).ready(function() {
     $('.phoneNumberConfirmBtn').on('click', () => {
         if ($("#phone").intlTelInput("isValidNumber")) {
             let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-            let phoneNumber = $('#phone').val().replace(/[^0-9]/g, '');;
+            let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+            // let phoneNumber = $('#phone').val().replace(/[^0-9]/g, '');
+            let phoneNumber = $('#phone').val();
             var form_data = new FormData();
             console.log(dialCode);
             console.log(phoneNumber);
-            form_data.append('phoneNumber', dialCode + '-' + phoneNumber);
+            form_data.append('isoCode2', isoCode2);
+            form_data.append('dialCode', dialCode);
+            form_data.append('phoneNumber', phoneNumber);
             $.ajax({
                 url: '/setting/setPhoneNumber',
                 headers: {
