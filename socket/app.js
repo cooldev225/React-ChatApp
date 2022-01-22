@@ -205,7 +205,7 @@ io.on('connection', (socket) => {
                                         let phone_code = phoneInfo[0].phone_code
                                         let fullPhoneNumber = '';
                                         if (phone_code != 1) {
-                                            fullPhoneNumber = prefix + phone_code + phoneNumber;
+                                            fullPhoneNumber = phone_code + phoneNumber;
                                         } else {
                                             fullPhoneNumber = phone_code + phoneNumber;
                                         }
