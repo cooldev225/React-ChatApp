@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
                                     let phone_code = phoneInfo[0].phone_code
                                     let fullPhoneNumber = '';
                                     if (phone_code != 1) {
-                                        fullPhoneNumber = prefix + phone_code + phoneNumber;
+                                        fullPhoneNumber = '011' + phone_code + phoneNumber;
                                     } else {
                                         fullPhoneNumber = phone_code + phoneNumber;
                                     }
@@ -205,9 +205,9 @@ io.on('connection', (socket) => {
                                         let phone_code = phoneInfo[0].phone_code
                                         let fullPhoneNumber = '';
                                         if (phone_code != 1) {
-                                            fullPhoneNumber = phone_code + phoneNumber;
-                                        } else {
                                             fullPhoneNumber = '011' + phone_code + phoneNumber;
+                                        } else {
+                                            fullPhoneNumber = phone_code + phoneNumber;
                                         }
                                         console.log(fullPhoneNumber);
                                         let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages. ${val}`;
