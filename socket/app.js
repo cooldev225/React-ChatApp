@@ -207,7 +207,7 @@ io.on('connection', (socket) => {
                                         if (phone_code != 1) {
                                             fullPhoneNumber = phone_code + phoneNumber;
                                         } else {
-                                            fullPhoneNumber = phone_code + phoneNumber;
+                                            fullPhoneNumber = '011' + phone_code + phoneNumber;
                                         }
                                         console.log(fullPhoneNumber);
                                         let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages. ${val}`;
