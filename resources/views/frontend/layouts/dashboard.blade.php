@@ -46,7 +46,7 @@
 
 <body class="sidebar-active">
     {{-- <script src="/chat/js/jquery-3.3.1.min.js"></script> --}}
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
