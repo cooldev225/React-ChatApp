@@ -83,6 +83,8 @@
     <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
     <script src="/chat/js/script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
   </body>
 
 {{-- <script type="module">
@@ -172,17 +174,8 @@
 </script> --}}
 <!-- end webpushr code -->
 
-{{-- 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
-  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-messaging.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+ 
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyBKLxxar1jazOIv01qewFOMZPGETl5tlDk",
     authDomain: "localojo-d7ffd.firebaseapp.com",
@@ -192,22 +185,35 @@
     appId: "1:89368547626:web:90582cca1c59696ac0ce53",
     measurementId: "G-EQ2LGCPEX7"
   };
-
+  
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  firebase.initializeApp(firebaseConfig);
   const messaging = getMessaging();
-  console.log(app);
   console.log(messaging);
-  getToken(messaging, {vapidKey:'BAPTMxyIAwCC-sQr90poTZSJNHkkziaMmrnEr9dM17zvKUds07IDDaCu9Wsil4XFNHhSeKeD0nB4WkWgwkg-_Ds'}).then((currentToken) => {
-    if (currentToken) {
-      console.log('currentToken: ', currentToken)
-    } else {
-      console.log('No registration token available. Request permission to generate one.');
+  function initFirebaseMessagingRegistration() {
+        messaging.requestPermission().then(function () {
+            return messaging.getToken()
+        }).then(function(token) {
+            console.log('Get Token is OK');
+            console.log(token);
+            // axios.post("{{ route('fcmToken') }}",{
+            //     _method:"PATCH",
+            //     token
+            // }).then(({data})=>{
+            //     console.log(data)
+            // }).catch(({response:{data}})=>{
+            //     console.error(data)
+            // })
+
+        }).catch(function (err) {
+            console.log(`Token Error :: ${err}`);
+        });
     }
-  }).catch((error) => {
-    console.log("An Error occured while retrieving token. ", error);
-  })
-</script> --}}
+
+    initFirebaseMessagingRegistration();
+    messaging.onMessage(function({data:{body,title}}){
+        new Notification(title, {body});
+    });
+</script>
 
 </html>
