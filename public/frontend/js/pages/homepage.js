@@ -6,12 +6,12 @@ var socket;
 var typingTime;
 var timerId;
 $(document).ready(() => {
-    webpushr('fetch_id', function(sid) {
-        //save id to database
-        console.log('webpushr subscriber id: ' + sid)
-        socket.emit('send:subscriberId', { sid });
-    });
-    socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
+    // webpushr('fetch_id', function(sid) {
+    //     //save id to database
+    //     console.log('webpushr subscriber id: ' + sid)
+    //     socket.emit('send:subscriberId', { sid });
+    // });
+    socket = io.connect("https://ojochat.com/socket", { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
     socket.on('message', message => {

@@ -150,7 +150,7 @@
     
 </script> --}}
 {{-- OJOChat --}}
-<script>
+{{-- <script>
     (function(w, d, s, id) {
         if (typeof(w.webpushr) !== 'undefined') return;
         w.webpushr = w.webpushr || function() {
@@ -169,7 +169,32 @@
 
         'integration': 'popup'
     });
-</script>
+</script> --}}
 <!-- end webpushr code -->
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBKLxxar1jazOIv01qewFOMZPGETl5tlDk",
+    authDomain: "localojo-d7ffd.firebaseapp.com",
+    projectId: "localojo-d7ffd",
+    storageBucket: "localojo-d7ffd.appspot.com",
+    messagingSenderId: "89368547626",
+    appId: "1:89368547626:web:90582cca1c59696ac0ce53",
+    measurementId: "G-EQ2LGCPEX7"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 </html>

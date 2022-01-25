@@ -4023,5 +4023,6 @@
 
     <script src="/frontend/js/pages/payment.js"></script>
     <script src="/frontend/js/pages/setting.js"></script>
+    <script src="/frontend/js/pages/notification.js"></script>
 
 @endsection

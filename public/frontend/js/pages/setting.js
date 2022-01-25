@@ -14,7 +14,6 @@ $(document).ready(function() {
     //     },
     //     error: function(response) {}
     // });
-    // $("#mobile-number").intlTelInput();
     var telInput = $("#phone"),
         errorMsg = $("#error-msg"),
         validMsg = $("#valid-msg");

@@ -20,6 +20,7 @@ var request = require('request');
 //     password: "",
 //     database: "ldahkumy_ojochat",
 // });
+
 // var headers = {
 //     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
 //     'webpushrAuthToken': '42945',
@@ -33,11 +34,12 @@ const db = mysql.createConnection({
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
 });
-var headers = {
-    'webpushrKey': 'aed1111725e9d8f368275815471d6f68',
-    'webpushrAuthToken': '42947',
-    'Content-Type': 'application/json'
-};
+
+// var headers = {
+//     'webpushrKey': 'aed1111725e9d8f368275815471d6f68',
+//     'webpushrAuthToken': '42947',
+//     'Content-Type': 'application/json'
+// };
 
 // var dataString = '{"title":"notification_title","message":"notification message","target_url":"http://ojochat.com"}';
 
@@ -61,7 +63,9 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
-const { copyFileSync } = require('fs');
+const {
+    copyFileSync
+} = require('fs');
 
 app.use(cors({
     origin: '*'
@@ -93,45 +97,8 @@ io.on('connection', (socket) => {
                     if (io.sockets.sockets.get(recipientSocketId))
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
-                    console.log('Send SMS');
-                    db.query(`SELECT * FROM users where id = ${data.currentContactId}`, (error, row) => {
-                        if (row.length) {
-                            var val = Math.floor(100000 + Math.random() * 900000);
-
-                            let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
-                            let isoCode2 = row[0].national.toUpperCase();
-                            console.log(isoCode2)
-                            db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
-                                console.log(error);
-                                console.log(country);
-                                db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
-                                    console.log(phoneInfo[0].intl_dialing_prefix);
-                                    console.log(phoneInfo[0].phone_code);
-                                    console.log(phoneNumber);
-                                    let prefix = phoneInfo[0].intl_dialing_prefix
-                                    let phone_code = phoneInfo[0].phone_code
-                                    let fullPhoneNumber = '';
-                                    if (phone_code != 1) {
-                                        fullPhoneNumber = '011' + phone_code + phoneNumber;
-                                    } else {
-                                        fullPhoneNumber = phone_code + phoneNumber;
-                                    }
-                                    console.log(fullPhoneNumber);
-                                    let message = `Hey ${row[0].username}, you have a new text message from someone. Login to Ojochat.com to view your messages. ${val}`;
-                                    console.log(message);
-                                    let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-                                    // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                                    const axios = require('axios');
-                                    axios.get(smsUrl).then(res => {
-                                        console.log(res.status);
-                                    }).catch(error => {
-                                        console.log(error);
-                                    })
-                                })
-                            })
-
-                        }
-                    });
+                    console.log('Send text SMS');
+                    sendSMS('', data.currentContactId, 'text');
                 }
             }
         });
@@ -186,46 +153,8 @@ io.on('connection', (socket) => {
                             io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
                         }
                     } else {
-                        console.log('Send SMS');
-
-                        db.query(`SELECT * FROM users where id = ${data.to}`, (error, row) => {
-                            if (row.length) {
-                                var val = Math.floor(100000 + Math.random() * 900000);
-
-                                let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
-                                let isoCode2 = row[0].national.toUpperCase();
-                                console.log(isoCode2)
-                                db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
-                                    console.log(error);
-                                    console.log(country);
-                                    db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
-                                        console.log(phoneInfo[0].intl_dialing_prefix);
-                                        console.log(phoneInfo[0].phone_code);
-                                        console.log(phoneNumber);
-                                        let prefix = phoneInfo[0].intl_dialing_prefix
-                                        let phone_code = phoneInfo[0].phone_code
-                                        let fullPhoneNumber = '';
-                                        if (phone_code != 1) {
-                                            fullPhoneNumber = '011' + phone_code + phoneNumber;
-                                        } else {
-                                            fullPhoneNumber = phone_code + phoneNumber;
-                                        }
-                                        console.log(fullPhoneNumber);
-                                        let message = `Hey ${row[0].username}, you have a new photo message from someone. Login to Ojochat.com to view your messages. ${val}`;
-                                        console.log(message);
-                                        let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-                                        // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                                        const axios = require('axios');
-                                        axios.get(smsUrl).then(res => {
-                                            console.log(res.status);
-                                        }).catch(error => {
-                                            console.log(error);
-                                        })
-                                    })
-                                })
-
-                            }
-                        });
+                        console.log('Send Photo SMS');
+                        sendSMS('', data.to, 'photo');
                     }
                 });
             });
@@ -331,15 +260,14 @@ io.on('connection', (socket) => {
     })
     socket.on('send:notification', data => {
         console.log(data);
-        // db.query(`SELECT * from messages WHERE id=${data.currentContactId}`)
-        var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
-        var options = {
-            url: `https://api.webpushr.com/v1/notification/send/sid`,
-            method: 'POST',
-            headers: headers,
-            body: dataString,
-        };
-        request(options, callback);
+        // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
+        // var options = {
+        //     url: `https://api.webpushr.com/v1/notification/send/sid`,
+        //     method: 'POST',
+        //     headers: headers,
+        //     body: dataString,
+        // };
+        // request(options, callback);
     })
     socket.on('logout', data => {
         let userSocketId = user_socketMap.get(currentUserId.toString());
@@ -354,3 +282,37 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log(`Server running on port: ${port}`)
 })
+
+function sendSMS(sender, recipient, type) {
+    db.query(`SELECT * FROM users where id = ${recipient}`, (error, row) => {
+        if (row.length) {
+            var val = Math.floor(100000 + Math.random() * 900000);
+            let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
+            let isoCode2 = row[0].national.toUpperCase();
+            db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
+                db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
+                    let prefix = phoneInfo[0].intl_dialing_prefix
+                    let phone_code = phoneInfo[0].phone_code
+                    let fullPhoneNumber = '';
+                    if (phone_code != 1) {
+                        fullPhoneNumber = '011' + phone_code + phoneNumber;
+                    } else {
+                        fullPhoneNumber = phone_code + phoneNumber;
+                    }
+                    console.log(fullPhoneNumber);
+                    db.query(`SELECT * FROM users where id=${sender}`, (error, user) => {
+                        let message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
+                        let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                        // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
+                        const axios = require('axios');
+                        axios.get(smsUrl).then(res => {
+                            console.log(res.status);
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    });
+                });
+            });
+        }
+    });
+}

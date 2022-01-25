@@ -65,9 +65,9 @@ class CreateCountryStateCityTable extends Migration
 
 
 
-        Artisan::call('db:seed', [
-            '--class' => CountryCityStateTableSeeder::class
-        ]);
+        // Artisan::call('db:seed', [
+        //     '--class' => CountryCityStateTableSeeder::class
+        // ]);
     }
     
     /**
