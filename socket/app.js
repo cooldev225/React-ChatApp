@@ -259,6 +259,7 @@ io.on('connection', (socket) => {
         }
     })
     socket.on('send:notification', data => {
+        console.log('You have to send SMS');
         console.log(data);
         // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
         // var options = {

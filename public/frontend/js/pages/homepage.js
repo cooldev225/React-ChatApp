@@ -28,7 +28,14 @@ $(document).ready(() => {
                 message.kind == 0 ? message.content : "Error Message";
 
             console.log(message);
-            socket.emit('send:notification', { from: message.from, to: message.to, senderName, sid, content });
+            document.addEventListener("visibilitychange", event => {
+                if (document.visibilityState == "visible") {
+                    console.log('you have got message')
+                } else {
+                    console.log('send Notification')
+                    socket.emit('send:notification', { from: message.from, to: message.to, senderName, sid, content });
+                }
+            })
         }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);

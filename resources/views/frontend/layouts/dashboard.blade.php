@@ -48,11 +48,6 @@
     {{-- <script src="/chat/js/jquery-3.3.1.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script> --}}
-
     <script src="/frontend/js/pages/fabric.js"></script>
     <script src="/frontend/js/constant.js"></script>
 
@@ -83,8 +78,8 @@
     <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
     <script src="/chat/js/script.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script> --}}
   </body>
 
 {{-- <script type="module">
@@ -174,7 +169,7 @@
 </script> --}}
 <!-- end webpushr code -->
 
- 
+{{--  
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyBKLxxar1jazOIv01qewFOMZPGETl5tlDk",
@@ -206,6 +201,6 @@
     messaging.onMessage(function({data:{body,title}}){
         new Notification(title, {body});
     });
-</script>
+</script> --}}
 
 </html>
