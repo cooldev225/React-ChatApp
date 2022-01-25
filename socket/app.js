@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
                     console.log('Send text SMS');
-                    sendSMS('', data.currentContactId, 'text');
+                    sendSMS(currentUserId, data.currentContactId, 'text');
                 }
             }
         });
@@ -154,7 +154,7 @@ io.on('connection', (socket) => {
                         }
                     } else {
                         console.log('Send Photo SMS');
-                        sendSMS('', data.to, 'photo');
+                        sendSMS(data.from, data.to, 'photo');
                     }
                 });
             });
