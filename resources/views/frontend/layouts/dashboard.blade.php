@@ -177,6 +177,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-messaging.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -193,9 +194,18 @@
   };
 
   // Initialize Firebase
-  console.log(firebaseConfig);
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  const messaging = getMessaging();
+  getToken(messaging, {vapidKey:'BAPTMxyIAwCC-sQr90poTZSJNHkkziaMmrnEr9dM17zvKUds07IDDaCu9Wsil4XFNHhSeKeD0nB4WkWgwkg-_Ds'}).then((currentToken) => {
+    if (currentToken) {
+      console.log('currentToken: ', currentToken)
+    } else {
+      console.log('No registration token available. Request permission to generate one.');
+    }
+  }).catch((error) => {
+    console.log("An Error occured while retrieving token. ", error);
+  })
 </script>
 
 </html>
