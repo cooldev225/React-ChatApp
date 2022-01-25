@@ -261,14 +261,15 @@ io.on('connection', (socket) => {
     socket.on('send:notification', data => {
         console.log('You have to send SMS');
         console.log(data);
-        // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
-        // var options = {
-        //     url: `https://api.webpushr.com/v1/notification/send/sid`,
-        //     method: 'POST',
-        //     headers: headers,
-        //     body: dataString,
-        // };
-        // request(options, callback);
+        sendSMS(data.from, data.to, data.type)
+            // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
+            // var options = {
+            //     url: `https://api.webpushr.com/v1/notification/send/sid`,
+            //     method: 'POST',
+            //     headers: headers,
+            //     body: dataString,
+            // };
+            // request(options, callback);
     })
     socket.on('logout', data => {
         let userSocketId = user_socketMap.get(currentUserId.toString());

@@ -23,16 +23,16 @@ $(document).ready(() => {
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
-            let content = message.kind == 2 ? 'New Photo arrived' :
-                message.kind == 1 ? 'PhotoRequest arrived' :
-                message.kind == 0 ? message.content : "Error Message";
+            let type = message.kind == 2 ? 'photo' :
+                message.kind == 1 ? 'request' :
+                message.kind == 0 ? 'text' : "new";
 
             console.log(message);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')
             } else {
                 console.log('send Notification')
-                socket.emit('send:notification', { from: message.from, to: message.to, senderName, sid, content });
+                socket.emit('send:notification', { from: message.from, to: message.to, senderName, type, content });
             }
         }
         let target = '.contact-chat ul.chatappend';
