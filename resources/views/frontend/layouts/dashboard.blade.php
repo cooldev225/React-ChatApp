@@ -172,7 +172,7 @@
 </script> --}}
 <!-- end webpushr code -->
 
-
+{{-- 
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
@@ -208,6 +208,6 @@
   }).catch((error) => {
     console.log("An Error occured while retrieving token. ", error);
   })
-</script>
+</script> --}}
 
 </html>
