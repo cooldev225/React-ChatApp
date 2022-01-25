@@ -32,7 +32,7 @@ $(document).ready(() => {
                 console.log('you have got message')
             } else {
                 console.log('send Notification')
-                socket.emit('send:notification', { from: message.from, to: message.to, senderName, type, content });
+                socket.emit('send:notification', { from: message.from, to: message.to, senderName, type });
             }
         }
         let target = '.contact-chat ul.chatappend';
