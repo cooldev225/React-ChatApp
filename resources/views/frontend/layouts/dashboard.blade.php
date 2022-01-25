@@ -197,6 +197,8 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const messaging = getMessaging();
+  console.log(app);
+  console.log(messaging);
   getToken(messaging, {vapidKey:'BAPTMxyIAwCC-sQr90poTZSJNHkkziaMmrnEr9dM17zvKUds07IDDaCu9Wsil4XFNHhSeKeD0nB4WkWgwkg-_Ds'}).then((currentToken) => {
     if (currentToken) {
       console.log('currentToken: ', currentToken)
