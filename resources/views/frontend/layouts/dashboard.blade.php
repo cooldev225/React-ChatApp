@@ -196,14 +196,6 @@
         }).then(function(token) {
             console.log('Get Token is OK');
             console.log(token);
-            // axios.post("{{ route('fcmToken') }}",{
-            //     _method:"PATCH",
-            //     token
-            // }).then(({data})=>{
-            //     console.log(data)
-            // }).catch(({response:{data}})=>{
-            //     console.error(data)
-            // })
 
         }).catch(function (err) {
             console.log(`Token Error :: ${err}`);
