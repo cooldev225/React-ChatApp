@@ -287,10 +287,9 @@ io.on('connection', (socket) => {
     })
     socket.on('disconnect', function() {
         // Do stuff (probably some jQuery)
-        let userSocketId = user_socketMap.get(currentUserId.toString());
         user_socketMap.delete(currentUserId);
-        socket_userMap.delete(userSocketId);
-        console.log(socket_userMap.get(socket.id), " : ", socket.id, ' Disconnected')
+        socket_userMap.delete(socket.id);
+        console.log(currentUserId, " : ", socket.id, ' Disconnected')
         console.log(user_socketMap);
     });
 
