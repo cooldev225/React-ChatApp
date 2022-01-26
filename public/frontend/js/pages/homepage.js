@@ -30,9 +30,6 @@ $(document).ready(() => {
             let type = message.kind == 2 ? 'photo' :
                 message.kind == 1 ? 'request' :
                 message.kind == 0 ? 'text' : "new";
-
-            socket.emit('send:state', { state: document.visibilityState, message });
-            console.log(message);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')
             } else {

@@ -63,9 +63,7 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
-const {
-    copyFileSync
-} = require('fs');
+const { copyFileSync } = require('fs');
 const { data, isPlainObject } = require('jquery');
 
 app.use(cors({
@@ -289,8 +287,11 @@ io.on('connection', (socket) => {
     })
     socket.on('disconnect', function() {
         // Do stuff (probably some jQuery)
+        let userSocketId = user_socketMap.get(currentUserId.toString());
+        user_socketMap.delete(currentUserId);
+        socket_userMap.delete(userSocketId);
         console.log(socket_userMap.get(socket.id), " : ", socket.id, ' Disconnected')
-
+        console.log(user_socketMap);
     });
 
 });
