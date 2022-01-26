@@ -11,13 +11,10 @@ $(document).ready(() => {
     //     console.log('webpushr subscriber id: ' + sid)
     //     socket.emit('send:subscriberId', { sid });
     // });
-    window.onbeforeunload = function(e) {
-        if (!e) e = event;
-        if (leaving) {
-            EndChatSession();
-            e.returnValue = "Are You Sure";
-        }
-    }
+    window.addEventListener('beforeunload', function(e) {
+        e.preventDefault();
+        e.returnValue = 'Are you sure?';
+    });
     socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
