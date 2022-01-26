@@ -287,6 +287,11 @@ io.on('connection', (socket) => {
         console.log('userId:', currentUserId, ' logouted');
         console.log(user_socketMap);
     })
+    socket.on('disconnect', function() {
+        // Do stuff (probably some jQuery)
+        console.log(socket_userMap.get(socket.id), " : ", socket.id, ' Disconnected')
+
+    });
 
 });
 
