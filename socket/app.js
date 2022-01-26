@@ -88,13 +88,17 @@ io.on('connection', (socket) => {
             content: data.message,
             kind: 0,
         }
+        console.log('get message');
+        console.log(data);
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
             if (data.currentContactId) {
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
+                console.log('recipientSocketId: ', recipientSocketId);
                 io.sockets.sockets.get(senderSocketId).emit('message', message);
                 if (recipientSocketId) {
+                    console.log(io.sockets.sockets);
                     if (io.sockets.sockets.get(recipientSocketId))
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
