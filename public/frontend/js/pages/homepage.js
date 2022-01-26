@@ -28,6 +28,7 @@ $(document).ready(() => {
                 message.kind == 0 ? 'text' : "new";
 
             console.log(message);
+            alert(document.visibilityState);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')
             } else {
