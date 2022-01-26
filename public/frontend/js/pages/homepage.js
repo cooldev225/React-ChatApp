@@ -24,7 +24,6 @@ $(document).ready(() => {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
 
-        socket.emit('send:state', { state: document.visibilityState, message });
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
@@ -32,6 +31,7 @@ $(document).ready(() => {
                 message.kind == 1 ? 'request' :
                 message.kind == 0 ? 'text' : "new";
 
+            socket.emit('send:state', { state: document.visibilityState, message });
             console.log(message);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')

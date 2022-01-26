@@ -66,7 +66,7 @@ const cors = require('cors');
 const {
     copyFileSync
 } = require('fs');
-const { data } = require('jquery');
+const { data, isPlainObject } = require('jquery');
 
 app.use(cors({
     origin: '*'
@@ -98,7 +98,8 @@ io.on('connection', (socket) => {
                 console.log('recipientSocketId: ', recipientSocketId);
                 io.sockets.sockets.get(senderSocketId).emit('message', message);
                 if (recipientSocketId) {
-                    console.log(io.sockets.sockets);
+                    console.log('socket list', io.sockets.sockets.size);
+                    console.log(io.sockets.sockets.keys())
                     if (io.sockets.sockets.get(recipientSocketId))
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
