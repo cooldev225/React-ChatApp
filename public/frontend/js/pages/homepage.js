@@ -11,6 +11,13 @@ $(document).ready(() => {
     //     console.log('webpushr subscriber id: ' + sid)
     //     socket.emit('send:subscriberId', { sid });
     // });
+    window.onbeforeunload = function(e) {
+        if (!e) e = event;
+        if (leaving) {
+            EndChatSession();
+            e.returnValue = "Are You Sure";
+        }
+    }
     socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
 
@@ -20,7 +27,7 @@ $(document).ready(() => {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
 
-        alert(document.visibilityState);
+        socket.emit('send:state', { state: document.visibilityState, message });
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;

@@ -66,6 +66,7 @@ const cors = require('cors');
 const {
     copyFileSync
 } = require('fs');
+const { data } = require('jquery');
 
 app.use(cors({
     origin: '*'
@@ -129,6 +130,9 @@ io.on('connection', (socket) => {
             });
         }
     });
+    socket.on('send:state', data => {
+        console.log(data);
+    })
 
     socket.on('send:photo', data => {
         if (data.to) {
