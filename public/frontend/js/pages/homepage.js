@@ -20,6 +20,7 @@ $(document).ready(() => {
         //     $('.chitchat-container').toggleClass("mobile-menu");
         // }
 
+        alert(document.visibilityState);
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;
@@ -28,7 +29,6 @@ $(document).ready(() => {
                 message.kind == 0 ? 'text' : "new";
 
             console.log(message);
-            alert(document.visibilityState);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')
             } else {
