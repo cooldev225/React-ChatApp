@@ -11,10 +11,10 @@ $(document).ready(() => {
     //     console.log('webpushr subscriber id: ' + sid)
     //     socket.emit('send:subscriberId', { sid });
     // });
-    window.addEventListener('beforeunload', function(e) {
-        e.preventDefault();
-        e.returnValue = 'Are you sure?';
-    });
+    // window.addEventListener('beforeunload', function(e) {
+    //     e.preventDefault();
+    //     e.returnValue = 'Are you sure?';
+    // });
     // socket = io.connect(window.location.origin, { query: "currentUserId=" + currentUserId });
     socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });

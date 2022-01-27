@@ -404,21 +404,20 @@
                             <div class="card">
                                 <div class="card-header" id="headingTwo" role="heading" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                    <a>Security<i class="fa fa-angle-down"></i></a>
+                                    <a>Notification<i class="fa fa-angle-down"></i></a>
                                 </div>
                                 <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo"
                                     data-parent="#accordion">
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body">
-                                                <h5>Show Security notification</h5>
+                                                <h5>Show notification</h5>
                                             </div>
                                             <div class="media-right">
                                                 <input class="js-switch8" type="checkbox" />
                                             </div>
                                         </div>
-                                        <p> <b>Note : </b>turn on this setting to recive notification when a contact's
-                                            security code has been changes.</p>
+                                        <p> <b>Note : </b>turn on this setting to recive notification when you get message.</p>
                                     </div>
                                 </div>
                             </div>

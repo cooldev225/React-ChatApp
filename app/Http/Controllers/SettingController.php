@@ -54,4 +54,17 @@ class SettingController extends Controller
         // return array('state'=>'true', 'data'=>$requestData);
     }
     
+    public function setNotification(Request $request) {
+        $id = Auth::id();
+        $state = $request->input('state');
+        
+        $user = User::find($id);
+        $user->notification = $state;
+        $user->updated_at = date('Y-m-d H:i:s');
+        $user->save();
+        return array(
+            'message' => 'Save Successfully',
+            'update' => true,
+        );
+    }
 }

@@ -520,9 +520,14 @@
     });
     $(".sidebar-top a, .balance").on('click', function() {
         let userData = getCertainUserInfoById(currentUserId);
+        //phone number setting
         $("#phone").intlTelInput("selectCountry", userData.national);
         // $("#phone").intlTelInput("setNumber", userData.phone_number.replace(/[^0-9]/g, ''));
         $("#phone").val(userData.phone_number);
+        //notification switch
+        let notificationState = userData.notification ? false : true;
+        $(".js-switch8").prop('checked', notificationState).trigger('click')
+
         $(".sidebar-top  a").removeClass("active");
         $(this).addClass("active");
         $('.dynemic-sidebar').removeClass("active");

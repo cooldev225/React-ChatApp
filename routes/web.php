@@ -44,7 +44,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/stripe', 'StripeController@stripePost')->name('stripe.post');
     Route::post('/setting/setPhoneNumber', 'SettingController@setPhoneNumber');
     Route::post('/setting/getPhoneNumber', 'SettingController@getPhoneNumber');
-    Route::get('/get', 'SettingController@index');
+    Route::post('/setting/setNotification', 'SettingController@setNotification');
 });
 
 Route::group(['middleware' => ['admin']], function () {

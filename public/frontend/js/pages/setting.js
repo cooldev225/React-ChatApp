@@ -78,4 +78,28 @@ $(document).ready(function() {
         }
 
     });
+
+    //notificatin setting
+    $('.js-switch8').on('change', () => {
+        let state = $('.js-switch8').prop('checked') ? 1 : 0;
+        var form_data = new FormData();
+        form_data.append('state', state);
+        $.ajax({
+            url: '/setting/setNotification',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            data: form_data,
+            success: function(res) {
+                console.log(res);
+            },
+            error: function(response) {}
+        });
+    })
+
 })
