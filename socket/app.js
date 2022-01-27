@@ -324,7 +324,7 @@ function sendSMS(sender, recipient, type) {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             let message = '';
                             if (spainish) {
-                                message = `Hola ${row[0].username}, tienes un nuevo mensaje ${type == 'text' ? 'de texto': 'con foto'} de OJOChat. Inicie sesión en Ojochat.com para ver sus mensajes.`
+                                message = `Hola ${row[0].username}, tienes un nuevo mensaje ${type == 'text' ? 'de texto': 'con foto'} de OJOChat. Inicie sesión en Ojochat.com para ver sus mensajes. ${val}`;
                             } else {
                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
                             }
