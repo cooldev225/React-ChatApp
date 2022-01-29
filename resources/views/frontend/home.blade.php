@@ -10,7 +10,6 @@
     </style>
     <script>
         var currentUserId = {{ Auth::id() }};
-        var currentUsername = "{{ Auth::user()->username }}";
     </script>
     <div class="chitchat-loader">
         <div><img src="/chat/images/logo/logo_big.png" alt="" />
@@ -36,7 +35,7 @@
                         <div class="user-popup status one selfProfileBtn">
                             <div>
                                 <img class="bg-img"
-                                    src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
+                                    src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
                                     alt="Avatar" />
                             </div>
                         </div>
@@ -88,7 +87,7 @@
                         <div class="item">
                             <div class="recent-box">
                                 <div class="dot-btn dot-danger grow"></div>
-                                <div class="recent-profile"><img class="bg-img" src="/chat/images/avtar/1.jpg"
+                                <div class="recent-profile"><img class="bg-img" src="/images/default-avatar.png"
                                         alt="Avatar" />
                                     <h6> John deo</h6>
                                 </div>
@@ -337,7 +336,7 @@
                         <div class="media">
                             <div class="profile" style="position: relative">
                                 <img class="bg-img" id="profileImage"
-                                    src="{{ !Auth::user()->avatar ? '/chat/images/contact/2.jpg' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
+                                    src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
                                     alt="Avatar" />
                                 <input type="file" id="profileImageUploadBtn" />
                             </div>
@@ -922,7 +921,7 @@
                                         </a></div>
                                     <div class="media-right">
                                         <div class="profile"><img class="bg-img"
-                                                src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                 </div>
                             </li>
@@ -934,7 +933,7 @@
                                         </a></div>
                                     <div class="media-right">
                                         <div class="profile"><img class="bg-img"
-                                                src="/chat/images/contact/3.jpg" alt="Avatar" /></div>
+                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                 </div>
                             </li>
@@ -947,7 +946,7 @@
                                         </a></div>
                                     <div class="media-right">
                                         <div class="profile"><img class="bg-img"
-                                                src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                 </div>
                             </li>
@@ -1040,7 +1039,7 @@
                                 <div class="media left">
                                     <div class="media-left me-3">
                                         <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                     <div class="media-body">
                                         <h5 class="contactor-name">John Doe</h5>
@@ -1108,7 +1107,7 @@
                                 <div class="media left">
                                     <div class="media-left me-3">
                                         <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                     <div class="media-body">
                                         <h5>John Doe</h5>
@@ -1300,7 +1299,7 @@
                                                 <div class="chat-box">
                                                     <div class="media">
                                                         <div class="profile"><img class="bg-img"
-                                                                src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                                         <div class="details">
                                                             <h5>John Doe</h5>
                                                             <h6>Alabma , USA</h6>
@@ -1317,7 +1316,7 @@
                                                 <div class="chat-box">
                                                     <div class="media">
                                                         <div class="profile"><img class="bg-img"
-                                                                src="/chat/images/contact/3.jpg" alt="Avatar" /></div>
+                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                                         <div class="details">
                                                             <h5>John Doe</h5>
                                                             <h6>Alabma , USA</h6>
@@ -1334,7 +1333,7 @@
                                                 <div class="chat-box">
                                                     <div class="media">
                                                         <div class="profile unreachable"><img class="bg-img"
-                                                                src="/chat/images/contact/4.jpg" alt="Avatar" /></div>
+                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
                                                         <div class="details">
                                                             <h5>John Doe</h5>
                                                             <h6>Alabma , USA</h6>
@@ -1358,7 +1357,7 @@
                             <li class="sent">
                                 <div class="media">
                                     <div class="profile me-4"><img class="bg-img"
-                                            src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                            src="/images/default-avatar.png" alt="Avatar" /></div>
                                     <div class="media-body">
                                         <div class="contact-name">
                                             <h5>John Doe</h5>
@@ -1406,7 +1405,7 @@
                             </li>
                             <li class="replies">
                                 <div class="media">
-                                    <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg"
+                                    <div class="profile me-4"><img class="bg-img" src="/images/default-avatar.png"
                                             alt="Avatar" /></div>
                                     <div class="media-body">
                                         <div class="contact-name">
@@ -1468,7 +1467,7 @@
                             <li class="sent">
                                 <div class="media">
                                     <div class="profile me-4"><img class="bg-img"
-                                            src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                            src="/images/default-avatar.png" alt="Avatar" /></div>
                                     <div class="media-body">
                                         <div class="contact-name">
                                             <h5>John Doe</h5>
@@ -1525,7 +1524,7 @@
                             </li>
                             <li class="replies">
                                 <div class="media">
-                                    <div class="profile me-4"><img class="bg-img" src="/chat/images/avtar/1.jpg"
+                                    <div class="profile me-4"><img class="bg-img" src="/images/default-avatar.png"
                                             alt="Avatar" /></div>
                                     <div class="media-body">
                                         <div class="contact-name">
@@ -1688,7 +1687,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="user-profile mb-3">
-                            <div class="user-content"><img class="img-fluid" src="/chat/images/contact/2.jpg"
+                            <div class="user-content"><img class="img-fluid" src="/images/default-avatar.png"
                                     alt="user-img" />
                                 <h3>John Doe</h3>
                                 <h4 class="mt-2">+0 1800 76855</h4>
@@ -1758,7 +1757,7 @@
                         <div class="col-sm-5">
                             <div class="user-profile">
                                 <div class="user-content"><img class="img-fluid bg-icon"
-                                        src="/chat/images/contact/2.jpg" alt="user-img" />
+                                        src="/images/default-avatar.png" alt="user-img" />
                                     <h3>John Doe</h3>
                                     <ul>
                                         <li><i class="fa fa-twitch"> </i>massage</li>
@@ -1792,7 +1791,7 @@
                                                     </a></div>
                                                 <div class="media-right">
                                                     <div class="profile bg-size"><img class="bg-img"
-                                                            src="/chat/images/contact/3.jpg" alt="Avatar" /></div>
+                                                            src="/images/default-avatar.png" alt="Avatar" /></div>
                                                 </div>
                                             </div>
                                         </li>
@@ -1805,7 +1804,7 @@
                                                     </a></div>
                                                 <div class="media-right">
                                                     <div class="profile bg-size"><img class="bg-img"
-                                                            src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                            src="/images/default-avatar.png" alt="Avatar" /></div>
                                                 </div>
                                             </div>
                                         </li>
@@ -2131,7 +2130,7 @@
                                     <li>
                                         <div class="media">
                                             <div class="profile me-4"><img class="bg-img"
-                                                    src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                                    src="/images/default-avatar.png" alt="Avatar" /></div>
                                             <div class="media-body">
                                                 <div class="contact-name">
                                                     <h5>Alan josheph</h5>
@@ -2148,7 +2147,7 @@
                                     <li>
                                         <div class="media">
                                             <div class="profile me-4"><img class="bg-img"
-                                                    src="/chat/images/contact/3.jpg" alt="Avatar" /></div>
+                                                    src="/images/default-avatar.png" alt="Avatar" /></div>
                                             <div class="media-body">
                                                 <div class="contact-name">
                                                     <h5>John Doe</h5>
@@ -3835,7 +3834,7 @@
                         <li class="active">
                             <div class="call-box">
                                 <div class="profile offline"><img class="bg-img"
-                                        src="/chat/images/contact/2.jpg" alt="Avatar" /></div>
+                                        src="/images/default-avatar.png" alt="Avatar" /></div>
                                 <div class="details">
                                     <h5>Jony Lynetin</h5>
                                     <h6> <i data-feather="arrow-down-left"></i>3:30 pm</h6>

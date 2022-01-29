@@ -236,7 +236,7 @@ function setCurrentChatContent(contactorId) {
                 if (contactorInfo.avatar) {
                     $('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${contactorInfo.avatar}")`);
                 } else {
-                    $('.profile.menu-trigger').css('background-image', `url("/chat/images/contact/1.jpg")`);
+                    $('.profile.menu-trigger').css('background-image', `url("/images/default-avatar.png")`);
                 }
                 //whole rate display
                 // displayProfileContent(rateData)
@@ -322,10 +322,11 @@ function searchAndAddRecentChatList() {
 }
 
 function addChatUserListItem(target, data) {
+    console.log(data);
     $(target).prepend(
         `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
-            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
+            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
                 
             </div>
             <div class="details">
@@ -437,7 +438,7 @@ function typingMessage() {
     // }
     if (!$('.typing-m').length) {
         let contactorInfo = getCertainUserInfoById(currentContactId);
-        $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
+        $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
         $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
     }
     if (delta < 2000) {
@@ -460,7 +461,7 @@ function addChatItem(target, senderId, data) {
     let time = data.created_at ? new Date(data.created_at) : new Date();
     let item = `<li class="${type} msg-item" key="${data.messageId}" kind="${data.kind}">
         <div class="media">
-            <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+            <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
             </div>
             <div class="media-body">
                 <div class="contact-name">
@@ -520,7 +521,7 @@ function displayProfileContent(userId) {
     if (userInfo.avatar) {
         $('.contact-top').css('background-image', `url("v1/api/downloadFile?path=${userInfo.avatar}")`);
     } else {
-        $('.contact-top').css('background-image', `url("/chat/images/contact/1.jpg")`);
+        $('.contact-top').css('background-image', `url("/images/default-avatar.png")`);
     }
     $('.contact-profile .name h3').html(userInfo.username);
     $('.contact-profile .name h5').html(userInfo.location);
@@ -591,7 +592,7 @@ function displayRecentChatFriends(recentChatUsers) {
             <div class="recent-box">
             
                 <div class="dot-btn dot-success grow"></div>
-                <div class="recent-profile"><img class="bg-img" src="${item.avatar ? 'v1/api/downloadFile?path=' + item.avatar : '/chat/images/avtar/1.jpg'}"
+                <div class="recent-profile"><img class="bg-img" src="${item.avatar ? 'v1/api/downloadFile?path=' + item.avatar : '/images/default-avatar.png'}"
                         alt="Avatar" />
                     <h6>${item.username}</h6>
                 </div>
@@ -599,7 +600,7 @@ function displayRecentChatFriends(recentChatUsers) {
         </div>`);
     });
     $('.recent-slider').owlCarousel({
-        items: 2,
+        items: 3,
         dots: false,
         loop: true,
         margin: 60,
@@ -608,21 +609,29 @@ function displayRecentChatFriends(recentChatUsers) {
         autoplayTimeout: 5000,
         autoplayHoverPause: false,
         responsive: {
+            300: {
+                items: 2,
+                margin: 30,
+            },
             320: {
-                items: 2,
-                margin: 25,
+                items: 3,
+                margin: 20,
             },
-
-            601: {
-                items: 2,
-                margin: 25,
+            500: {
+                items: 3,
+                margin: 30,
             },
-            1070: {
-                items: 2,
-                margin: 25,
+            560: {
+                items: 3,
+                margin: 80,
             },
-            1500: {
-                items: 2
+            660: {
+                items: 4,
+                margin: 40,
+            },
+            800: {
+                items: 2,
+                margin: 30,
             },
         }
     })
@@ -687,7 +696,7 @@ function displayPaymentHistory(userId) {
                         <a>
                             <div class="chat-box">
                                 <div class="profile bg-size"
-                                    style="background-image: url(${avatar ? 'v1/api/downloadFile?path=' + avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center
+                                    style="background-image: url(${avatar ? 'v1/api/downloadFile?path=' + avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center
                                     center; display: block;">
                                 </div>
                                 <div class="details">

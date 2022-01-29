@@ -23,7 +23,7 @@ class LogoutUsers
         if (! empty($user->logout)) {
             // Not for the next time!
             // Maybe a `unmarkForLogout()` method is appropriate here.
-            $user->logout = false;
+            $user->logout = 1;
             $user->save();
 
             // Log her out

@@ -323,15 +323,13 @@ function sendSMS(sender, recipient, type) {
                             console.log(country[0].name);
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             let message = '';
-                            console.log(type);
                             let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
                             console.log(messageType);
                             if (spainish) {
-                                message = `Hola ${row[0].username}, tienes un nuevo mensaje ${type == 'text' ? 'de texto': 'con foto'} de ${user[0].username}. Inicie sesion en Ojochat.com para ver sus mensajes. ${val}`;
+                                message = `Hola ${row[0].username}, tienes un nuevo mensaje ${messageType} de ${user[0].username}. Inicie sesion en Ojochat.com para ver sus mensajes. ${val}`;
                             } else {
                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
                             }
-                            console.log(message);
                             let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                             // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
                             const axios = require('axios');

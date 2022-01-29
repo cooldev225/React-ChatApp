@@ -114,7 +114,7 @@ $(document).ready(function() {
             let target = '.contact-chat ul.chatappend';
             $(target).append(`<li class="replies photo-request">
                 <div class="media">
-                    <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center;">
+                    <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
                     </div>
                     <div class="media-body">
                         <div class="contact-name">
@@ -214,7 +214,7 @@ function addRequestItem(senderInfo, receiverInfo, data) {
         `<li class="${sendFlag ? 'sent' : ''}" key="${data.id || data.requestId}" data-from="${senderInfo.id}" data-to="${receiverInfo.id}">
             <a data-bs-toggle="modal" data-bs-target="#detailRequestModal">
                 <div class="chat-box">
-                    <div class="profile bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/chat/images/contact/2.jpg"}); background-size: cover; background-position: center center; display: block;">
+                    <div class="profile bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
                         
                     </div>
                     <div class="details">
@@ -513,7 +513,7 @@ function getPhotoSrcById(id, target) {
                     // return res.data[0].photo;
                     resolve(res.data[0].photo);
                 } else {
-                    // return'/chat/images/contact/2.jpg';
+                    // return'/images/default-avatar.png';
                 }
             },
             error: function(response) {
