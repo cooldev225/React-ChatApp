@@ -35,7 +35,12 @@ $(document).ready(() => {
                 console.log('you have got message')
             } else {
                 console.log('send Notification')
-                socket.emit('send:notification', { from: message.from, to: message.to, senderName, type });
+                socket.emit('send:notification', {
+                    from: message.from,
+                    to: message.to,
+                    senderName,
+                    type
+                });
             }
         }
         let target = '.contact-chat ul.chatappend';
@@ -43,7 +48,9 @@ $(document).ready(() => {
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
-            $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+            $(".messages").animate({
+                scrollTop: $('.contact-chat').height()
+            }, "fast");
             $(`ul.chat-main li[key=${message.to}]`).insertBefore('ul.chat-main li:eq(0)');
 
         } else {
@@ -89,7 +96,9 @@ $(document).ready(() => {
 
     });
     $('#logoutBtn').on('click', () => {
-        socket.emit('logout', { currentUserId });
+        socket.emit('logout', {
+            currentUserId
+        });
     });
 
     // displayChatData();
@@ -168,7 +177,10 @@ function getRecentChatUsers() {
         dataType: "json",
         success: function(res) {
             if (res.state == 'true') {
-                let { recentChatUsers, lastChatUserId } = res;
+                let {
+                    recentChatUsers,
+                    lastChatUserId
+                } = res;
                 recentChatUsers = recentChatUsers.map(item => getCertainUserInfoById(item));
                 currentContactId = lastChatUserId;
                 let userListTarget = $('.recent-default .recent-chat-list');
@@ -211,7 +223,9 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function(res) {
             if (res.state == 'true') {
-                let { messageData } = res;
+                let {
+                    messageData
+                } = res;
                 let contactorInfo = getCertainUserInfoById(contactorId);
                 currentContactId = contactorId;
                 $('.section-py-space').css('display', 'none');
@@ -255,7 +269,9 @@ function setCurrentChatContent(contactorId) {
                     }
                     resolve();
                 }).then(() => {
-                    $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
+                    $(".messages").animate({
+                        scrollTop: $('.contact-chat').height()
+                    }, 'fast');
                     setTimeout(() => {
                         $('.spining').css('display', 'none');
                     }, 1000);
@@ -420,12 +436,20 @@ function newMessage() {
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
     let sid = getCertainUserInfoById(currentContactId).sid;
-    socket.emit('message', { currentContactId, message, senderName, sid });
+    socket.emit('message', {
+        currentContactId,
+        message,
+        senderName,
+        sid
+    });
 };
 
 function displayTypingAction() {
     $('.message-input input').on('keyup', function(e) {
-        socket.emit('typing', { currentUserId, currentContactId });
+        socket.emit('typing', {
+            currentUserId,
+            currentContactId
+        });
     });
 }
 
@@ -439,7 +463,9 @@ function typingMessage() {
     if (!$('.typing-m').length) {
         let contactorInfo = getCertainUserInfoById(currentContactId);
         $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
-        $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+        $(".messages").animate({
+            scrollTop: $('.contact-chat').height()
+        }, "fast");
     }
     if (delta < 2000) {
         typingTime = new Date();
@@ -447,7 +473,9 @@ function typingMessage() {
     }
     timerId = setTimeout(() => {
         $('.typing-m').remove();
-        $(".messages").animate({ scrollTop: $('.contact-chat').height() }, "fast");
+        $(".messages").animate({
+            scrollTop: $('.contact-chat').height()
+        }, "fast");
         typingTime = undefined;
     }, 2000);
 
@@ -466,7 +494,7 @@ function addChatItem(target, senderId, data) {
             <div class="media-body">
                 <div class="contact-name">
                     <h5>${senderInfo.username}</h5>
-                    <h6>${time.toLocaleTimeString()}</h6>
+                    <h6>${displayTimeString(time)}</h6>
                     <div class="photoRating">
                         <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                     </div>
@@ -540,7 +568,7 @@ function displayProfileContent(userId) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.state == 'true') {
                 let [data] = res.rateData;
                 if (res.rateData.length) {
@@ -577,8 +605,7 @@ function displayProfileContent(userId) {
                 document.querySelector('.content-rating-list .voice-call-rating')._tippy.setContent(voiceCallRate.toFixed(2))
             }
         },
-        error: function(response) {
-        }
+        error: function (response) {}
     });
 }
 
@@ -652,7 +679,11 @@ function deleteMessages() {
             console.log('not photo');
         }
         console.log(messageId, photoId)
-        socket.emit('deleteMessage', { currentContactId, messageId, photoId });
+        socket.emit('deleteMessage', {
+            currentContactId,
+            messageId,
+            photoId
+        });
         $(this).closest('.msg-dropdown').hide();
     });
 }
@@ -682,7 +713,7 @@ function displayPaymentHistory(userId) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.state == 'true') {
                 $('.history-list').empty();
                 res.data.forEach(item => {
@@ -710,11 +741,27 @@ function displayPaymentHistory(userId) {
                             </div>
                         </a>
                     </li>`)
-                    
+
                 })
             }
         },
-        error: function(response) {
-        }
+        error: function (response) {}
     });
+}
+
+function displayTimeString(time) {
+    let dateString = time.toDateString();
+    let timeString = time.toLocaleTimeString();
+    let nowDateString = new Date().toDateString();
+    console.log(nowDateString);
+    console.log(dateString);
+    let timeDiffer = parseInt((new Date(nowDateString) - new Date(dateString)) / (1000 * 60 * 60 * 24), 10);
+    switch(timeDiffer) {
+        case 0:
+            return 'Today ' + timeString;
+        case 1:
+            return 'Yesterday ' + timeString;
+        default:
+            return dateString + ' ' + timeString;
+    }
 }
