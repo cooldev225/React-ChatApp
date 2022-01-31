@@ -482,7 +482,7 @@ function typingMessage() {
 
 }
 
-function addChatItem(target, senderId, data) {
+function addChatItem(target, senderId, data, loadFlag) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
 
@@ -520,8 +520,11 @@ function addChatItem(target, senderId, data) {
             </div>
         </div>
     </li>`;
-    // $(target).append(item);
-    $(target).prepend(item);
+    if (loadFlag) {
+        $(target).prepend(item);
+    } else {
+        $(target).append(item);
+    }
     // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
 
     if (data.rate) {

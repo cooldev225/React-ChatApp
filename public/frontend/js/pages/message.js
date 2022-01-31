@@ -21,12 +21,14 @@ $(document).ready(() => {
                 success: function(res) {
                     console.log(res);
                     if (res.messageData) {
-                        console.log('true')
+                        console.log('true');
+                        console.log($('.contact-chat').height())
                         let target = '.contact-chat ul.chatappend';
                         res.messageData.forEach(item => {
                             item.messageId = item.id;
-                            addChatItem(target, item.sender, item);
+                            addChatItem(target, item.sender, item, true);
                         });
+                        console.log($('.contact-chat').height())
                         if (res.messageData.length) $('.messages').scrollTop(50);
                     }
                     $('#loader').hide();
