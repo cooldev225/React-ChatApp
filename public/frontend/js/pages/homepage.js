@@ -753,8 +753,6 @@ function displayTimeString(time) {
     let dateString = time.toDateString();
     let timeString = time.toLocaleTimeString();
     let nowDateString = new Date().toDateString();
-    console.log(nowDateString);
-    console.log(dateString);
     let timeDiffer = parseInt((new Date(nowDateString) - new Date(dateString)) / (1000 * 60 * 60 * 24), 10);
     switch(timeDiffer) {
         case 0:
