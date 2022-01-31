@@ -262,7 +262,7 @@ function setCurrentChatContent(contactorId) {
                 new Promise(resolve => {
                     if (messageData) {
                         let target = '.contact-chat ul.chatappend';
-                        messageData.reverse().forEach(item => {
+                        messageData.forEach(item => {
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item);
                         });
@@ -520,7 +520,8 @@ function addChatItem(target, senderId, data) {
             </div>
         </div>
     </li>`;
-    $(target).append(item);
+    // $(target).append(item);
+    $(target).prepend(item);
     // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
 
     if (data.rate) {

@@ -259,4 +259,29 @@ class HomeController extends Controller
             'data' => $data
         );
     }
+
+    public function loadMoreMessages(Request $request) {
+        $id = Auth::id();
+        $contactorId = $request->input('currentContactId');
+        $firstMessageId = $request->input('firstMessageId');
+        
+        $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId." AND id < ".$firstMessageId)
+            ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id." AND id < ".$firstMessageId)->orderBy('created_at', 'desc')->limit(5)->get();
+        $messages = $messageData->map(function($item) {
+            if ($item['kind'] == 0) 
+                return $item;
+            if ($item['kind'] == 1) {
+                $temp = PhotoRequest::where('id', $item['content'])->get();
+                $item['requestId'] = $temp[0]['id'];
+                $item['content'] = $temp[0]['price'];
+                return $item;
+            }
+            $temp = PhotoGallery::where('id', $item['content'])->get();
+            $item['photoId'] = $temp[0]['id'];
+            $item['content'] = $temp[0]['photo'];
+            return $item;
+        });
+        
+        return array('state'=>'true','messageData'=>$messages);
+    }
 }

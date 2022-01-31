@@ -37,6 +37,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getPhotoData', 'HomeController@getPhotoData');
     Route::post('/home/setContentRate', 'HomeController@setContentRate');
     Route::post('/home/getRateData', 'HomeController@getRateData');
+    Route::post('/home/loadMoreMessages', 'HomeController@loadMoreMessages');
     Route::post('/api/create-paypal-transaction', 'PaymentController@createPayment');
     Route::post('/api/confirm-paypal-transaction', 'PaymentController@confirmPayment');
     Route::post('/home/getPaymentHistories', 'HomeController@getPaymentHistories');

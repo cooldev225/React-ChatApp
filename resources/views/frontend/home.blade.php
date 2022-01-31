@@ -7,6 +7,15 @@
         .hide {
             display: none;
         }
+        #loader {
+            width: 20px;
+            height: 20px;
+            margin: auto;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 92px);
+            display: none;
+        }
     </style>
     <script>
         var currentUserId = {{ Auth::id() }};
@@ -1026,7 +1035,6 @@
                                                                                                                                                                                                                         </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
-
                     <div class="contact-details">
                         <div class="row">
                             <form class="form-inline search-form">
@@ -1094,9 +1102,11 @@
                             </div>
                         </div>
                     </div>
+                    <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>
+
                     <div class="contact-chat">
                         <ul class="chatappend">
-
+                            
                         </ul>
                     </div>
                 </div>
@@ -4022,5 +4032,6 @@
     <script src="/frontend/js/pages/payment.js"></script>
     <script src="/frontend/js/pages/setting.js"></script>
     <script src="/frontend/js/pages/notification.js"></script>
+    <script src="/frontend/js/pages/message.js"></script>
 
 @endsection

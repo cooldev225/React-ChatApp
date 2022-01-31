@@ -55,7 +55,7 @@ $(document).ready(function() {
     // on keyup / change flag: reset
     telInput.on("keyup change", reset);
 
-    $('.phoneNumberConfirmBtn').on('click', () => {
+    $('.phoneNumberConfirmBtn').on('mouseup', () => {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
         let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
         let phoneNumber = $('#phone').val();
@@ -89,6 +89,9 @@ $(document).ready(function() {
             dataType: "json",
             success: function(res) {
                 console.log(res);
+                if (res.update == 'true') {
+                    alert('Phone Number saved correctly');
+                }
             },
             error: function(response) {}
         });
