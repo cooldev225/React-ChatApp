@@ -262,7 +262,7 @@ function setCurrentChatContent(contactorId) {
                 new Promise(resolve => {
                     if (messageData) {
                         let target = '.contact-chat ul.chatappend';
-                        messageData.forEach(item => {
+                        messageData.reverse().forEach(item => {
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item);
                         });
