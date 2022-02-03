@@ -66,6 +66,7 @@ let socket_userMap = new Map();
 const cors = require('cors');
 const { copyFileSync } = require('fs');
 const { data, isPlainObject } = require('jquery');
+const { is } = require('express/lib/request');
 
 app.use(cors({
     origin: '*'
@@ -111,7 +112,11 @@ io.on('connection', (socket) => {
             if (error) throw error;
             let senderSocketId = user_socketMap.get(data.from.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
-            io.sockets.sockets.get(senderSocketId).emit('arrive:message', data);
+            if (senderSocketId) {
+                if (io.sockets.sockets.get(senderSocketId)) {
+                    io.sockets.sockets.get(senderSocketId).emit('arrive:message', data);
+                }
+            }
             if (recipientSocketId) {
                 if (io.sockets.sockets.get(recipientSocketId)) {
                     io.sockets.sockets.get(recipientSocketId).emit('arrive:message', data);
@@ -126,7 +131,11 @@ io.on('connection', (socket) => {
             if (error) throw error;
             let senderSocketId = user_socketMap.get(data.from.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
-            io.sockets.sockets.get(senderSocketId).emit('read:message', data);
+            if (senderSocketId) {
+                if (io.sockets.sockets.get(senderSocketId)) {
+                    io.sockets.sockets.get(senderSocketId).emit('read:message', data);
+                }
+            }
             if (recipientSocketId) {
                 if (io.sockets.sockets.get(recipientSocketId)) {
                     io.sockets.sockets.get(recipientSocketId).emit('read:message', data);
