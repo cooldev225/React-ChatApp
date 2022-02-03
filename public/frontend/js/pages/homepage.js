@@ -504,7 +504,7 @@ function typingMessage() {
             scrollTop: $('.contact-chat').height()
         }, "fast");
     }
-    if (delta < 500) {
+    if (delta < 1500) {
         typingTime = new Date();
         clearTimeout(timerId);
     }
@@ -514,7 +514,7 @@ function typingMessage() {
             scrollTop: $('.contact-chat').height()
         }, "fast");
         typingTime = undefined;
-    }, 500);
+    }, 1500);
 
 
 }
