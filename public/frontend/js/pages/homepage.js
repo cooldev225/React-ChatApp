@@ -291,7 +291,7 @@ function setCurrentChatContent(contactorId) {
                     if (messageData) {
                         let target = '.contact-chat ul.chatappend';
                         messageData.reverse().forEach(item => {
-                            if (item.state != 3) {
+                            if (item.state != 3 && currentUserId != item.sender) {
                                 let message = {
                                     from: item.sender,
                                     to: item.recipient,
