@@ -356,12 +356,12 @@ function sendSMS(sender, recipient, type) {
                             }
                             let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                             // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                            // const axios = require('axios');
-                            // axios.get(smsUrl).then(res => {
-                            //     console.log(res.status);
-                            // }).catch(error => {
-                            //     console.log(error);
-                            // });
+                            const axios = require('axios');
+                            axios.get(smsUrl).then(res => {
+                                console.log(res.status);
+                            }).catch(error => {
+                                console.log(error);
+                            });
                         });
                     });
                 });
