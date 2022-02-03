@@ -5,6 +5,7 @@ var usersList = [];
 var socket;
 var typingTime;
 var timerId;
+let State = ['', 'sent', 'arrived', 'read'];
 $(document).ready(() => {
     // webpushr('fetch_id', function(sid) {
     //     //save id to database
@@ -31,8 +32,14 @@ $(document).ready(() => {
             let type = message.kind == 2 ? 'photo' :
                 message.kind == 1 ? 'request' :
                 message.kind == 0 ? 'text' : "new";
+            //arrived message
+            socket.emit('arrive:message', message);
             if (document.visibilityState == "visible") {
                 console.log('you have got message')
+                if (currentContactId == message.from) {
+                    //unread -> read
+                    socket.emit('read:message', message);
+                }
             } else {
                 console.log('send Notification')
                 socket.emit('send:notification', {
@@ -45,6 +52,8 @@ $(document).ready(() => {
         }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
+        console.log(currentContactId);
+        console.log(message.from);
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
@@ -73,6 +82,24 @@ $(document).ready(() => {
             // setCurrentChatContent(currentContactId);
         }
     });
+    socket.on('arrive:message', message => {
+        setTimeout(() => {
+            console.log('arrived');
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('arrived')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('read')
+            console.log(message);
+        }, 1000);
+    })
+    socket.on('read:message', message => {
+        setTimeout(() => {
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('arrived')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('read')
+            console.log('read');
+            console.log(message);
+        }, 2000);
+    })
 
     socket.on('receive:typing', data => {
         if (data == currentContactId) {
@@ -110,6 +137,7 @@ $(document).ready(() => {
             $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
         }
         currentContactId = Number($(e.currentTarget).attr('key'));
+        console.log(currentContactId);
         $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
         $(`ul.chat-main li[key=${currentContactId}] h6.status`).css('display', 'block');
         $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).text('');
@@ -263,6 +291,16 @@ function setCurrentChatContent(contactorId) {
                     if (messageData) {
                         let target = '.contact-chat ul.chatappend';
                         messageData.reverse().forEach(item => {
+                            if (item.state != 3) {
+                                let message = {
+                                    from: item.sender,
+                                    to: item.recipient,
+                                    content: item.content,
+                                    messageId: item.id,
+                                    state: item.state,
+                                }
+                                socket.emit('read:message', message);
+                            }
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item);
                         });
@@ -338,7 +376,6 @@ function searchAndAddRecentChatList() {
 }
 
 function addChatUserListItem(target, data) {
-    console.log(data);
     $(target).prepend(
         `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
@@ -467,7 +504,7 @@ function typingMessage() {
             scrollTop: $('.contact-chat').height()
         }, "fast");
     }
-    if (delta < 2000) {
+    if (delta < 500) {
         typingTime = new Date();
         clearTimeout(timerId);
     }
@@ -477,7 +514,7 @@ function typingMessage() {
             scrollTop: $('.contact-chat').height()
         }, "fast");
         typingTime = undefined;
-    }, 2000);
+    }, 500);
 
 
 }
@@ -485,7 +522,6 @@ function typingMessage() {
 function addChatItem(target, senderId, data, loadFlag) {
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
-
     let time = data.created_at ? new Date(data.created_at) : new Date();
     let item = `<li class="${type} msg-item" key="${data.messageId}" kind="${data.kind}">
         <div class="media">
@@ -494,7 +530,7 @@ function addChatItem(target, senderId, data, loadFlag) {
             <div class="media-body">
                 <div class="contact-name">
                     <h5>${senderInfo.username}</h5>
-                    <h6>${displayTimeString(time)}</h6>
+                    <h6 class="${State[data.state]}">${displayTimeString(time)}</h6>
                     <div class="photoRating">
                         <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                     </div>

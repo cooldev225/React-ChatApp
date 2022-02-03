@@ -85,20 +85,16 @@ io.on('connection', (socket) => {
             from: currentUserId,
             to: data.currentContactId,
             content: data.message,
+            state: 1,
             kind: 0,
         }
-        console.log('get message');
-        console.log(data);
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
             if (data.currentContactId) {
                 let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
-                console.log('recipientSocketId: ', recipientSocketId);
                 io.sockets.sockets.get(senderSocketId).emit('message', message);
                 if (recipientSocketId) {
-                    console.log('socket list', io.sockets.sockets.size);
-                    console.log(io.sockets.sockets.keys())
                     if (io.sockets.sockets.get(recipientSocketId))
                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
                 } else {
@@ -108,6 +104,36 @@ io.on('connection', (socket) => {
             }
         });
     });
+    socket.on('arrive:message', data => {
+        console.log('arrive');
+        console.log(data);
+        db.query(`UPDATE messages SET state = 2 WHERE id=${data.messageId}`, (error, item) => {
+            if (error) throw error;
+            let senderSocketId = user_socketMap.get(data.from.toString());
+            let recipientSocketId = user_socketMap.get(data.to.toString());
+            io.sockets.sockets.get(senderSocketId).emit('arrive:message', data);
+            if (recipientSocketId) {
+                if (io.sockets.sockets.get(recipientSocketId)) {
+                    io.sockets.sockets.get(recipientSocketId).emit('arrive:message', data);
+                }
+            }
+        })
+    })
+    socket.on('read:message', data => {
+        console.log('read');
+        console.log(data);
+        db.query(`UPDATE messages SET state = 3 WHERE id=${data.messageId}`, (error, item) => {
+            if (error) throw error;
+            let senderSocketId = user_socketMap.get(data.from.toString());
+            let recipientSocketId = user_socketMap.get(data.to.toString());
+            io.sockets.sockets.get(senderSocketId).emit('read:message', data);
+            if (recipientSocketId) {
+                if (io.sockets.sockets.get(recipientSocketId)) {
+                    io.sockets.sockets.get(recipientSocketId).emit('read:message', data);
+                }
+            }
+        })
+    })
     socket.on('send:request', data => {
         if (data.to) {
             let message = {
@@ -312,7 +338,6 @@ function sendSMS(sender, recipient, type) {
                     db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
                         let prefix = phoneInfo[0].intl_dialing_prefix
                         let phone_code = phoneInfo[0].phone_code
-                        console.log(phone_code)
                         let fullPhoneNumber = '';
                         if (phone_code != 1) {
                             fullPhoneNumber = '011' + phone_code + phoneNumber;
@@ -321,11 +346,9 @@ function sendSMS(sender, recipient, type) {
                         }
                         console.log(fullPhoneNumber);
                         db.query(`SELECT * FROM users where id=${sender}`, (error, user) => {
-                            console.log(country[0].name);
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             let message = '';
                             let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
-                            console.log(messageType);
                             if (spainish) {
                                 message = `Hola ${row[0].username}, tienes un nuevo mensaje ${messageType} de ${user[0].username}. Inicie sesion en Ojochat.com para ver sus mensajes. ${val}`;
                             } else {
@@ -333,12 +356,12 @@ function sendSMS(sender, recipient, type) {
                             }
                             let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                             // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                            const axios = require('axios');
-                            axios.get(smsUrl).then(res => {
-                                console.log(res.status);
-                            }).catch(error => {
-                                console.log(error);
-                            });
+                            // const axios = require('axios');
+                            // axios.get(smsUrl).then(res => {
+                            //     console.log(res.status);
+                            // }).catch(error => {
+                            //     console.log(error);
+                            // });
                         });
                     });
                 });

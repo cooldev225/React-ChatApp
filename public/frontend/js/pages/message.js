@@ -21,11 +21,8 @@ $(document).ready(() => {
                 success: function(res) {
                     console.log(res);
                     if (res.messageData) {
-                        console.log('true');
-                        console.log($('.contact-chat').height())
                         let target = '.contact-chat ul.chatappend';
                         res.messageData.forEach(item => {
-                            console.log(item);
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item, true);
                         });

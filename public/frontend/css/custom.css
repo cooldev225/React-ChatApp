@@ -551,6 +551,18 @@ select#phone {
     margin-bottom: 10px;
 }
 
+h6.sent {
+    color: rgb(58 49 49);
+}
+
+h6.arrived {
+    color: rgb(24 90 189);
+}
+
+h6.read {
+    color: rgb(42 169 0);
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
