@@ -20,6 +20,7 @@ var request = require('request');
 //     user: "root",
 //     password: "",
 //     database: "ldahkumy_ojochat",
+//     charset: 'utf8mb4'
 // });
 
 var headers = {
@@ -34,6 +35,7 @@ const db = mysql.createConnection({
     user: "ldahkumy_ojochat",
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
+    charset: 'utf8mb4'
 });
 
 // var headers = {
@@ -93,6 +95,8 @@ io.on('connection', (socket) => {
             state: 1,
             kind: 0,
         }
+        console.log(data.message.toString().length);
+        console.log(typeof data.message.toString());
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
             if (data.currentContactId) {
