@@ -76,6 +76,10 @@ io.on('connection', (socket) => {
     let currentUserId = socket.handshake.query.currentUserId;
     //user table logout flag make false
     console.log('userId:', currentUserId, ' logined');
+    db.query(`UPDATE users SET logout = 0 WHERE id=${currentUserId}`, (error, item) => {
+        if (error) throw error;
+        console.log('userId:', currentUserId, ' logined successfully');
+    });
 
     user_socketMap.set(currentUserId, socket.id);
     socket_userMap.set(socket.id, currentUserId);
@@ -328,7 +332,6 @@ io.on('connection', (socket) => {
         console.log(currentUserId, " : ", socket.id, ' Disconnected')
         console.log(user_socketMap);
     });
-
 });
 
 server.listen(port, () => {

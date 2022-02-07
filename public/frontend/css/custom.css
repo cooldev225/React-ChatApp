@@ -563,6 +563,26 @@ h6.read {
     color: rgb(42 169 0);
 }
 
+.msg-setting-main .msg-dropdown-main .msg-open-btn {
+    display: none;
+    width: 40px;
+    height: 25px;
+    background-color: #e5edf5;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.sent .msg-setting-main .msg-dropdown-main .msg-open-btn {
+    margin-left: 10px;
+}
+
+.msg-setting-main:hover .receive_photo~.msg-dropdown-main .msg-open-btn {
+    display: flex;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;

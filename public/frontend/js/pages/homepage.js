@@ -542,6 +542,7 @@ function addChatItem(target, senderId, data, loadFlag) {
                                     `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
                                     : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                             <div class="msg-dropdown-main">
+                                <div class="msg-open-btn"><span>Open</span></div>
                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
                                 <div class="msg-dropdown"> 
                                     <ul>
@@ -796,7 +797,7 @@ function displayTimeString(time) {
     let timeDiffer = parseInt((new Date(nowDateString) - new Date(dateString)) / (1000 * 60 * 60 * 24), 10);
     switch(timeDiffer) {
         case 0:
-            return 'Today ' + timeString;
+            return timeString;
         case 1:
             return 'Yesterday ' + timeString;
         default:
