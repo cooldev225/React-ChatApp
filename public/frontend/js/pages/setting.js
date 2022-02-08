@@ -1,19 +1,5 @@
 $(document).ready(function() {
-    // $.ajax({
-    //     url: '/setting/getPhoneNumber',
-    //     headers: {
-    //         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    //     },
-    //     cache: false,
-    //     contentType: false,
-    //     processData: false,
-    //     type: 'POST',
-    //     dataType: "json",
-    //     success: function(res) {
-    //         console.log(res);
-    //     },
-    //     error: function(response) {}
-    // });
+
     var telInput = $("#phone"),
         errorMsg = $("#error-msg"),
         validMsg = $("#valid-msg");
@@ -23,7 +9,9 @@ $(document).ready(function() {
         // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js"
     });
-
+    // window.intlTelInput(telInput, {
+    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js"
+    // })
     var reset = function() {
         telInput.removeClass("error");
         errorMsg.addClass("hide");
@@ -36,7 +24,7 @@ $(document).ready(function() {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
         if (dialCode == 57) {
             let phoneNumber = $('#phone').val();
-            if (/32[0-9] \d{7}/.test(phoneNumber)) {
+            if (/31[0-9] \d{7}/.test(phoneNumber)) {
                 validMsg.removeClass("hide");
             } else {
                 telInput.addClass("error");
@@ -63,7 +51,7 @@ $(document).ready(function() {
         console.log(dialCode);
         console.log(phoneNumber);
         if (dialCode == 57) {
-            if (/32[0-9] \d{7}/.test(phoneNumber)) {
+            if (/31[0-9] \d{7}/.test(phoneNumber)) {
                 form_data.append('isoCode2', isoCode2);
                 form_data.append('dialCode', dialCode);
                 form_data.append('phoneNumber', phoneNumber);
