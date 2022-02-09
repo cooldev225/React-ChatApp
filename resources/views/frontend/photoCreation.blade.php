@@ -36,7 +36,7 @@
             </div>
             <div class="colorPicker" id="fontColorPicker" value="#4700B3"></div>
             <div class="colorPicker" id="backColorPicker" value="#4700B3"></div>
-            
+
             <button type="button" class="btn btn-primary btn-sm addText">Add</button>
         </div>
     </div>
@@ -44,12 +44,14 @@
         <canvas id="back_canvas">
         </canvas>
         <div class="emojis-tool">
+            <button id="emoji-button" class="btn input_emojis"></button>
+
             <div class="input_emojis btn" id="input_emoji_btn">
                 <input class="input-file" type="file" id="input_emoji_select">
                 <img class="input-btn" src="/images/gallery.png"></button>
-                <span>Open</span>
+                {{-- <span>Open</span> --}}
             </div>
-            <div class="emojis">
+            {{-- <div class="emojis">
                 <img src="/images/emojis/1 (1).svg" draggable="true" />
                 <img src="/images/emojis/1 (2).svg" draggable="true" />
                 <img src="/images/emojis/1 (3).svg" draggable="true" />
@@ -105,7 +107,7 @@
                 <img src="/images/emojis/1 (58).png" draggable="true" />
                 <img src="/images/emojis/1 (59).png" draggable="true" />
                 <img src="/images/emojis/1 (60).png" draggable="true" />
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="tool-box">
@@ -132,5 +134,7 @@
         // $(function() {
         //     $('#backColorPicker').colorpicker();
         // });
+
+       
     </script>
 @endsection

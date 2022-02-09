@@ -40,7 +40,6 @@
     {{-- <link rel="stylesheet" type="text/css" href="/frontend/css/normalize.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/css/intlTelInput.css">
-
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
 </head>
@@ -80,8 +79,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.js"></script> --}}
     <script src="/chat/js/script.js"></script>
-    {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script> --}}
+    
+     {{-- emojis --}}
+     <script src="https://cdn.jsdelivr.net/npm/emoji-button@0.6.0/dist/index.min.js"></script>
   </body>
 
 {{-- <script type="module">

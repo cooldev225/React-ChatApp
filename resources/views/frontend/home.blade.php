@@ -1688,11 +1688,12 @@
                             </a>
                             <div class="contact-poll-content">
                                 <ul>
+                                    <li><a id="mediaBtn"><i data-feather="image"></i>Media</a></li>
+                                    <li><a id="createPhotoBtn"><i data-feather="image"></i>Photo Creation</a></li>
                                     <li><a data-bs-toggle="modal" data-bs-target="#photoRequestModal"><i
                                                 data-feather="camera"></i>Photo Request</a></li>
                                     {{-- <li><a data-bs-toggle="modal" data-bs-target="#createPhoto"><i
                                             data-feather="image"></i>Media</a></li> --}}
-                                    <li><a id="createPhotoBtn"><i data-feather="image"></i>Media</a></li>
                                     <li><a href="#"><i data-feather="clipboard"> </i>File</a></li>
                                 </ul>
                             </div>
@@ -4204,7 +4205,7 @@
     </div>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    {{-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> --}}
 
     <script src="/frontend/js/pages/payment.js"></script>
     <script src="/frontend/js/pages/setting.js"></script>

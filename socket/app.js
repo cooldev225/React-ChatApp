@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const mysql = require('mysql');
+const axios = require('axios');
+
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
     // const port = process.env.PORT || 4000
@@ -10,10 +12,8 @@ const io = require('socket.io')(server, {
         origins: '*',
     },
     maxHttpBufferSize: 10E7
-
 });
 
-var request = require('request');
 
 // const db = mysql.createConnection({
 //     host: "localhost",
@@ -23,11 +23,11 @@ var request = require('request');
 //     charset: 'utf8mb4'
 // });
 
-var headers = {
-    'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
-    'webpushrAuthToken': '42945',
-    'Content-Type': 'application/json',
-};
+// var headers = {
+//     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
+//     'webpushrAuthToken': '42945',
+//     'Content-Type': 'application/json',
+// };
 const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
 
 const db = mysql.createConnection({
@@ -66,9 +66,6 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
-const { copyFileSync } = require('fs');
-const { data, isPlainObject } = require('jquery');
-const { is } = require('express/lib/request');
 
 app.use(cors({
     origin: '*'
@@ -372,7 +369,6 @@ function sendSMS(sender, recipient, type) {
                             }
                             let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                             // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                            const axios = require('axios');
                             axios.get(smsUrl).then(res => {
                                 console.log(res.status);
                             }).catch(error => {
