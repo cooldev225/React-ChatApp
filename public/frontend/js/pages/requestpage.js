@@ -365,7 +365,7 @@ function addEmojisOnPhoto() {
         if (text) {
             let textBox = new fabric.Textbox(text, {
                 with: 200,
-                fontSize: 30,
+                fontSize: 35,
                 textAlign: 'center',
                 editable: false,
                 price: price
@@ -621,7 +621,7 @@ function addTextOnPhoto() {
         if (text) {
             let textBox = new fabric.Textbox(text, {
                 with: 200,
-                fontSize: 30,
+                fontSize: 35,
                 fill: '#4700B3',
                 textAlign: 'center',
                 backgroundColor: '#C4E6C1',
