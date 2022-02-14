@@ -1,5 +1,4 @@
 @section('photoCreation')
-
     <div class="price-text">
         <div class="price-tool">
             {{-- <ul class="switch-list">
@@ -44,12 +43,25 @@
         <canvas id="back_canvas">
         </canvas>
         <div class="emojis-tool">
-            <button id="emoji-button" class="btn input_emojis"></button>
-
-            <div class="input_emojis btn" id="input_emoji_btn">
+            <div class="btn">
+                <input id="input_file" class="input-file" type="file">
+                <img id="input_btn" class="" src="/images/gallery.png"></button>
+            </div>
+            <div class="btn">
+                <div id="emoji-button"></div>
+            </div>
+            <div id="input_emoji_btn" class="btn">
                 <input class="input-file" type="file" id="input_emoji_select">
-                <img class="input-btn" src="/images/gallery.png"></button>
-                {{-- <span>Open</span> --}}
+                <img class="" src="/images/add_photo.png"></button>
+            </div>
+            <div class="btn lock-tool unlock">
+                <a class="icon-btn btn-outline-success outside" href="#">
+                    <i class="fa fa-lock"></i>
+                    <i class="fa fa-unlock-alt"></i>
+                </a>
+            </div>
+            <div class="btn">
+                <img class="" id="input_reset" src="/images/reset.png"></button>
             </div>
             {{-- <div class="emojis">
                 <img src="/images/emojis/1 (1).svg" draggable="true" />
@@ -111,12 +123,6 @@
         </div>
     </div>
     <div class="tool-box">
-        <div class="lock-tool unlock">
-            <a class="icon-btn btn-outline-success me-4 outside" href="#">
-                <i class="fa fa-lock"></i>
-                <i class="fa fa-unlock-alt"></i>
-            </a>
-        </div>
         <div class="blur-tool">
             <img src="/images/blur.png" alt="">
             <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">
@@ -130,11 +136,41 @@
             </button>
         </div>
     </div>
-    <script>
-        // $(function() {
-        //     $('#backColorPicker').colorpicker();
-        // });
+@endsection
 
-       
+@section('media')
+    <input type="file" accept="image/*" capture>
+    <video id="player" autoplay width=400></video>
+    <button id="capture">Capture</button>
+    <canvas id="mediaCanvas" width=320 height=240></canvas>
+    <script>
+        console.log("Open Modal");
+        const player = document.getElementById('player');
+        const mediaCanvas = document.getElementById('mediaCanvas');
+        const context = mediaCanvas.getContext('2d');
+        const captureButton = document.getElementById('capture');
+
+        const constraints = {
+            video: true,
+        };
+
+        captureButton.addEventListener('click', () => {
+            // Draw the video frame to the canvas.
+            context.drawImage(player, 0, 0, mediaCanvas.width, mediaCanvas.height);
+        });
+
+        // Attach the video stream to the video element and autoplay.
+    $('#mediaPhoto').on('shown.bs.modal', function(e) {
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => {
+                    player.srcObject = stream;
+                }).catch(function(error) {
+                    player.src = '/videos/2.mp4';
+                    console.log("Something went wrong!");
+                });;
+        }
+    });
+
     </script>
 @endsection

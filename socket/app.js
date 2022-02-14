@@ -23,13 +23,6 @@ const io = require('socket.io')(server, {
 //     charset: 'utf8mb4'
 // });
 
-// var headers = {
-//     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
-//     'webpushrAuthToken': '42945',
-//     'Content-Type': 'application/json',
-// };
-const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
-
 const db = mysql.createConnection({
     host: "localhost",
     user: "ldahkumy_ojochat",
@@ -39,13 +32,19 @@ const db = mysql.createConnection({
 });
 
 // var headers = {
+//     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
+//     'webpushrAuthToken': '42945',
+//     'Content-Type': 'application/json',
+// };
+// var headers = {
 //     'webpushrKey': 'aed1111725e9d8f368275815471d6f68',
 //     'webpushrAuthToken': '42947',
 //     'Content-Type': 'application/json'
 // };
+const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
+const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
 // var dataString = '{"title":"notification_title","message":"notification message","target_url":"http://ojochat.com"}';
-
 
 
 function callback(error, response, body) {
@@ -60,7 +59,6 @@ function callback(error, response, body) {
 //     console.log(item);
 // })
 // });
-const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
@@ -92,8 +90,7 @@ io.on('connection', (socket) => {
             state: 1,
             kind: 0,
         }
-        console.log(data.message.toString().length);
-        console.log(typeof data.message.toString());
+
         db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
             message.messageId = item.insertId;
             if (data.currentContactId) {
@@ -111,8 +108,6 @@ io.on('connection', (socket) => {
         });
     });
     socket.on('arrive:message', data => {
-        console.log('arrive');
-        console.log(data);
         db.query(`UPDATE messages SET state = 2 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;
             let senderSocketId = user_socketMap.get(data.from.toString());
@@ -130,8 +125,6 @@ io.on('connection', (socket) => {
         })
     })
     socket.on('read:message', data => {
-        console.log('read');
-        console.log(data);
         db.query(`UPDATE messages SET state = 3 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;
             let senderSocketId = user_socketMap.get(data.from.toString());
@@ -217,7 +210,7 @@ io.on('connection', (socket) => {
                 let rate = data.rate - row[0].rate;
                 let count = row[0].rate ? 0 : 1;
                 db.query(`INSERT INTO ratings (user_id, ${KindConstant[data.kind]}_count, ${KindConstant[data.kind]}_rate) VALUES (${data.currentContactId}, 1, ${rate}) ON DUPLICATE KEY UPDATE user_id=${data.currentContactId}, ${KindConstant[data.kind]}_count=${KindConstant[data.kind]}_count+${count}, ${KindConstant[data.kind]}_rate=${KindConstant[data.kind]}_rate+${rate}`, (error, item) => {
-                    console.log("rate: ", item);
+
                     // let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                     // if (recipientSocketId) {
                     //     if (io.sockets.sockets.get(recipientSocketId)) {
@@ -248,7 +241,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('deleteMessage', data => {
-        console.log(data);
         db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
             if (!error) {
                 if (data.photoId) {
@@ -307,8 +299,6 @@ io.on('connection', (socket) => {
         }
     })
     socket.on('send:notification', data => {
-        console.log('You have to send SMS');
-        console.log(data);
         sendSMS(data.from, data.to, data.type)
             // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
             // var options = {
@@ -357,7 +347,6 @@ function sendSMS(sender, recipient, type) {
                         } else {
                             fullPhoneNumber = phone_code + phoneNumber;
                         }
-                        console.log(fullPhoneNumber);
                         db.query(`SELECT * FROM users where id=${sender}`, (error, user) => {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             let message = '';

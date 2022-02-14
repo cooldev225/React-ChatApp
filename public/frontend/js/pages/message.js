@@ -37,4 +37,30 @@ $(document).ready(() => {
             });
         }
     });
+    $('#mediaPhoto').on('shown.bs.modal', function(e) {
+        // console.log("Open Modal");
+        // const player = document.getElementById('player');
+        // const mediaCanvas = document.getElementById('mediaCanvas');
+        // const context = mediaCanvas.getContext('2d');
+        // const captureButton = document.getElementById('capture');
+
+        // const constraints = {
+        //     video: true,
+        // };
+
+        // captureButton.addEventListener('click', () => {
+        //     // Draw the video frame to the canvas.
+        //     context.drawImage(player, 0, 0, mediaCanvas.width, mediaCanvas.height);
+        // });
+
+        // // Attach the video stream to the video element and autoplay.
+        // if (navigator.mediaDevices.getUserMedia) {
+        //     navigator.mediaDevices.getUserMedia(constraints)
+        //         .then((stream) => {
+        //             player.srcObject = stream;
+        //         }).catch(function(error) {
+        //             console.log("Something went wrong!");
+        //         });;
+        // }
+    });
 })
