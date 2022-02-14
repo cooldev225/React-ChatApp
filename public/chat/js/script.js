@@ -77,11 +77,13 @@
     tippy('.content-rating-list .video-call-rating', { content: "0.00" });
     tippy('.content-rating-list .voice-call-rating', { content: "0.00" });
     //PhotoCreation tooltip
-    tippy('.emojis-tool .background_btn', { content: "Add Background" });
-    tippy('.emojis-tool .emoji_btn', { content: "Add Emojis" });
-    tippy('.emojis-tool .add_photo_btn', { content: "Add Photos" });
-    tippy('.emojis-tool .lock_btn', { content: "Lock Resize" });
-    tippy('.emojis-tool .reset_btn', { content: "Reset" });
+    tippy('.emojis-tool .background_btn', { content: "Add Background", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .emoji_btn', { content: "Add Emojis", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .add_photo_btn', { content: "Add Photos", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .lock_btn', { content: "Lock Resize", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .Text_btn', { content: "Add Text", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .blur_btn', { content: "Add Blur", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
+    tippy('.emojis-tool .reset_btn', { content: "Reset", onShow(instance) { setTimeout(() => { instance.hide(), 1000 }) } });
 
     /*=====================
       02. Background Image js

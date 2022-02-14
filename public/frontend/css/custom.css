@@ -202,16 +202,12 @@ ul.chatappend .msg-box .camera-icon {
     overflow: auto;
 }
 
-.price-text {
-    display: flex;
-    align-items: center;
+.text-tool,
+.blur-tool {
+    display: none;
 }
 
-.price-tool {
-    margin-right: 5px;
-}
-
-.text-tool {
+.text-tool>div {
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -286,12 +282,12 @@ ul.chatappend .msg-box .camera-icon {
     width: 75px;
 }
 
-.emojis-tool .emojis {
-    height: 360px;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 5px;
+.emojis-price {
+    width: 75px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 8px;
+    padding-left: 10px;
 }
 
 .emoji-picker {
@@ -304,7 +300,8 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 #emoji-button {
-    height: 40px;
+    /* height: 30px; */
+    margin: auto;
     color: black;
     background-color: white;
 }
@@ -315,9 +312,11 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 .lock-tool .icon-btn,
-#emoji-button svg {
-    width: 40px;
-    height: 40px;
+#emoji-button svg,
+.emojis-tool .btn img,
+#emoji-button {
+    width: 30px;
+    height: 30px;
 }
 
 .lock-tool.lock .fa-lock,
@@ -332,10 +331,11 @@ ul.chatappend .msg-box .camera-icon {
 
 .tool-box {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin-top: 5px;
 }
 
-.blur-tool {
+.blur-tool>div {
     width: 60%;
     display: flex;
     align-items: center;
@@ -343,6 +343,7 @@ ul.chatappend .msg-box .camera-icon {
 }
 
 .blur-tool img,
+.blur_btn img,
 #photo_item .blur-image img {
     width: 30px;
     height: 30px;
@@ -356,7 +357,7 @@ ul.chatappend .msg-box .camera-icon {
 .save-send {
     display: flex;
     justify-content: space-around;
-    width: 30%;
+    width: 40%;
 }
 
 #back_canvas,
@@ -448,7 +449,8 @@ ul.chatappend .msg-box .camera-icon {
     height: 30px;
     background-color: #4700B3;
     border-radius: 5px;
-    outline: 1px solid rgba(0, 100, 0, 0.938);
+    /* outline: 1px solid rgba(0, 100, 0, 0.938); */
+    border: 1px solid rgba(0, 100, 0, 0.938);
     outline-offset: 1px;
 }
 
@@ -634,17 +636,6 @@ h6.read {
         min-width: 350px !important;
         min-height: 350px !important;
     }
-    .emojis-tool .emojis {
-        height: 310px;
-        grid-gap: 5px;
-    }
-    .emojis img {
-        width: 45px;
-        height: 45px;
-    }
-    .colorPicker {
-        width: 15px;
-    }
     .text-tool .text {
         width: 120px;
     }
@@ -653,6 +644,20 @@ h6.read {
     }
     .text-tool .btn {
         padding: 0 10px;
+    }
+    .lock-tool .icon-btn,
+    #emoji-button svg,
+    .emojis-tool .btn img,
+    #emoji-button {
+        width: 20px;
+        height: 20px;
+    }
+    .emojis-tool {
+        gap: 5px;
+    }
+    .emojis-price {
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
 }
 
@@ -673,9 +678,6 @@ h6.read {
     #createPhoto .price-mode,
     #createPhoto .text-input {
         top: 36px;
-    }
-    .emojis-tool .emojis {
-        height: 260px;
     }
     .text-tool .text {
         width: 110px;

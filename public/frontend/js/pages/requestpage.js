@@ -288,10 +288,16 @@ function selectBackPhoto() {
         canvas.clear();
         globalImage = undefined;
         ori_image = null;
+        $('.blur-tool').slideUp();
+        $('.text-tool').slideUp();
     });
 }
 
 function blurPhoto() {
+    $('.blur_btn').on('click', () => {
+        $('.blur-tool').slideToggle();
+        $('.text-tool').slideUp();
+    });
     $('#blurRange').on('input', e => {
         if (canvas.getActiveObject()) {
             let obj = canvas.getActiveObject();
@@ -326,33 +332,34 @@ function blurPhoto() {
 
 function addEmojisOnPhoto() {
     var touchtime = 0;
-    $(".emojis-tool img").on("click", (e) => {
-        if (touchtime == 0) {
-            touchtime = new Date().getTime();
-        } else {
-            if (((new Date().getTime()) - touchtime) < 800) {
 
-                fabric.Image.fromURL(e.target.src, function(oImg) {
-                    if ($('#createPhoto .preview-paid').hasClass('d-none')) {
-                        oImg.price = $('.emojis-price').val();
-                    } else {
-                        oImg.price = $('.preview-paid').val();
-                        // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
-                    }
-                    oImg.id = Date.now();
-                    addEventAction(canvas, oImg);
+    // $(".emojis-tool img").on("click", (e) => {
+    //     if (touchtime == 0) {
+    //         touchtime = new Date().getTime();
+    //     } else {
+    //         if (((new Date().getTime()) - touchtime) < 800) {
 
-                    canvas.add(oImg);
-                    canvas.centerObject(oImg);
-                });
+    //             fabric.Image.fromURL(e.target.src, function(oImg) {
+    //                 if ($('#createPhoto .preview-paid').hasClass('d-none')) {
+    //                     oImg.price = $('.emojis-price').val();
+    //                 } else {
+    //                     oImg.price = $('.preview-paid').val();
+    //                     // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
+    //                 }
+    //                 oImg.id = Date.now();
+    //                 addEventAction(canvas, oImg);
 
-                touchtime = 0;
-            } else {
-                // not a double click so set as a new first click
-                touchtime = new Date().getTime();
-            }
-        }
-    });
+    //                 canvas.add(oImg);
+    //                 canvas.centerObject(oImg);
+    //             });
+
+    //             touchtime = 0;
+    //         } else {
+    //             // not a double click so set as a new first click
+    //             touchtime = new Date().getTime();
+    //         }
+    //     }
+    // });
 
     EmojiButton(document.querySelector('#emoji-button'), function(emoji) {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
@@ -390,8 +397,6 @@ function addEmojisOnPhoto() {
                 }
 
                 let ratio = oImg.width / oImg.height;
-                let width = 50;
-                let height = 50 / ratio;
                 oImg.scaleX = 50 / oImg.width;
                 oImg.scaleY = 50 / ratio / oImg.height;
                 oImg.id = Date.now();
@@ -610,6 +615,10 @@ function setContentRate() {
 
 function addTextOnPhoto() {
 
+    $('.text_btn').on('click', () => {
+        $('.text-tool').slideToggle();
+        $('.blur-tool').slideUp();
+    });
     $('.addText').on('click', function() {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
@@ -633,6 +642,8 @@ function addTextOnPhoto() {
             canvas.add(textBox).setActiveObject(textBox);
             canvas.centerObject(textBox);
             $('.text-tool .text').val('');
+            $('.text-tool').slideToggle();
+
         }
 
     });
@@ -642,7 +653,6 @@ function addTextOnPhoto() {
             canvas.requestRenderAll();
         }
     });
-
     $('#backColorPicker').colorpicker().on('changeColor', e => {
         let color = e.color.toString();
         $('#backColorPicker').css('backgroundColor', color);

@@ -1,19 +1,38 @@
 @section('photoCreation')
-    <div class="price-text">
-        <div class="price-tool">
-            {{-- <ul class="switch-list">
-                <li>
-                    <input class="sticky-switch" type="checkbox" />
-                    <h5>Sticky</h5>
-                </li>
-            </ul> --}}
+    <div class="text-tool">
+        <div>
+            <input type="text" class="text form-control" placeholder="Text Here">
+            <select class="form-select form-select-sm font-family" id="font-family" aria-label=".form-select-sm example">
+
+            </select>
+            <div class="font-style">
+                <span class="bold">B</span>
+                <span class="italic">I</span>
+            </div>
+            <div class="colorPicker" id="fontColorPicker" value="#4700B3"></div>
+            <div class="colorPicker" id="backColorPicker" value="#4700B3"></div>
+
+            <button type="button" class="btn btn-primary btn-sm addText">Add</button>
+        </div>
+    </div>
+    <div class="blur-tool">
+        <div>
+            <img src="/images/blur.png" alt="">
+            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">
+        </div>
+    </div>
+    <div class="photo-container">
+        <canvas id="back_canvas">
+        </canvas>
+        <div class="emojis-tool">
             <select class="form-select form-select-sm price-list preview-paid" aria-label="Default select example">
                 <option value="0" selected>Preview</option>
                 <option value="-2">Paid</option>
             </select>
             <select class="form-select form-select-sm pirce-list emojis-price d-none" aria-label="Default select example">
+                <option value="0" selected>Mode</option>
                 <option value="-1">Sticky</option>
-                <option value="0" selected>Free</option>
+                <option value="0">Free</option>
                 <option value="1">$1</option>
                 <option value="2">$2</option>
                 <option value="5">$5</option>
@@ -22,27 +41,6 @@
                 <option value="20">$20</option>
                 <option value="25">$25</option>
             </select>
-        </div>
-        <div class="text-tool">
-            <input type="text" class="text form-control" placeholder="">
-            <select class="form-select form-select-sm font-family" id="font-family" aria-label=".form-select-sm example">
-
-            </select>
-            <div class="font-style">
-                <span class="bold">B</span>
-                <span class="italic">I</span>
-                {{-- <span class="underline">U</span> --}}
-            </div>
-            <div class="colorPicker" id="fontColorPicker" value="#4700B3"></div>
-            <div class="colorPicker" id="backColorPicker" value="#4700B3"></div>
-
-            <button type="button" class="btn btn-primary btn-sm addText">Add</button>
-        </div>
-    </div>
-    <div class="photo-container">
-        <canvas id="back_canvas">
-        </canvas>
-        <div class="emojis-tool">
             <div class="btn background_btn">
                 <input id="input_file" class="input-file" type="file">
                 <img id="input_btn" class="" src="/images/gallery.png"></button>
@@ -53,6 +51,12 @@
             <div id="input_emoji_btn" class="btn add_photo_btn">
                 <input class="input-file" type="file" id="input_emoji_select">
                 <img class="" src="/images/add_photo.png"></button>
+            </div>
+            <div class="btn text_btn">
+                <img src="/images/text.png" alt="Text">
+            </div>
+            <div class="btn blur_btn">
+                <img src="/images/blur.png" alt="Blur">
             </div>
             <div class="btn lock-tool unlock lock_btn">
                 <a class="icon-btn btn-outline-success outside" href="#">
@@ -123,10 +127,6 @@
         </div>
     </div>
     <div class="tool-box">
-        <div class="blur-tool">
-            <img src="/images/blur.png" alt="">
-            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">
-        </div>
         <div class="save-send">
             <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="save-photo">
                 <i data-feather="save"></i>
@@ -144,7 +144,6 @@
     <button id="capture">Capture</button>
     <canvas id="mediaCanvas" width=320 height=240></canvas>
     <script>
-        console.log("Open Modal");
         const player = document.getElementById('player');
         const mediaCanvas = document.getElementById('mediaCanvas');
         const context = mediaCanvas.getContext('2d');
@@ -160,17 +159,16 @@
         });
 
         // Attach the video stream to the video element and autoplay.
-    $('#mediaPhoto').on('shown.bs.modal', function(e) {
-        if (navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then((stream) => {
-                    player.srcObject = stream;
-                }).catch(function(error) {
-                    player.src = '/videos/2.mp4';
-                    console.log("Something went wrong!");
-                });;
-        }
-    });
-
+        $('#mediaPhoto').on('shown.bs.modal', function(e) {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then((stream) => {
+                        player.srcObject = stream;
+                    }).catch(function(error) {
+                        player.src = '/videos/2.mp4';
+                        console.log("Something went wrong!");
+                    });;
+            }
+        });
     </script>
 @endsection
