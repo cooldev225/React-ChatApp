@@ -43,24 +43,24 @@
         <canvas id="back_canvas">
         </canvas>
         <div class="emojis-tool">
-            <div class="btn">
+            <div class="btn background_btn">
                 <input id="input_file" class="input-file" type="file">
                 <img id="input_btn" class="" src="/images/gallery.png"></button>
             </div>
-            <div class="btn">
+            <div class="btn emoji_btn">
                 <div id="emoji-button"></div>
             </div>
-            <div id="input_emoji_btn" class="btn">
+            <div id="input_emoji_btn" class="btn add_photo_btn">
                 <input class="input-file" type="file" id="input_emoji_select">
                 <img class="" src="/images/add_photo.png"></button>
             </div>
-            <div class="btn lock-tool unlock">
+            <div class="btn lock-tool unlock lock_btn">
                 <a class="icon-btn btn-outline-success outside" href="#">
                     <i class="fa fa-lock"></i>
                     <i class="fa fa-unlock-alt"></i>
                 </a>
             </div>
-            <div class="btn">
+            <div class="btn reset_btn">
                 <img class="" id="input_reset" src="/images/reset.png"></button>
             </div>
             {{-- <div class="emojis">
