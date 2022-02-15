@@ -35,13 +35,11 @@ $(document).ready(() => {
             //arrived message
             socket.emit('arrive:message', message);
             if (document.visibilityState == "visible") {
-                console.log('you have got message')
                 if (currentContactId == message.from) {
                     //unread -> read
                     socket.emit('read:message', message);
                 }
             } else {
-                console.log('send Notification')
                 socket.emit('send:notification', {
                     from: message.from,
                     to: message.to,
@@ -52,8 +50,6 @@ $(document).ready(() => {
         }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
-        console.log(currentContactId);
-        console.log(message.from);
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
@@ -84,11 +80,9 @@ $(document).ready(() => {
     });
     socket.on('arrive:message', message => {
         setTimeout(() => {
-            console.log('arrived');
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('arrived')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('read')
-            console.log(message);
         }, 1000);
     })
     socket.on('read:message', message => {
@@ -96,8 +90,6 @@ $(document).ready(() => {
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('arrived')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('read')
-            console.log('read');
-            console.log(message);
         }, 2000);
     })
 
@@ -137,7 +129,6 @@ $(document).ready(() => {
             $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
         }
         currentContactId = Number($(e.currentTarget).attr('key'));
-        console.log(currentContactId);
         $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
         $(`ul.chat-main li[key=${currentContactId}] h6.status`).css('display', 'block');
         $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).text('');
@@ -238,7 +229,7 @@ function getRecentChatUsers() {
 }
 
 function setCurrentChatContent(contactorId) {
-    // $('.spining').css('display', 'flex');
+    $('.spining').css('display', 'flex');
 
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
@@ -723,7 +714,6 @@ function deleteMessages() {
         } else {
             console.log('not photo');
         }
-        console.log(messageId, photoId)
         socket.emit('deleteMessage', {
             currentContactId,
             messageId,

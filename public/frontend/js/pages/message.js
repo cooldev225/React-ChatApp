@@ -19,14 +19,12 @@ $(document).ready(() => {
                 type: 'POST',
                 dataType: "json",
                 success: function(res) {
-                    console.log(res);
                     if (res.messageData) {
                         let target = '.contact-chat ul.chatappend';
                         res.messageData.forEach(item => {
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item, true);
                         });
-                        console.log($('.contact-chat').height())
                         if (res.messageData.length) $('.messages').scrollTop(50);
                     }
                     $('#loader').hide();
@@ -38,7 +36,6 @@ $(document).ready(() => {
         }
     });
     $('#mediaPhoto').on('shown.bs.modal', function(e) {
-        // console.log("Open Modal");
         // const player = document.getElementById('player');
         // const mediaCanvas = document.getElementById('mediaCanvas');
         // const context = mediaCanvas.getContext('2d');

@@ -48,8 +48,6 @@ $(document).ready(function() {
         let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
         let phoneNumber = $('#phone').val();
         var form_data = new FormData();
-        console.log(dialCode);
-        console.log(phoneNumber);
         if (dialCode == 57) {
             if (/31[0-9] \d{7}/.test(phoneNumber)) {
                 form_data.append('isoCode2', isoCode2);
@@ -76,7 +74,6 @@ $(document).ready(function() {
             type: 'POST',
             dataType: "json",
             success: function(res) {
-                console.log(res);
                 if (res.update == 'true') {
                     alert('Phone Number saved correctly');
                 }
@@ -102,9 +99,7 @@ $(document).ready(function() {
             type: 'POST',
             dataType: "json",
             data: form_data,
-            success: function(res) {
-                console.log(res);
-            },
+            success: function(res) {},
             error: function(response) {}
         });
     })

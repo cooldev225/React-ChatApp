@@ -637,7 +637,6 @@
             let username = $(this).parents('.media').find('input.username').val();
             let location = $(this).parents('.media').find('input.location').val();
             let description = $(this).parents('.media').find('textarea.description').val();
-            console.log(location, description);
             form_data.append('username', username);
             form_data.append('location', location);
             form_data.append('description', description);
@@ -655,7 +654,6 @@
                 dataType: "json",
                 success: function(res) {
                     if (res.update == true) {
-                        console.log(res);
                         $('#settings .profile-box .details .setting__profile--name').html(username);
                         $('#settings .profile-box .details .setting__profile--location').html(location);
                         $('#settings .profile-box .details .setting__profile--description').html(description);

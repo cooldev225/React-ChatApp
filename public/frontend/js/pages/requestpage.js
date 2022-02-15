@@ -140,7 +140,6 @@ $(document).ready(function() {
         }
     })
     $('.payWholePriceBtn').on('click', () => {
-        console.log(selectedEmojis);
         payWholePhotoPrice();
     });
 
@@ -501,9 +500,7 @@ function payPhoto() {
         price == 0 ? price = photoPrice : '';
         if (price != 0) {
             $('#checkoutModal').modal('show');
-            console.log('not zero');
         } else {
-            console.log('zero');
             payWholePhotoPrice();
         }
     })
@@ -926,7 +923,6 @@ function showPhotoContent(id) {
                                             } else {
                                                 selectedEmojis.push(textBox.id);
                                                 var img = document.createElement('span');
-                                                console.log(textBox);
                                                 $(img).attr('key', textBox.id);
                                                 if (textBox.text.charCodeAt() > 128) {
                                                     img.innerHTML = textBox.text;
@@ -935,7 +931,6 @@ function showPhotoContent(id) {
                                                 }
                                                 $('.selected-emojis').append(img);
                                             }
-                                            // console.log(textBox);
                                             let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.id == item).price) + total, 0);
                                             if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
                                             price == 0 ? price = photoPrice : '';
