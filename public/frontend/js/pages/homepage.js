@@ -238,7 +238,7 @@ function getRecentChatUsers() {
 }
 
 function setCurrentChatContent(contactorId) {
-    $('.spining').css('display', 'flex');
+    // $('.spining').css('display', 'flex');
 
     var form_data = new FormData();
     form_data.append('currentContactorId', contactorId);
