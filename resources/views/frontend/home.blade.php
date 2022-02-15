@@ -4218,7 +4218,7 @@
 
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    {{-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> --}}
 
     <script src="/frontend/js/pages/payment.js"></script>
     <script src="/frontend/js/pages/setting.js"></script>
