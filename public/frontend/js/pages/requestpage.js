@@ -315,6 +315,7 @@ function blurPhoto() {
                 blurPrice = $('.preview-paid').val();
                 // blurPrice = $('.sticky-switch').is(':checked') ? -1 : 0;
             }
+            blurPrice = blurPrice < 0 ? 0 : blurPrice;
             let obj = Object.assign(globalImage);
 
             let filter = new fabric.Image.filters.Blur({
@@ -798,6 +799,7 @@ function showPhotoContent(id) {
                                     $(img).attr('key', 'blur');
                                     $('.selected-emojis').append(img);
                                 }
+
                                 let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.id == item).price) + total, 0);
                                 if (selectedEmojis.includes('blur')) price += res.data[0].blur_price;
                                 price == 0 ? price = photoPrice : '';
