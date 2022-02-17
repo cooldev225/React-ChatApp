@@ -383,7 +383,7 @@ function addChatUserListItem(target, data) {
             </div>
             <div class="date-status"><i class="ti-pin2"></i>
                 <h6>22/10/19</h6>
-                <h6 class="font-success status"> Seen</h6>
+                <h6 class="font-success status"></h6>
                 <div class="badge badge-primary sm"></div>
             </div>
             </div>

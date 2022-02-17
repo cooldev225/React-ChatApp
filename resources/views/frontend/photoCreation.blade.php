@@ -139,7 +139,7 @@
 @endsection
 
 @section('media')
-    <input type="file" accept="image/*" capture>
+    <input type="file" accept="image/*" capture="camera" />
     <video id="player" autoplay width=400></video>
     <button id="capture">Capture</button>
     <canvas id="mediaCanvas" width=320 height=240></canvas>
@@ -160,14 +160,32 @@
 
         // Attach the video stream to the video element and autoplay.
         $('#mediaPhoto').on('shown.bs.modal', function(e) {
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia(constraints)
-                    .then((stream) => {
-                        player.srcObject = stream;
-                    }).catch(function(error) {
-                        player.src = '/videos/2.mp4';
-                        console.log("Something went wrong!");
-                    });;
+            if (navigator.getUserMedia) {
+                // navigator.mediaDevices.getUserMedia(constraints)
+                //     .then((stream) => {
+                //         player.srcObject = stream;
+                //     }).catch(function(error) {
+                //         player.src = '/videos/2.mp4';
+                //         console.log("Something went wrong!");
+                //     });
+
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator
+                    .mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+                if (navigator.getUserMedia) {
+                    navigator.getUserMedia({
+                        video: true
+                    }, handleVideo, videoError);
+                }
+
+                function handleVideo(stream) {
+                    player.srcObject = stream;
+                    player.play();
+                }
+
+                function videoError(e) {
+
+                }
             }
         });
     </script>
