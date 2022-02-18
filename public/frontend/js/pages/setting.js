@@ -49,7 +49,7 @@ $(document).ready(function() {
         let phoneNumber = $('#phone').val();
         var form_data = new FormData();
         if (dialCode == 57) {
-            if (/31[0-9] \d{7}/.test(phoneNumber)) {
+            if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
                 form_data.append('isoCode2', isoCode2);
                 form_data.append('dialCode', dialCode);
                 form_data.append('phoneNumber', phoneNumber);
