@@ -308,6 +308,25 @@ io.on('connection', (socket) => {
             //     body: dataString,
             // };
             // request(options, callback);
+    });
+    socket.on('stickyToFree', data => {
+        db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
+            let content = JSON.parse(item[0].content);
+            let index = content.findIndex(emojiInfo => emojiInfo.id == data.emojiId);
+            content[index].price = 0;
+            item[0].content = JSON.stringify(content);
+            db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
+                if (error) throw error;
+                let recipientSocketId = user_socketMap.get(item[0].to.toString());
+                let senderSocketId = user_socketMap.get(currentUserId.toString());
+                io.sockets.sockets.get(senderSocketId).emit('stickyToFree');
+                if (recipientSocketId) {
+                    if (io.sockets.sockets.get(recipientSocketId)) {
+                        io.sockets.sockets.get(recipientSocketId).emit('stickyToFree');
+                    }
+                }
+            })
+        });
     })
     socket.on('logout', data => {
         let userSocketId = user_socketMap.get(currentUserId.toString());

@@ -80,6 +80,12 @@ $(document).ready(function() {
         let target = $('.chatappend').find(`.replies .msg-item[key=${data.messageId}]`);
         getContentRate(target, data.rate);
     })
+    socket.on('stickyToFree', data => {
+        let id = $('#photo_item .modal-content').attr('key');
+        if (id) {
+            showPhotoContent(id);
+        }
+    })
 
     $('ul.chat-main.request-list').on('click', 'li', (e) => {
         $('#detailRequestModal').find('.btn-success').css('display', 'block');
@@ -699,7 +705,7 @@ function addEventAction(panel, element) {
         'mouseup': () => {
             if (tempImage) panel.remove(tempImage);
             if (text) panel.remove(text);
-            let timeout = 1500;
+            let timeout = 2000;
             if (element.left < -10 || element.left > panel.width || element.top < -10 || element.top > panel.height) {
                 panel.remove(panel.getActiveObject());
                 panel.remove(tempImage);
@@ -739,6 +745,18 @@ function addEventAction(panel, element) {
                 text.hasControls = false;
                 panel.add(text);
             }
+            tempImage.off().on({
+                'mouseup': () => {
+                    console.log(element.price);
+                    if ($('#photo_item .modal-content').hasClass('sent')) {
+                        let photoId = $('#photo_item .modal-content').attr('photoId');
+                        let emojiId = element.id
+                        console.log(photoId, emojiId);
+                        socket.emit('stickyToFree', { photoId, emojiId })
+                    }
+                    console.log(element);
+                }
+            });
             setTimeout(() => {
                 panel.remove(tempImage);
                 panel.remove(text);
