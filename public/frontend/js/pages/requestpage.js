@@ -8,7 +8,7 @@ let unlockImage;
 let priceImage;
 let blurPrice = 0;
 let photoPrice = 0;
-
+fabric.Object.prototype.cornerSize = 5;
 fabric.Image.fromURL('/images/lock.png', (oImg) => {
     lockImage = oImg;
 });

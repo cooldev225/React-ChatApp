@@ -313,7 +313,11 @@ io.on('connection', (socket) => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             let content = JSON.parse(item[0].content);
             let index = content.findIndex(emojiInfo => emojiInfo.id == data.emojiId);
-            content[index].price = 0;
+            if (content[index].price < 0) {
+                content[index].price = 0;
+            } else if (content[index].price == 0) {
+                content[index].price = -1;
+            }
             item[0].content = JSON.stringify(content);
             db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
