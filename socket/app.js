@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
     console.log('userId:', currentUserId, ' logined');
     db.query(`UPDATE users SET logout = 0 WHERE id=${currentUserId}`, (error, item) => {
         if (error)
-            console.log(error);
+            console.log("Error:", error);
         console.log('userId:', currentUserId, ' logined successfully');
     });
 
