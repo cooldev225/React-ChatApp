@@ -54,11 +54,11 @@ function callback(error, response, body) {
 }
 
 
-// db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
-// db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
-//     console.log(item);
-// })
-// });
+db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
+    db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
+        console.log(item);
+    })
+});
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
@@ -182,6 +182,7 @@ io.on('connection', (socket) => {
                 kind: 2
             }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+                if (error) console.log(error);
                 data.id = item.insertId;
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {

@@ -19,7 +19,9 @@ $(document).ready(() => {
     // socket = io.connect(window.location.origin, { query: "currentUserId=" + currentUserId });
     socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
-
+    socket.on("connect", () => {
+        getUsersList();
+    })
     socket.on('message', message => {
         // var contentwidth = jQuery(window).width();
         // if (contentwidth <= '768') {
@@ -246,6 +248,7 @@ function setCurrentChatContent(contactorId) {
         dataType: "json",
         success: function(res) {
             if (res.state == 'true') {
+                getUsersList();
                 let {
                     messageData
                 } = res;
