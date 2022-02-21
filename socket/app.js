@@ -25,11 +25,18 @@ const io = require('socket.io')(server, {
 
 const db = mysql.createConnection({
     host: "localhost",
-    user: "ldahkumy_ojochat",
+    user: "root",
     password: "tempP@ss123",
     database: "ldahkumy_ojochat",
     charset: 'utf8mb4'
 });
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "ldahkumy_ojochat",
+//     password: "tempP@ss123",
+//     database: "ldahkumy_ojochat",
+//     charset: 'utf8mb4'
+// });
 
 // var headers = {
 //     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
