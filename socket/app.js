@@ -30,6 +30,7 @@ const db = mysql.createConnection({
     database: "ldahkumy_ojochat",
     charset: 'utf8mb4'
 });
+
 // const db = mysql.createConnection({
 //     host: "localhost",
 //     user: "ldahkumy_ojochat",
@@ -81,7 +82,8 @@ io.on('connection', (socket) => {
     //user table logout flag make false
     console.log('userId:', currentUserId, ' logined');
     db.query(`UPDATE users SET logout = 0 WHERE id=${currentUserId}`, (error, item) => {
-        if (error) throw error;
+        if (error)
+            console.log(error);
         console.log('userId:', currentUserId, ' logined successfully');
     });
 
