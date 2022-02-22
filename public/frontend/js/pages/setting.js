@@ -43,7 +43,7 @@ $(document).ready(function() {
     // on keyup / change flag: reset
     telInput.on("keyup change", reset);
 
-    $('.phoneNumberConfirmBtn').on('mouseup', () => {
+    $('.phoneNumberConfirmBtn').on('click', () => {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
         let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
         let phoneNumber = $('#phone').val();

@@ -567,6 +567,15 @@ select#phone {
     margin-bottom: 10px;
 }
 
+.change-number .text-end {
+    display: flex;
+    justify-content: space-between;
+}
+
+.change-number .text-end a.btn {
+    padding: 5px 10px;
+}
+
 h6.sent {
     color: rgb(58 49 49);
 }

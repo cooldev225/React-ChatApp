@@ -23,11 +23,6 @@ $(document).ready(() => {
         getUsersList();
     })
     socket.on('message', message => {
-        // var contentwidth = jQuery(window).width();
-        // if (contentwidth <= '768') {
-        //     $('.chitchat-container').toggleClass("mobile-menu");
-        // }
-
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
             let sid = getCertainUserInfoById(message.to).sid;

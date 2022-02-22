@@ -63,15 +63,16 @@ function callback(error, response, body) {
 
 
 db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
-    db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
-        console.log(item);
-    })
+    // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
+    //     console.log(item);
+    // });
 });
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
+const { type } = require('express/lib/response');
 
 app.use(cors({
     origin: '*'
@@ -341,7 +342,33 @@ io.on('connection', (socket) => {
                 }
             })
         });
-    })
+    });
+    socket.on('test:SMS', data => {
+        console.log(data);
+        let fullPhoneNumber = '+' + data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+        let message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
+        if (type == 1) {
+            var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+        } else {
+            var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
+        }
+        axios.get(smsUrl).then(res => {
+            console.log(res.status);
+            if (res.status == 200) {
+                console.log('OK');
+                let senderSocketId = user_socketMap.get(currentUserId.toString());
+                if (senderSocketId) {
+                    if (io.sockets.sockets.get(senderSocketId)) {
+                        io.sockets.sockets.get(senderSocketId).emit('test:SMS', { type: data.type });
+                    }
+                }
+            } else {
+                console.log('Error');
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+    });
     socket.on('logout', data => {
         let userSocketId = user_socketMap.get(currentUserId.toString());
         user_socketMap.delete(currentUserId);
@@ -389,9 +416,9 @@ function sendSMS(sender, recipient, type) {
                             } else {
                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
                             }
-                            let smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-                            // let smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-                            axios.get(smsUrl).then(res => {
+                            let sms1Url = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                            let sms2Url = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
+                            axios.get(sms1Url).then(res => {
                                 console.log(res.status);
                             }).catch(error => {
                                 console.log(error);
