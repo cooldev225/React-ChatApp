@@ -355,7 +355,7 @@ io.on('connection', (socket) => {
             var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
         }
         axios.get(smsUrl).then(res => {
-            console.log(res.success);
+            console.log(res.data);
             if (res.status == 200) {
                 console.log('OK');
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
