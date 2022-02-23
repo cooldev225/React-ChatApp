@@ -345,7 +345,12 @@ io.on('connection', (socket) => {
     });
     socket.on('test:SMS', data => {
         console.log(data);
-        let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+        // let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+        if (data.dialCode != 1) {
+            var fullPhoneNumber = '011' + data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+        } else {
+            var fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+        }
         let message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
         if (data.type == 1) {
             console.log('1');
