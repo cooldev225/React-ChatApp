@@ -347,7 +347,7 @@ io.on('connection', (socket) => {
         console.log(data);
         let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
         let message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
-        if (type == 1) {
+        if (data.type == 1) {
             console.log('1');
             var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
         } else {
@@ -355,7 +355,6 @@ io.on('connection', (socket) => {
             var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
         }
         axios.get(smsUrl).then(res => {
-            console.log(res)
             console.log(res.success);
             if (res.status == 200) {
                 console.log('OK');
