@@ -50,6 +50,13 @@ $(document).ready(function() {
         if (phoneNumber.includes('+')) {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
         }
+        let smsType = $('.smsTestBtns .btn.active').text().replace(/[^0-9]/g, '');
+        console.log(smsType);
+        if (!smsType) {
+            alert('Please set SMS1 or SMS2.');
+            return;
+        }
+
         var form_data = new FormData();
         if (dialCode == 57) {
             if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
@@ -65,6 +72,7 @@ $(document).ready(function() {
             alert('Please input valid phone number');
             return;
         }
+        form_data.append('smsType', smsType);
         $.ajax({
             url: '/setting/setPhoneNumber',
             headers: {

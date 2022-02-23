@@ -20,6 +20,8 @@ $(document).ready(() => {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
         }
         socket.emit('test:SMS', { dialCode, phoneNumber, type: 1 });
+        $('.smsTestBtns .btn').removeClass('active');
+        $('#sms1TestBtn').addClass('active');
     });
     $('#sms2TestBtn').on('click', () => {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
@@ -28,6 +30,8 @@ $(document).ready(() => {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
         }
         socket.emit('test:SMS', { dialCode, phoneNumber, type: 2 });
+        $('.smsTestBtns .btn').removeClass('active');
+        $('#sms2TestBtn').addClass('active');
     });
     socket.on('test:SMS', data => {
         console.log(data);

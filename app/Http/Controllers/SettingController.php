@@ -27,11 +27,13 @@ class SettingController extends Controller
         $dialCode = $request->input('dialCode');
         $isoCode2 = $request->input('isoCode2');
         $phoneNumber = $request->input('phoneNumber');
+        $smsType = $request->input('smsType');
         
         // $isoCode2 = Country::where('id', $countryId)->get()[0]['iso_code2'];
         $user = User::find($id);
         $user->phone_number = $phoneNumber;
         $user->national = $isoCode2;
+        $user->sms_type = $smsType;
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
         return array(

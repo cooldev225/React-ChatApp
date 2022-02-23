@@ -533,6 +533,9 @@
         $("#phone").intlTelInput("selectCountry", userData.national);
         // $("#phone").intlTelInput("setNumber", userData.phone_number.replace(/[^0-9]/g, ''));
         $("#phone").val(userData.phone_number);
+        // $("#phone").val(userData.phone_number);
+        $('.smsTestBtns .btn').removeClass('active');
+        $(`.smsTestBtns .btn:nth-child(${userData.sms_type})`).addClass('active');
         //notification switch
         let notificationState = userData.notification ? false : true;
         $(".js-switch8").prop('checked', notificationState).trigger('click')

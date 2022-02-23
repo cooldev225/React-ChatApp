@@ -576,6 +576,10 @@ select#phone {
     padding: 5px 10px;
 }
 
+.change-number .text-end .smsTestBtns a.btn.active {
+    outline: 1px solid black !important;
+}
+
 h6.sent {
     color: rgb(58 49 49);
 }
