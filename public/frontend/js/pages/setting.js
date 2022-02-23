@@ -47,6 +47,9 @@ $(document).ready(function() {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
         let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
         let phoneNumber = $('#phone').val();
+        if (phoneNumber.includes('+')) {
+            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
+        }
         var form_data = new FormData();
         if (dialCode == 57) {
             if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
