@@ -277,7 +277,7 @@ io.on('connection', (socket) => {
                     console.log('OK');
                 });
             });
-            Nofification.sendPaySMS(item[0].from, item[0].to, data.addBalance);
+            Nofification.sendPaySMS(item[0].to, item[0].from, data.addBalance);
         });
     })
 

@@ -23,9 +23,9 @@ exports.sendPaySMS = (sender, recipient, amount) => {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             if (spainish) {
                                 // var message = `Hola ${row[0].username}, you have got cash! You have received $${amount} from ${user[0].username} on OJO.`;
-                                var message = `¡Oye, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${row[0].username} en OJO.`;
+                                var message = `¡Oye, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${user[0].username} en OJO.`;
                             } else {
-                                var message = `Hey ${user[0].username}, you\u0027ve got cash! You have received $${amount} from ${row[0].username} on OJO.`;
+                                var message = `Hey ${row[0].username}, you\u0027ve got cash! You have received $${amount} from ${user[0].username} on OJO.`;
                             }
                             this.sendSMSFinal(fullPhoneNumber, message, row[0].sms_type);
                         });
