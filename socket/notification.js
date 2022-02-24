@@ -23,10 +23,9 @@ exports.sendPaySMS = (sender, recipient, amount) => {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             if (spainish) {
                                 // var message = `Hola ${row[0].username}, you have got cash! You have received $${amount} from ${user[0].username} on OJO.`;
-                                var message = `¡Oye, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${user[0].username} en OJO.`;
-
+                                var message = `¡Oye, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${row[0].username} en OJO.`;
                             } else {
-                                var message = `Hey ${row[0].username}, you have got cash! You have received $${amount} from ${user[0].username} on OJO.`;
+                                var message = `Hey ${user[0].username}, you\u0027ve got cash! You have received $${amount} from ${row[0].username} on OJO.`;
                             }
                             this.sendSMSFinal(fullPhoneNumber, message, row[0].sms_type);
                         });
@@ -59,13 +58,14 @@ exports.sendRateSMS = (sender, recipient, rate) => {
                             let countStar = '';
                             for (let i = 0; i < rate; i++) {
                                 countStar += '*';
+                                // countStar += '\u2B50';
                                 // countStar += '⭐️⭐️⭐️⭐️⭐️';
                             }
                             console.log(countStar);
                             if (spainish) {
-                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de darte ${countStar} en una foto en OJO.`;
+                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de calificarte ${countStar} en un mensaje de texto en OJO.`;
                             } else {
-                                var message = `Hey ${row[0].username}, ${user[0].username} just gave you ${countStar} on a photo at OJO.`;
+                                var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a text message at OJO.`;
                             }
                             console.log(message);
                             this.sendSMSFinal(fullPhoneNumber, message, row[0].sms_type);
