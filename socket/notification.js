@@ -65,9 +65,9 @@ exports.sendRateSMS = (sender, recipient, rate, kindIndex) => {
                             console.log(countStar);
                             let type = KindConstant[kindIndex];
                             console.log(type);
-                            let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
+                            let messageType = type == 'text' ? 'un mensaje de texto' : type == 'photo' ? 'una foto' : 'solicitar';
                             if (spainish) {
-                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de darte ${countStar} en un ${messageType} en OJO.`;
+                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de darte ${countStar} en ${messageType} en OJO.`;
                             } else {
                                 var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a ${type} message at OJO.`;
                             }
