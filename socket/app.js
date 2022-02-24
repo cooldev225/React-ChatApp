@@ -217,7 +217,7 @@ io.on('connection', (socket) => {
                 }
             }
         });
-        Nofification.sendRateSMS(currentUserId, data.currentContactId, data.rate);
+        Nofification.sendRateSMS(currentUserId, data.currentContactId, data.rate, data.kind);
     })
 
     socket.on('typing', data => {

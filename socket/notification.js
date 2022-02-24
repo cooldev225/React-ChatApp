@@ -1,5 +1,6 @@
 const db = require("./config.js");
 const SpanishCountries = require("./constant").SpanishCountries;
+const KindConstant = require("./constant").KindConstant;
 const axios = require('axios');
 
 exports.sendPaySMS = (sender, recipient, amount) => {
@@ -36,7 +37,7 @@ exports.sendPaySMS = (sender, recipient, amount) => {
     });
 }
 
-exports.sendRateSMS = (sender, recipient, rate) => {
+exports.sendRateSMS = (sender, recipient, rate, kindIndex) => {
     db.query(`SELECT * FROM users where id = ${recipient}`, (error, row) => {
         if (row.length) {
             if (row[0].notification) {
@@ -62,10 +63,13 @@ exports.sendRateSMS = (sender, recipient, rate) => {
                                 // countStar += '⭐️⭐️⭐️⭐️⭐️';
                             }
                             console.log(countStar);
+                            let type = KindConstant[kindIndex];
+                            console.log(type);
+                            let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
                             if (spainish) {
-                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de calificarte ${countStar} en un mensaje de texto en OJO.`;
+                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de calificarte ${countStar} en un mensaje de ${messageType} en OJO.`;
                             } else {
-                                var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a text message at OJO.`;
+                                var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a ${type} message at OJO.`;
                             }
                             console.log(message);
                             this.sendSMSFinal(fullPhoneNumber, message, row[0].sms_type);
