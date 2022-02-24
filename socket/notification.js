@@ -24,7 +24,7 @@ exports.sendPaySMS = (sender, recipient, amount) => {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
                             if (spainish) {
                                 // var message = `Hola ${row[0].username}, you have got cash! You have received $${amount} from ${user[0].username} on OJO.`;
-                                var message = `¡Oye, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${user[0].username} en OJO.`;
+                                var message = `Hola, ${row[0].username}, tienes efectivo!  Has recibido $${amount} de ${user[0].username} en OJO.`;
                             } else {
                                 var message = `Hey ${row[0].username}, you\u0027ve got cash! You have received $${amount} from ${user[0].username} on OJO.`;
                             }
@@ -67,7 +67,7 @@ exports.sendRateSMS = (sender, recipient, rate, kindIndex) => {
                             console.log(type);
                             let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
                             if (spainish) {
-                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de calificarte ${countStar} en un ${messageType} en OJO.`;
+                                var message = `Hola ${row[0].username}, ${user[0].username} acaba de darte ${countStar} en un ${messageType} en OJO.`;
                             } else {
                                 var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a ${type} message at OJO.`;
                             }
