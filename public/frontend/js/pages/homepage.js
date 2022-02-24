@@ -7,15 +7,6 @@ var typingTime;
 var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
 $(document).ready(() => {
-    // webpushr('fetch_id', function(sid) {
-    //     //save id to database
-    //     console.log('webpushr subscriber id: ' + sid)
-    //     socket.emit('send:subscriberId', { sid });
-    // });
-    // window.addEventListener('beforeunload', function(e) {
-    //     e.preventDefault();
-    //     e.returnValue = 'Are you sure?';
-    // });
     // socket = io.connect(window.location.origin, { query: "currentUserId=" + currentUserId });
     socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
@@ -157,6 +148,10 @@ $(document).ready(() => {
     });
     $('.selfProfileBtn').on('click', () => {
         displayProfileContent(currentUserId);
+        $('.chitchat-container').toggleClass("mobile-menu");
+        if ($(window).width() <= 768) {
+            $('.main-nav').removeClass("on");
+        }
     });
     $('.menu-trigger').on('click', () => {
         if (currentContactId)

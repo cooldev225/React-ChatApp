@@ -1,8 +1,6 @@
 const express = require('express')
 const app = express()
-const mysql = require('mysql');
 const axios = require('axios');
-
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
     // const port = process.env.PORT || 4000
@@ -13,31 +11,10 @@ const io = require('socket.io')(server, {
     },
     maxHttpBufferSize: 10E7
 });
+const db = require("./config.js");
+const Nofification = require("./notification.js");
 
 
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "ldahkumy_ojochat",
-//     charset: 'utf8mb4'
-// });
-
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "tempP@ss123",
-    database: "ldahkumy_ojochat",
-    charset: 'utf8mb4'
-});
-
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "ldahkumy_ojochat",
-//     password: "tempP@ss123",
-//     database: "ldahkumy_ojochat",
-//     charset: 'utf8mb4'
-// });
 
 // var headers = {
 //     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
@@ -239,7 +216,8 @@ io.on('connection', (socket) => {
                     io.sockets.sockets.get(recipientSocketId).emit('get:rate', data);
                 }
             }
-        })
+        });
+        Nofification.sendRateSMS(currentUserId, data.currentContactId, data.rate);
     })
 
     socket.on('typing', data => {
@@ -298,17 +276,11 @@ io.on('connection', (socket) => {
                     if (error) throw error;
                     console.log('OK');
                 });
-            })
+            });
+            Nofification.sendPaySMS(item[0].from, item[0].to, data.addBalance);
         });
     })
 
-    socket.on('send:subscriberId', data => {
-        if (data.sid) {
-            db.query(`UPDATE users SET sid=${data.sid} WHERE id=${currentUserId}`, (error, item) => {
-                if (error) console.log(error);
-            })
-        }
-    })
     socket.on('send:notification', data => {
         sendSMS(data.from, data.to, data.type)
             // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
@@ -424,10 +396,8 @@ function sendSMS(sender, recipient, type) {
                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
                             }
                             if (row[0].sms_type == 1) {
-                                console.log('1');
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                             } else {
-                                console.log('2');
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
                             // let sms1Url = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
