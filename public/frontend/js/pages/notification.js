@@ -1,3 +1,30 @@
+$(document).ready(() => {
+    $('#sms1TestBtn').on('click', () => {
+        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
+        let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+        let phoneNumber = $('#phone').val();
+        if (phoneNumber.includes('+')) {
+            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
+        }
+        socket.emit('test:SMS', { dialCode, isoCode2, phoneNumber, type: 1 });
+        $('.smsTestBtns .btn').removeClass('active');
+        $('#sms1TestBtn').addClass('active');
+    });
+    $('#sms2TestBtn').on('click', () => {
+        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
+        let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+        let phoneNumber = $('#phone').val();
+        if (phoneNumber.includes('+')) {
+            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
+        }
+        socket.emit('test:SMS', { dialCode, phoneNumber, type: 2 });
+        $('.smsTestBtns .btn').removeClass('active');
+        $('#sms2TestBtn').addClass('active');
+    });
+    socket.on('test:SMS', data => {
+        console.log(data);
+    });
+});
 // importScripts('https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js');
 // importScripts('https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js');
 
@@ -12,28 +39,3 @@
 // messaging.setBackgroundMessageHandler(function({ data: { title, body, icon } }) {
 //     return self.registration.showNotification(title, { body, icon });
 // });
-$(document).ready(() => {
-    $('#sms1TestBtn').on('click', () => {
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        let phoneNumber = $('#phone').val();
-        if (phoneNumber.includes('+')) {
-            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
-        }
-        socket.emit('test:SMS', { dialCode, phoneNumber, type: 1 });
-        $('.smsTestBtns .btn').removeClass('active');
-        $('#sms1TestBtn').addClass('active');
-    });
-    $('#sms2TestBtn').on('click', () => {
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        let phoneNumber = $('#phone').val();
-        if (phoneNumber.includes('+')) {
-            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
-        }
-        socket.emit('test:SMS', { dialCode, phoneNumber, type: 2 });
-        $('.smsTestBtns .btn').removeClass('active');
-        $('#sms2TestBtn').addClass('active');
-    });
-    socket.on('test:SMS', data => {
-        console.log(data);
-    })
-});

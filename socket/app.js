@@ -317,35 +317,43 @@ io.on('connection', (socket) => {
     });
     socket.on('test:SMS', data => {
         console.log(data);
-        // let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
-        if (data.dialCode != 1) {
-            var fullPhoneNumber = '011' + data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
-        } else {
-            var fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
-        }
-        let message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
-        if (data.type == 1) {
-            console.log('1');
-            var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-        } else {
-            console.log('2');
-            var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
-        }
-        axios.get(smsUrl).then(res => {
-            console.log(res.data);
-            if (res.status == 200) {
-                console.log('OK');
-                let senderSocketId = user_socketMap.get(currentUserId.toString());
-                if (senderSocketId) {
-                    if (io.sockets.sockets.get(senderSocketId)) {
-                        io.sockets.sockets.get(senderSocketId).emit('test:SMS', { type: data.type });
-                    }
-                }
+        db.query(`SELECT * FROM countries where iso_code2 = '${data.isoCode2}'`, (error, country) => {
+            // let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+
+            let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
+            if (data.dialCode != 1) {
+                var fullPhoneNumber = '011' + data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
             } else {
-                console.log('Error');
+                var fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
             }
-        }).catch(error => {
-            console.log(error);
+            if (spainish) {
+                var message = `Oye, tu número de móvil ${data.phoneNumber} ha sido actualizado en OJO.`;
+            } else {
+                var message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
+            }
+            if (data.type == 1) {
+                var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+            } else {
+                var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
+            }
+            axios.get(smsUrl).then(res => {
+                console.log(res.data);
+                console.log(message);
+                if (res.status == 200) {
+                    console.log('OK');
+                    let senderSocketId = user_socketMap.get(currentUserId.toString());
+                    if (senderSocketId) {
+                        if (io.sockets.sockets.get(senderSocketId)) {
+                            io.sockets.sockets.get(senderSocketId).emit('test:SMS', { type: data.type });
+                        }
+                    }
+                } else {
+                    console.log('Error');
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+
         });
     });
     socket.on('logout', data => {

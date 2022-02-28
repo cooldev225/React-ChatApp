@@ -62,16 +62,13 @@ exports.sendRateSMS = (sender, recipient, rate, kindIndex) => {
                                 // countStar += '\u2B50';
                                 // countStar += '⭐️⭐️⭐️⭐️⭐️';
                             }
-                            console.log(countStar);
                             let type = KindConstant[kindIndex];
-                            console.log(type);
                             let messageType = type == 'text' ? 'un mensaje de texto' : type == 'photo' ? 'una foto' : 'solicitar';
                             if (spainish) {
                                 var message = `Hola ${row[0].username}, ${user[0].username} acaba de darte ${countStar} en ${messageType} en OJO.`;
                             } else {
                                 var message = `Hey ${row[0].username}, ${user[0].username} just rated you ${countStar} on a ${type} message at OJO.`;
                             }
-                            console.log(message);
                             this.sendSMSFinal(fullPhoneNumber, message, row[0].sms_type);
                         });
                     });
@@ -87,7 +84,6 @@ exports.sendSMSFinal = (phoneNumber, message, smsType) => {
     } else {
         var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${phoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
     }
-    console.log(smsUrl);
     axios.get(smsUrl).then(res => {
         console.log("Status: ", res.data.success);
         console.log("Content: ", res.data);
