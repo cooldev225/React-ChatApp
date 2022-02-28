@@ -10,8 +10,8 @@ let SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica
 
 $(document).ready(() => {
     // socket = io.connect(window.location.origin, { query: "currentUserId=" + currentUserId });
-    // socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
-    socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
+    socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
+    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
     socket.on("connect", () => {
         getUsersList();
     })
