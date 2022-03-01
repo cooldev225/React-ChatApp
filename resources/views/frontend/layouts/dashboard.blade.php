@@ -49,7 +49,9 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
     <script src="/frontend/js/pages/fabric.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"
+    integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('content')
     <script src="/chat/js/owl.carousel.js"></script>
     <script src="/chat/js/popper.min.js"></script>
@@ -71,9 +73,7 @@
     <script src="/chat/js/tour/intro-init.js"></script>
     <script src="/chat/js/jquery.magnific-popup.js"></script>
     <script src="/chat/js/zoom-gallery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"
-        integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.js"></script> --}}
