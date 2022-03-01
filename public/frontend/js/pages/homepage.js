@@ -7,9 +7,7 @@ var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
 
 $(document).ready(() => {
-    socket.on("connect", () => {
-        getUsersList();
-    })
+
     socket.on('message', message => {
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
