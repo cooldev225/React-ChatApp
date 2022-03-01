@@ -3947,7 +3947,7 @@
             </div>
         </div>
     </div>
-
+    <script src="/frontend/js/constant.js"></script>
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>

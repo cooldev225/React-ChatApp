@@ -6,11 +6,10 @@ var socket;
 var typingTime;
 var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
-let SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
 
 $(document).ready(() => {
     // socket = io.connect(window.location.origin, { query: "currentUserId=" + currentUserId });
-    socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
+    // socket = io.connect('http://ojochat.com:3000', { query: "currentUserId=" + currentUserId });
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
     socket.on("connect", () => {
         getUsersList();

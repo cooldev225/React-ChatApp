@@ -49,7 +49,6 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
     <script src="/frontend/js/pages/fabric.js"></script>
-    <script src="/frontend/js/constant.js"></script>
 
     @yield('content')
     <script src="/chat/js/owl.carousel.js"></script>
