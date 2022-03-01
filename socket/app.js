@@ -230,24 +230,38 @@ io.on('connection', (socket) => {
     });
 
     socket.on('deleteMessage', data => {
-        db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
-            if (!error) {
-                if (data.photoId) {
+        let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+        let senderSocketId = user_socketMap.get(currentUserId.toString());
+        if (data.photoId) {
+            console.log(data.photoId);
+            db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, photo) => {
+                if (photo[0].paid && currentUserId == photo[0].from) {
+                    io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: false });
+                } else {
+                    var paid_status = false;
                     db.query(`DELETE FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
                         if (!error) console.log(data.photoId, ': photo deleted')
                     });
+                    db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
+                        if (!error) {
+                            io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: true });
+                            if (io.sockets.sockets.get(recipientSocketId)) {
+                                io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
+                            }
+                        }
+                    });
                 }
-                if (data.currentContactId) {
-                    let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
-                    let senderSocketId = user_socketMap.get(currentUserId.toString());
-                    io.sockets.sockets.get(senderSocketId).emit('delete:message', data.messageId);
-                    if (recipientSocketId) {
-                        if (io.sockets.sockets.get(recipientSocketId))
-                            io.sockets.sockets.get(recipientSocketId).emit('delete:message', data.messageId);
+            });
+        } else {
+            db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
+                if (!error) {
+                    io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: true });
+                    if (io.sockets.sockets.get(recipientSocketId)) {
+                        io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
                     }
                 }
-            }
-        });
+            });
+        }
     });
 
     socket.on('pay:photo', data => {
@@ -264,7 +278,7 @@ io.on('connection', (socket) => {
                     item[0].content = JSON.stringify(content);
                 }
             });
-            db.query(`UPDATE photo_galleries SET blur = ${item[0].blur}, blur_price = ${item[0].blur_price}, content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
+            db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(item[0].content)}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
                     if (error) throw error;
