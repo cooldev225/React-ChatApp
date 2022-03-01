@@ -2,7 +2,6 @@ var $contact_active;
 var currentContactId;
 var contactorInfo = {};
 var usersList = [];
-var socket;
 var typingTime;
 var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
