@@ -89,7 +89,7 @@ $(document).ready(() => {
             element.length ? element.remove() : '';
         } else {
             let currentContactName = getCertainUserInfoById(currentContactId).username;
-            alert(`This is photo is paid by ${currentContactName}. You can't delete this.`);
+            alert(`This photo has been paid by ${currentContactName}. You can not delete this. `);
         }
     })
     new Promise(resolve => {
