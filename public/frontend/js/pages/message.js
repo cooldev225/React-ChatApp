@@ -62,15 +62,33 @@ $(document).ready(() => {
     });
 
     //Multimessage
+
     $('#new_chat').on('click', () => {
+
+        // $('#direct').toggleClass('active');
+        // $('#direct').toggleClass('show');
+        // $('#group').toggleClass('active');
+        // $('#group').toggleClass('show');
+
+        $('.chat-cont-setting').removeClass('open');
+
         $('#chating').removeClass('active');
-        $('#group_chat').removeClass('active');
         $('#group_blank').addClass('active');
+        $('#group_chat').removeClass('active');
         $('.chitchat-container').toggleClass("mobile-menu");
         if ($(window).width() <= 768) {
             $('.main-nav').removeClass("on");
         }
     });
+    $('#group_blank .mobile-sidebar').on('click', () => {
+        $('#direct').addClass('active');
+        $('#direct').addClass('show');
+        $('#group').removeClass('active');
+        $('#group').removeClass('show');
+        $('#chating').addClass('active');
+        $('#group_blank').removeClass('active');
+    })
+
     $('#msgchatModal').on('shown.bs.modal', function(e) {
         var form_data = new FormData();
         $.ajax({

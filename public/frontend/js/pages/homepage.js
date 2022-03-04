@@ -112,9 +112,14 @@ $(document).ready(() => {
 
     // displayChatData();
     $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
+
         $('.section-py-space').css('display', 'none');
         $('.app-list').css('display', 'block');
         $('#content').css('display', 'block');
+
+        $('#chating').addClass('active');
+        $('#group_blank').removeClass('active');
+
         if (currentContactId) {
             $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
         }
