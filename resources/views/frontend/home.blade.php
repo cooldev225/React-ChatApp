@@ -839,6 +839,11 @@
                                             data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
                                         <div class="chat-frind-content">
                                             <ul>
+                                                <li class="add_contact_user">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm"
+                                                        href="#"><i data-feather="users"></i></a>
+                                                    <h5>Add Contact</h5>
+                                                </li>
                                                 <li>
                                                     <a class="icon-btn btn-outline-primary button-effect btn-sm"
                                                         href="#"><i data-feather="user"></i></a>
@@ -3971,4 +3976,5 @@
     <script src="/frontend/js/pages/setting.js"></script>
     <script src="/frontend/js/pages/notification.js"></script>
     <script src="/frontend/js/pages/message.js"></script>
+    <script src="/frontend/js/pages/contact.js"></script>
 @endsection

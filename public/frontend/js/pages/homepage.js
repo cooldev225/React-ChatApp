@@ -422,9 +422,9 @@ function getContactList() {
     });
 }
 
-function addContact() {
+function addContact(email) {
     var form_data = new FormData();
-    form_data.append('email', $('#exampleInputEmail1').val());
+    form_data.append('email', email || $('#exampleInputEmail1').val());
     $.ajax({
         url: '/home/addContactItem',
         headers: {
@@ -448,6 +448,10 @@ function addContact() {
                 data.created_at = new Date();
                 let target = '#contact-list .chat-main';
                 addChatUserListItem(target, data);
+                if (email) {
+                    let username = getCertainUserInfoById(currentContactId).username;
+                    alert(`${username} is added in contact successfully`);
+                }
             }
         },
         error: function(response) {
