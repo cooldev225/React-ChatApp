@@ -125,14 +125,30 @@
                     </div>
                 </div>
                 <div class="chat custom-scroll">
-                    <!-- <ul class="chat-cont-setting">
-                                                                                                                                                                                                                                        <li> <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                                                                                                                                                                                                                            <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="message-square"></i></div></a></li>
-                                                                                                                                                                                                                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
-                                                                                                                                                                                                                                            <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i></div></a></li>
-                                                                                                                                                                                                                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                                                                                                                                                                                                                            <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i></div></a></li>
-                                                                                                                                                                                                                                    </ul> -->
+                    <ul class="chat-cont-setting">
+                        <li> 
+                            {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
+                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
+                                        data-feather="message-square"></i></div>
+                            </a> --}}
+                            <a href="#" id="new_chat"><span>new chat</span>
+                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
+                                        data-feather="message-square"></i></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
+                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
                     <div class="theme-title">
                         <div class="media">
                             <div>
@@ -149,7 +165,8 @@
                                         <div class="icon-close close-search"> </div>
                                     </div>
                                 </form>
-                                <!-- <a class="icon-btn btn-primary btn-fix chat-cont-toggle outside" href="#"><i data-feather="plus"></i></a> -->
+                                <a class="icon-btn btn-primary btn-fix chat-cont-toggle outside" href="#"><i
+                                        data-feather="plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -169,6 +186,10 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                                 <div class="theme-tab">
+                                    {{-- <ul class="nav nav-tabs" id="myTab1" role="tablist">
+                                        <li class="nav-item"><a class="nav-link button-effect active" id="direct-tab" data-bs-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a></li>
+                                        <li class="nav-item"><a class="nav-link button-effect" id="group-tab" data-bs-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a></li>
+                                    </ul> --}}
                                     <div class="tab-content" id="myTabContent1">
                                         <div class="tab-pane fade show active" id="direct" role="tabpanel"
                                             aria-labelledby="direct-tab">
@@ -177,7 +198,7 @@
                                             </ul>
                                         </div>
                                         <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="group-tab">
-                                            <div class="search2">
+                                            {{-- <div class="search2">
                                                 <div>
                                                     <div class="input-group">
                                                         <div class="input-group-append"><span class="input-group-text"><i
@@ -186,7 +207,7 @@
                                                             placeholder="Start Chat" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <ul class="group-main">
 
                                             </ul>
@@ -526,10 +547,13 @@
                                         </div>
                                         <div class="text-end">
                                             <div class="smsTestBtns">
-                                                <a class="btn btn-primary button-effect btn-sm" id="sms1TestBtn" href="#">SMS1</a>
-                                                <a class="btn btn-primary button-effect btn-sm" id="sms2TestBtn" href="#">SMS2</a>
+                                                <a class="btn btn-primary button-effect btn-sm" id="sms1TestBtn"
+                                                    href="#">SMS1</a>
+                                                <a class="btn btn-primary button-effect btn-sm" id="sms2TestBtn"
+                                                    href="#">SMS2</a>
                                             </div>
-                                            <a class="btn btn-outline-primary button-effect btn-sm phoneNumberConfirmBtn" href="#">confirm</a>
+                                            <a class="btn btn-outline-primary button-effect btn-sm phoneNumberConfirmBtn"
+                                                href="#">confirm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -766,8 +790,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                                                                                                                <span class="sr-only">Loading...</span>
-                                                                                                                                                                                                                            </div> -->
+                        <span class="sr-only">Loading...</span>
+                    </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -818,12 +842,12 @@
                                                 <li>
                                                     <a class="icon-btn btn-outline-primary button-effect btn-sm"
                                                         href="#"><i data-feather="user"></i></a>
-                                                    <h5>Profile</h5>
+                                                    <h5>Show Profile</h5>
                                                 </li>
                                                 <li>
                                                     <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i
                                                             data-feather="trash-2"></i></a>
-                                                    <h5>Delete</h5>
+                                                    <h5>Delete Conversation</h5>
                                                 </li>
                                                 <li>
                                                     <a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i
@@ -1304,30 +1328,17 @@
                 <div class="messages custom-scroll" id="group_blank">
                     <div class="contact-details">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-8">
                                 <div class="media left">
-                                    <div class="media-left me-3">
-                                        <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/chat/images/avtar/family.jpg" alt="Avatar" /></div>
-                                    </div>
+                                    <span>To: </span>
                                     <div class="media-body">
-                                        <h5>Family Ties</h5>
-                                        <h6>Last Seen 2 hours</h6>
+                                        
                                     </div>
                                     <div class="media-right">
                                         <ul>
-                                            <li><a class="icon-btn btn-light button-effect mute" href="#"><i
-                                                        class="fa fa-volume-up"></i></a></li>
-                                            <li><a class="icon-btn btn-light search search-right" href="#"> <i
-                                                        data-feather="search"></i></a>
-                                                <form class="form-inline search-form">
-                                                    <div class="form-group">
-                                                        <input class="form-control-plaintext" type="search"
-                                                            placeholder="Search.." />
-                                                        <div class="icon-close close-search"> </div>
-                                                    </div>
-                                                </form>
-                                            </li>
+                                            <li><a class="icon-btn btn-light button-effect" href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><i
+                                                        class="fa fa-plus"></i></a></li>
+                                            
                                             <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
                                                         data-feather="chevron-left"></i></a></li>
                                         </ul>
@@ -1411,9 +1422,10 @@
                             </svg>
                         </a> --}}
                         <div class="dot-btn dot-primary me-3">
-                            <a class="icon-btn btn-outline-primary button-effect toggle-emoji" href="#"><i data-feather="smile"></i></a>
+                            <a class="icon-btn btn-outline-primary button-effect toggle-emoji" href="#"><i
+                                    data-feather="smile"></i></a>
                         </div>
-                          
+
                         <div class="contact-poll">
                             <a class="icon-btn btn-outline-primary me-4 outside" href="#">
                                 <i class="fa fa-plus"></i>
@@ -2326,8 +2338,8 @@
                         </div>
                         <div class="theme-tab">
                             <ul class="nav nav-tabs">
-                                <li class="nav-item"><a class="nav-link button-effect active"
-                                        data-bs-toggle="pill" href="#tab1">Media</a></li>
+                                <li class="nav-item"><a class="nav-link button-effect active" data-bs-toggle="pill"
+                                        href="#tab1">Media</a></li>
                                 <li class="nav-item"><a class="nav-link button-effect" data-bs-toggle="pill"
                                         href="#tab2">Link</a></li>
                                 <li class="nav-item"><a class="nav-link button-effect" data-bs-toggle="pill"
@@ -3582,9 +3594,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                            </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3699,7 +3711,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title">
-                        Create New Message</h2>
+                        Add New Recipient</h2>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -3713,7 +3725,7 @@
                         </div>
                     </div>
                     <ul class="chat-main custom-scroll">
-                        <li data-to="blank">
+                        {{-- <li data-to="blank">
                             <div class="chat-box">
                                 <div class="profile offline"><img class="bg-img"
                                         src="/chat/images/contact/1.jpg" alt="Avatar" /></div>
@@ -3726,7 +3738,7 @@
                                     <h6 class="font-success status"></h6>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -3812,7 +3824,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title">Photo Creation</h2>
-                    
+
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     {{-- <span class="price-mode">Mode:</span>
@@ -3924,9 +3936,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div> -->
+                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div> -->
             </div>
         </div>
     </div>
@@ -3948,8 +3960,10 @@
         </div>
     </div>
 
-    <script src="https://www.paypalobjects.com/api/checkout.js"></sript>
-    // <script src="/frontend/js/constant.js"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+    <script src="/frontend/js/constant.js"></script>
+    
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
 
@@ -3957,5 +3971,4 @@
     <script src="/frontend/js/pages/setting.js"></script>
     <script src="/frontend/js/pages/notification.js"></script>
     <script src="/frontend/js/pages/message.js"></script>
-
 @endsection

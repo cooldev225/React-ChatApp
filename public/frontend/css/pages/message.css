@@ -1,0 +1,21 @@
+#group_blank div.media-body {
+    height: 35px;
+    border: 1px solid #954b4b;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.chitchat-main .messages .contact-details .left.media .media-body:before {
+    width: 0;
+}
+
+.chitchat-main .messages .contact-details .left.media .media-body {
+    max-width: 250px;
+}
+
+@media (max-width: 600px) {
+    .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
+    .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
+        display: inline-block;
+    }
+}

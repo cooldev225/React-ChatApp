@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/css/pages/message.css">
 </head>
 
 <body class="sidebar-active">

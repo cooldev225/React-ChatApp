@@ -60,4 +60,42 @@ $(document).ready(() => {
         //         });;
         // }
     });
+
+    //Multimessage
+    $('#new_chat').on('click', () => {
+        $('#chating').removeClass('active');
+        $('#group_chat').removeClass('active');
+        $('#group_blank').addClass('active');
+        $('.chitchat-container').toggleClass("mobile-menu");
+        if ($(window).width() <= 768) {
+            $('.main-nav').removeClass("on");
+        }
+    });
+    $('#msgchatModal').on('shown.bs.modal', function(e) {
+        var form_data = new FormData();
+        $.ajax({
+            url: '/home/getContactList',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function(res) {
+                let target = '#msgchatModal .chat-main';
+                $(target).empty();
+                res.reverse().forEach(item => {
+                    addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
+                });
+
+            },
+            error: function(response) {
+
+            }
+        });
+    });
+
 })
