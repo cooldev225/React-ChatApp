@@ -24,7 +24,7 @@ $(document).ready(function() {
         let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
         if (dialCode == 57) {
             let phoneNumber = $('#phone').val();
-            if (/31[0-9] \d{7}/.test(phoneNumber)) {
+            if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
                 validMsg.removeClass("hide");
             } else {
                 telInput.addClass("error");

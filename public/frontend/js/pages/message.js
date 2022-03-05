@@ -80,6 +80,7 @@ $(document).ready(() => {
             $('.main-nav').removeClass("on");
         }
     });
+
     $('#group_blank .mobile-sidebar').on('click', () => {
         $('#direct').addClass('active');
         $('#direct').addClass('show');

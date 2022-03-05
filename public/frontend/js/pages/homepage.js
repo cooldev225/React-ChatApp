@@ -133,6 +133,9 @@ $(document).ready(() => {
         if (contentwidth <= '768') {
             $('.chitchat-container').toggleClass("mobile-menu");
         }
+        if (contentwidth <= '575') {
+            $('.main-nav').removeClass("on");
+        }
     });
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
@@ -450,7 +453,7 @@ function addContact(email) {
                 addChatUserListItem(target, data);
                 if (email) {
                     let username = getCertainUserInfoById(currentContactId).username;
-                    alert(`${username} is added in contact successfully`);
+                    alert(`${username} has been added to contacts successfully`);
                 }
             }
         },

@@ -1412,7 +1412,7 @@
                     </div>
                     <div class="call-list-center"><img src="/chat/images/chat.png" alt="" />
                         <div class="animated-bg"><i></i><i></i><i></i></div>
-                        <p>Select a chat to read messages</p>
+                        <p>Select one or more contacts</p>
                     </div>
                 </div>
                 <div class="message-input">

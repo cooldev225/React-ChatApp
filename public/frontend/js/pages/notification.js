@@ -17,7 +17,7 @@ $(document).ready(() => {
         if (phoneNumber.includes('+')) {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
         }
-        socket.emit('test:SMS', { dialCode, phoneNumber, type: 2 });
+        socket.emit('test:SMS', { dialCode, isoCode2, phoneNumber, type: 2 });
         $('.smsTestBtns .btn').removeClass('active');
         $('#sms2TestBtn').addClass('active');
     });
