@@ -341,7 +341,7 @@ io.on('connection', (socket) => {
                 var fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
             }
             if (spainish) {
-                var message = `Oye, tu número de móvil ${data.phoneNumber} ha sido actualizado en OJO.`;
+                var message = `Oye, tu numero de móvil ${data.phoneNumber} ha sido actualizado en OJO.`;
             } else {
                 var message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
             }
