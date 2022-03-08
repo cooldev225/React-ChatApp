@@ -14,30 +14,8 @@ const io = require('socket.io')(server, {
 const db = require("./config.js");
 const Nofification = require("./notification.js");
 
-
-
-// var headers = {
-//     'webpushrKey': 'a3df736b0f17fe511e63ce752fd3e3d9',
-//     'webpushrAuthToken': '42945',
-//     'Content-Type': 'application/json',
-// };
-// var headers = {
-//     'webpushrKey': 'aed1111725e9d8f368275815471d6f68',
-//     'webpushrAuthToken': '42947',
-//     'Content-Type': 'application/json'
-// };
 const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
-
-// var dataString = '{"title":"notification_title","message":"notification message","target_url":"http://ojochat.com"}';
-
-
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-    }
-}
-
 
 db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
     // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
@@ -69,31 +47,35 @@ io.on('connection', (socket) => {
     socket_userMap.set(socket.id, currentUserId);
 
     console.log(user_socketMap);
-    socket.on('message', data => {
-        let message = {
-            from: currentUserId,
-            to: data.currentContactId,
-            content: data.message,
-            state: 1,
-            kind: 0,
-        }
 
-        db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
-            message.messageId = item.insertId;
-            if (data.currentContactId) {
-                let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
-                let senderSocketId = user_socketMap.get(currentUserId.toString());
-                io.sockets.sockets.get(senderSocketId).emit('message', message);
-                if (recipientSocketId) {
-                    if (io.sockets.sockets.get(recipientSocketId))
-                        io.sockets.sockets.get(recipientSocketId).emit('message', message);
-                } else {
-                    console.log('Send text SMS');
-                    sendSMS(currentUserId, data.currentContactId, 'text');
-                }
+    socket.on('message', data => {
+        data.currentContactIdArr.forEach((currentContactId, index) => {
+            let message = {
+                from: currentUserId,
+                to: currentContactId,
+                content: data.message,
+                state: 1,
+                kind: 0,
             }
-        });
+
+            db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
+                message.messageId = item.insertId;
+                if (currentContactId) {
+                    let recipientSocketId = user_socketMap.get(currentContactId.toString());
+                    let senderSocketId = user_socketMap.get(currentUserId.toString());
+                    io.sockets.sockets.get(senderSocketId).emit('message', message);
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId))
+                            io.sockets.sockets.get(recipientSocketId).emit('message', message);
+                    } else {
+                        console.log('Send text SMS');
+                        sendSMS(currentUserId, currentContactId, 'text');
+                    }
+                }
+            });
+        })
     });
+
     socket.on('arrive:message', data => {
         db.query(`UPDATE messages SET state = 2 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;
@@ -296,15 +278,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send:notification', data => {
-        sendSMS(data.from, data.to, data.type)
-            // var dataString = `{"title": "${data.senderName || 'New Message'}","message": "${data.content}","target_url": "http://ojochat.com","sid": "${data.sid}","action_buttons": [{ "title": "Open", "url": "http://ojochat.com" }]}`;
-            // var options = {
-            //     url: `https://api.webpushr.com/v1/notification/send/sid`,
-            //     method: 'POST',
-            //     headers: headers,
-            //     body: dataString,
-            // };
-            // request(options, callback);
+        sendSMS(data.from, data.to, data.type);
     });
     socket.on('stickyToFree', data => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {

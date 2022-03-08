@@ -130,4 +130,8 @@ $(document).ready(() => {
             <span userId=${userId}>${userName}</span>
         `);
     });
+
+    $('#group_blank .media-body').on('click', 'span', function() {
+        $(this).remove();
+    });
 })

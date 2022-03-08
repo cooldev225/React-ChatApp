@@ -481,10 +481,12 @@ function newMessage() {
     let senderName = getCertainUserInfoById(currentUserId).username;
 
     if ($('#group_blank').hasClass('active')) {
-        var currentContactIdArr = $('#group_blank > div.contact-details .media-body')
+        var currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+    } else {
+        var currentContactIdArr = [currentContactId];
     }
     socket.emit('message', {
-        currentContactId,
+        currentContactIdArr,
         message,
         senderName,
     });
