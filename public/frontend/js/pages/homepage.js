@@ -13,7 +13,6 @@ $(document).ready(() => {
     socket.on('message', message => {
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
-            let sid = getCertainUserInfoById(message.to).sid;
             let type = message.kind == 2 ? 'photo' :
                 message.kind == 1 ? 'request' :
                 message.kind == 0 ? 'text' : "new";
@@ -35,31 +34,37 @@ $(document).ready(() => {
         }
         let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
+        console.log("From: ", message.from)
+        console.log("To ", message.to);
+        console.log("currentUserId: ", currentUserId);
+        console.log("currentContactId: ", currentContactId);
         if (message.from == currentUserId || message.from == currentContactId) {
             addChatItem(target, message.from, message);
             $('.typing-m').remove();
             $(".messages").animate({
                 scrollTop: $('.contact-chat').height()
             }, "fast");
-            $(`ul.chat-main li[key=${message.to}]`).insertBefore('ul.chat-main li:eq(0)');
+            $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
 
+            console.log('aaa');
         } else {
             // if (currentContactId) {
-            //     $(`ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+            //     $(`#direct > ul.chat-main li[key=${currentContactId}]`).removeClass('active');
             // }
             // currentContactId = Number(message.from);
-            if (!$(`ul.chat-main li[key=${Number(message.from)}]`).length) {
+            console.log('bbb');
+            if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
                 let senderInfo = usersList.find(item => item.id == Number(message.from));
                 let userListTarget = $('.recent-default .recent-chat-list');
                 addChatUserListItem(userListTarget, senderInfo);
             } else {
-                $(`ul.chat-main li[key=${message.from}]`).insertBefore('ul.chat-main li:eq(0)');
-                $(`ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
-                $(`ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
-                let count = $(`ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
-                $(`ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
+                $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+                $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
+                $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
+                let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
+                $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
             }
-            // $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+            // $(`#direct > ul.chat-main li[key=${currentContactId}]`).addClass('active');
             // setCurrentChatContent(currentContactId);
         }
     });
@@ -85,7 +90,7 @@ $(document).ready(() => {
     });
     socket.on('delete:message', data => {
         if (data.state) {
-            let element = $('.chatappend').find(`[key=${data}]`).closest('li.msg-item');
+            let element = $('.chatappend').find(`[key=${data.id}]`).closest('li.msg-item');
             element.length ? element.remove() : '';
         } else {
             let currentContactName = getCertainUserInfoById(currentContactId).username;
@@ -106,7 +111,7 @@ $(document).ready(() => {
     });
     $('#logoutBtn').on('click', () => {
         socket.emit('logout', {
-            currentUserIds
+            currentUserId
         });
     });
 
@@ -474,12 +479,14 @@ function newMessage() {
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
-    let sid = getCertainUserInfoById(currentContactId).sid;
+
+    if ($('#group_blank').hasClass('active')) {
+        var currentContactIdArr = $('#group_blank > div.contact-details .media-body')
+    }
     socket.emit('message', {
         currentContactId,
         message,
         senderName,
-        sid
     });
 };
 

@@ -1,16 +1,31 @@
 #group_blank div.media-body {
-    height: 35px;
+    max-width: 250px;
+    height: 42px;
     border: 1px solid #954b4b;
     border-radius: 5px;
     margin-left: 5px;
+    padding: 2px;
+    overflow: auto;
+}
+
+#group_blank .media-body span {
+    background-color: #954b4b;
+    border: 1px solid black;
+    border-radius: 3px;
+    white-space: nowrap;
+    padding: 0 2px;
 }
 
 .chitchat-main .messages .contact-details .left.media .media-body:before {
     width: 0;
 }
 
-.chitchat-main .messages .contact-details .left.media .media-body {
-    max-width: 250px;
+#msgchatModal ul.chat-main li {
+    cursor: pointer;
+}
+
+#msgchatModal ul.chat-main li:hover {
+    background-color: #eff7fe;
 }
 
 @media (max-width: 600px) {
@@ -18,4 +33,13 @@
     .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
         display: inline-block;
     }
+    #group_blank .contact-details>.row .icon-btn {
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+    }
 }
+
+
+/* @media (max-width: 480px) {
+} */

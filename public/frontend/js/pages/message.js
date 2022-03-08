@@ -104,7 +104,7 @@ $(document).ready(() => {
             type: 'POST',
             dataType: "json",
             success: function(res) {
-                let target = '#msgchatModal .chat-main';
+                let target = '#msgchatModal > div > div > div.modal-body > ul';
                 $(target).empty();
                 res.reverse().forEach(item => {
                     addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
@@ -117,4 +117,17 @@ $(document).ready(() => {
         });
     });
 
+    $('#msgchatModal ul.chat-main').on('click', 'li', (e) => {
+        // console.log(e.currentTarget);
+        let userId = $(e.currentTarget).attr('key');
+        console.log($(e.currentTarget).attr('key'));
+        if ($('#group_blank .media-body').find(`span[userId=${userId}]`).length) {
+            console.log('exist');
+            return;
+        }
+        let userName = $(e.currentTarget).find('.details h5').text();
+        $('#group_blank .media-body').append(`
+            <span userId=${userId}>${userName}</span>
+        `);
+    });
 })
