@@ -1409,6 +1409,9 @@
                             <div class="dot"></div>
                             <div class="dot1"></div>
                         </div>
+                        <ul class="chatappend">
+                            
+                        </ul>
                     </div>
                     <div class="call-list-center"><img src="/chat/images/chat.png" alt="" />
                         <div class="animated-bg"><i></i><i></i><i></i></div>

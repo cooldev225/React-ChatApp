@@ -63,7 +63,9 @@ io.on('connection', (socket) => {
                 if (currentContactId) {
                     let recipientSocketId = user_socketMap.get(currentContactId.toString());
                     let senderSocketId = user_socketMap.get(currentUserId.toString());
-                    io.sockets.sockets.get(senderSocketId).emit('message', message);
+                    if (index == 0) {
+                        io.sockets.sockets.get(senderSocketId).emit('message', message);
+                    }
                     if (recipientSocketId) {
                         if (io.sockets.sockets.get(recipientSocketId))
                             io.sockets.sockets.get(recipientSocketId).emit('message', message);
@@ -141,23 +143,25 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send:photo', data => {
-        if (data.to) {
+        data.to.forEach((currentContactId, index) => {
             let senderSocketId = user_socketMap.get(currentUserId.toString());
-            let recipientSocketId = user_socketMap.get(data.to.toString());
+            let recipientSocketId = user_socketMap.get(currentContactId.toString());
             let message = {
                 from: data.from,
-                to: data.to,
+                to: currentContactId,
                 content: data.photo,
                 kind: 2
             }
-            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${data.to}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
                 if (error) console.log(error);
                 data.id = item.insertId;
                 message.photoId = item.insertId
-                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${data.to}", "${data.id}", 2)`, (error, messageItem) => {
+                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
                     message.messageId = messageItem.insertId;
-                    io.sockets.sockets.get(senderSocketId).emit('message', message);
-                    io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
+                    if (index == 0) {
+                        io.sockets.sockets.get(senderSocketId).emit('message', message);
+                        io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
+                    }
                     if (recipientSocketId) {
                         if (io.sockets.sockets.get(recipientSocketId)) {
                             io.sockets.sockets.get(recipientSocketId).emit('message', message);
@@ -165,12 +169,11 @@ io.on('connection', (socket) => {
                         }
                     } else {
                         console.log('Send Photo SMS');
-                        sendSMS(data.from, data.to, 'photo');
+                        sendSMS(data.from, currentContactId, 'photo');
                     }
                 });
             });
-
-        }
+        });
 
     });
 

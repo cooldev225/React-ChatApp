@@ -1,4 +1,4 @@
-#group_blank div.media-body {
+#group_blank>.contact-details div.media-body {
     max-width: 250px;
     height: 42px;
     border: 1px solid #954b4b;
@@ -8,13 +8,17 @@
     overflow: auto;
 }
 
-#group_blank .media-body span {
+#group_blank>.contact-details .media-body span {
     background-color: #954b4b;
     border: 1px solid black;
     border-radius: 3px;
     white-space: nowrap;
     padding: 0 2px;
     cursor: pointer;
+}
+
+#group_blank .contact-chat ul.chatappend {
+    display: none;
 }
 
 .chitchat-main .messages .contact-details .left.media .media-body:before {

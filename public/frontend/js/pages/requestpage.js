@@ -117,7 +117,7 @@ $(document).ready(function() {
         e.preventDefault();
         let reason = prompt('Please enter the reject reason.');
         if (reason) {
-            let target = '.contact-chat ul.chatappend';
+            let target = '#chating .contact-chat ul.chatappend';
             $(target).append(`<li class="replies photo-request">
                 <div class="media">
                     <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
@@ -426,19 +426,25 @@ function sendPhoto() {
         canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
         let data = {};
         data.from = currentUserId;
-        data.to = currentContactId;
+        if ($('#group_blank').hasClass('active')) {
+            data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+        } else {
+            data.to = [currentContactId];
+        }
+        // data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
         data.back = ori_image || '';
         data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
+
         socket.emit('send:photo', data);
     });
 }
 
 function showPhoto() {
 
-    $('.contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
+    $('#chating .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
         if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
             $('.previewBtn').removeClass('d-none');
             $('.payBtn').addClass('d-none');

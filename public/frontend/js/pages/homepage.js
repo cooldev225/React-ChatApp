@@ -32,41 +32,48 @@ $(document).ready(() => {
                 });
             }
         }
-        let target = '.contact-chat ul.chatappend';
         message.from = Number(message.from);
         console.log("From: ", message.from)
         console.log("To ", message.to);
         console.log("currentUserId: ", currentUserId);
         console.log("currentContactId: ", currentContactId);
-        if (message.from == currentUserId || message.from == currentContactId) {
-            addChatItem(target, message.from, message);
-            $('.typing-m').remove();
-            $(".messages").animate({
-                scrollTop: $('.contact-chat').height()
-            }, "fast");
-            $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
 
-            console.log('aaa');
+        if ($('#group_blank').hasClass('active') && message.from == currentUserId) {
+            $('#group_blank .rightchat').css('display', 'none');
+            $('#group_blank .call-list-center').css('display', 'none');
+            $('#group_blank .chatappend').css('display', 'flex');
+            let target = '#group_blank .contact-chat ul.chatappend';
+            addChatItem(target, message.from, message);
         } else {
-            // if (currentContactId) {
-            //     $(`#direct > ul.chat-main li[key=${currentContactId}]`).removeClass('active');
-            // }
-            // currentContactId = Number(message.from);
-            console.log('bbb');
-            if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
-                let senderInfo = usersList.find(item => item.id == Number(message.from));
-                let userListTarget = $('.recent-default .recent-chat-list');
-                addChatUserListItem(userListTarget, senderInfo);
+            if (message.from == currentUserId || message.from == currentContactId) {
+                let target = '#chating .contact-chat ul.chatappend';
+                addChatItem(target, message.from, message);
+                $('.typing-m').remove();
+                $(".messages").animate({
+                    scrollTop: $('#chating .contact-chat').height()
+                }, "fast");
+                $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             } else {
-                $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-                $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
-                $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
-                let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
-                $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
+                // if (currentContactId) {
+                //     $(`#direct > ul.chat-main li[key=${currentContactId}]`).removeClass('active');
+                // }
+                // currentContactId = Number(message.from);
+                if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
+                    let senderInfo = usersList.find(item => item.id == Number(message.from));
+                    let userListTarget = $('.recent-default .recent-chat-list');
+                    addChatUserListItem(userListTarget, senderInfo);
+                } else {
+                    $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+                    $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
+                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
+                    let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
+                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
+                }
+                // $(`#direct > ul.chat-main li[key=${currentContactId}]`).addClass('active');
+                // setCurrentChatContent(currentContactId);
             }
-            // $(`#direct > ul.chat-main li[key=${currentContactId}]`).addClass('active');
-            // setCurrentChatContent(currentContactId);
         }
+
     });
     socket.on('arrive:message', message => {
         setTimeout(() => {
@@ -288,11 +295,11 @@ function setCurrentChatContent(contactorId) {
                 displayProfileContent(contactorId)
 
                 //Chat data display
-                $('.contact-chat ul.chatappend').empty();
+                $('#chating .contact-chat ul.chatappend').empty();
 
                 new Promise(resolve => {
                     if (messageData) {
-                        let target = '.contact-chat ul.chatappend';
+                        let target = '#chating .contact-chat ul.chatappend';
                         messageData.reverse().forEach(item => {
                             if (item.state != 3 && currentUserId != item.sender) {
                                 let message = {
@@ -311,7 +318,7 @@ function setCurrentChatContent(contactorId) {
                     resolve();
                 }).then(() => {
                     $(".messages").animate({
-                        scrollTop: $('.contact-chat').height()
+                        scrollTop: $('#chating .contact-chat').height()
                     }, 'fast');
                     setTimeout(() => {
                         $('.spining').css('display', 'none');
@@ -512,7 +519,7 @@ function typingMessage() {
         let contactorInfo = getCertainUserInfoById(currentContactId);
         $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
         $(".messages").animate({
-            scrollTop: $('.contact-chat').height()
+            scrollTop: $('#chating .contact-chat').height()
         }, "fast");
     }
     if (delta < 1500) {
@@ -522,7 +529,7 @@ function typingMessage() {
     timerId = setTimeout(() => {
         $('.typing-m').remove();
         $(".messages").animate({
-            scrollTop: $('.contact-chat').height()
+            scrollTop: $('#chating .contact-chat').height()
         }, "fast");
         typingTime = undefined;
     }, 1500);
@@ -573,7 +580,7 @@ function addChatItem(target, senderId, data, loadFlag) {
     } else {
         $(target).append(item);
     }
-    // $(".messages").animate({ scrollTop: $('.contact-chat').height() }, 'fast');
+    // $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
 
     if (data.rate) {
         getContentRate(`li.msg-item[key="${data.messageId}"]`, data.rate)

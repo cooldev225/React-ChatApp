@@ -20,7 +20,7 @@ $(document).ready(() => {
                 dataType: "json",
                 success: function(res) {
                     if (res.messageData) {
-                        let target = '.contact-chat ul.chatappend';
+                        let target = '#chating .contact-chat ul.chatappend';
                         res.messageData.forEach(item => {
                             item.messageId = item.id;
                             addChatItem(target, item.sender, item, true);
@@ -121,17 +121,17 @@ $(document).ready(() => {
         // console.log(e.currentTarget);
         let userId = $(e.currentTarget).attr('key');
         console.log($(e.currentTarget).attr('key'));
-        if ($('#group_blank .media-body').find(`span[userId=${userId}]`).length) {
+        if ($('#group_blank > .contact-details .media-body').find(`span[userId=${userId}]`).length) {
             console.log('exist');
             return;
         }
         let userName = $(e.currentTarget).find('.details h5').text();
-        $('#group_blank .media-body').append(`
+        $('#group_blank > .contact-details .media-body').append(`
             <span userId=${userId}>${userName}</span>
         `);
     });
 
-    $('#group_blank .media-body').on('click', 'span', function() {
+    $('#group_blank > .contact-details .media-body').on('click', 'span', function() {
         $(this).remove();
     });
 })
