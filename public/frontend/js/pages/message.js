@@ -127,7 +127,7 @@ $(document).ready(() => {
         }
         let userName = $(e.currentTarget).find('.details h5').text();
         $('#group_blank > .contact-details .media-body').append(`
-            <span userId=${userId}>${userName}</span>
+            <span userId=${userId}>${userName}&nbsp&nbsp<b>\u2716</b></span>
         `);
     });
 

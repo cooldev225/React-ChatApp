@@ -9,12 +9,17 @@
 }
 
 #group_blank>.contact-details .media-body span {
-    background-color: #954b4b;
+    background-color: #1c9dea;
+    color: white;
     border: 1px solid black;
     border-radius: 3px;
     white-space: nowrap;
     padding: 0 2px;
     cursor: pointer;
+}
+
+#group_blank>.contact-details .media-body span>b {
+    color: black;
 }
 
 #group_blank .contact-chat ul.chatappend {
