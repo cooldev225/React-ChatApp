@@ -1333,7 +1333,7 @@
                 <div class="messages custom-scroll" id="group_blank">
                     <div class="contact-details">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col">
                                 <div class="media left">
                                     <span>To: </span>
                                     <div class="media-body">
@@ -1350,7 +1350,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            {{-- <div class="col">
                                 <ul class="calls text-end">
                                     <li><a class="icon-btn btn-light button-effect" href="#"
                                             data-tippy-content="Quick Audio Call" data-bs-toggle="modal"
@@ -1385,7 +1385,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="contact-chat">

@@ -122,7 +122,6 @@ $(document).ready(() => {
         let userId = $(e.currentTarget).attr('key');
         console.log($(e.currentTarget).attr('key'));
         if ($('#group_blank > .contact-details .media-body').find(`span[userId=${userId}]`).length) {
-            console.log('exist');
             return;
         }
         let userName = $(e.currentTarget).find('.details h5').text();
