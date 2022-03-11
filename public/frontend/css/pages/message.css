@@ -43,6 +43,24 @@
     background-color: #eff7fe;
 }
 
+#msgchatModal ul.chat-main li.active {
+    background-color: #eff7fe;
+}
+
+#msgchatModal ul.chat-main li {
+    cursor: pointer;
+}
+
+#msgchatModal ul.chat-main li .chat-box .date-status {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#msgchatModal ul.chat-main li .chat-box .date-status .form-check-input {
+    font-size: 1.5em;
+    border-radius: 50%;
+}
+
 @media (max-width: 600px) {
     .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
     .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
