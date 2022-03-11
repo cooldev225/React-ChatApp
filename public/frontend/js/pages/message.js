@@ -70,12 +70,14 @@ $(document).ready(() => {
         // $('#group').toggleClass('active');
         // $('#group').toggleClass('show');
 
-        $('.chat-cont-setting').removeClass('open');
-
-        $('#chating').removeClass('active');
+        $('#chat .tab-content .tab-pane').removeClass('active show')
+        $('#chat .tab-content .tab-pane#cast').addClass('active show')
+        $('#content .chat-content .messages').removeClass('active');
         $('#group_blank').addClass('active');
-        $('#group_chat').removeClass('active');
+
+        $('.chat-cont-setting').removeClass('open');
         $('.chitchat-container').toggleClass("mobile-menu");
+
         if ($(window).width() <= 768) {
             $('.main-nav').removeClass("on");
         }

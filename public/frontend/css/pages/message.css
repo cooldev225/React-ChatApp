@@ -30,6 +30,10 @@
     width: 0;
 }
 
+.theme-tab .nav-tabs .nav-item .nav-link {
+    padding: 6px 15px;
+}
+
 #msgchatModal ul.chat-main li {
     cursor: pointer;
 }
