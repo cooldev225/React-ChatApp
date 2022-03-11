@@ -32,9 +32,10 @@
 
 .theme-tab .nav-tabs .nav-item .nav-link {
     padding: 6px 15px;
+    min-width: 100px;
 }
 
-#msgchatModal ul.chat-main li {
+.theme-tab .nav-tabs .nav-item .nav-link #msgchatModal ul.chat-main li {
     cursor: pointer;
 }
 
