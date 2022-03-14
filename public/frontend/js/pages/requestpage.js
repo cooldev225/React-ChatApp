@@ -426,17 +426,21 @@ function sendPhoto() {
         canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
         let data = {};
         data.from = currentUserId;
-        if ($('#group_blank').hasClass('active')) {
-            data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        } else {
-            data.to = [currentContactId];
-        }
         // data.to = currentContactId;
         data.photo = canvas.toDataURL('image/png');
         data.back = ori_image || '';
         data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
+        if ($('#group_blank').hasClass('active')) {
+            data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+            socket.emit('send:castPhoto', data);
+        } else if ($('#cast_chat').hasClass('active')) {
+            data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+            socket.emit('send:castPhoto', data);
+        } else {
+            data.to = [currentContactId];
+        }
 
         socket.emit('send:photo', data);
     });

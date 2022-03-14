@@ -33,10 +33,6 @@ $(document).ready(() => {
             }
         }
         message.from = Number(message.from);
-        console.log("From: ", message.from)
-        console.log("To ", message.to);
-        console.log("currentUserId: ", currentUserId);
-        console.log("currentContactId: ", currentContactId);
 
         if ($('#group_blank').hasClass('active') && message.from == currentUserId) {
             $('#group_blank .rightchat').css('display', 'none');
@@ -44,6 +40,13 @@ $(document).ready(() => {
             $('#group_blank .chatappend').css('display', 'flex');
             let target = '#group_blank .contact-chat ul.chatappend';
             addChatItem(target, message.from, message);
+        } else if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
+            // $('#group_blank .rightchat').css('display', 'none');
+            // $('#group_blank .call-list-center').css('display', 'none');
+            // $('#group_blank .chatappend').css('display', 'flex');
+            let target = '#cast_chat > div.contact-chat > ul.chatappend';
+            addChatItem(target, message.from, message);
+
         } else {
             if (message.from == currentUserId || message.from == currentContactId) {
                 let target = '#chating .contact-chat ul.chatappend';
@@ -489,6 +492,10 @@ function newMessage() {
 
     if ($('#group_blank').hasClass('active')) {
         var currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, kind: 0 });
+    } else if ($('#cast_chat').hasClass('active')) {
+        var currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, kind: 0 });
     } else {
         var currentContactIdArr = [currentContactId];
     }

@@ -131,7 +131,7 @@
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
                             </a> --}}
-                            <a href="#" id="new_chat"><span>new chat</span>
+                            <a href="#" id="new_cast"><span>new cast</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
                             </a>
@@ -215,19 +215,7 @@
                                         </div>
                                         <div class="tab-pane fade" id="cast" role="tabpanel" aria-labelledby="cast-tab">
                                             <ul class="chat-main">
-                                                <li data-to="blank">
-                                                    <div class="chat-box">
-                                                        <div class="profile offline bg-size" style="background-image: url(/images/default-avatar.png); background-size: cover; background-position: center center; display: block;"><img class="bg-img" src="/images/default-avatar.png" alt="Avatar" style="display: none;"></div>
-                                                        <div class="details">
-                                                        <h5>Josephin water</h5>
-                                                        <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                                                        </div>
-                                                        <div class="date-status"><i class="ti-pin2"></i>
-                                                        <h6>22/10/19</h6>
-                                                        <h6 class="font-success status"> Seen</h6>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -3879,7 +3867,7 @@
         </div>
     </div>
 
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    {{-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> --}}
 
     <script src="/frontend/js/constant.js"></script>
     

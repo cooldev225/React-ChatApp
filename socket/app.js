@@ -78,6 +78,12 @@ io.on('connection', (socket) => {
         })
     });
 
+    socket.on('send:castMessage', data => {
+        let recipients = data.currentContactIdArr.join(', ');
+        db.query(`INSERT INTO casts (sender, recipients, content) VALUES ("${currentUserId}", "${recipients}", "${data.message}")`, (error, item) => {});
+    });
+
+
     socket.on('arrive:message', data => {
         db.query(`UPDATE messages SET state = 2 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;
@@ -176,6 +182,41 @@ io.on('connection', (socket) => {
         });
 
     });
+
+    // socket.on('send:castPhoto', data => {
+    //     data.to.forEach((currentContactId, index) => {
+    //         let senderSocketId = user_socketMap.get(currentUserId.toString());
+    //         let recipientSocketId = user_socketMap.get(currentContactId.toString());
+    //         let message = {
+    //             from: data.from,
+    //             to: currentContactId,
+    //             content: data.photo,
+    //             kind: 2
+    //         }
+    //         db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+    //             if (error) console.log(error);
+    //             data.id = item.insertId;
+    //             message.photoId = item.insertId
+    //             db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
+    //                 message.messageId = messageItem.insertId;
+    //                 if (index == 0) {
+    //                     io.sockets.sockets.get(senderSocketId).emit('message', message);
+    //                     io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
+    //                 }
+    //                 if (recipientSocketId) {
+    //                     if (io.sockets.sockets.get(recipientSocketId)) {
+    //                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
+    //                         io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+    //                     }
+    //                 } else {
+    //                     console.log('Send Photo SMS');
+    //                     sendSMS(data.from, currentContactId, 'photo');
+    //                 }
+    //             });
+    //         });
+    //     });
+
+    // });
 
     socket.on('give:rate', data => {
         if (data.kind != 1) {
