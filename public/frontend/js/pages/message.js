@@ -47,6 +47,10 @@ $(document).ready(() => {
                 // $('#direct').toggleClass('show');
                 // $('#group').toggleClass('active');
                 // $('#group').toggleClass('show');
+                $('.section-py-space').css('display', 'none');
+                $('#content').css('display', 'block');
+                $('.spining').css('display', 'none');
+
 
                 $('#chat .tab-content .tab-pane').removeClass('active show')
                 $('#chat .tab-content .tab-pane#cast').addClass('active show')

@@ -480,6 +480,7 @@ function addContact(email) {
 }
 
 function newMessage() {
+
     var message = $('.message-input input').val();
     if ($.trim(message) == '') {
         return false;
@@ -499,19 +500,23 @@ function newMessage() {
     } else {
         var currentContactIdArr = [currentContactId];
     }
-    socket.emit('message', {
-        currentContactIdArr,
-        message,
-        senderName,
-    });
+    if (currentContactIdArr.length) {
+        socket.emit('message', {
+            currentContactIdArr,
+            message,
+            senderName,
+        });
+    }
 };
 
 function displayTypingAction() {
     $('.message-input input').on('keyup', function(e) {
-        socket.emit('typing', {
-            currentUserId,
-            currentContactId
-        });
+        if (currentContactId) {
+            socket.emit('typing', {
+                currentUserId,
+                currentContactId
+            });
+        }
     });
 }
 

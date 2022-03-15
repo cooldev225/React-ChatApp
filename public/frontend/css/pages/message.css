@@ -61,6 +61,12 @@
     border-radius: 50%;
 }
 
+body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
+    position: absolute;
+    left: 20px;
+    z-index: 2;
+}
+
 @media (max-width: 600px) {
     .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
     .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
