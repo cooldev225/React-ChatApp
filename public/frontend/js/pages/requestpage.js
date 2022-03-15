@@ -441,8 +441,9 @@ function sendPhoto() {
         } else {
             data.to = [currentContactId];
         }
-
-        socket.emit('send:photo', data);
+        if (data.to) {
+            socket.emit('send:photo', data);
+        }
     });
 }
 
