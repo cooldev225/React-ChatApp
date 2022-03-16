@@ -75,6 +75,7 @@
     }
     
     @media (max-width: 600px) {
+        .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(1),
         .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(2),
         .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
         .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
