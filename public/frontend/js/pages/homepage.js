@@ -382,10 +382,17 @@ function searchAndAddRecentChatList() {
                 });
                 $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
             } else {
+
                 getRecentChatUsers();
             }
         }, 100);
-    })
+    });
+    $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
+        if ($('#direct-tab').hasClass('active')) {
+            $('.new-chat-search').val('');
+            getRecentChatUsers();
+        }
+    });
 }
 
 function addChatUserListItem(target, data) {

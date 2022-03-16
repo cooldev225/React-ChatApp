@@ -4,7 +4,7 @@ const axios = require('axios');
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
     // const port = process.env.PORT || 4000
-const port = 3000;
+const port = 4000;
 const io = require('socket.io')(server, {
     cors: {
         origins: '*',
