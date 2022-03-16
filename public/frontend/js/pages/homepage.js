@@ -364,34 +364,36 @@ function searchAndAddRecentChatList() {
     let keyuptimer;
     let target = $('.recent-default .recent-chat-list');
     $('.new-chat-search').bind('keyup', function() {
-        clearTimeout(keyuptimer);
-        keyuptimer = setTimeout(function() {
-            let value = $('.new-chat-search').val();
-            let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
-            // Array.from($('.recent-chat-list .details h5')).forEach(item => {
-            //     if (item.innerText.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
-            //         $(item).closest('li').css('display', 'block');
-            //     } else {
-            //         $(item).closest('li').css('display', 'none');
-            //     }
-            // })
-            if (value) {
-                target.empty();
-                usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
-                    addChatUserListItem(target, item);
-                });
-                $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-            } else {
+        if ($('#direct-tab').hasClass('active')) {
+            clearTimeout(keyuptimer);
+            keyuptimer = setTimeout(function() {
+                let value = $('.new-chat-search').val();
+                let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
+                // Array.from($('.recent-chat-list .details h5')).forEach(item => {
+                //     if (item.innerText.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+                //         $(item).closest('li').css('display', 'block');
+                //     } else {
+                //         $(item).closest('li').css('display', 'none');
+                //     }
+                // })
+                if (value) {
+                    target.empty();
+                    usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
+                        addChatUserListItem(target, item);
+                    });
+                    $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
+                } else {
 
-                getRecentChatUsers();
-            }
-        }, 100);
+                    getRecentChatUsers();
+                }
+            }, 100);
+        }
     });
     $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
-        if ($('#direct-tab').hasClass('active')) {
-            $('.new-chat-search').val('');
-            getRecentChatUsers();
-        }
+        // if ($('#direct-tab').hasClass('active')) {
+        $('.new-chat-search').val('');
+        getRecentChatUsers();
+        // }
     });
 }
 

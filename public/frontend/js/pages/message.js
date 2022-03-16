@@ -59,6 +59,9 @@ $(document).ready(() => {
 
                 $('.chat-cont-setting').removeClass('open');
                 $('.chitchat-container').toggleClass("mobile-menu");
+                //remove history
+                $('#group_blank > .contact-details .media-body').empty();
+                $('#group_blank .contact-chat ul.chatappend').empty()
 
                 if ($(window).width() <= 768) {
                     $('.main-nav').removeClass("on");
@@ -72,6 +75,11 @@ $(document).ready(() => {
             $('#cast > ul.chat-main').on('click', 'li', function() {
                         $('#cast > ul.chat-main li').removeClass('active');
                         $(this).addClass('active');
+
+                        $('#content .chat-content .messages').removeClass('active');
+                        $('#content .chat-content .messages#cast_chat').addClass('active');
+
+
                         let recipients = $(this).attr('recipients');
                         let form_data = new FormData();
                         form_data.append('recipients', recipients);
@@ -130,6 +138,13 @@ $(document).ready(() => {
                         </li>`;
                         $(target).append(item);
                     });
+                    var contentwidth = jQuery(window).width();
+                    if (contentwidth <= '768') {
+                        $('.chitchat-container').toggleClass("mobile-menu");
+                    }
+                    if (contentwidth <= '575') {
+                        $('.main-nav').removeClass("on");
+                    }
                 }
             },
             error: function(response) {}
@@ -231,8 +246,7 @@ function getCastData() {
         type: 'POST',
         dataType: "json",
         success: function(res) {
-            if (res.state == 'true') {
-                console.log(res.castData);
+            if (res.state == 'true') {      
                 let target = '#cast > ul.chat-main';
                 $(target).empty();
                 res.castData.forEach(item => {
@@ -240,7 +254,7 @@ function getCastData() {
                     console.log(recipients);
                     let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
                     $(target).prepend(
-                        `<li data-to="blank" recipients="${item.recipients}">
+                        `<li data-to="cast_chat" recipients="${item.recipients}">
                             <div class="chat-box">
                                 <div class="profile bg-size" style="background-image: url('/images/default-avatar.png'); background-size: cover; background-position: center center; display: block;">
                                     
