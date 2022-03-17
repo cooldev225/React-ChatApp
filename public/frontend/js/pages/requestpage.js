@@ -434,10 +434,12 @@ function sendPhoto() {
         data.content = getEmojisInfo(canvas._objects);
         if ($('#group_blank').hasClass('active')) {
             data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-            socket.emit('send:castPhoto', data);
+            // socket.emit('send:castPhoto', data);
+            data.cast = true;
         } else if ($('#cast_chat').hasClass('active')) {
             data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-            socket.emit('send:castPhoto', data);
+            // socket.emit('send:castPhoto', data);
+            data.cast = true;
         } else {
             data.to = [currentContactId];
         }
@@ -758,14 +760,11 @@ function addEventAction(panel, element) {
             }
             tempImage.off().on({
                 'mouseup': () => {
-                    console.log(element.price);
                     if ($('#photo_item .modal-content').hasClass('sent')) {
                         let photoId = $('#photo_item .modal-content').attr('photoId');
                         let emojiId = element.id
-                        console.log(photoId, emojiId);
                         socket.emit('stickyToFree', { photoId, emojiId })
                     }
-                    console.log(element);
                 }
             });
             setTimeout(() => {

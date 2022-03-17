@@ -96,7 +96,6 @@ $(document).ready(() => {
                                     dataType: "json",
                                     success: function(res) {
                                             if (res.state == 'true') {
-                                                console.log(res.data);
                                                 let target = '#cast_chat > div.contact-chat > ul';
                                                 let senderInfo = getCertainUserInfoById(currentUserId);
                                                 $(target).find('li:not(:first-child)').remove();
@@ -119,7 +118,7 @@ $(document).ready(() => {
                                                     `<h5>${data.content}</h5>`
                                                     : data.kind == 1 ?
                                                         `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-                                                        : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                                                        : data.kind == 2 ? `<img class="receive_photo" castId="${data.castId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                                                 <div class="msg-dropdown-main">
                                                     <div class="msg-open-btn"><span>Open</span></div>
                                                     <div class="msg-setting"><i class="ti-more-alt"></i></div>
@@ -251,9 +250,8 @@ function getCastData() {
                 $(target).empty();
                 res.castData.forEach(item => {
                     let recipients = item.recipients.split(', ').map(item => getCertainUserInfoById(item).username).join(', ');
-                    console.log(recipients);
                     let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
-                    $(target).prepend(
+                    $(target).append(
                         `<li data-to="cast_chat" recipients="${item.recipients}">
                             <div class="chat-box">
                                 <div class="profile bg-size" style="background-image: url('/images/default-avatar.png'); background-size: cover; background-position: center center; display: block;">

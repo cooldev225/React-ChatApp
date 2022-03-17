@@ -3,7 +3,6 @@ let totalPrice = 0;
 $(document).ready(function() {
 
     $('#checkoutModal').on('shown.bs.modal', function(e) {
-        console.log('aaa');
         totalPrice = 0;
         let userInfo = getCertainUserInfoById(currentContactId);
         $('#checkoutModal .recipientName').text(userInfo.username);

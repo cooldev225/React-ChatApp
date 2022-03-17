@@ -563,7 +563,6 @@
                         })
                         .then(function(res) {
                             // 3. Return res.id from the response
-                            // console.log(res);
                             return res.id
                         })
                 },
@@ -619,7 +618,6 @@
     });
     // $('.chatappend').on('click', '.msg-setting-main', function(event) {
     //     event.stopPropagation();
-    //     console.log('aaa');
     //     $(this).find('.msg-dropdown-main').toggle();
     // });
     $('.chatappend').on('click', '.msg-setting', function(event) {

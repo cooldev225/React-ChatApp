@@ -38,8 +38,23 @@ class MessageController extends Controller
         $recipients = $request->input('recipients');
 
         $castData = Cast::where('sender', $userId)->where('recipients', $recipients)->orderBy('created_at', 'desc')->get();
-        if (count($castData)) {
-            return array('state'=>'true', 'data'=>$castData);
+        $messages = $castData->map(function($item) {
+            if ($item['kind'] == 0) 
+                return $item;
+            if ($item['kind'] == 1) {
+                $temp = PhotoRequest::where('id', $item['content'])->get();
+                $item['requestId'] = $temp[0]['id'];
+                $item['content'] = $temp[0]['price'];
+                return $item;
+            }
+            $temp = PhotoGallery::where('id', $item['content'])->get();
+            $item['castId'] = $item['id'];
+            $item['photoId'] = $temp[0]['id'];
+            $item['content'] = $temp[0]['photo'];
+            return $item;
+        });
+        if (count($messages)) {
+            return array('state'=>'true', 'data'=>$messages);
         } else {
             return array('state' => 'false');
         }
