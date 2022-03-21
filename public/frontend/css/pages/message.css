@@ -67,6 +67,16 @@
         z-index: 2;
     }
     
+    #group_blank>div.contact-details>div.cast_title {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    #group_blank>div.contact-details>div.cast_title input {
+        flex: 1;
+    }
+    
     @media (max-width: 768px) {
         .chitchat-container .chitchat-main .messages#cast_chat .media-right {
             order: -1;

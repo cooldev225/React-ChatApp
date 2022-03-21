@@ -96,6 +96,24 @@ $(document).ready(() => {
                                     dataType: "json",
                                     success: function(res) {
                                             if (res.state == 'true') {
+                                                //cast title display
+                                                $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
+                                                // avatar display
+                                                $('#cast_chat ul.chatappend li.groupuser>div').remove();
+                                                recipients.split(', ').forEach((item, index) => {
+                                                        let avatar = getCertainUserInfoById(item).avatar;
+                                                        let userName = getCertainUserInfoById(item).username;
+                                                        avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
+                                                        $('#cast_chat ul.chatappend li.groupuser').append(`
+                                                            <div class="gr-profile dot-btn dot-success grow bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
+                                                                <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
+                                                            </div>
+                                                        `);
+                                                        tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index+2})`, { content: userName });
+                                                        // document.querySelector('.contact-profile .photoRating')._tippy.setContent(averageRate.toFixed(2))
+
+                                                    })
+                                                    // history display
                                                 let target = '#cast_chat > div.contact-chat > ul';
                                                 let senderInfo = getCertainUserInfoById(currentUserId);
                                                 $(target).find('li:not(:first-child)').remove();

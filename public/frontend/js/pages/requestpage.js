@@ -435,6 +435,8 @@ function sendPhoto() {
         if ($('#group_blank').hasClass('active')) {
             data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
             // socket.emit('send:castPhoto', data);
+            data.castTitle = $('#group_blank .cast_title input').val();
+
             data.cast = true;
         } else if ($('#cast_chat').hasClass('active')) {
             data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));

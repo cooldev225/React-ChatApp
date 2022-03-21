@@ -502,7 +502,8 @@ function newMessage() {
 
     if ($('#group_blank').hasClass('active')) {
         var currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, kind: 0 });
+        var castTitle = $('#group_blank .cast_title input').val();
+        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
     } else if ($('#cast_chat').hasClass('active')) {
         var currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, kind: 0 });
