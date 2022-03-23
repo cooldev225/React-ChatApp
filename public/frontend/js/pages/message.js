@@ -42,30 +42,7 @@ $(document).ready(() => {
             //Multimessage
 
             $('#new_cast').on('click', () => {
-
-                // $('#direct').toggleClass('active');
-                // $('#direct').toggleClass('show');
-                // $('#group').toggleClass('active');
-                // $('#group').toggleClass('show');
-                $('.section-py-space').css('display', 'none');
-                $('#content').css('display', 'block');
-                $('.spining').css('display', 'none');
-
-
-                $('#chat .tab-content .tab-pane').removeClass('active show')
-                $('#chat .tab-content .tab-pane#cast').addClass('active show')
-                $('#content .chat-content .messages').removeClass('active');
-                $('#group_blank').addClass('active');
-
-                $('.chat-cont-setting').removeClass('open');
-                $('.chitchat-container').toggleClass("mobile-menu");
-                //remove history
-                $('#group_blank > .contact-details .media-body').empty();
-                $('#group_blank .contact-chat ul.chatappend').empty()
-
-                if ($(window).width() <= 768) {
-                    $('.main-nav').removeClass("on");
-                }
+                showNewCastPage();
             });
 
             $('#cast-tab').on('click', function() {
@@ -102,59 +79,60 @@ $(document).ready(() => {
                                                 // avatar display
                                                 $('#cast_chat ul.chatappend li.groupuser>div').remove();
                                                 recipients.split(', ').forEach((item, index) => {
-                                                        let avatar = getCertainUserInfoById(item).avatar;
-                                                        let userName = getCertainUserInfoById(item).username;
-                                                        avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
-                                                        $('#cast_chat ul.chatappend li.groupuser').append(`
-                                                            <div class="gr-profile dot-btn dot-success grow bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
-                                                                <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
-                                                            </div>
-                                                        `);
-                                                        tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index+2})`, { content: userName });
-                                                        // document.querySelector('.contact-profile .photoRating')._tippy.setContent(averageRate.toFixed(2))
+                                                    let avatar = getCertainUserInfoById(item).avatar;
+                                                    let userName = getCertainUserInfoById(item).username;
+                                                    avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
+                                                    $('#cast_chat ul.chatappend li.groupuser').append(
+                                                        `<div class="gr-profile dot-btn dot-success grow bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
+                                                        <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
+                                                    </div>`
+                                                    );
+                                                    tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index+2})`, { content: userName });
+                                                    // document.querySelector('.contact-profile .photoRating')._tippy.setContent(averageRate.toFixed(2))
 
-                                                    })
-                                                    // history display
+                                                });
+                                                // history display
                                                 let target = '#cast_chat > div.contact-chat > ul';
                                                 let senderInfo = getCertainUserInfoById(currentUserId);
                                                 $(target).find('li:not(:first-child)').remove();
                                                 res.data.reverse().forEach(data => {
                                                             let time = data.created_at ? new Date(data.created_at) : new Date();
-                                                            let item = `<li class="replies msg-item" key="${data.id}" kind="${data.kind}">
-                            <div class="media">
-                                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
-                                </div>
-                                <div class="media-body">
-                                    <div class="contact-name">
-                                        <h5>${senderInfo.username}</h5>
-                                        <h6 class="${State[data.state]}">${displayTimeString(time)}</h6>
-                                        <div class="photoRating">
-                                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
-                                        </div>
-                                        <ul class="msg-box">
-                                            <li class="msg-setting-main">
-                                                ${data.kind == 0 ?
-                                                    `<h5>${data.content}</h5>`
-                                                    : data.kind == 1 ?
-                                                        `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-                                                        : data.kind == 2 ? `<img class="receive_photo" castId="${data.castId}" photoId="${data.photoId}" src="${data.content}">` : ''}
-                                                <div class="msg-dropdown-main">
-                                                    <div class="msg-open-btn"><span>Open</span></div>
-                                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                                    <div class="msg-dropdown"> 
-                                                        <ul>
-                                                            <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                                            <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                                        </ul>
-                                                    </div>
+                                                            $(target).append(
+                                                                    `<li class="replies msg-item" key="${data.id}" kind="${data.kind}">
+                                <div class="media">
+                                    <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="contact-name">
+                                            <h5>${senderInfo.username}</h5>
+                                            <h6 class="${State[data.state]}">${displayTimeString(time)}</h6>
+                                            <div class="photoRating">
+                                                <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
                                             </div>
-                                            </li>
-                                        </ul>
+                                            <ul class="msg-box">
+                                                <li class="msg-setting-main">
+                                                    ${data.kind == 0 ?
+                                                        `<h5>${data.content}</h5>`
+                                                        : data.kind == 1 ?
+                                                            `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                                                            : data.kind == 2 ? `<img class="receive_photo" castId="${data.castId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                                                    <div class="msg-dropdown-main">
+                                                        <div class="msg-open-btn"><span>Open</span></div>
+                                                        <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                                        <div class="msg-dropdown"> 
+                                                            <ul>
+                                                                <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                                                <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                                            </ul>
+                                                        </div>
+                                                </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>`;
-                        $(target).append(item);
+                            </li>`
+                        );
                     });
                     var contentwidth = jQuery(window).width();
                     if (contentwidth <= '768') {
@@ -171,12 +149,12 @@ $(document).ready(() => {
 
 
     $('#group_blank .mobile-sidebar').on('click', () => {
-        $('#direct').addClass('active');
-        $('#direct').addClass('show');
-        $('#group').removeClass('active');
-        $('#group').removeClass('show');
-        $('#chating').addClass('active');
-        $('#group_blank').removeClass('active');
+        // $('#direct').addClass('active');
+        // $('#direct').addClass('show');
+        // $('#group').removeClass('active');
+        // $('#group').removeClass('show');
+        // $('#chating').addClass('active');
+        // $('#group_blank').removeClass('active');
     })
 
     $('#msgchatModal').on('shown.bs.modal', function(e) {
@@ -250,7 +228,49 @@ $(document).ready(() => {
     $('#group_blank > .contact-details .media-body').on('click', 'span', function() {
         $(this).remove();
     });
+
+    $('#cast > ul.chat-main').on('click', 'li .edit-list', function(e) {
+        console.log('aaa');
+        e.stopPropagation();
+        showNewCastPage();
+        let recipients = $(this).closest('li').attr('recipients');
+        console.log(recipients);
+        recipients.split(', ').forEach(userId => {
+            let userName = getCertainUserInfoById(userId).username;
+            $('#group_blank > .contact-details .media-body').append(`
+                <span userId=${userId}>${userName}&nbsp&nbsp<b>\u2716</b></span>
+            `);
+        })
+    });
+
+
 });
+
+function showNewCastPage() {
+    // $('#direct').toggleClass('active');
+    // $('#direct').toggleClass('show');
+    // $('#group').toggleClass('active');
+    // $('#group').toggleClass('show');
+    $('.section-py-space').css('display', 'none');
+    $('#content').css('display', 'block');
+    $('.spining').css('display', 'none');
+
+
+    $('#chat .tab-content .tab-pane').removeClass('active show')
+    $('#chat .tab-content .tab-pane#cast').addClass('active show')
+    $('#content .chat-content .messages').removeClass('active');
+    $('#group_blank').addClass('active');
+
+    $('.chat-cont-setting').removeClass('open');
+    $('.chitchat-container').toggleClass("mobile-menu");
+    //remove history
+    $('#group_blank > .contact-details .media-body').empty();
+    $('#group_blank .contact-chat ul.chatappend').empty()
+
+    if ($(window).width() <= 768) {
+        $('.main-nav').removeClass("on");
+    }
+}
 
 function getCastData() {
     $.ajax({
@@ -282,7 +302,10 @@ function getCastData() {
                                     <h6>${displayNames}</h6>
                                 </div>
                                 <div class="date-status">
-                                
+                                    <a class="icon-btn btn-outline-light btn-sm edit-list" href="#">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    
                                 </div>
                             </div>
                         </li>`
