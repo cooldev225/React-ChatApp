@@ -98,6 +98,7 @@ $(document).ready(() => {
                                             if (res.state == 'true') {
                                                 //cast title display
                                                 $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
+                                                $('#cast_chat .chatappend .groupuser>h4').text('');
                                                 // avatar display
                                                 $('#cast_chat ul.chatappend li.groupuser>div').remove();
                                                 recipients.split(', ').forEach((item, index) => {
@@ -268,6 +269,7 @@ function getCastData() {
                 $(target).empty();
                 res.castData.forEach(item => {
                     let recipients = item.recipients.split(', ').map(item => getCertainUserInfoById(item).username).join(', ');
+                    let countRecipients = item.recipients.split(', ').length;
                     let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
                     $(target).append(
                         `<li data-to="cast_chat" recipients="${item.recipients}">
@@ -276,8 +278,8 @@ function getCastData() {
                                     
                                 </div>
                                 <div class="details">
-                                    <h5>${displayNames}</h5>
-                                    <h6>${item.content}</h6>
+                                    <h5>Recipients: ${countRecipients}</h5>
+                                    <h6>${displayNames}</h6>
                                 </div>
                                 <div class="date-status">
                                 

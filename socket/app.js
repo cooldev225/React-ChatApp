@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
     socket.on('send:castMessage', data => {
         console.log(data.castTitle);
         let recipients = data.currentContactIdArr.join(', ');
-        db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {});
+        db.query(`INSERT INTO casts (sender, recipients, content) VALUES ("${currentUserId}", "${recipients}", "${data.message}")`, (error, item) => {});
     });
     // socket.on('send:castPhoto', data => {
     //     // let recipients = data.currentContactIdArr.join(', ');
@@ -175,7 +175,7 @@ io.on('connection', (socket) => {
                         io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
                         if (data.cast) {
                             console.log(data.to);
-                            db.query(`INSERT INTO casts (sender, recipients, cast_title, content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
+                            db.query(`INSERT INTO casts (sender, recipients, content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.id}", 2)`, (error, castItem) => {
                                 console.log('Cast saved')
                             });
                         }

@@ -1195,10 +1195,6 @@
                                 </ul>
                             </div> --}}
                         </div>
-                        <div class="cast_title">
-                            <span style="width: 35px">Title: </span>
-                            <input class="form-control input" type="text" placeholder="Please input cast title here">
-                        </div>
                     </div>
                     <div class="contact-chat">
                         <div class="rightchat animat-rate">
