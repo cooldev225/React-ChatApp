@@ -41,7 +41,7 @@ $(document).ready(() => {
 
             //Multimessage
 
-            $('#new_cast').on('click', () => {
+            $('#new_cast, #editCastListbtn').on('click', () => {
                 showNewCastPage();
             });
 
@@ -205,6 +205,30 @@ $(document).ready(() => {
             }
         });
     });
+    $('#castUserListModal').on('shown.bs.modal', function(list) {
+        let recipients = list.relatedTarget;
+
+        let target = '#castUserListModal > div > div > div.modal-body > ul';
+        $(target).empty();
+
+        recipients.forEach(item => {
+            let data = getCertainUserInfoById(item)
+            $(target).append(
+                `<li data-to="blank" key="${data.id}">
+                    <div class="chat-box">
+                        <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                            
+                        </div>
+                        <div class="details">
+                            <h5>${data.username}</h5>
+                            <h6>${data.description || 'Hello'}</h6>
+                        </div>
+                    </div>
+                </li>`
+            );
+            // addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
+        });
+    });
 
     $('#msgchatModal ul.chat-main').on('click', 'li', function(e) {
         $(this).find('.form-check-input').prop('checked', !$(this).find('.form-check-input')[0].checked);
@@ -229,13 +253,16 @@ $(document).ready(() => {
         $(this).remove();
     });
 
-    $('#cast > ul.chat-main').on('click', 'li .edit-list', function(e) {
+    $('#cast > ul.chat-main').on('click', 'li .list_info', function(e) {
         console.log('aaa');
         e.stopPropagation();
-        showNewCastPage();
-        let recipients = $(this).closest('li').attr('recipients');
+        let recipients = $(this).closest('li').attr('recipients').split(', ');
+
+        // showNewCastPage();
+        $('#castUserListModal').modal('show', recipients);
+        $('#castUserListModal .modal-header h2').text(`List Recipients: ${recipients.length} of Unlimited`);
         console.log(recipients);
-        recipients.split(', ').forEach(userId => {
+        recipients.forEach(userId => {
             let userName = getCertainUserInfoById(userId).username;
             $('#group_blank > .contact-details .media-body').append(`
                 <span userId=${userId}>${userName}&nbsp&nbsp<b>\u2716</b></span>
@@ -264,7 +291,7 @@ function showNewCastPage() {
     $('.chat-cont-setting').removeClass('open');
     $('.chitchat-container').toggleClass("mobile-menu");
     //remove history
-    $('#group_blank > .contact-details .media-body').empty();
+    // $('#group_blank > .contact-details .media-body').empty();
     $('#group_blank .contact-chat ul.chatappend').empty()
 
     if ($(window).width() <= 768) {
@@ -302,10 +329,9 @@ function getCastData() {
                                     <h6>${displayNames}</h6>
                                 </div>
                                 <div class="date-status">
-                                    <a class="icon-btn btn-outline-light btn-sm edit-list" href="#">
-                                        <i class="fa fa-edit"></i>
+                                    <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
+                                        <img src="/images/icons/info.svg" alt="info">
                                     </a>
-                                    
                                 </div>
                             </div>
                         </li>`

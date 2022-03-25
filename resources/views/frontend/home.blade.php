@@ -3630,6 +3630,46 @@
             </div>
         </div>
     </div>
+    <div class="modal fade add-popup msg-chat-modal" id="castUserListModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        List Recipients: </h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-msg-search">
+                        <div class="input-group" style="justify-content: flex-end; border: none; background-color: white">
+                            {{-- <input class="form-control" type="text" placeholder="Search"
+                                aria-label="Recipient's username" aria-describedby="basic-addon21" />
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon21">@</span>
+                            </div> --}}
+                            <button class="btn btn-success button-effect btn-sm" id="editCastListbtn" type="button"
+                                data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#msgchatModal">Edit List</button>
+                        </div>
+                    </div>
+                    <ul class="chat-main custom-scroll">
+                        {{-- <li data-to="blank">
+                            <div class="chat-box">
+                                <div class="profile offline"><img class="bg-img"
+                                        src="/chat/images/contact/1.jpg" alt="Avatar" /></div>
+                                <div class="details">
+                                    <h5>John Doe</h5>
+                                    <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
+                                </div>
+                                <div class="date-status"><i class="ti-pin2"></i>
+                                    <h6>22/10/19</h6>
+                                    <h6 class="font-success status"></h6>
+                                </div>
+                            </div>
+                        </li> --}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade add-popup msg-chat-modal" id="msgcallModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
