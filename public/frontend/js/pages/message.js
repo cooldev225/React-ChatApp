@@ -43,27 +43,13 @@ $(document).ready(() => {
 
             $('#new_cast').on('click', () => {
                 showNewCastPage();
-            });
-            $('#editCastListbtn').on('click', () => {
-                $('.section-py-space').css('display', 'none');
-                $('#content').css('display', 'block');
-                $('.spining').css('display', 'none');
-
-
-                $('#chat .tab-content .tab-pane').removeClass('active show')
-                $('#chat .tab-content .tab-pane#cast').addClass('active show')
-                $('#content .chat-content .messages').removeClass('active');
-                $('#group_blank').addClass('active');
-
-                $('.chat-cont-setting').removeClass('open');
-                $('.chitchat-container').toggleClass("mobile-menu");
-                //remove history
-                // $('#group_blank > .contact-details .media-body').empty();
+                $('#group_blank > .contact-details .media-body').empty();
                 $('#group_blank .contact-chat ul.chatappend').empty()
 
-                if ($(window).width() <= 768) {
-                    $('.main-nav').removeClass("on");
-                }
+            });
+
+            $('#editCastListbtn').on('click', () => {
+                showNewCastPage();
             });
 
             $('#cast-tab').on('click', function() {
@@ -284,6 +270,7 @@ $(document).ready(() => {
         $('#castUserListModal').modal('show', recipients);
         $('#castUserListModal .modal-header h2').text(`List Recipients: ${recipients.length} of Unlimited`);
         console.log(recipients);
+        $('#group_blank > .contact-details .media-body').empty();
         recipients.forEach(userId => {
             let userName = getCertainUserInfoById(userId).username;
             if (!$('#group_blank > .contact-details .media-body').find(`span[userId=${userId}]`).length) {
@@ -316,8 +303,8 @@ function showNewCastPage() {
     $('.chat-cont-setting').removeClass('open');
     $('.chitchat-container').toggleClass("mobile-menu");
     //remove history
-    $('#group_blank > .contact-details .media-body').empty();
-    $('#group_blank .contact-chat ul.chatappend').empty()
+    // $('#group_blank > .contact-details .media-body').empty();
+    // $('#group_blank .contact-chat ul.chatappend').empty()
 
     if ($(window).width() <= 768) {
         $('.main-nav').removeClass("on");
