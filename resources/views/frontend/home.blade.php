@@ -872,7 +872,7 @@
                             </div>
                         </div>
                     </div>
-                    <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>
+                    <img id="loader" src='/images/loader64.gif'>
 
                     <div class="contact-chat">
                         <ul class="chatappend">
