@@ -20,8 +20,9 @@ class FileUtil extends Controller{
 		exit(json_encode($res));
     }
     public function downloadFile(Request $request){
-        exec(storage_path("app/".$request->input('path')));
-        return response()->download(storage_path("app/".$request->input('path')));
+        $path = substr($_SERVER['REQUEST_URI'], 26);
+        return response()->download(storage_path("app/".$path));
+        // return response()->download(storage_path("app/".$request->input('path')));
     }
     
     public function arrayToJson(Request $request){
