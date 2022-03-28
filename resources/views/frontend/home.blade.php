@@ -45,9 +45,7 @@
                         <!-- <a class="button-effect" data-intro="Check Status here"> -->
                         <div class="user-popup status one selfProfileBtn">
                             <div>
-                                <img class="bg-img"
-                                    src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : 'v1/api/downloadFile?path=' . Auth::user()->avatar }}"
-                                    alt="Avatar" />
+                                <img class="bg-img" src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : '/v1/api/downloadFile?path=' . Auth::user()->avatar }}" alt="Avatar" />
                             </div>
                         </div>
                         <!-- </a> -->
