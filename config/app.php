@@ -55,7 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
-
+    
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -66,8 +66,8 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
-    'timezone' => 'America/New_York',
+    
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
     // 'timezone' => 'America/Denver',
     // 'timezone' => 'Asia/Tokyo',
 
