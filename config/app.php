@@ -67,8 +67,8 @@ return [
     |
     */
 
-    // 'timezone' => 'America/Sao_Paulo',
-    'timezone' => 'America/Denver',
+    'timezone' => 'America/New_York',
+    // 'timezone' => 'America/Denver',
     // 'timezone' => 'Asia/Tokyo',
 
     /*
