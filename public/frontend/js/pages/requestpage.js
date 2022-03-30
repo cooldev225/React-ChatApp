@@ -453,7 +453,7 @@ function sendPhoto() {
 
 function showPhoto() {
 
-    $('#chating .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
+    $('#chating .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
         if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
             $('.previewBtn').removeClass('d-none');
             $('.payBtn').addClass('d-none');
