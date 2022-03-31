@@ -51,12 +51,14 @@
         cursor: pointer;
     }
     
-    #msgchatModal ul.chat-main li .chat-box .date-status {
+    #msgchatModal ul.chat-main li .chat-box .date-status,
+    #castUserListModal ul.chat-main li .chat-box .date-status {
         top: 50%;
         transform: translateY(-50%);
     }
     
-    #msgchatModal ul.chat-main li .chat-box .date-status .form-check-input {
+    #msgchatModal ul.chat-main li .chat-box .date-status .form-check-input,
+    #castUserListModal ul.chat-main li .chat-box .date-status .form-check-input {
         font-size: 1.5em;
         border-radius: 50%;
     }
@@ -75,6 +77,14 @@
     
     #group_blank>div.contact-details>div.cast_title input {
         flex: 1;
+    }
+    
+    #cast_chat>div.contact-chat>ul>li.groupuser {
+        overflow-x: auto;
+    }
+    
+    #cast_chat>div.contact-chat>ul>li.groupuser>div {
+        flex-shrink: 0;
     }
     
     @media (max-width: 768px) {

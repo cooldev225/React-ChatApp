@@ -612,6 +612,19 @@ h6.read {
     display: flex;
 }
 
+.chat-main>li {
+    cursor: pointer;
+}
+
+.msg-chat-modal .chat-msg-search .input-group .form-control {
+    border: 1px solid;
+}
+
+#castUserListModal .edit_save_cast_list.edit .save_list,
+#castUserListModal .edit_save_cast_list.save .edit_list {
+    display: none;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;

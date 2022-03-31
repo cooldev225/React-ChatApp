@@ -434,13 +434,15 @@ function sendPhoto() {
         data.content = getEmojisInfo(canvas._objects);
         if ($('#group_blank').hasClass('active')) {
             data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-            // socket.emit('send:castPhoto', data);
-            data.castTitle = $('#group_blank .cast_title input').val();
+            data.castTitle = $('#msgchatModal .cast_title input').val();
 
             data.cast = true;
+            // socket.emit('send:castPhoto', data);
         } else if ($('#cast_chat').hasClass('active')) {
             data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+            data.castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
             // socket.emit('send:castPhoto', data);
+            console.log(data.castTitle);
             data.cast = true;
         } else {
             data.to = [currentContactId];

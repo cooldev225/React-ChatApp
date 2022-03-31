@@ -25,7 +25,7 @@ class MessageController extends Controller
 {
     public function getCastData(Request $request) {
         $userId = Auth::id();
-        $castData = Cast::where('sender', $userId)->groupBy('recipients')->orderBy('created_at', 'desc')->get();
+        $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderBy('created_at', 'desc')->get();
         if (count($castData)) {
             return array('state'=>'true', 'castData'=>$castData);
         } else {
@@ -36,8 +36,9 @@ class MessageController extends Controller
     public function displayCastChatData(Request $request) {
         $userId = Auth::id();
         $recipients = $request->input('recipients');
-
-        $castData = Cast::where('sender', $userId)->where('recipients', $recipients)->orderBy('created_at', 'desc')->get();
+        $castTitle = $request->input('castTitle');
+        // $castData = Cast::where('sender', $userId)->where('recipients', $recipients)->orderBy('created_at', 'desc')->get();
+        $castData = Cast::where('sender', $userId)->where('cast_title', $castTitle)->orderBy('created_at', 'desc')->get();
         $messages = $castData->map(function($item) {
             if ($item['kind'] == 0) 
                 return $item;

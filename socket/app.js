@@ -28,6 +28,7 @@ let socket_userMap = new Map();
 
 const cors = require('cors');
 const { type } = require('express/lib/response');
+const { data } = require('jquery');
 
 app.use(cors({
     origin: '*'
@@ -79,9 +80,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on('send:castMessage', data => {
-        console.log(data.castTitle);
         let recipients = data.currentContactIdArr.join(', ');
-        db.query(`INSERT INTO casts (sender, recipients, content) VALUES ("${currentUserId}", "${recipients}", "${data.message}")`, (error, item) => {});
+        let senderSocketId = user_socketMap.get(currentUserId.toString());
+        db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {
+            if (senderSocketId) {
+                if (io.sockets.sockets.get(senderSocketId)) {
+                    io.sockets.sockets.get(senderSocketId).emit('update:cast');
+                }
+            }
+        });
     });
     // socket.on('send:castPhoto', data => {
     //     // let recipients = data.currentContactIdArr.join(', ');
@@ -171,14 +178,17 @@ io.on('connection', (socket) => {
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
                     message.messageId = messageItem.insertId;
                     if (index == 0) {
-                        io.sockets.sockets.get(senderSocketId).emit('message', message);
-                        io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
+
                         if (data.cast) {
-                            console.log(data.to);
-                            db.query(`INSERT INTO casts (sender, recipients, content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.id}", 2)`, (error, castItem) => {
-                                console.log('Cast saved')
+                            console.log("Recipients:", data.to);
+                            db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
+                                console.log("Cast Title: ", data.castTitle);
+                                io.sockets.sockets.get(senderSocketId).emit('update:cast');
+
                             });
                         }
+                        io.sockets.sockets.get(senderSocketId).emit('message', message);
+                        io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
                     }
                     if (recipientSocketId) {
                         if (io.sockets.sockets.get(recipientSocketId)) {
@@ -193,6 +203,21 @@ io.on('connection', (socket) => {
             });
         });
 
+    });
+
+    socket.on('update:cast', data => {
+        console.log(data);
+        let senderSocketId = user_socketMap.get(currentUserId.toString());
+
+        db.query(`UPDATE casts SET cast_title = "${data.newCastTitle}", recipients="${data.newRecipients}" WHERE sender=${currentUserId} AND cast_title="${data.oldCastTitle}"`, (error, item) => {
+            if (error) throw error;
+
+            if (senderSocketId) {
+                if (io.sockets.sockets.get(senderSocketId)) {
+                    io.sockets.sockets.get(senderSocketId).emit('update:cast');
+                }
+            }
+        });
     });
 
     // socket.on('send:castPhoto', data => {

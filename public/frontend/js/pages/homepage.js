@@ -502,11 +502,14 @@ function newMessage() {
 
     if ($('#group_blank').hasClass('active')) {
         var currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        var castTitle = $('#group_blank .cast_title input').val();
+        var castTitle = $('#msgchatModal .cast_title input').val();
         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
+        $('#msgchatModal .cast_title input').val('');
+
     } else if ($('#cast_chat').hasClass('active')) {
         var currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, kind: 0 });
+        var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
+        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
     } else {
         var currentContactIdArr = [currentContactId];
     }

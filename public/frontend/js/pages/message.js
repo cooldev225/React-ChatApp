@@ -1,4 +1,10 @@
+var oldRecipients = '';
+var oldCastTitle = '';
 $(document).ready(() => {
+            socket.on('update:cast', () => {
+                console.log('Cast Updated');
+                getCastData();
+            })
             $('.messages').scroll(() => {
                 if ($('.messages').scrollTop() == 0) {
                     // $('.chatappend').prepend(loader);
@@ -49,7 +55,7 @@ $(document).ready(() => {
             });
 
             $('#editCastListbtn').on('click', () => {
-                showNewCastPage();
+                // showNewCastPage();
             });
 
             $('#cast-tab').on('click', function() {
@@ -65,8 +71,11 @@ $(document).ready(() => {
 
 
                         let recipients = $(this).attr('recipients');
+                        let castTitle = $(this).find('.details h5').text();
+                        console.log(castTitle);
                         let form_data = new FormData();
                         form_data.append('recipients', recipients);
+                        form_data.append('castTitle', castTitle);
                         $.ajax({
                                     url: '/home/displayCastChatData',
                                     headers: {
@@ -82,7 +91,7 @@ $(document).ready(() => {
                                             if (res.state == 'true') {
                                                 //cast title display
                                                 $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
-                                                $('#cast_chat .chatappend .groupuser>h4').text('');
+                                                $('#cast_chat > div.contact-details div.media-body > h5').text(res.data[0].cast_title || 'Cast Title');
                                                 // avatar display
                                                 $('#cast_chat ul.chatappend li.groupuser>div').remove();
                                                 recipients.split(', ').forEach((item, index) => {
@@ -90,7 +99,7 @@ $(document).ready(() => {
                                                     let userName = getCertainUserInfoById(item).username;
                                                     avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
                                                     $('#cast_chat ul.chatappend li.groupuser').append(
-                                                        `<div class="gr-profile dot-btn dot-success grow bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
+                                                        `<div class="gr-profile dot-btn dot-success bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
                                                         <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
                                                     </div>`
                                                     );
@@ -213,13 +222,23 @@ $(document).ready(() => {
             }
         });
     });
-    $('#castUserListModal').on('shown.bs.modal', function(list) {
-        let recipients = list.relatedTarget;
 
+    $('#castUserListModal').on('shown.bs.modal', function() {
+        let recipients = $('#castUserListModal').data('recipients');
+        let castTitle = $('#castUserListModal').data('title') || 'No Title';
+        console.log(castTitle);
+        console.log(recipients);
+        oldRecipients = recipients;
+        oldCastTitle = $('#castUserListModal').data('title');
+        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').val(castTitle);
+        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').prop('disabled', true);
+        
+        $('.edit_save_cast_list').addClass('edit');
+        $('.edit_save_cast_list').removeClass('save');
+        
         let target = '#castUserListModal > div > div > div.modal-body > ul';
         $(target).empty();
-
-        recipients.forEach(item => {
+        recipients.split(',').forEach(item => {
             let data = getCertainUserInfoById(item)
             $(target).append(
                 `<li data-to="blank" key="${data.id}">
@@ -238,7 +257,7 @@ $(document).ready(() => {
         });
     });
 
-    $('#msgchatModal ul.chat-main').on('click', 'li', function(e) {
+    $('#msgchatModal ul.chat-main, #castUserListModal ul.chat-main').on('click', 'li', function(e) {
         $(this).find('.form-check-input').prop('checked', !$(this).find('.form-check-input')[0].checked);
         $(this).toggleClass('active');
 
@@ -262,14 +281,15 @@ $(document).ready(() => {
     });
 
     $('#cast > ul.chat-main').on('click', 'li .list_info', function(e) {
-        console.log('aaa');
         e.stopPropagation();
         let recipients = $(this).closest('li').attr('recipients').split(', ');
-
+        let castTitle = $(this).closest('li').find('.details h5').text();
         // showNewCastPage();
-        $('#castUserListModal').modal('show', recipients);
+        $('#castUserListModal').attr('data-recipients', recipients.join(', '));
+        $('#castUserListModal').attr('data-title', castTitle);
+        $('#castUserListModal').modal('show');
         $('#castUserListModal .modal-header h2').text(`List Recipients: ${recipients.length} of Unlimited`);
-        console.log(recipients);
+        
         $('#group_blank > .contact-details .media-body').empty();
         recipients.forEach(userId => {
             let userName = getCertainUserInfoById(userId).username;
@@ -282,7 +302,82 @@ $(document).ready(() => {
         })
     });
 
+    $('.edit_save_cast_list button').on('click', function(e) {
+        $(this).closest('.edit_save_cast_list').toggleClass('edit');
+        $(this).closest('.edit_save_cast_list').toggleClass('save');
+        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').prop('disabled', false);
 
+        if ($(this).closest('.edit_save_cast_list').hasClass('save')) {
+            var form_data = new FormData();
+        $.ajax({
+            url: '/home/getContactList',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function(res) {
+                let target = '#castUserListModal div.modal-body > ul';
+                $(target).empty();
+
+                res.reverse().forEach(item => {
+                    let data = usersList.find(user => user.id == item.contact_id)
+                    $(target).prepend(
+                        `<li data-to="blank" key="${data.id}">
+                            <div class="chat-box">
+                            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                                
+                            </div>
+                            <div class="details">
+                                <h5>${data.username}</h5>
+                                <h6>${data.description || 'Hello'}</h6>
+                            </div>
+                            <div class="date-status">
+                                <input class="form-check-input" type="checkbox" value="" aria-label="...">
+                            </div>
+                            </div>
+                        </li>`
+                    );
+                    if ($('#group_blank > .contact-details .media-body').find(`span[userId=${data.id}]`).length) {
+                        $(`#castUserListModal ul.chat-main li[key=${data.id}] input`).prop('checked', true);
+                        $(`#castUserListModal ul.chat-main li[key=${data.id}]`).addClass('active');
+                    }
+                });
+
+            },
+            error: function(response) {
+
+            }
+        });
+        }
+
+
+    });
+
+    $('#saveCastListbtn').on('click', function (e) {
+        console.log('Update Cast');
+        console.log(oldCastTitle);
+        console.log(oldRecipients);
+        let newCastTitle = $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').val();
+        var newRecipients = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId'))).join(', ');
+        console.log(newCastTitle);
+        console.log(newRecipients);
+        socket.emit('update:cast', {oldCastTitle, oldRecipients, newCastTitle, newRecipients});
+        
+        $('#castUserListModal').modal('hide');
+
+    });
+
+    $('#castUserListModal').on('hidden.bs.modal', function () {
+        console.log('remove');
+        $(this).removeData('title');
+        $(this).removeData('recipients');
+        
+    });
 });
 
 function showNewCastPage() {
@@ -327,6 +422,7 @@ function getCastData() {
                 let target = '#cast > ul.chat-main';
                 $(target).empty();
                 res.castData.forEach(item => {
+                    let title = item.cast_title;
                     let recipients = item.recipients.split(', ').map(item => getCertainUserInfoById(item).username).join(', ');
                     let countRecipients = item.recipients.split(', ').length;
                     let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
@@ -337,8 +433,8 @@ function getCastData() {
                                     
                                 </div>
                                 <div class="details">
-                                    <h5>Recipients: ${countRecipients}</h5>
-                                    <h6>${displayNames}</h6>
+                                    <h5>${title}</h5>
+                                    <h6>${countRecipients} : ${displayNames}</h6>
                                 </div>
                                 <div class="date-status">
                                     <a class="icon-btn btn-outline-light btn-sm list_info" href="#">

@@ -1234,7 +1234,7 @@
                                                 src="/chat/images/avtar/teq.jpg" alt="Avatar" /></div>
                                     </div>
                                     <div class="media-body">
-                                        <h5>Cast</h5>
+                                        <h5>Cast Title</h5>
                                         <div class="badge badge-success">Active</div>
                                     </div>
                                     <div class="media-right">
@@ -3600,12 +3600,10 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="chat-msg-search">
+                    <div class="cast_title">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search"
+                            <input class="form-control" type="text" placeholder="Cast Title"
                                 aria-label="Recipient's username" aria-describedby="basic-addon21" />
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon21">@</span>
-                            </div>
                         </div>
                     </div>
                     <ul class="chat-main custom-scroll">
@@ -3640,30 +3638,17 @@
                 <div class="modal-body">
                     <div class="chat-msg-search">
                         <div class="input-group" style="justify-content: flex-end; border: none; background-color: white">
-                            {{-- <input class="form-control" type="text" placeholder="Search"
+                            <input class="form-control" type="text" placeholder="Cast Title"
                                 aria-label="Recipient's username" aria-describedby="basic-addon21" />
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon21">@</span>
-                            </div> --}}
-                            <button class="btn btn-success button-effect btn-sm" id="editCastListbtn" type="button"
-                                data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#msgchatModal">Edit List</button>
                         </div>
                     </div>
                     <ul class="chat-main custom-scroll">
-                        {{-- <li data-to="blank">
-                            <div class="chat-box">
-                                <div class="profile offline"><img class="bg-img"
-                                        src="/chat/images/contact/1.jpg" alt="Avatar" /></div>
-                                <div class="details">
-                                    <h5>John Doe</h5>
-                                    <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                                </div>
-                                <div class="date-status"><i class="ti-pin2"></i>
-                                    <h6>22/10/19</h6>
-                                    <h6 class="font-success status"></h6>
-                                </div>
-                            </div>
-                        </li> --}}
+                        
                     </ul>
+                    <div class="edit_save_cast_list edit">
+                        <button class="btn btn-success button-effect btn-sm edit_list" id="editCastListbtn" type="button" style="float: right; margin-top: 20px;">Edit</button>
+                        <button class="btn btn-success button-effect btn-sm save_list" id="saveCastListbtn" type="button" style="float: right; margin-top: 20px;">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
