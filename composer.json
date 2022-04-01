@@ -22,7 +22,6 @@
         "stevebauman/location": "^6.1",
         "stripe/stripe-php": "^7.107",
         "usamamuneerchaudhary/country-city-state": "^2.8"
-
     },
     "require-dev": {
         "facade/ignition": "^2.0",
