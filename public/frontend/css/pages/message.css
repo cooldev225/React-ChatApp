@@ -81,6 +81,7 @@
     
     #cast_chat>div.contact-chat>ul>li.groupuser {
         overflow-x: auto;
+        width: 100%;
     }
     
     #cast_chat>div.contact-chat>ul>li.groupuser>div {

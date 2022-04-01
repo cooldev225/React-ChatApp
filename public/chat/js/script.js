@@ -530,10 +530,14 @@
     $(".sidebar-top a, .balance").on('click', function() {
         let userData = getCertainUserInfoById(currentUserId);
         //phone number setting
-        $("#phone").intlTelInput("selectCountry", userData.national);
+        let iti = intlTelInput(document.querySelector('#phone'));
+        iti.setCountry(userData.national);
+        // $("#phone").intlTelInput("selectCountry", userData.national);
         // $("#phone").intlTelInput("setNumber", userData.phone_number.replace(/[^0-9]/g, ''));
         $("#phone").val(userData.phone_number);
         // $("#phone").val(userData.phone_number);
+
+
         $('.smsTestBtns .btn').removeClass('active');
         $(`.smsTestBtns .btn:nth-child(${userData.sms_type})`).addClass('active');
         //notification switch

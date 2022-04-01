@@ -1,7 +1,9 @@
 $(document).ready(() => {
+    var iti = window.intlTelInput(document.querySelector('#phone'));
     $('#sms1TestBtn').on('click', () => {
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+        let countryData = iti.getSelectedCountryData();
+        let dialCode = countryData.dialCode;
+        let isoCode2 = countryData.iso2;
         let phoneNumber = $('#phone').val();
         if (phoneNumber.includes('+')) {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
@@ -11,8 +13,9 @@ $(document).ready(() => {
         $('#sms1TestBtn').addClass('active');
     });
     $('#sms2TestBtn').on('click', () => {
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+        let countryData = iti.getSelectedCountryData();
+        let dialCode = countryData.dialCode;
+        let isoCode2 = countryData.iso2;
         let phoneNumber = $('#phone').val();
         if (phoneNumber.includes('+')) {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');

@@ -1,17 +1,17 @@
 $(document).ready(function() {
-
+    var phoneNumberInput = document.querySelector('#phone');
     var telInput = $("#phone"),
         errorMsg = $("#error-msg"),
         validMsg = $("#valid-msg");
 
     // initialise plugin
-    telInput.intlTelInput({
-        // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js"
-    });
-    // window.intlTelInput(telInput, {
-    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js"
-    // })
+    // telInput.intlTelInput({
+    //     // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    // });
+    var iti = window.intlTelInput(phoneNumberInput, {
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/utils.js"
+    })
     var reset = function() {
         telInput.removeClass("error");
         errorMsg.addClass("hide");
@@ -21,31 +21,40 @@ $(document).ready(function() {
     // on blur: validate
     telInput.blur(function() {
         reset();
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        if (dialCode == 57) {
-            let phoneNumber = $('#phone').val();
-            if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
-                validMsg.removeClass("hide");
-            } else {
-                telInput.addClass("error");
-                errorMsg.removeClass("hide");
-            }
-        } else if ($.trim(telInput.val())) {
-            if (telInput.intlTelInput("isValidNumber")) {
-                validMsg.removeClass("hide");
-            } else {
-                telInput.addClass("error");
-                errorMsg.removeClass("hide");
-            }
+        let isValid = iti.isValidNumber();
+        console.log(isValid);
+        if (isValid) {
+            validMsg.removeClass('hide');
+        } else {
+            telInput.addClass("error");
+            errorMsg.removeClass("hide");
         }
+        // let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
+        // if (dialCode == 57) {
+        //     let phoneNumber = $('#phone').val();
+        //     if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
+        //         validMsg.removeClass("hide");
+        //     } else {
+        //         telInput.addClass("error");
+        //         errorMsg.removeClass("hide");
+        //     }
+        // } else if ($.trim(telInput.val())) {
+        //     if (telInput.intlTelInput("isValidNumber")) {
+        //         validMsg.removeClass("hide");
+        //     } else {
+        //         telInput.addClass("error");
+        //         errorMsg.removeClass("hide");
+        //     }
+        // }
     });
 
     // on keyup / change flag: reset
     telInput.on("keyup change", reset);
 
     $('.phoneNumberConfirmBtn').on('click', () => {
-        let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        let isoCode2 = $("#phone").intlTelInput("getSelectedCountryData").iso2;
+        let countryData = iti.getSelectedCountryData();
+        let dialCode = countryData.dialCode;
+        let isoCode2 = countryData.iso2;
         let phoneNumber = $('#phone').val();
         if (phoneNumber.includes('+')) {
             phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
@@ -58,20 +67,35 @@ $(document).ready(function() {
         }
 
         var form_data = new FormData();
-        if (dialCode == 57) {
-            if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
-                form_data.append('isoCode2', isoCode2);
-                form_data.append('dialCode', dialCode);
-                form_data.append('phoneNumber', phoneNumber);
-            }
-        } else if ($("#phone").intlTelInput("isValidNumber")) {
+        let isValid = iti.isValidNumber();
+        console.log(isValid);
+        if (isValid) {
             form_data.append('isoCode2', isoCode2);
             form_data.append('dialCode', dialCode);
             form_data.append('phoneNumber', phoneNumber);
+
+            validMsg.removeClass('hide');
         } else {
             alert('Please input valid phone number');
+
+            telInput.addClass("error");
+            errorMsg.removeClass("hide");
             return;
         }
+        // if (dialCode == 57) {
+        //     if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
+        //         form_data.append('isoCode2', isoCode2);
+        //         form_data.append('dialCode', dialCode);
+        //         form_data.append('phoneNumber', phoneNumber);
+        //     }
+        // } else if ($("#phone").intlTelInput("isValidNumber")) {
+        //     form_data.append('isoCode2', isoCode2);
+        //     form_data.append('dialCode', dialCode);
+        //     form_data.append('phoneNumber', phoneNumber);
+        // } else {
+        //     alert('Please input valid phone number');
+        //     return;
+        // }
         form_data.append('smsType', smsType);
         $.ajax({
             url: '/setting/setPhoneNumber',
