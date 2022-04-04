@@ -4,9 +4,9 @@ $(document).ready(function() {
         errorMsg = $("#error-msg"),
         validMsg = $("#valid-msg");
 
-    var iti = window.intlTelInput(phoneNumberInput, {
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/utils.js"
-    })
+    // var iti = window.intlTelInput(phoneNumberInput, {
+    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/utils.js"
+    // })
     var reset = function() {
         telInput.removeClass("error");
         errorMsg.addClass("hide");
@@ -18,6 +18,7 @@ $(document).ready(function() {
         reset();
         let isValid = iti.isValidNumber();
         console.log(iti.getNumber());
+        console.log(iti.getSelectedCountryData());
         console.log(isValid);
         if (isValid) {
             validMsg.removeClass('hide');
@@ -31,7 +32,6 @@ $(document).ready(function() {
     telInput.on("keyup change", reset);
 
     $('.phoneNumberConfirmBtn').on('click', () => {
-        let iti = intlTelInput(document.querySelector('#phone'));
         let countryData = iti.getSelectedCountryData();
         let dialCode = countryData.dialCode;
         let isoCode2 = countryData.iso2;

@@ -1,5 +1,4 @@
 $(document).ready(() => {
-    var iti = window.intlTelInput(document.querySelector('#phone'));
     $('#sms1TestBtn').on('click', () => {
         let countryData = iti.getSelectedCountryData();
         let dialCode = countryData.dialCode;
