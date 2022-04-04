@@ -534,7 +534,8 @@
         iti.setCountry(userData.national);
         // $("#phone").intlTelInput("selectCountry", userData.national);
         // $("#phone").intlTelInput("setNumber", userData.phone_number.replace(/[^0-9]/g, ''));
-        $("#phone").val(userData.phone_number);
+        // $("#phone").val(userData.phone_number);
+        iti.setNumber(userData.phone_number);
         // $("#phone").val(userData.phone_number);
 
 

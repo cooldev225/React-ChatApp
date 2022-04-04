@@ -4,11 +4,6 @@ $(document).ready(function() {
         errorMsg = $("#error-msg"),
         validMsg = $("#valid-msg");
 
-    // initialise plugin
-    // telInput.intlTelInput({
-    //     // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
-    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-    // });
     var iti = window.intlTelInput(phoneNumberInput, {
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/utils.js"
     })
@@ -22,6 +17,7 @@ $(document).ready(function() {
     telInput.blur(function() {
         reset();
         let isValid = iti.isValidNumber();
+        console.log(iti.getNumber());
         console.log(isValid);
         if (isValid) {
             validMsg.removeClass('hide');
@@ -29,38 +25,22 @@ $(document).ready(function() {
             telInput.addClass("error");
             errorMsg.removeClass("hide");
         }
-        // let dialCode = $("#phone").intlTelInput("getSelectedCountryData").dialCode;
-        // if (dialCode == 57) {
-        //     let phoneNumber = $('#phone').val();
-        //     if (/3[0-9][0-9] \d{7}/.test(phoneNumber)) {
-        //         validMsg.removeClass("hide");
-        //     } else {
-        //         telInput.addClass("error");
-        //         errorMsg.removeClass("hide");
-        //     }
-        // } else if ($.trim(telInput.val())) {
-        //     if (telInput.intlTelInput("isValidNumber")) {
-        //         validMsg.removeClass("hide");
-        //     } else {
-        //         telInput.addClass("error");
-        //         errorMsg.removeClass("hide");
-        //     }
-        // }
     });
 
     // on keyup / change flag: reset
     telInput.on("keyup change", reset);
 
     $('.phoneNumberConfirmBtn').on('click', () => {
+        let iti = intlTelInput(document.querySelector('#phone'));
         let countryData = iti.getSelectedCountryData();
         let dialCode = countryData.dialCode;
         let isoCode2 = countryData.iso2;
-        let phoneNumber = $('#phone').val();
-        if (phoneNumber.includes('+')) {
-            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
-        }
+        let phoneNumber = iti.getNumber();
+        // if (phoneNumber.includes('+')) {
+        //     phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
+        // }
         let smsType = $('.smsTestBtns .btn.active').text().replace(/[^0-9]/g, '');
-        console.log(smsType);
+        console.log('SMS' + smsType);
         if (!smsType) {
             alert('Please set SMS1 or SMS2.');
             return;

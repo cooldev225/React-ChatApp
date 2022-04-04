@@ -88,6 +88,10 @@
         flex-shrink: 0;
     }
     
+    .iti-mobile .iti--container {
+        z-index: 9999;
+    }
+    
     @media (max-width: 768px) {
         .chitchat-container .chitchat-main .messages#cast_chat .media-right {
             order: -1;
@@ -109,5 +113,3 @@
             background-color: transparent;
         }
     }
-    /* @media (max-width: 480px) {
-} */

@@ -450,8 +450,7 @@ ul.chatappend .msg-box .camera-icon {
     background-color: #4700B3;
     border-radius: 5px;
     /* outline: 1px solid rgba(0, 100, 0, 0.938); */
-    border: 1px solid rgba(0, 100, 0, 0.938);
-    outline-offset: 1px;
+    border: 1px solid rgba(0, 100, 0, 0.938) !important;
 }
 
 #backColorPicker {
@@ -577,7 +576,7 @@ select#phone {
 }
 
 .change-number .text-end .smsTestBtns a.btn.active {
-    outline: 1px solid black !important;
+    border: 1px solid black !important;
 }
 
 h6.sent {

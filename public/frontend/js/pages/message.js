@@ -5,8 +5,8 @@ $(document).ready(() => {
                 console.log('Cast Updated');
                 getCastData();
             })
-            $('.messages').scroll(() => {
-                if ($('.messages').scrollTop() == 0) {
+            $('.messages.active').scroll(() => {
+                if ($('.messages.active').scrollTop() == 0) {
                     // $('.chatappend').prepend(loader);
 
                     let firstMessageId = $('.chatappend .msg-item:first-child').attr('key');

@@ -387,14 +387,13 @@ io.on('connection', (socket) => {
     socket.on('test:SMS', data => {
         console.log(data);
         db.query(`SELECT * FROM countries where iso_code2 = '${data.isoCode2}'`, (error, country) => {
-            // let fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
-
             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
             if (data.dialCode != 1) {
-                var fullPhoneNumber = '011' + data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+                var fullPhoneNumber = '011' + data.phoneNumber.replace(/[^0-9]/g, '');
             } else {
-                var fullPhoneNumber = data.dialCode + data.phoneNumber.replace(/[^0-9]/g, '');
+                var fullPhoneNumber = data.phoneNumber.replace(/[^0-9]/g, '');
             }
+            console.log(fullPhoneNumber);
             if (spainish) {
                 var message = `Oye, tu numero de movil ${data.phoneNumber} ha sido actualizado en OJO.`;
             } else {
@@ -455,7 +454,6 @@ function sendSMS(sender, recipient, type) {
                 db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
 
                     db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
-                        let prefix = phoneInfo[0].intl_dialing_prefix
                         let phone_code = phoneInfo[0].phone_code
                         let fullPhoneNumber = '';
                         if (phone_code != 1) {
@@ -477,8 +475,6 @@ function sendSMS(sender, recipient, type) {
                             } else {
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
-                            // let sms1Url = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-                            // let sms2Url = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             axios.get(smsUrl).then(res => {
                                 console.log(res.status);
                             }).catch(error => {

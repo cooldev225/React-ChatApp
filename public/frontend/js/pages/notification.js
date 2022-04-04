@@ -4,10 +4,8 @@ $(document).ready(() => {
         let countryData = iti.getSelectedCountryData();
         let dialCode = countryData.dialCode;
         let isoCode2 = countryData.iso2;
-        let phoneNumber = $('#phone').val();
-        if (phoneNumber.includes('+')) {
-            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
-        }
+        // let phoneNumber = $('#phone').val();
+        let phoneNumber = iti.getNumber();
         socket.emit('test:SMS', { dialCode, isoCode2, phoneNumber, type: 1 });
         $('.smsTestBtns .btn').removeClass('active');
         $('#sms1TestBtn').addClass('active');
@@ -16,10 +14,7 @@ $(document).ready(() => {
         let countryData = iti.getSelectedCountryData();
         let dialCode = countryData.dialCode;
         let isoCode2 = countryData.iso2;
-        let phoneNumber = $('#phone').val();
-        if (phoneNumber.includes('+')) {
-            phoneNumber = phoneNumber.replace(`+${dialCode}`, '');
-        }
+        let phoneNumber = iti.getNumber();
         socket.emit('test:SMS', { dialCode, isoCode2, phoneNumber, type: 2 });
         $('.smsTestBtns .btn').removeClass('active');
         $('#sms2TestBtn').addClass('active');
