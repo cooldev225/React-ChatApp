@@ -457,9 +457,9 @@ function sendSMS(sender, recipient, type) {
                         let phone_code = phoneInfo[0].phone_code
                         let fullPhoneNumber = '';
                         if (phone_code != 1) {
-                            fullPhoneNumber = '011' + phone_code + phoneNumber;
+                            fullPhoneNumber = '011' + phoneNumber;
                         } else {
-                            fullPhoneNumber = phone_code + phoneNumber;
+                            fullPhoneNumber = phoneNumber;
                         }
                         db.query(`SELECT * FROM users where id=${sender}`, (error, user) => {
                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
