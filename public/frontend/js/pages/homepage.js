@@ -409,7 +409,7 @@ function addChatUserListItem(target, data) {
                 <h6>${data.description || 'Hello'}</h6>
             </div>
             <div class="date-status"><i class="ti-pin2"></i>
-                <h6>22/10/19</h6>
+                <h6></h6>
                 <h6 class="font-success status"></h6>
                 <div class="badge badge-primary sm"></div>
             </div>
@@ -437,7 +437,7 @@ function getContactList() {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
                     res.reverse().forEach(item => {
-                        addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
+                        addChatUserListItem(target, item);
                     });
 
                 },

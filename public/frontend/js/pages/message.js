@@ -191,8 +191,8 @@ $(document).ready(() => {
                 let target = '#msgchatModal > div > div > div.modal-body > ul';
                 $(target).empty();
 
-                res.reverse().forEach(item => {
-                    let data = usersList.find(user => user.id == item.contact_id)
+                res.reverse().forEach(data => {
+                    // let data = usersList.find(user => user.id == item.contact_id)
                     $(target).prepend(
                         `<li data-to="blank" key="${data.id}">
                             <div class="chat-box">
@@ -213,7 +213,6 @@ $(document).ready(() => {
                         $(`#msgchatModal ul.chat-main li[key=${data.id}] input`).prop('checked', true);
                         $(`#msgchatModal ul.chat-main li[key=${data.id}]`).addClass('active');
                     }
-                    // addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
                 });
 
             },
@@ -253,7 +252,6 @@ $(document).ready(() => {
                     </div>
                 </li>`
             );
-            // addChatUserListItem(target, usersList.find(user => user.id == item.contact_id))
         });
     });
 
@@ -324,8 +322,8 @@ $(document).ready(() => {
                 let target = '#castUserListModal div.modal-body > ul';
                 $(target).empty();
 
-                res.reverse().forEach(item => {
-                    let data = usersList.find(user => user.id == item.contact_id)
+                res.reverse().forEach(data => {
+                    // let data = usersList.find(user => user.id == item.contact_id);
                     $(target).prepend(
                         `<li data-to="blank" key="${data.id}">
                             <div class="chat-box">
@@ -378,6 +376,12 @@ $(document).ready(() => {
         $(this).removeData('recipients');
         
     });
+
+    //remove Chat Thread
+    // $(document).on("contextmenu", ".element", function(e){
+    //     alert('Context Menu event has fired!');
+    //     return false;
+    //  });
 });
 
 function showNewCastPage() {

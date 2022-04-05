@@ -133,6 +133,9 @@ class HomeController extends Controller
     {
         $id = Auth::id();
         $contactIds = Contact::where('user_id', $id)->get('contact_id');
+        $contactList = User::whereIn('id', $contactIds)->orderBy('username')->get();
+        return $contactList;
+
         // for ($i = 0; $i < count($contacts); $i++) {
         //     $msg = Message::where('sender',$contacts[$i]->contact_id)
         //         ->orWhere('recipient',$contacts[$i]->contact_id);
