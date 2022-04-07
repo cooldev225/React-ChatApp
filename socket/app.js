@@ -39,8 +39,10 @@ io.on('connection', (socket) => {
     //user table logout flag make false
     console.log('userId:', currentUserId, ' logined');
     db.query(`UPDATE users SET logout = 0 WHERE id=${currentUserId}`, (error, item) => {
-        if (error)
-            console.log("Error:", error);
+        if (error) {
+            console.log("Error43:", error);
+        }
+
         console.log('userId:', currentUserId, ' logined successfully');
     });
 
@@ -172,7 +174,6 @@ io.on('connection', (socket) => {
                 kind: 2
             }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-                if (error) console.log(error);
                 data.id = item.insertId;
                 message.photoId = item.insertId
                 db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
@@ -385,7 +386,6 @@ io.on('connection', (socket) => {
         });
     });
     socket.on('test:SMS', data => {
-        console.log(data);
         db.query(`SELECT * FROM countries where iso_code2 = '${data.isoCode2}'`, (error, country) => {
             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
             if (data.dialCode != 1) {
@@ -400,12 +400,13 @@ io.on('connection', (socket) => {
                 var message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
             }
             if (data.type == 1) {
-                var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                // var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                var smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
+
             } else {
                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
             }
             axios.get(smsUrl).then(res => {
-                console.log(res.data);
                 console.log(message);
                 if (res.status == 200) {
                     console.log('OK');
@@ -471,14 +472,17 @@ function sendSMS(sender, recipient, type) {
                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
                             }
                             if (row[0].sms_type == 1) {
-                                var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                                // var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
+                                var smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
                             } else {
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
                             axios.get(smsUrl).then(res => {
                                 console.log(res.status);
                             }).catch(error => {
+                                console.log('-------------------------------');
                                 console.log(error);
+                                console.log('------------------------------');
                             });
                         });
                     });
