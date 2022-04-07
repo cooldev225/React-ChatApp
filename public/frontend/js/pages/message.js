@@ -59,6 +59,7 @@ $(document).ready(() => {
             });
 
             $('#cast-tab').on('click', function() {
+                console.log('aaa');
                 getCastData();
             });
 
@@ -425,6 +426,7 @@ function getCastData() {
             if (res.state == 'true') {      
                 let target = '#cast > ul.chat-main';
                 $(target).empty();
+                console.log(res.castData); 
                 res.castData.forEach(item => {
                     let title = item.cast_title;
                     let recipients = item.recipients.split(', ').map(item => getCertainUserInfoById(item).username).join(', ');
