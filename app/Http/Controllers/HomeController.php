@@ -186,7 +186,7 @@ class HomeController extends Controller
         $location = $request->input('location');
         $description = $request->input('description');
         $user = User::find($id);
-        $user->username = $username;
+        $user->firstName = $username;
         $user->location = $location;
         $user->description = $description;
         if ($request->file('avatar') != null) {

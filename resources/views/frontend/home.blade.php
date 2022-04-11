@@ -45,7 +45,9 @@
                         <!-- <a class="button-effect" data-intro="Check Status here"> -->
                         <div class="user-popup status one selfProfileBtn">
                             <div>
-                                <img class="bg-img" src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : '/v1/api/downloadFile?path=' . Auth::user()->avatar }}" alt="Avatar" />
+                                <img class="bg-img"
+                                    src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : '/v1/api/downloadFile?path=' . Auth::user()->avatar }}"
+                                    alt="Avatar" />
                             </div>
                         </div>
                         <!-- </a> -->
@@ -124,7 +126,7 @@
                 </div>
                 <div class="chat custom-scroll">
                     <ul class="chat-cont-setting">
-                        <li> 
+                        <li>
                             {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
@@ -185,9 +187,15 @@
                             <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                                 <div class="theme-tab">
                                     <ul class="nav nav-tabs" id="myTab1" role="tablist">
-                                        <li class="nav-item"><a class="nav-link button-effect active" id="direct-tab" data-bs-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a></li>
-                                        <li class="nav-item"><a class="nav-link button-effect" id="group-tab" data-bs-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a></li>
-                                        <li class="nav-item"><a class="nav-link button-effect" id="cast-tab" data-bs-toggle="tab" href="#cast" role="tab" aria-controls="cast" aria-selected="true" data-to="cast_chat">Cast</a></li>
+                                        <li class="nav-item"><a class="nav-link button-effect active" id="direct-tab"
+                                                data-bs-toggle="tab" href="#direct" role="tab" aria-controls="direct"
+                                                aria-selected="false" data-to="chating">Direct</a></li>
+                                        <li class="nav-item"><a class="nav-link button-effect" id="group-tab"
+                                                data-bs-toggle="tab" href="#group" role="tab" aria-controls="group"
+                                                aria-selected="true" data-to="group_chat">Group</a></li>
+                                        <li class="nav-item"><a class="nav-link button-effect" id="cast-tab"
+                                                data-bs-toggle="tab" href="#cast" role="tab" aria-controls="cast"
+                                                aria-selected="true" data-to="cast_chat">Cast</a></li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent1">
                                         <div class="tab-pane fade show active" id="direct" role="tabpanel"
@@ -213,7 +221,7 @@
                                         </div>
                                         <div class="tab-pane fade" id="cast" role="tabpanel" aria-labelledby="cast-tab">
                                             <ul class="chat-main">
-                                                
+
                                             </ul>
                                         </div>
                                     </div>
@@ -377,7 +385,8 @@
                                 <input type="file" id="profileImageUploadBtn" />
                             </div>
                             <div class="details">
-                                <h5 class="setting__profile--name">{{ Auth::user()->username }}</h5>
+                                <h5 class="setting__profile--name">
+                                    {{ Auth::user()->firstName ? Auth::user()->firstName : Auth::user()->username }}</h5>
                                 <h6 class="setting__profile--location">{{ Auth::user()->location }}</h6>
                                 <h6 class="setting__profile--description">{{ Auth::user()->description }}</h6>
                             </div>
@@ -392,8 +401,8 @@
                                             value="{{ Auth::user()->location }}" placeholder="Alabma, USA" />
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control description" placeholder="Description"
-                                            style="font-size: 12px;" row="5">{{ Auth::user()->description }}</textarea>
+                                        <textarea class="form-control description" placeholder="Description" style="font-size: 12px;"
+                                            row="5">{{ Auth::user()->description }}</textarea>
                                     </div>
                                 </form>
                             </div>
@@ -794,8 +803,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div> -->
+                                <span class="sr-only">Loading...</span>
+                            </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -1132,7 +1141,7 @@
                                 <div class="gr-profile dot-btn dot-success grow"><img class="bg-img"
                                         src="/chat/images/avtar/5.jpg" alt="Avatar" /></div>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -1143,13 +1152,13 @@
                                 <div class="media left">
                                     <span style="width: 30px">To: </span>
                                     <div class="media-body">
-                                        
+
                                     </div>
                                     <div class="media-right">
                                         <ul>
-                                            <li><a class="icon-btn btn-light button-effect" href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><i
-                                                        class="fa fa-plus"></i></a></li>
-                                            
+                                            <li><a class="icon-btn btn-light button-effect" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#msgchatModal"><i class="fa fa-plus"></i></a></li>
+
                                             <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
                                                         data-feather="chevron-left"></i></a></li>
                                         </ul>
@@ -1216,7 +1225,7 @@
                             <div class="dot1"></div>
                         </div>
                         <ul class="chatappend">
-                            
+
                         </ul>
                     </div>
                     <div class="call-list-center"><img src="/chat/images/chat.png" alt="" />
@@ -1240,7 +1249,8 @@
                                     <div class="media-right">
                                         <ul>
                                             <li>
-                                                <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i data-feather="chevron-left"></i></a>
+                                                <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
+                                                        data-feather="chevron-left"></i></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -1248,7 +1258,7 @@
                             </div>
                             <div class="col">
                                 <ul class="calls text-end">
-                                    
+
                                     <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
                                             data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
                                     <li class="chat-friend-toggle"><a
@@ -1680,7 +1690,11 @@
         </div>
 
         <section class="section-py-space chitchat-main light-bg">
-            <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg></a>
+            <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><svg xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg></a>
             <div class="container-fluid">
                 <div class="landing-title">
                     <div class="sub-title">
@@ -3478,9 +3492,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                    <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                    </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3626,7 +3640,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade add-popup msg-chat-modal" id="castUserListModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade add-popup msg-chat-modal" id="castUserListModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -3637,17 +3652,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="chat-msg-search">
-                        <div class="input-group" style="justify-content: flex-end; border: none; background-color: white">
+                        <div class="input-group"
+                            style="justify-content: flex-end; border: none; background-color: white">
                             <input class="form-control" type="text" placeholder="Cast Title"
                                 aria-label="Recipient's username" aria-describedby="basic-addon21" />
                         </div>
                     </div>
                     <ul class="chat-main custom-scroll">
-                        
+
                     </ul>
                     <div class="edit_save_cast_list edit">
-                        <button class="btn btn-success button-effect btn-sm edit_list" id="editCastListbtn" type="button" style="float: right; margin-top: 20px;">Edit</button>
-                        <button class="btn btn-success button-effect btn-sm save_list" id="saveCastListbtn" type="button" style="float: right; margin-top: 20px;">Save</button>
+                        <button class="btn btn-success button-effect btn-sm edit_list" id="editCastListbtn" type="button"
+                            style="float: right; margin-top: 20px;">Edit</button>
+                        <button class="btn btn-success button-effect btn-sm save_list" id="saveCastListbtn" type="button"
+                            style="float: right; margin-top: 20px;">Save</button>
                     </div>
                 </div>
             </div>
@@ -3845,9 +3863,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div> -->
+                                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div> -->
             </div>
         </div>
     </div>
@@ -3872,7 +3890,7 @@
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
     <script src="/frontend/js/constant.js"></script>
-    
+
     <script src="/frontend/js/pages/homepage.js"></script>
     <script src="/frontend/js/pages/requestpage.js"></script>
 
