@@ -46,7 +46,6 @@ $(document).ready(() => {
             // $('#group_blank .chatappend').css('display', 'flex');
             let target = '#cast_chat > div.contact-chat > ul.chatappend';
             addChatItem(target, message.from, message);
-
         } else {
             if (message.from == currentUserId || message.from == currentContactId) {
                 let target = '#chating .contact-chat ul.chatappend';
@@ -499,26 +498,31 @@ function newMessage() {
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
-
+    var currentContactIdArr = [];
     if ($('#group_blank').hasClass('active')) {
-        var currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+        currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
         var castTitle = $('#msgchatModal .cast_title input').val();
         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
         $('#msgchatModal .cast_title input').val('');
 
     } else if ($('#cast_chat').hasClass('active')) {
-        var currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-        var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
-        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
+        if ($('#cast > ul.chat-main > li.active').attr('recipients')) {
+            currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+            var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
+            socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
+        }
     } else {
-        var currentContactIdArr = [currentContactId];
+        currentContactIdArr = [currentContactId];
     }
+    console.log(currentContactIdArr);
     if (currentContactIdArr.length) {
         socket.emit('message', {
             currentContactIdArr,
             message,
             senderName,
         });
+    } else {
+        console.log('No recipients');
     }
 };
 

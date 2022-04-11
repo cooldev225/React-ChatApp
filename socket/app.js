@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
         db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {
             if (senderSocketId) {
                 if (io.sockets.sockets.get(senderSocketId)) {
-                    io.sockets.sockets.get(senderSocketId).emit('update:cast');
+                    // io.sockets.sockets.get(senderSocketId).emit('update:cast');
                 }
             }
         });
@@ -184,8 +184,7 @@ io.on('connection', (socket) => {
                             console.log("Recipients:", data.to);
                             db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
                                 console.log("Cast Title: ", data.castTitle);
-                                io.sockets.sockets.get(senderSocketId).emit('update:cast');
-
+                                // io.sockets.sockets.get(senderSocketId).emit('update:cast');
                             });
                         }
                         io.sockets.sockets.get(senderSocketId).emit('message', message);
@@ -215,7 +214,7 @@ io.on('connection', (socket) => {
 
             if (senderSocketId) {
                 if (io.sockets.sockets.get(senderSocketId)) {
-                    io.sockets.sockets.get(senderSocketId).emit('update:cast');
+                    io.sockets.sockets.get(senderSocketId).emit('update:cast', data);
                 }
             }
         });
