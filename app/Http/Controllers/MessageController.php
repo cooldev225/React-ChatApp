@@ -64,7 +64,7 @@ class MessageController extends Controller
     public function deleteChatThread(Request $request) {
         $userId = Auth::id();
         $recipients = $request->input('recipient');
-        $res = Message::where('sender', $userId)->where('recipient', $recipients)->delete();
+        $res = Message::whereRaw("sender = ".$userId." AND recipient = ".$recipients)->orWhereRaw("sender = ".$recipients." AND recipient = ".$userId);
         if ($res) {
             return array('state'=>'true', 'data'=>$res);
         } else {
