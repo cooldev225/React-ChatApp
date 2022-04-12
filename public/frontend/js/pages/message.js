@@ -125,6 +125,37 @@ $(document).ready(function() {
         })
     })
 
+    $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function (e) {
+        e.stopPropagation();
+        if (confirm('Delete this Thread?')) {
+
+            let recipient = $(this).closest('li').attr('key');
+            console.log(recipient);
+            let form_data = new FormData();
+            form_data.append('recipient', recipient);
+            $.ajax({
+                url: '/message/deleteChatThread',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state = 'true') {
+                        $(`.recent-chat-list li[key=${recipient}]`).remove();
+                    }
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+    });
+
     $('.messages.active').scroll(() => {
         if ($('.messages.active').scrollTop() == 0) {
             // $('.chatappend').prepend(loader);

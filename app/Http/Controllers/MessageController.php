@@ -25,7 +25,7 @@ class MessageController extends Controller
 {
     public function getCastData(Request $request) {
         $userId = Auth::id();
-        $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderBy('created_at', 'desc')->get();
+        $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderBy('cast_title')->get();
         if (count($castData)) {
             return array('state'=>'true', 'castData'=>$castData);
         } else {
@@ -56,6 +56,17 @@ class MessageController extends Controller
         });
         if (count($messages)) {
             return array('state'=>'true', 'data'=>$messages);
+        } else {
+            return array('state' => 'false');
+        }
+    }
+
+    public function deleteChatThread(Request $request) {
+        $userId = Auth::id();
+        $recipients = $request->input('recipient');
+        $res = Message::where('sender', $userId)->where('recipient', $recipients)->delete();
+        if ($res) {
+            return array('state'=>'true', 'data'=>$res);
         } else {
             return array('state' => 'false');
         }

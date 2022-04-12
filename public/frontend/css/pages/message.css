@@ -92,6 +92,20 @@
         z-index: 9999;
     }
     
+    .messages div.contact-chat li.replies .msg-box li {
+        text-align: left;
+    }
+    
+    .chat-main li .chat-box .date-status {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .chat-main li .chat-box .date-status i.ti-trash {
+        font-size: 16px;
+        color: #1c9dea;
+    }
+    
     @media (max-width: 768px) {
         .chitchat-container .chitchat-main .messages#cast_chat .media-right {
             order: -1;

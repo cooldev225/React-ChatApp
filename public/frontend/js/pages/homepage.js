@@ -272,7 +272,7 @@ function setCurrentChatContent(contactorId) {
                 $('.app-list').css('display', 'block');
                 $('#content').css('display', 'block');
                 //profile info display
-                $('.chat-content .contactor-name').html(contactorInfo.username);
+                $('.chat-content .contactor-name').html(contactorInfo.firstName || contactorInfo.username);
                 if (contactorInfo.logout) {
                     $('.chat-content .contact-details .profile').addClass('offline');
                     $('.chat-content .contact-details .profile').removeClass('online');
@@ -407,7 +407,7 @@ function addChatUserListItem(target, data) {
                 <h5>${data.username}</h5>
                 <h6>${data.description || 'Hello'}</h6>
             </div>
-            <div class="date-status"><i class="ti-pin2"></i>
+            <div class="date-status"><i class="ti-trash"></i>
                 <h6></h6>
                 <h6 class="font-success status"></h6>
                 <div class="badge badge-primary sm"></div>
@@ -584,10 +584,10 @@ function addChatItem(target, senderId, data, loadFlag) {
                     <ul class="msg-box">
                         <li class="msg-setting-main">
                             ${data.kind == 0 ?
-                                `<h5>${data.content}</h5>`
-                                : data.kind == 1 ?
-                                    `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-                                    : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+            `<h5>${data.content}</h5>`
+            : data.kind == 1 ?
+                `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
                             <div class="msg-dropdown-main">
                                 <div class="msg-open-btn"><span>Open</span></div>
                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
@@ -639,7 +639,7 @@ function displayProfileContent(userId) {
     } else {
         $('.contact-top').css('background-image', `url("/images/default-avatar.png")`);
     }
-    $('.contact-profile .name h3').html(userInfo.username);
+    $('.contact-profile .name h3').html(userInfo.firstName || userInfo.username);
     $('.contact-profile .name h5').html(userInfo.location);
     $('.contact-profile .name h6').html(userInfo.description);
 
@@ -693,7 +693,7 @@ function displayProfileContent(userId) {
                 document.querySelector('.content-rating-list .voice-call-rating')._tippy.setContent(voiceCallRate.toFixed(2))
             }
         },
-        error: function (response) {}
+        error: function (response) { }
     });
 }
 
@@ -757,7 +757,7 @@ function deleteMessages() {
         if (confirm('Are you sure?')) {
             let element = $(event.currentTarget).closest('.msg-item');
             let messageId = element.attr('key');
-    
+
             if (element.attr('kind') == '2') {
                 var photoId = element.find('.receive_photo').attr('photoid');
                 let price = element.find('.receive_photo').attr('price');
@@ -824,7 +824,7 @@ function displayPaymentHistory(userId) {
                                     <h6 class="title">${new Date(item.created_at).toLocaleDateString()}</h6>
                                 </div>
                                 <div class="date-status">
-                                    <span class=${sendFlag?'font-danger':'font-success'}>${sendFlag ? '-' : ''}$${amount}</span>
+                                    <span class=${sendFlag ? 'font-danger' : 'font-success'}>${sendFlag ? '-' : ''}$${amount}</span>
                                     <h6 class="status ${item.state ? 'font-success' : 'font-warning'}" request-status="4"> ${status[item.state]}</h6>
                                 </div>
                             </div>
@@ -834,7 +834,7 @@ function displayPaymentHistory(userId) {
                 })
             }
         },
-        error: function (response) {}
+        error: function (response) { }
     });
 }
 
@@ -843,7 +843,7 @@ function displayTimeString(time) {
     let timeString = time.toLocaleTimeString();
     let nowDateString = new Date().toDateString();
     let timeDiffer = parseInt((new Date(nowDateString) - new Date(dateString)) / (1000 * 60 * 60 * 24), 10);
-    switch(timeDiffer) {
+    switch (timeDiffer) {
         case 0:
             return timeString;
         case 1:

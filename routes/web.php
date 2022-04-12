@@ -48,6 +48,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/setting/setPhoneNumber', 'SettingController@setPhoneNumber');
     Route::post('/setting/getPhoneNumber', 'SettingController@getPhoneNumber');
     Route::post('/setting/setNotification', 'SettingController@setNotification');
+    Route::post('/message/deleteChatThread', 'MessageController@deleteChatThread');
 });
 
 Route::group(['middleware' => ['admin']], function () {
