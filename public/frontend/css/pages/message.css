@@ -63,6 +63,10 @@
         border-radius: 50%;
     }
     
+    #msgchatModal>div>div>div.modal-body>div>div>input {
+        margin-bottom: 10px;
+    }
+    
     body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
         position: absolute;
         left: 20px;

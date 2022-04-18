@@ -502,6 +502,12 @@ function newMessage() {
     if ($('#group_blank').hasClass('active')) {
         currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
         var castTitle = $('#msgchatModal .cast_title input').val();
+        if (!castTitle) {
+            $('#msgchatModal').modal('show');
+            // alert('Please enter Cast Title');
+            $('#msgchatModal .cast_title input').addClass('is-invalid');
+            return;
+        }
         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
         $('#msgchatModal .cast_title input').val('');
 

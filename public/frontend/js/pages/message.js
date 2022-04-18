@@ -251,6 +251,15 @@ $(document).ready(function() {
         });
     });
 
+    $('#msgchatModal').on('hidden.bs.modal', function (e) {
+        let castTitle = $('#msgchatModal .cast_title input').val();
+
+    });
+    $('#msgchatModal .cast_title input').on('keydown', function () {
+        $('#msgchatModal .cast_title input').removeClass('is-invalid');
+        console.log('aaa');
+    });
+
     $('#castUserListModal').on('shown.bs.modal', function () {
         let recipients = $('#castUserListModal').data('recipients');
         let castTitle = $('#castUserListModal').data('title') || 'No Title';
