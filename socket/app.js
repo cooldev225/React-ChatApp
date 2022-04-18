@@ -346,7 +346,7 @@ io.on('connection', (socket) => {
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
                     if (error) throw error;
                 });
-                db.query(`UPDATE users SET balances=balances-${data.addBalance/0.7} WHERE id=${item[0].to}`, (error, item) => {
+                db.query(`UPDATE users SET balances=balances-${data.addBalance / 0.7} WHERE id=${item[0].to}`, (error, item) => {
                     if (error) throw error;
                 });
                 db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${item[0].to}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
@@ -371,7 +371,7 @@ io.on('connection', (socket) => {
                 content[index].price = -1;
             }
             item[0].content = JSON.stringify(content);
-            db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content) } WHERE id=${item[0].id}`, (error, photo) => {
+            db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content)} WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
                 let recipientSocketId = user_socketMap.get(item[0].to.toString());
                 let senderSocketId = user_socketMap.get(currentUserId.toString());
