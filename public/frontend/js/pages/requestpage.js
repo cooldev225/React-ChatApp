@@ -41,7 +41,7 @@ var fonts = ["Arial", "monospace", "cursive", "fantasy", "emoji", "math",
     "fangsong", "Verdana", "Trebuchet MS", "Gill Sans", "Optima"
 ];
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // let elem = document.querySelector('.sticky-switch');
     // let init = new Switchery(elem, { color: '#3fcc35', size: 'small' });
@@ -60,11 +60,11 @@ $(document).ready(function() {
     payPhoto();
 
     document.getElementById("input_btn")
-        .addEventListener('click', function() {
+        .addEventListener('click', function () {
             document.getElementById("input_file").click();
         }, false);
     document.getElementById("input_emoji_btn")
-        .addEventListener('click', function() {
+        .addEventListener('click', function () {
             document.getElementById("input_emoji_select").click();
         }, false);
 
@@ -155,7 +155,7 @@ function addFont() {
     fonts.unshift('Times New Roman');
     // Populate the fontFamily select
     var select = document.getElementById("font-family");
-    fonts.forEach(function(font) {
+    fonts.forEach(function (font) {
         var option = document.createElement('option');
         option.innerHTML = font;
         option.value = font;
@@ -178,7 +178,7 @@ function getRequestList() {
                 processData: false,
                 type: 'POST',
                 dataType: "json",
-                success: function(res) {
+                success: function (res) {
                     if (res.state == 'true') {
                         let target = 'ul.request-list';
                         $(target).empty();
@@ -190,7 +190,7 @@ function getRequestList() {
                     }
 
                 },
-                error: function(response) {
+                error: function (response) {
 
                 }
             });
@@ -250,7 +250,7 @@ function selectBackPhoto() {
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
-            fabric.Image.fromURL(reader.result, function(oImg) {
+            fabric.Image.fromURL(reader.result, function (oImg) {
                 ori_image = reader.result || '';
                 globalImage = oImg;
 
@@ -258,19 +258,21 @@ function selectBackPhoto() {
                 let imgHeight = oImg.height;
                 let imgRatio = imgWidth / imgHeight;
 
-                if (imgWidth > canvasDimension || imgHeight > canvasDimension) {
-                    if (imgWidth > imgHeight) {
-                        var width = canvasDimension;
-                        var height = width / imgRatio;
-                    } else {
-                        var height = canvasDimension;
-                        var width = height * imgRatio;
-                    }
+                var width = canvasDimension;
+                var height = width / imgRatio;
+                // if (imgWidth > canvasDimension || imgHeight > canvasDimension) {
+                //     if (imgWidth > imgHeight) {
+                //         var width = canvasDimension;
+                //         var height = width / imgRatio;
+                //     } else {
+                //         // var height = canvasDimension;
+                //         // var width = height * imgRatio;
+                //     }
 
-                } else {
-                    var width = imgWidth;
-                    var height = imgHeight;
-                }
+                // } else {
+                //     var width = imgWidth;
+                //     var height = imgHeight;
+                // }
                 canvas.setWidth(width);
                 canvas.setHeight(height);
 
@@ -337,37 +339,7 @@ function blurPhoto() {
 }
 
 function addEmojisOnPhoto() {
-    var touchtime = 0;
-
-    // $(".emojis-tool img").on("click", (e) => {
-    //     if (touchtime == 0) {
-    //         touchtime = new Date().getTime();
-    //     } else {
-    //         if (((new Date().getTime()) - touchtime) < 800) {
-
-    //             fabric.Image.fromURL(e.target.src, function(oImg) {
-    //                 if ($('#createPhoto .preview-paid').hasClass('d-none')) {
-    //                     oImg.price = $('.emojis-price').val();
-    //                 } else {
-    //                     oImg.price = $('.preview-paid').val();
-    //                     // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
-    //                 }
-    //                 oImg.id = Date.now();
-    //                 addEventAction(canvas, oImg);
-
-    //                 canvas.add(oImg);
-    //                 canvas.centerObject(oImg);
-    //             });
-
-    //             touchtime = 0;
-    //         } else {
-    //             // not a double click so set as a new first click
-    //             touchtime = new Date().getTime();
-    //         }
-    //     }
-    // });
-
-    EmojiButton(document.querySelector('#emoji-button'), function(emoji) {
+    EmojiButton(document.querySelector('#emoji-button'), function (emoji) {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
         } else {
@@ -394,7 +366,7 @@ function addEmojisOnPhoto() {
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
-            fabric.Image.fromURL(reader.result, function(oImg) {
+            fabric.Image.fromURL(reader.result, function (oImg) {
                 if ($('#createPhoto .preview-paid').hasClass('d-none')) {
                     oImg.price = $('.emojis-price').val();
                 } else {
@@ -546,7 +518,7 @@ function getPhotoSrcById(id, target) {
             processData: false,
             type: 'POST',
             dataType: "json",
-            success: function(res) {
+            success: function (res) {
                 if (res.state == 'true') {
                     let data = JSON.parse(res.data[0].content);
                     // return res.data[0].photo;
@@ -555,7 +527,7 @@ function getPhotoSrcById(id, target) {
                     // return'/images/default-avatar.png';
                 }
             },
-            error: function(response) {
+            error: function (response) {
 
             }
         });
@@ -613,7 +585,7 @@ function getContentRate(target, rate) {
 }
 
 function setContentRate() {
-    $(document).on('click', '.photoRating div', function(e) {
+    $(document).on('click', '.photoRating div', function (e) {
         let rate = 5 - $(this).index();
 
         if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
@@ -643,7 +615,7 @@ function addTextOnPhoto() {
         $('.text-tool').slideToggle();
         $('.blur-tool').slideUp();
     });
-    $('.addText').on('click', function() {
+    $('.addText').on('click', function () {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
         } else {
@@ -671,7 +643,7 @@ function addTextOnPhoto() {
         }
 
     });
-    $('#font-family').on('change', function() {
+    $('#font-family').on('change', function () {
         if (canvas.getActiveObject()) {
             canvas.getActiveObject().set("fontFamily", this.value);
             canvas.requestRenderAll();
@@ -696,7 +668,7 @@ function addTextOnPhoto() {
         }
     })
 
-    $('.font-style').on('click', function(e) {
+    $('.font-style').on('click', function (e) {
         if (canvas.getActiveObject()) {
             if ($(e.target).hasClass('bold')) {
                 if ($(e.target).hasClass('active')) {
@@ -800,7 +772,7 @@ function showPhotoContent(id) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
@@ -854,7 +826,7 @@ function showPhotoContent(id) {
                 //background
                 new Promise(resolve => {
                     if (res.data[0].back) {
-                        fabric.Image.fromURL(res.data[0].back, function(oImg) {
+                        fabric.Image.fromURL(res.data[0].back, function (oImg) {
                             let filter = new fabric.Image.filters.Blur({
                                 blur: res.data[0].blur
                             });
@@ -874,7 +846,7 @@ function showPhotoContent(id) {
                     Promise.all(emojis.map(item => {
                         return new Promise(resolve => {
                             if (item.type == 'image') {
-                                fabric.Image.fromURL(item.src, function(oImg) {
+                                fabric.Image.fromURL(item.src, function (oImg) {
                                     oImg.id = item.id;
                                     oImg.left = item.position[0];
                                     oImg.top = item.position[1];
@@ -1006,7 +978,7 @@ function showPhotoContent(id) {
                 $('#photo_item').modal('show');
             }
         },
-        error: function(response) {
+        error: function (response) {
 
         }
     });

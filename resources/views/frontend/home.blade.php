@@ -3616,7 +3616,7 @@
                 <div class="modal-body">
                     <div class="cast_title">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Cast Title"
+                            <input class="form-control cast_title" type="text" placeholder="Cast Title"
                                 aria-label="Recipient's username" aria-describedby="basic-addon21" />
                         </div>
                     </div>

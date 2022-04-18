@@ -3,7 +3,7 @@ const app = express()
 const axios = require('axios');
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
-    // const port = process.env.PORT || 4000
+// const port = process.env.PORT || 4000
 const port = 4000;
 const io = require('socket.io')(server, {
     cors: {
@@ -431,7 +431,7 @@ io.on('connection', (socket) => {
         console.log('userId:', currentUserId, ' logouted');
         console.log(user_socketMap);
     })
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         // Do stuff (probably some jQuery)
         user_socketMap.delete(currentUserId);
         socket_userMap.delete(socket.id);
