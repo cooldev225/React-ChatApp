@@ -2,149 +2,179 @@ var oldRecipients = '';
 var oldCastTitle = '';
 
 
-$(document).ready(function() {
-            $('#new_cast').on('click', () => {
-                showNewCastPage();
-                $('#group_blank > .contact-details .media-body').empty();
-                $('#group_blank .contact-chat ul.chatappend').empty()
+$(document).ready(function () {
+    $('#new_cast').on('click', () => {
+        showNewCastPage();
+        $('#group_blank > .contact-details .media-body').empty();
+        $('#group_blank .contact-chat ul.chatappend').empty()
 
-            });
+    });
 
-            $('#editCastListbtn').on('click', () => {
-                // showNewCastPage();
-            });
+    $('#editCastListbtn').on('click', () => {
+        // showNewCastPage();
+    });
 
-            $('#cast-tab').on('click', function() {
-                getCastData();
-            });
+    $('#cast-tab').on('click', function () {
+        getCastData();
+    });
+    socket.on('add:newCast', data => {
+        console.log(data);
+        let target = '#cast > ul.chat-main';
+        let title = data.castTitle;
+        let recipients = data.currentContactIdArr.map(item => getCertainUserInfoById(item).username).join(', ');
+        let countRecipients = data.currentContactIdArr.length;
+        let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
+        $(target).prepend(
+            `<li data-to="cast_chat" recipients="${data.currentContactIdArr.join(', ')}">
+                <div class="chat-box">
+                    <div class="profile bg-size" style="background-image: url('/images/default-avatar.png'); background-size: cover; background-position: center center; display: block;">
+                        
+                    </div>
+                    <div class="details">
+                        <h5>${title}</h5>
+                        <h6>${countRecipients} : ${displayNames}</h6>
+                    </div>
+                    <div class="date-status">
+                        <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
+                            <img src="/images/icons/info.svg" alt="info">
+                        </a>
+                    </div>
+                </div>
+            </li>`
+        );
+        $(target).children().removeClass('active');
+        $(target).children().first().addClass('active');
 
-            socket.on('update:cast', (data) => {
-                new Promise((resolve) => {
-                    getCastData(resolve);
-                }).then(() => {
-                    $('#cast > ul.chat-main >li').removeClass('active');
-                    $('#cast > ul.chat-main >li').filter(function() {
-                        return $(this).find('.details>h5').text() === data.newCastTitle;
-                    }).addClass('active');
-                })
-            })
+        $('#content .chat-content .messages').removeClass('active');
+        $('#cast_chat').addClass('active');
+    });
+    socket.on('update:cast', (data) => {
+        new Promise((resolve) => {
+            getCastData(resolve);
+        }).then(() => {
+            $('#cast > ul.chat-main >li').removeClass('active');
+            $('#cast > ul.chat-main >li').filter(function () {
+                return $(this).find('.details>h5').text() === data.newCastTitle;
+            }).addClass('active');
+        })
+    })
 
-            $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function(e) {
-                e.stopPropagation();
-                if (confirm('Delete this Thread?')) {
+    $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function (e) {
+        e.stopPropagation();
+        if (confirm('Delete this Thread?')) {
 
-                    let recipient = $(this).closest('li').attr('key');
-                    console.log(recipient);
-                    let form_data = new FormData();
-                    form_data.append('recipient', recipient);
-                    $.ajax({
-                        url: '/message/deleteChatThread',
-                        headers: {
-                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: form_data,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        type: 'POST',
-                        dataType: "json",
-                        success: function(res) {
-                            if (res.state = 'true') {
-                                $(`.recent-chat-list li[key=${recipient}]`).remove();
-                            }
-                        },
-                        error: function(response) {
+            let recipient = $(this).closest('li').attr('key');
+            console.log(recipient);
+            let form_data = new FormData();
+            form_data.append('recipient', recipient);
+            $.ajax({
+                url: '/message/deleteChatThread',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state = 'true') {
+                        $(`.recent-chat-list li[key=${recipient}]`).remove();
+                    }
+                },
+                error: function (response) {
 
-                        }
-                    });
                 }
             });
+        }
+    });
 
-            $('.messages.active').scroll(() => {
-                if ($('.messages.active').scrollTop() == 0) {
-                    // $('.chatappend').prepend(loader);
+    $('.messages.active').scroll(() => {
+        if ($('.messages.active').scrollTop() == 0) {
+            // $('.chatappend').prepend(loader);
 
-                    let firstMessageId = $('.chatappend .msg-item:first-child').attr('key');
-                    let form_data = new FormData();
-                    form_data.append('firstMessageId', firstMessageId);
-                    form_data.append('currentContactId', currentContactId);
-                    $.ajax({
-                        url: '/home/loadMoreMessages',
-                        headers: {
-                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: form_data,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        type: 'POST',
-                        dataType: "json",
-                        success: function(res) {
-                            if (res.messageData) {
-                                let target = '#chating .contact-chat ul.chatappend';
-                                res.messageData.forEach(item => {
-                                    item.messageId = item.id;
-                                    addChatItem(target, item.sender, item, true);
-                                });
-                                if (res.messageData.length) $('.messages').scrollTop(50);
-                            }
-                            $('#loader').hide();
-                        },
-                        error: function(response) {
-                            $('#loader').hide();
-                        }
-                    });
+            let firstMessageId = $('.chatappend .msg-item:first-child').attr('key');
+            let form_data = new FormData();
+            form_data.append('firstMessageId', firstMessageId);
+            form_data.append('currentContactId', currentContactId);
+            $.ajax({
+                url: '/home/loadMoreMessages',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.messageData) {
+                        let target = '#chating .contact-chat ul.chatappend';
+                        res.messageData.forEach(item => {
+                            item.messageId = item.id;
+                            addChatItem(target, item.sender, item, true);
+                        });
+                        if (res.messageData.length) $('.messages').scrollTop(50);
+                    }
+                    $('#loader').hide();
+                },
+                error: function (response) {
+                    $('#loader').hide();
                 }
             });
-            $('#cast > ul.chat-main').on('click', 'li', function() {
-                        $('#cast > ul.chat-main li').removeClass('active');
-                        $(this).addClass('active');
-                        $('#content .chat-content .messages').removeClass('active');
-                        $('#content .chat-content .messages#cast_chat').addClass('active');
+        }
+    });
+    $('#cast > ul.chat-main').on('click', 'li', function () {
+        $('#cast > ul.chat-main li').removeClass('active');
+        $(this).addClass('active');
+        $('#content .chat-content .messages').removeClass('active');
+        $('#content .chat-content .messages#cast_chat').addClass('active');
 
-                        let recipients = $(this).attr('recipients');
-                        let castTitle = $(this).find('.details h5').text();
-                        let form_data = new FormData();
-                        form_data.append('recipients', recipients);
-                        form_data.append('castTitle', castTitle);
-                        $.ajax({
-                                    url: '/home/displayCastChatData',
-                                    headers: {
-                                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    type: 'POST',
-                                    data: form_data,
-                                    dataType: "json",
-                                    success: function(res) {
-                                            if (res.state == 'true') {
-                                                //cast title display
-                                                $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
-                                                $('#cast_chat > div.contact-details div.media-body > h5').text(res.data[0].cast_title || 'Cast Title');
-                                                // avatar display
-                                                $('#cast_chat ul.chatappend li.groupuser>div').remove();
-                                                recipients.split(', ').forEach((item, index) => {
-                                                    let avatar = getCertainUserInfoById(item).avatar;
-                                                    let userName = getCertainUserInfoById(item).username;
-                                                    avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
-                                                    $('#cast_chat ul.chatappend li.groupuser').append(`
+        let recipients = $(this).attr('recipients');
+        let castTitle = $(this).find('.details h5').text();
+        let form_data = new FormData();
+        form_data.append('recipients', recipients);
+        form_data.append('castTitle', castTitle);
+        $.ajax({
+            url: '/home/displayCastChatData',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            data: form_data,
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 'true') {
+                    //cast title display
+                    $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
+                    $('#cast_chat > div.contact-details div.media-body > h5').text(res.data[0].cast_title || 'Cast Title');
+                    // avatar display
+                    $('#cast_chat ul.chatappend li.groupuser>div').remove();
+                    recipients.split(', ').forEach((item, index) => {
+                        let avatar = getCertainUserInfoById(item).avatar;
+                        let userName = getCertainUserInfoById(item).username;
+                        avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
+                        $('#cast_chat ul.chatappend li.groupuser').append(`
                             <div class="gr-profile dot-btn dot-success bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
                                 <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
                             </div>
                         `);
-                                                    tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index + 2})`, {
-                                                        content: userName
-                                                    });
-                                                });
-                                                // history display
-                                                let target = '#cast_chat > div.contact-chat > ul';
-                                                let senderInfo = getCertainUserInfoById(currentUserId);
-                                                $(target).find('li:not(:first-child)').remove();
-                                                res.data.reverse().forEach(data => {
-                                                            let time = data.created_at ? new Date(data.created_at) : new Date();
-                                                            let item = `<li class="replies msg-item" key="${data.id}" kind="${data.kind}">
+                        tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index + 2})`, {
+                            content: userName
+                        });
+                    });
+                    // history display
+                    let target = '#cast_chat > div.contact-chat > ul';
+                    let senderInfo = getCertainUserInfoById(currentUserId);
+                    $(target).find('li:not(:first-child)').remove();
+                    res.data.reverse().forEach(data => {
+                        let time = data.created_at ? new Date(data.created_at) : new Date();
+                        let item = `<li class="replies msg-item" key="${data.id}" kind="${data.kind}">
                             <div class="media">
                                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
                                 </div>
@@ -428,8 +458,8 @@ function showNewCastPage() {
     $('.spining').css('display', 'none');
 
 
-    $('#chat .tab-content .tab-pane').removeClass('active show')
-    $('#chat .tab-content .tab-pane#cast').addClass('active show')
+    $('#chat .tab-content .tab-pane').removeClass('active show');
+    $('#chat .tab-content .tab-pane#cast').addClass('active show');
     $('#content .chat-content .messages').removeClass('active');
     $('#group_blank').addClass('active');
 

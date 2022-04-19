@@ -15,7 +15,7 @@ $(document).ready(() => {
             let senderName = getCertainUserInfoById(message.from).username;
             let type = message.kind == 2 ? 'photo' :
                 message.kind == 1 ? 'request' :
-                message.kind == 0 ? 'text' : "new";
+                    message.kind == 0 ? 'text' : "new";
             //arrived message
             socket.emit('arrive:message', message);
             if (document.visibilityState == "visible") {
@@ -214,7 +214,7 @@ function getRecentChatUsers() {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.state == 'true') {
                 let {
                     recentChatUsers,
@@ -237,7 +237,7 @@ function getRecentChatUsers() {
 
             }
         },
-        error: function(res) {
+        error: function (res) {
             alert('Get Recent User Failed');
             // document.location.href = '/login';
         }
@@ -260,7 +260,7 @@ function setCurrentChatContent(contactorId) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.state == 'true') {
                 getUsersList();
                 let {
@@ -328,7 +328,7 @@ function setCurrentChatContent(contactorId) {
                 });
             }
         },
-        error: function(response) {}
+        error: function (response) { }
     });
 
 
@@ -348,11 +348,11 @@ function getUsersList(resolve) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             usersList = res.data;
             if (resolve) resolve();
         },
-        error: function(response) {
+        error: function (response) {
             // document.location.href = '/';
             alert('UserList Error');
         }
@@ -362,10 +362,10 @@ function getUsersList(resolve) {
 function searchAndAddRecentChatList() {
     let keyuptimer;
     let target = $('.recent-default .recent-chat-list');
-    $('.new-chat-search').bind('keyup', function() {
+    $('.new-chat-search').bind('keyup', function () {
         if ($('#direct-tab').hasClass('active')) {
             clearTimeout(keyuptimer);
-            keyuptimer = setTimeout(function() {
+            keyuptimer = setTimeout(function () {
                 let value = $('.new-chat-search').val();
                 let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
                 // Array.from($('.recent-chat-list .details h5')).forEach(item => {
@@ -432,7 +432,7 @@ function getContactList() {
                 processData: false,
                 type: 'POST',
                 dataType: "json",
-                success: function(res) {
+                success: function (res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
                     res.reverse().forEach(item => {
@@ -440,7 +440,7 @@ function getContactList() {
                     });
 
                 },
-                error: function(response) {
+                error: function (response) {
 
                 }
             });
@@ -462,7 +462,7 @@ function addContact(email) {
         processData: false,
         type: 'POST',
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.insertion == false) {
                 $('.addContactError').html(res.message);
                 setTimeout(() => {
@@ -480,7 +480,7 @@ function addContact(email) {
                 }
             }
         },
-        error: function(response) {
+        error: function (response) {
             // document.location.href = '/';
             alert('Add Contact Error');
         }
@@ -508,7 +508,7 @@ function newMessage() {
             $('#msgchatModal .cast_title input').addClass('is-invalid');
             return;
         }
-        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
+        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0, newCast: true });
         $('#msgchatModal .cast_title input').val('');
 
     } else if ($('#cast_chat').hasClass('active')) {
@@ -533,7 +533,7 @@ function newMessage() {
 };
 
 function displayTypingAction() {
-    $('.message-input input').on('keyup', function(e) {
+    $('.message-input input').on('keyup', function (e) {
         if (currentContactId) {
             socket.emit('typing', {
                 currentUserId,
