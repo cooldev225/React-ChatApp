@@ -499,6 +499,10 @@ function payPhoto() {
             $('#checkoutModal').modal('show');
         } else {
             payWholePhotoPrice();
+            let photoId = $('#photo_item .modal-content').attr('photoId');
+            photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
+            let thumbnailPhoto = photo_canvas.toDataURL('image/png');
+            socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
         }
     })
 }
