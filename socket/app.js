@@ -331,6 +331,7 @@ io.on('connection', (socket) => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             data.selectedEmojis.forEach(id => {
                 let content = JSON.parse(item[0].content);
+                console.log(id);
                 if (id == 'blur') {
                     item[0].blur = 0;
                     item[0].blur_price = 0;
@@ -341,7 +342,9 @@ io.on('connection', (socket) => {
                     item[0].content = JSON.stringify(content);
                 }
             });
-            db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(item[0].content)}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
+            console.log(JSON.stringify(JSON.parse(item[0].content)));
+            console.log(JSON.stringify(item[0].content) || []);
+            db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(JSON.stringify(JSON.parse(item[0].content)))}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
                     if (error) throw error;
@@ -356,7 +359,13 @@ io.on('connection', (socket) => {
             });
             Nofification.sendPaySMS(item[0].to, item[0].from, data.addBalance);
         });
-    })
+    });
+
+    socket.on('update:thumbnailPhoto', data => {
+        db.query(`UPDATE photo_galleries SET photo=${JSON.stringify(data.thumbnailPhoto)} WHERE id=${data.photoId}`, (error, photo) => {
+            if (error) throw error;
+        });
+    });
 
     socket.on('send:notification', data => {
         sendSMS(data.from, data.to, data.type);
@@ -392,7 +401,6 @@ io.on('connection', (socket) => {
             } else {
                 var fullPhoneNumber = data.phoneNumber.replace(/[^0-9]/g, '');
             }
-            console.log(fullPhoneNumber);
             if (spainish) {
                 var message = `Oye, tu numero de movil ${data.phoneNumber} ha sido actualizado en OJO.`;
             } else {
@@ -406,9 +414,7 @@ io.on('connection', (socket) => {
                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
             }
             axios.get(smsUrl).then(res => {
-                console.log(message);
                 if (res.status == 200) {
-                    console.log('OK');
                     let senderSocketId = user_socketMap.get(currentUserId.toString());
                     if (senderSocketId) {
                         if (io.sockets.sockets.get(senderSocketId)) {

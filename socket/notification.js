@@ -12,7 +12,6 @@ exports.sendPaySMS = (sender, recipient, amount) => {
                 let isoCode2 = row[0].national.toUpperCase();
                 db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
                     db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
-                        let prefix = phoneInfo[0].intl_dialing_prefix
                         let phone_code = phoneInfo[0].phone_code
                         let fullPhoneNumber = '';
                         if (phone_code != 1) {
