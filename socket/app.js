@@ -84,13 +84,15 @@ io.on('connection', (socket) => {
     socket.on('send:castMessage', data => {
         let recipients = data.currentContactIdArr.join(', ');
         let senderSocketId = user_socketMap.get(currentUserId.toString());
-        db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {
-            if (senderSocketId) {
-                if (io.sockets.sockets.get(senderSocketId)) {
-                    io.sockets.sockets.get(senderSocketId).emit('add:newCast', data);
+        if (recipients && data.castTitle) {
+            db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {
+                if (senderSocketId) {
+                    if (io.sockets.sockets.get(senderSocketId)) {
+                        io.sockets.sockets.get(senderSocketId).emit('add:newCast', data);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
     // socket.on('send:castPhoto', data => {
     //     // let recipients = data.currentContactIdArr.join(', ');
@@ -182,10 +184,13 @@ io.on('connection', (socket) => {
 
                         if (data.cast) {
                             console.log("Recipients:", data.to);
-                            db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
-                                console.log("Cast Title: ", data.castTitle);
-                                // io.sockets.sockets.get(senderSocketId).emit('update:cast');
-                            });
+                            if (data.to.join(', ') && data.castTitle) {
+                                db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
+                                    console.log("Cast Title: ", data.castTitle);
+                                    // io.sockets.sockets.get(senderSocketId).emit('update:cast');
+                                });
+                            }
+
                         }
                         io.sockets.sockets.get(senderSocketId).emit('message', message);
                         io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);

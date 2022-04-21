@@ -503,6 +503,7 @@ function payPhoto() {
             photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
             let thumbnailPhoto = photo_canvas.toDataURL('image/png');
             socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
+            console.log('aaa');
         }
     })
 }
