@@ -344,6 +344,7 @@ io.on('connection', (socket) => {
                     let index = content.findIndex(emojiInfo => emojiInfo.id == id);
                     content[index].price = 0;
                     content[index].blur = 0;
+                    content[index].paid = true;
                     item[0].content = JSON.stringify(content);
                 }
             });
@@ -377,25 +378,33 @@ io.on('connection', (socket) => {
     });
     socket.on('stickyToFree', data => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
-            let content = JSON.parse(item[0].content);
-            let index = content.findIndex(emojiInfo => emojiInfo.id == data.emojiId);
-            if (content[index].price < 0) {
-                content[index].price = 0;
-            } else if (content[index].price == 0) {
-                content[index].price = -1;
-            }
-            item[0].content = JSON.stringify(content);
-            db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content)} WHERE id=${item[0].id}`, (error, photo) => {
-                if (error) throw error;
-                let recipientSocketId = user_socketMap.get(item[0].to.toString());
-                let senderSocketId = user_socketMap.get(currentUserId.toString());
-                io.sockets.sockets.get(senderSocketId).emit('stickyToFree');
-                if (recipientSocketId) {
-                    if (io.sockets.sockets.get(recipientSocketId)) {
-                        io.sockets.sockets.get(recipientSocketId).emit('stickyToFree');
-                    }
+            console.log(currentUserId);
+            console.log(item[0].from);
+            if (item[0].from == currentUserId) {
+                let content = JSON.parse(item[0].content);
+                let index = content.findIndex(emojiInfo => emojiInfo.id == data.emojiId);
+                console.log(content[index].price);
+                console.log(content[index].paid);
+                console.log(content[index].oldPrice);
+                if (content[index].price && !content[index].paid) {
+                    content[index].oldPrice = content[index].price;
+                    content[index].price = 0;
+                } else if (content[index].price == 0 && !content[index].paid && content[index].oldPrice) {
+                    content[index].price = content[index].oldPrice;
                 }
-            })
+                item[0].content = JSON.stringify(content);
+                db.query(`UPDATE photo_galleries SET content=${JSON.stringify(item[0].content)} WHERE id=${item[0].id}`, (error, photo) => {
+                    if (error) throw error;
+                    let recipientSocketId = user_socketMap.get(item[0].to.toString());
+                    let senderSocketId = user_socketMap.get(currentUserId.toString());
+                    io.sockets.sockets.get(senderSocketId).emit('stickyToFree');
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId)) {
+                            io.sockets.sockets.get(recipientSocketId).emit('stickyToFree');
+                        }
+                    }
+                })
+            }
         });
     });
     socket.on('test:SMS', data => {

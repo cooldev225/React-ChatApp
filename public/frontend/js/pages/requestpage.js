@@ -714,17 +714,19 @@ function addEventAction(panel, element) {
             }
             tempImage.scale(0.5);
             if (element.price > 9) tempImage.scaleX *= 1.2;
-            tempImage.left = element.aCoords.tr.x - 0.25 * tempImage.width;
-            tempImage.top = element.aCoords.tr.y - 0.25 * tempImage.height;
+            // tempImage.left = element.aCoords.tr.x - 0.25 * tempImage.width + 5;
+            tempImage.left = element.aCoords.tr.x;
+            tempImage.top = element.aCoords.tr.y - 0.5 * tempImage.height;
             if (element.aCoords.tr.x + 30 > panel.width) {
-                tempImage.left = element.aCoords.tl.x - 0.25 * tempImage.width;
+                tempImage.left = element.aCoords.tl.x - 0.5 * tempImage.width;
             }
             if (element.aCoords.tr.y < 30)
-                tempImage.top = element.aCoords.br.y - 0.25 * tempImage.height;
+                tempImage.top = element.aCoords.br.y;
             tempImage.kind = 'temp';
             tempImage.selectable = false;
             tempImage.hasControls = false;
             panel.add(tempImage);
+            let temp = tempImage;
             if (element.price > 0) {
                 text = new fabric.Text('$' + element.price, {
                     left: tempImage.left + 3,
@@ -738,14 +740,14 @@ function addEventAction(panel, element) {
                 text.selectable = false;
                 text.hasControls = false;
                 panel.add(text);
+                temp = text;
             }
-            tempImage.off().on({
+            temp.off().on({
                 'mouseup': () => {
-                    if ($('#photo_item .modal-content').hasClass('sent')) {
-                        let photoId = $('#photo_item .modal-content').attr('photoId');
-                        let emojiId = element.id
-                        socket.emit('stickyToFree', { photoId, emojiId })
-                    }
+                    console.log('aaa');
+                    let photoId = $('#photo_item .modal-content').attr('photoId');
+                    let emojiId = element.id
+                    socket.emit('stickyToFree', { photoId, emojiId });
                 }
             });
             setTimeout(() => {
@@ -781,6 +783,7 @@ function showPhotoContent(id) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
+                console.log(emojis);
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
                 $('#photo_item .modal-content').attr('photoId', res.data[0].id);
