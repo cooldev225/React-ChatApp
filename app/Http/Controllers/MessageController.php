@@ -72,4 +72,16 @@ class MessageController extends Controller
         }
     }
 
+    public function deleteCastThread(Request $request) {
+        $userId = Auth::id();
+        $recipients = $request->input('recipients');
+        $castTitle = $request->input('castTitle');
+        $res = Cast::where("sender", $userId)->where("cast_title", $castTitle)->delete();
+        if ($res) {
+            return array('state'=>'true', 'data'=>$res);
+        } else {
+            return array('state' => 'false');
+        }
+    }
+
 }

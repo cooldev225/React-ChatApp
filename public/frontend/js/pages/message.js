@@ -38,6 +38,9 @@ $(document).ready(function () {
                         <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
                             <img src="/images/icons/info.svg" alt="info">
                         </a>
+                        <a class="icon-btn btn-outline-light btn-sm" href="#">
+                            <i class="ti-trash"></i>
+                        </a>
                     </div>
                 </div>
             </li>`
@@ -62,7 +65,6 @@ $(document).ready(function () {
     $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function (e) {
         e.stopPropagation();
         if (confirm('Delete this Thread?')) {
-
             let recipient = $(this).closest('li').attr('key');
             console.log(recipient);
             let form_data = new FormData();
@@ -81,6 +83,41 @@ $(document).ready(function () {
                 success: function (res) {
                     if (res.state = 'true') {
                         $(`.recent-chat-list li[key=${recipient}]`).remove();
+
+                    }
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+    });
+
+    $('#cast').on('click', 'li .date-status .ti-trash', function (e) {
+        e.stopPropagation();
+        if (confirm('Delete this Thread?')) {
+            let recipients = $(this).closest('li').attr('recipients');
+            let castTitle = $(this).closest('li').find('.details h5').text();
+            console.log(recipients);
+            console.log(castTitle);
+            let form_data = new FormData();
+            form_data.append('recipients', recipients);
+            form_data.append('castTitle', castTitle);
+            $.ajax({
+                url: '/message/deleteCastThread',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.state = 'true') {
+                        $(e.currentTarget).closest('li').remove();
+                        // $(`#cast li[recipiet=${recipient}]`).remove();
                     }
                 },
                 error: function (response) {
@@ -507,6 +544,9 @@ function getCastData(resolve) {
                                 <div class="date-status">
                                     <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
                                         <img src="/images/icons/info.svg" alt="info">
+                                    </a>
+                                    <a class="icon-btn btn-outline-light btn-sm" href="#">
+                                        <i class="ti-trash"></i>
                                     </a>
                                 </div>
                             </div>

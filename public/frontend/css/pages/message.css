@@ -105,6 +105,16 @@
         transform: translateY(-50%);
     }
     
+    #cast .chat-main li .chat-box .date-status {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #cast .chat-main li .chat-box .icon-btn.btn-outline-light {
+        position: static;
+        margin: 1px;
+    }
+    
     .chat-main li .chat-box .date-status i.ti-trash {
         font-size: 16px;
         color: #1c9dea;
