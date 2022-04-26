@@ -174,6 +174,7 @@ $(document).ready(function () {
             });
         }
     });
+
     $('#cast > ul.chat-main').on('click', 'li', function () {
         $('#cast > ul.chat-main li').removeClass('active');
         $(this).addClass('active');

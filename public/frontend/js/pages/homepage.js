@@ -599,6 +599,7 @@ function addChatItem(target, senderId, data, loadFlag) {
                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
                                 <div class="msg-dropdown"> 
                                     <ul>
+                                        <li class="replyBtn"><a href="#"><i class="fa fa-reply"></i>reply</a></li>
                                         <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
                                         <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
                                     </ul>

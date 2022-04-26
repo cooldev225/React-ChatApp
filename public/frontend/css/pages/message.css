@@ -120,6 +120,10 @@
         color: #1c9dea;
     }
     
+    .messages .replies.msg-item .replyBtn {
+        display: none;
+    }
+    
     #cast .chat-box .msg-setting {
         width: 25px;
         height: 25px;
