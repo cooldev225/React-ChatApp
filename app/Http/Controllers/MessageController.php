@@ -25,7 +25,7 @@ class MessageController extends Controller
 {
     public function getCastData(Request $request) {
         $userId = Auth::id();
-        $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderBy('cast_title')->get();
+        $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderByRaw('max(`created_at`) desc')->get();
         if (count($castData)) {
             return array('state'=>'true', 'castData'=>$castData);
         } else {

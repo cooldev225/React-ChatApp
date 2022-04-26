@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
         let senderSocketId = user_socketMap.get(currentUserId.toString());
         if (recipients && data.castTitle) {
             db.query(`INSERT INTO casts (sender, recipients, cast_title, content) VALUES ("${currentUserId}", "${recipients}", "${data.castTitle}", "${data.message}")`, (error, item) => {
-                if (senderSocketId) {
+                if (senderSocketId && data.newCast) {
                     if (io.sockets.sockets.get(senderSocketId)) {
                         io.sockets.sockets.get(senderSocketId).emit('add:newCast', data);
                     }

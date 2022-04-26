@@ -18,7 +18,6 @@ $(document).ready(function () {
         getCastData();
     });
     socket.on('add:newCast', data => {
-        console.log(data);
         let target = '#cast > ul.chat-main';
         let title = data.castTitle;
         let recipients = data.currentContactIdArr.map(item => getCertainUserInfoById(item).username).join(', ');
@@ -35,12 +34,23 @@ $(document).ready(function () {
                         <h6>${countRecipients} : ${displayNames}</h6>
                     </div>
                     <div class="date-status">
-                        <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
-                            <img src="/images/icons/info.svg" alt="info">
-                        </a>
-                        <a class="icon-btn btn-outline-light btn-sm" href="#">
-                            <i class="ti-trash"></i>
-                        </a>
+                        <div class="msg-dropdown-main">
+                            <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                            <div class="msg-dropdown">
+                                <ul>
+                                    <li>
+                                        <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
+                                            <img src="/images/icons/info.svg" alt="info">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="icon-btn btn-outline-light btn-sm" href="#">
+                                            <i class="ti-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>`
@@ -51,6 +61,7 @@ $(document).ready(function () {
         $('#content .chat-content .messages').removeClass('active');
         $('#cast_chat').addClass('active');
     });
+
     socket.on('update:cast', (data) => {
         new Promise((resolve) => {
             getCastData(resolve);
@@ -65,7 +76,7 @@ $(document).ready(function () {
     $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function (e) {
         e.stopPropagation();
         if (confirm('Delete this Thread?')) {
-            let recipient = $(this).closest('li').attr('key');
+            let recipient = $(this).closest('.date-status').closest('li').attr('key');
             console.log(recipient);
             let form_data = new FormData();
             form_data.append('recipient', recipient);
@@ -96,8 +107,8 @@ $(document).ready(function () {
     $('#cast').on('click', 'li .date-status .ti-trash', function (e) {
         e.stopPropagation();
         if (confirm('Delete this Thread?')) {
-            let recipients = $(this).closest('li').attr('recipients');
-            let castTitle = $(this).closest('li').find('.details h5').text();
+            let recipients = $(this).closest('.date-status').closest('li').attr('recipients');
+            let castTitle = $(this).closest('.date-status').closest('li').find('.details h5').text();
             console.log(recipients);
             console.log(castTitle);
             let form_data = new FormData();
@@ -116,7 +127,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (res) {
                     if (res.state = 'true') {
-                        $(e.currentTarget).closest('li').remove();
+                        $(e.currentTarget).closest('.date-status').closest('li').remove();
                         // $(`#cast li[recipiet=${recipient}]`).remove();
                     }
                 },
@@ -383,8 +394,8 @@ $(document).ready(function () {
 
     $('#cast > ul.chat-main').on('click', 'li .list_info', function (e) {
         e.stopPropagation();
-        let recipients = $(this).closest('li').attr('recipients').split(', ');
-        let castTitle = $(this).closest('li').find('.details h5').text();
+        let recipients = $(this).closest('.date-status').closest('li').attr('recipients').split(', ');
+        let castTitle = $(this).closest('.date-status').closest('li').find('.details h5').text();
         // showNewCastPage();
         $('#castUserListModal').attr('data-recipients', recipients.join(', '));
         $('#castUserListModal').attr('data-title', castTitle);
@@ -483,6 +494,15 @@ $(document).ready(function () {
     //     alert('Context Menu event has fired!');
     //     return false;
     //  });
+
+
+    $('#cast .chat-main').on('click', '.msg-setting', function (event) {
+        event.stopPropagation();
+        $(this).siblings('.msg-dropdown').toggle();
+        setTimeout(() => {
+            $(this).siblings('.msg-dropdown').hide();
+        }, 5000);
+    });
 });
 
 function showNewCastPage() {
@@ -542,12 +562,23 @@ function getCastData(resolve) {
                                     <h6>${countRecipients} : ${displayNames}</h6>
                                 </div>
                                 <div class="date-status">
-                                    <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
-                                        <img src="/images/icons/info.svg" alt="info">
-                                    </a>
-                                    <a class="icon-btn btn-outline-light btn-sm" href="#">
-                                        <i class="ti-trash"></i>
-                                    </a>
+                                    <div class="msg-dropdown-main">
+                                        <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                        <div class="msg-dropdown">
+                                            <ul>
+                                                <li>
+                                                    <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
+                                                        <img src="/images/icons/info.svg" alt="info">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="icon-btn btn-outline-light btn-sm" href="#">
+                                                        <i class="ti-trash"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>`

@@ -120,6 +120,37 @@
         color: #1c9dea;
     }
     
+    #cast .chat-box .msg-setting {
+        width: 25px;
+        height: 25px;
+        background-color: #bbbbbb;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 25px;
+    }
+    
+    #cast .chat-box .msg-setting:hover {
+        background-color: #8b8080;
+    }
+    
+    #cast .chat-box .msg-dropdown {
+        display: none;
+        background-color: white;
+        padding: 5px;
+        position: absolute;
+        border-radius: 10px;
+        border: 1px solid;
+        left: 50%;
+        top: 33px;
+        z-index: 999999;
+        transform: translateX(-50%);
+    }
+    
+    #cast .chat-box .msg-dropdown li {
+        margin: 5px 0px;
+        padding: 0px;
+    }
+    
     @media (max-width: 768px) {
         .chitchat-container .chitchat-main .messages#cast_chat .media-right {
             order: -1;
