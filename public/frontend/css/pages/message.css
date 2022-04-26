@@ -141,7 +141,7 @@
         border-radius: 10px;
         border: 1px solid;
         left: 50%;
-        top: 33px;
+        top: -105px;
         z-index: 999999;
         transform: translateX(-50%);
     }
