@@ -139,11 +139,11 @@
     
     #cast .chat-box .msg-dropdown {
         display: none;
-        background-color: white;
+        background-color: #fff;
         padding: 5px;
         position: absolute;
-        border-radius: 10px;
-        border: 1px solid;
+        border: 2px solid #eff1f2;
+        border-radius: 15px;
         left: 50%;
         top: -105px;
         z-index: 999999;

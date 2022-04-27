@@ -394,7 +394,8 @@
                                 <form class="form-radious form-sm">
                                     <div class="form-group mb-2">
                                         <input class="form-control username" type="text" name="username"
-                                            value="{{ Auth::user()->firstName ? Auth::user()->firstName : Auth::user()->username }}" placeholder="John Doe" />
+                                            value="{{ Auth::user()->firstName ? Auth::user()->firstName : Auth::user()->username }}"
+                                            placeholder="John Doe" />
                                     </div>
                                     <div class="form-group mb-2">
                                         <input class="form-control location" type="text" name="address"
@@ -803,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div> -->
+                                    <span class="sr-only">Loading...</span>
+                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3492,9 +3493,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                    <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3863,9 +3864,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            </div> -->
+                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div> -->
             </div>
         </div>
     </div>
