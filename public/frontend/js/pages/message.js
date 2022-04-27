@@ -17,6 +17,7 @@ $(document).ready(function () {
     $('#cast-tab').on('click', function () {
         getCastData();
     });
+
     socket.on('add:newCast', data => {
         let target = '#cast > ul.chat-main';
         let title = data.castTitle;
@@ -503,6 +504,14 @@ $(document).ready(function () {
         setTimeout(() => {
             $(this).siblings('.msg-dropdown').hide();
         }, 5000);
+    });
+
+    //reply message
+    $('.messages').on('click', '.replyBtn', function (e) {
+        let messageContent = $(this).closest('li.msg-setting-main').find('h5').text();
+        console.log(messageContent);
+        $('#content .replyMessage .replyContent').text(messageContent);
+        $('#content .replyMessage').show();
     });
 });
 

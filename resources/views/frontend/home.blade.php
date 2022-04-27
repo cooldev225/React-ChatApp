@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div> -->
+                                                    <span class="sr-only">Loading...</span>
+                                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -1303,6 +1303,22 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div class="replyMessage">
+                    <span class="replyIcon">
+                        <i class="fa fa-reply"></i>
+                    </span>
+                    <span class="replyContent">
+                        "Hello, This is test reply message."
+                    </span>
+                    <span class="closeIcon">
+                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CCCCCC"
+                            gradientcolor1="#CCCCCC" gradientcolor2="#CCCCCC">
+                            <path
+                                d="M4.397 4.554l.073-.084a.75.75 0 01.976-.073l.084.073L12 10.939l6.47-6.47a.75.75 0 111.06 1.061L13.061 12l6.47 6.47a.75.75 0 01.072.976l-.073.084a.75.75 0 01-.976.073l-.084-.073L12 13.061l-6.47 6.47a.75.75 0 01-1.06-1.061L10.939 12l-6.47-6.47a.75.75 0 01-.072-.976l.073-.084-.073.084z">
+                            </path>
+                        </svg>
+                    </span>
                 </div>
                 <div class="message-input">
                     <div class="wrap emojis-main">
@@ -3493,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3864,9 +3880,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                </div> -->
+                                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                </div> -->
             </div>
         </div>
     </div>
