@@ -52,6 +52,7 @@ io.on('connection', (socket) => {
     console.log(user_socketMap);
 
     socket.on('message', data => {
+        console.log(data.replyId);
         data.currentContactIdArr.forEach((currentContactId, index) => {
             let message = {
                 from: currentUserId,
@@ -59,9 +60,10 @@ io.on('connection', (socket) => {
                 content: data.message,
                 state: 1,
                 kind: 0,
+                reply_id: data.replyId || 0
             }
 
-            db.query(`INSERT INTO messages (sender, recipient, content) VALUES ("${message.from}", "${message.to}", "${message.content}")`, (error, item) => {
+            db.query(`INSERT INTO messages (sender, recipient, content, reply_id) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id})`, (error, item) => {
                 message.messageId = item.insertId;
                 if (currentContactId) {
                     let recipientSocketId = user_socketMap.get(currentContactId.toString());
@@ -117,7 +119,8 @@ io.on('connection', (socket) => {
                 }
             }
         })
-    })
+    });
+
     socket.on('read:message', data => {
         db.query(`UPDATE messages SET state = 3 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;

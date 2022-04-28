@@ -509,9 +509,12 @@ $(document).ready(function () {
     //reply message
     $('.messages').on('click', '.replyBtn', function (e) {
         let messageContent = $(this).closest('li.msg-setting-main').find('h5').text();
+        let replyId = $(this).closest('li.msg-item').attr('key');
+        console.log(replyId);
         console.log(messageContent);
-        $('#content .replyMessage .replyContent').text(messageContent);
-        $('#content .replyMessage').show();
+        $('#content .chat-content>.replyMessage .replyContent').text(messageContent);
+        $('#content .chat-content>.replyMessage').attr('replyId', replyId);
+        $('#content .chat-content>.replyMessage').show();
     });
 });
 

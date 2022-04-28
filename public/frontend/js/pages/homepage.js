@@ -263,9 +263,7 @@ function setCurrentChatContent(contactorId) {
         success: function (res) {
             if (res.state == 'true') {
                 getUsersList();
-                let {
-                    messageData
-                } = res;
+                let { messageData } = res;
                 let contactorInfo = getCertainUserInfoById(contactorId);
                 currentContactId = contactorId;
                 $('.section-py-space').css('display', 'none');
@@ -488,7 +486,10 @@ function addContact(email) {
 }
 
 function newMessage() {
-
+    let replyId = $('#content .chat-content>.replyMessage').attr('replyId');
+    $('#content .chat-content>.replyMessage').removeAttr('replyId');
+    $('#content .chat-content>.replyMessage').hide();
+    console.log(replyId);
     var message = $('.message-input input').val();
     if ($.trim(message) == '') {
         return false;
@@ -526,6 +527,7 @@ function newMessage() {
             currentContactIdArr,
             message,
             senderName,
+            replyId
         });
     } else {
         console.log('No recipients');
@@ -573,6 +575,10 @@ function typingMessage() {
 }
 
 function addChatItem(target, senderId, data, loadFlag) {
+    console.log(data.reply_id);
+
+    let replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main h5').text();
+    if (data.reply_id) console.log(replyContent);
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = data.created_at ? new Date(data.created_at) : new Date();
@@ -590,7 +596,12 @@ function addChatItem(target, senderId, data, loadFlag) {
                     <ul class="msg-box">
                         <li class="msg-setting-main">
                             ${data.kind == 0 ?
-            `<h5>${data.content}</h5>`
+            `${data.reply_id ? '<div class="replyMessage">\
+                <span class="replyIcon"><i class="fa fa-reply"></i></span>\
+                <span class="replyContent">' + replyContent + '</span>\
+                <hr style="color: black">\
+                <span class="content">' + data.content + '</span>\
+            </div>' : '<h5>' + data.content + '</h5>'}`
             : data.kind == 1 ?
                 `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
                 : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}

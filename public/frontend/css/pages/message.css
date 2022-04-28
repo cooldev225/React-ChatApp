@@ -155,22 +155,26 @@
         padding: 0px;
     }
     
-    #content .replyMessage {
-        display: none;
-        width: 100%;
+    #content .chat-content .replyMessage {
         padding: 15px;
-        position: absolute;
-        bottom: 0;
         border-radius: 15px;
-        background-color: #82878f;
+        background-color: #e5edf5;
         color: white;
     }
     
-    #content .replyMessage .replyIcon {
+    #content .chat-content>.replyMessage {
+        display: none;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background-color: #82878f;
+    }
+    
+    #content .chat-content .replyMessage .replyIcon {
         margin-right: 10px;
     }
     
-    #content .replyMessage .closeIcon {
+    #content .chat-content>.replyMessage .closeIcon {
         position: absolute;
         top: 5px;
         right: 5px;
