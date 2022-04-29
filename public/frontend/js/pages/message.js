@@ -523,6 +523,12 @@ $(document).ready(function () {
         $('#content .chat-content>.replyMessage').attr('replyKind', replyKind);
         $('#content .chat-content>.replyMessage').show();
     });
+
+    $('#content').on('click', 'div.replyMessage > span.closeIcon', function (e) {
+        $('#content .chat-content>.replyMessage').removeAttr('replyId');
+        $('#content .chat-content>.replyMessage').removeAttr('replyKind');
+        $('#content .chat-content>.replyMessage').hide();
+    });
 });
 
 function showNewCastPage() {

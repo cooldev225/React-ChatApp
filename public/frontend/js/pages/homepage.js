@@ -489,6 +489,7 @@ function newMessage() {
     let replyId = $('#content .chat-content>.replyMessage').attr('replyId');
     let replyKind = $('#content .chat-content>.replyMessage').attr('replyKind');
     $('#content .chat-content>.replyMessage').removeAttr('replyId');
+    $('#content .chat-content>.replyMessage').removeAttr('replyKind');
     $('#content .chat-content>.replyMessage').hide();
     console.log(replyId);
     var message = $('.message-input input').val();
