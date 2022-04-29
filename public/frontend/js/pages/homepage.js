@@ -487,6 +487,7 @@ function addContact(email) {
 
 function newMessage() {
     let replyId = $('#content .chat-content>.replyMessage').attr('replyId');
+    let replyKind = $('#content .chat-content>.replyMessage').attr('replyKind');
     $('#content .chat-content>.replyMessage').removeAttr('replyId');
     $('#content .chat-content>.replyMessage').hide();
     console.log(replyId);
@@ -527,7 +528,8 @@ function newMessage() {
             currentContactIdArr,
             message,
             senderName,
-            replyId
+            replyId,
+            replyKind
         });
     } else {
         console.log('No recipients');
@@ -575,9 +577,14 @@ function typingMessage() {
 }
 
 function addChatItem(target, senderId, data, loadFlag) {
-    console.log(data.reply_id);
-
-    let replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main h5').text();
+    console.log("id:", data.reply_id);
+    console.log("kind:", data.reply_kind);
+    if (data.reply_kind == 0) {
+        var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main h5').text();
+    } else if (data.reply_kind == 2) {
+        let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
+        var replyContent = `<img src="${imageSrc}" width="50">`;
+    }
     if (data.reply_id) console.log(replyContent);
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";

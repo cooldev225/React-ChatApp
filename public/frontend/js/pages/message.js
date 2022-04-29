@@ -508,12 +508,19 @@ $(document).ready(function () {
 
     //reply message
     $('.messages').on('click', '.replyBtn', function (e) {
-        let messageContent = $(this).closest('li.msg-setting-main').find('h5').text();
+        let replyKind = $(this).closest('li.msg-item').attr('kind');
+        console.log('replyKind:', replyKind);
+        let messageContent = replyKind == 0 ? $(this).closest('li.msg-setting-main').find('h5').text() : '';
+        if (replyKind == 2) {
+            let imageSrc = $(this).closest('.msg-setting-main').find('.receive_photo').attr('src');
+            let photoId = $(this).closest('.msg-setting-main').find('.receive_photo').attr('photoId');
+            console.log(photoId)
+            messageContent = `<img src="${imageSrc}" width="50">`;
+        }
         let replyId = $(this).closest('li.msg-item').attr('key');
-        console.log(replyId);
-        console.log(messageContent);
-        $('#content .chat-content>.replyMessage .replyContent').text(messageContent);
+        $('#content .chat-content>.replyMessage .replyContent').html(messageContent);
         $('#content .chat-content>.replyMessage').attr('replyId', replyId);
+        $('#content .chat-content>.replyMessage').attr('replyKind', replyKind);
         $('#content .chat-content>.replyMessage').show();
     });
 });

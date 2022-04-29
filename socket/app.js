@@ -60,10 +60,11 @@ io.on('connection', (socket) => {
                 content: data.message,
                 state: 1,
                 kind: 0,
-                reply_id: data.replyId || 0
+                reply_id: data.replyId || 0,
+                reply_kind: data.replyKind || 0
             }
 
-            db.query(`INSERT INTO messages (sender, recipient, content, reply_id) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id})`, (error, item) => {
+            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind} )`, (error, item) => {
                 message.messageId = item.insertId;
                 if (currentContactId) {
                     let recipientSocketId = user_socketMap.get(currentContactId.toString());
