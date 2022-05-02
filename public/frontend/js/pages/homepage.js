@@ -500,6 +500,26 @@ function newMessage() {
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
+
+    console.log("sendername v8 :", getCertainUserInfoById(currentUserId).id);
+    $.ajax({
+        type: "POST",
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: "/home/sendMessage",
+        data: {
+            id: getCertainUserInfoById(currentUserId).id,
+            content: message,
+            foo: 'bar',
+            currentContactID: currentContactId
+        },
+        success: function (datas) {
+            console.log("Request Sent");
+        },
+        //dataType: dataType
+    });
+
     var currentContactIdArr = [];
     if ($('#group_blank').hasClass('active')) {
         currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
