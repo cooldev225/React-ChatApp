@@ -491,7 +491,6 @@ function newMessage() {
     $('#content .chat-content>.replyMessage').removeAttr('replyId');
     $('#content .chat-content>.replyMessage').removeAttr('replyKind');
     $('#content .chat-content>.replyMessage').hide();
-    console.log(replyId);
     var message = $('.message-input input').val();
     if ($.trim(message) == '') {
         return false;
@@ -523,7 +522,6 @@ function newMessage() {
     } else {
         currentContactIdArr = [currentContactId];
     }
-    console.log(currentContactIdArr);
     if (currentContactIdArr.length) {
         socket.emit('message', {
             currentContactIdArr,
@@ -578,15 +576,12 @@ function typingMessage() {
 }
 
 function addChatItem(target, senderId, data, loadFlag) {
-    console.log("id:", data.reply_id);
-    console.log("kind:", data.reply_kind);
     if (data.reply_kind == 0) {
         var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main h5').text();
     } else if (data.reply_kind == 2) {
         let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
         var replyContent = `<img src="${imageSrc}" width="50">`;
     }
-    if (data.reply_id) console.log(replyContent);
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
     let time = data.created_at ? new Date(data.created_at) : new Date();

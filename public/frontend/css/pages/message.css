@@ -158,7 +158,7 @@
     #content .chat-content .replyMessage {
         padding: 15px;
         border-radius: 15px;
-        background-color: #e5edf5;
+        background-color: #82878f;
         color: white;
     }
     
@@ -172,6 +172,10 @@
     
     #content .chat-content .replyMessage .replyIcon {
         margin-right: 10px;
+    }
+    
+    #content .chat-content .replyMessage .replyContent img {
+        width: 65px;
     }
     
     #content .chat-content>.replyMessage .closeIcon {

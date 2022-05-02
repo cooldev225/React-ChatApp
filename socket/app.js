@@ -27,8 +27,6 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
-const { type } = require('express/lib/response');
-const { data } = require('jquery');
 
 app.use(cors({
     origin: '*'
@@ -52,7 +50,6 @@ io.on('connection', (socket) => {
     console.log(user_socketMap);
 
     socket.on('message', data => {
-        console.log(data.replyId);
         data.currentContactIdArr.forEach((currentContactId, index) => {
             let message = {
                 from: currentUserId,
