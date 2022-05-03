@@ -12,7 +12,7 @@ const io = require('socket.io')(server, {
     maxHttpBufferSize: 10E7
 });
 const db = require("./config.js");
-const Nofification = require("./notification.js");
+const Notification = require("./notification.js");
 
 const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
@@ -288,7 +288,7 @@ io.on('connection', (socket) => {
                 }
             }
         });
-        Nofification.sendRateSMS(currentUserId, data.currentContactId, data.rate, data.kind);
+        Notification.sendRateSMS(currentUserId, data.currentContactId, data.rate, data.kind);
     })
 
     socket.on('typing', data => {
@@ -366,7 +366,7 @@ io.on('connection', (socket) => {
                     console.log('OK');
                 });
             });
-            Nofification.sendPaySMS(item[0].to, item[0].from, data.addBalance);
+            Notification.sendPaySMS(item[0].to, item[0].from, data.addBalance);
         });
     });
 

@@ -597,7 +597,7 @@ function typingMessage() {
 
 function addChatItem(target, senderId, data, loadFlag) {
     if (data.reply_kind == 0) {
-        var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main h5').text();
+        var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
     } else if (data.reply_kind == 2) {
         let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
         var replyContent = `<img src="${imageSrc}" width="50">`;
@@ -624,7 +624,7 @@ function addChatItem(target, senderId, data, loadFlag) {
                 <span class="replyContent">' + replyContent + '</span>\
                 <hr style="color: black">\
                 <span class="content">' + data.content + '</span>\
-            </div>' : '<h5>' + data.content + '</h5>'}`
+            </div>' : '<h5 class="content">' + data.content + '</h5>'}`
             : data.kind == 1 ?
                 `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
                 : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}

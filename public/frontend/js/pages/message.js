@@ -238,7 +238,7 @@ $(document).ready(function () {
                                         <ul class="msg-box">
                                             <li class="msg-setting-main">
                                                 ${data.kind == 0 ?
-                                `<h5>${data.content}</h5>`
+                                `<h5 class="content">${data.content}</h5>`
                                 : data.kind == 1 ?
                                     `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
                                     : data.kind == 2 ? `<img class="receive_photo" castId="${data.castId}" photoId="${data.photoId}" src="${data.content}">` : ''}
@@ -510,7 +510,7 @@ $(document).ready(function () {
     $('.messages').on('click', '.replyBtn', function (e) {
         let replyKind = $(this).closest('li.msg-item').attr('kind');
         console.log('replyKind:', replyKind);
-        let messageContent = replyKind == 0 ? $(this).closest('li.msg-setting-main').find('h5').text() : '';
+        let messageContent = replyKind == 0 ? $(this).closest('li.msg-setting-main').find('.content').text() : '';
         if (replyKind == 2) {
             let imageSrc = $(this).closest('.msg-setting-main').find('.receive_photo').attr('src');
             let photoId = $(this).closest('.msg-setting-main').find('.receive_photo').attr('photoId');
