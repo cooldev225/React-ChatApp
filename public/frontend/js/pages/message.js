@@ -524,6 +524,27 @@ $(document).ready(function () {
         $('#content .chat-content>.replyMessage').show();
     });
 
+    //edit reply message
+    $('.messages').on('click', '.replyEditBtn', function (e) {
+        // $('#createPhoto').modal('show');
+        // $('#photo_item').modal('show');
+        if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
+            $('.previewBtn').removeClass('d-none');
+            $('.payBtn').addClass('d-none');
+        } else {
+            $('.previewBtn').addClass('d-none');
+            $('.payBtn').removeClass('d-none');
+        }
+        let id = $(e.currentTarget).closest('li.msg-item').attr('key');
+        $('.selected-emojis').empty();
+        selectedEmojis = [];
+        if (id) {
+            showPhotoContent(id);
+        } else {
+            $('#createPhoto').modal('show');
+        }
+    });
+
     $('#content').on('click', 'div.replyMessage > span.closeIcon', function (e) {
         $('#content .chat-content>.replyMessage').removeAttr('replyId');
         $('#content .chat-content>.replyMessage').removeAttr('replyKind');

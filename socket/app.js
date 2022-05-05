@@ -65,6 +65,39 @@ io.on('connection', (socket) => {
 
             db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind} )`, (error, item) => {
                 message.messageId = item.insertId;
+                var axios = require('axios');
+                var data = JSON.stringify({
+                    "channel": "laravel_database_App.User." + currentContactId,
+                    "name": "App\\Events\\NewMessage",
+                    "data": {
+                        "message": {
+                            "content": message.content,
+                            "id": item.insertId,
+                            "recipient": currentContactId,
+                            "sender": currentUserId,
+                            "state": 1
+                        }
+                    },
+                    "socket_id": currentUserId
+                });
+
+                var config = {
+                    method: 'post',
+                    url: 'https://ws.ojochat.com/apps/mongs/events',
+                    headers: {
+                        'Authorization': 'Bearer b9312da459fb8b2a0039ae1040e9c04f',
+                        'Content-Type': 'application/json',
+                    },
+                    data: data
+                };
+
+                axios(config)
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
                 if (currentContactId) {
                     let recipientSocketId = user_socketMap.get(currentContactId.toString());
                     let senderSocketId = user_socketMap.get(currentUserId.toString());
