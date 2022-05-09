@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div> -->
+                                                                            <span class="sr-only">Loading...</span>
+                                                                        </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3835,8 +3835,11 @@
                     <div class="btn payBtn" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
                     <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
                     <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
-                    <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img
-                            src="/images/cancel.png" alt="Cancel"></div>
+                    <div class="btn emoji_btn">
+                        <div id="edit_emoji_button" class="emoji-button"></div>
+                    </div>
+                    <div class="btn savePhotoBtn" title="Save"><img src="/images/save.png" alt="Save"> </div>
+                    {{-- <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div> --}}
                 </div>
                 <div class="selected-emojis"></div>
             </div>
@@ -3880,9 +3883,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                    </div> -->
+                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                        </div> -->
             </div>
         </div>
     </div>

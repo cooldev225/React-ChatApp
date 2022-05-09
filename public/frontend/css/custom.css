@@ -299,24 +299,36 @@ ul.chatappend .msg-box .camera-icon {
     margin-top: 1em;
 }
 
-#emoji-button {
+.emoji-button {
     /* height: 30px; */
     margin: auto;
     color: black;
     background-color: white;
 }
 
-#emoji-button svg {
+.emoji-button svg {
     background-color: yellow;
     border-radius: 50%;
 }
 
 .lock-tool .icon-btn,
-#emoji-button svg,
+#create_emoji_button svg,
+#edit_emoji_button svg,
 .emojis-tool .btn img,
-#emoji-button {
+.emoji-button {
     width: 30px;
     height: 30px;
+}
+
+#edit_emoji_button {
+    width: 65px;
+    height: 45px;
+    box-shadow: 1px 1px 3px rgb(0 0 0 / 80%);
+    border-radius: 5px;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lock-tool.lock .fa-lock,
@@ -671,9 +683,10 @@ h6.read {
         padding: 0 10px;
     }
     .lock-tool .icon-btn,
-    #emoji-button svg,
+    #create_emoji_button svg,
+    #edit_emoji_button svg,
     .emojis-tool .btn img,
-    #emoji-button {
+    .emoji-button {
         width: 20px;
         height: 20px;
     }

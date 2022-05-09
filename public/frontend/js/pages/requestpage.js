@@ -339,7 +339,7 @@ function blurPhoto() {
 }
 
 function addEmojisOnPhoto() {
-    EmojiButton(document.querySelector('#emoji-button'), function (emoji) {
+    EmojiButton(document.querySelector('#create_emoji_button'), function (emoji) {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
         } else {
@@ -356,11 +356,44 @@ function addEmojisOnPhoto() {
                 price: price
             });
             textBox.id = Date.now();
-            addEventAction(canvas, textBox);
-            canvas.add(textBox).setActiveObject(textBox);
-            canvas.centerObject(textBox);
+            if ($('#createPhoto').hasClass('show')) {
+                addEventAction(canvas, textBox);
+                canvas.add(textBox).setActiveObject(textBox);
+                canvas.centerObject(textBox);
+            } else if ($('#photo_item').hasClass('show')) {
+                addEventAction(photo_canvas, textBox);
+                photo_canvas.add(textBox).setActiveObject(textBox);
+                photo_canvas.centerObject(textBox);
+            }
         }
-
+    });
+    EmojiButton(document.querySelector('#edit_emoji_button'), function (emoji) {
+        if ($('#createPhoto .preview-paid').hasClass('d-none')) {
+            var price = $('.emojis-price').val();
+        } else {
+            var price = $('.preview-paid').val();
+            // var price = $('.sticky-switch').is(':checked') ? -1 : 0;
+        }
+        let text = emoji;
+        if (text) {
+            let textBox = new fabric.Textbox(text, {
+                with: 200,
+                fontSize: 35,
+                textAlign: 'center',
+                editable: false,
+                price: price
+            });
+            textBox.id = Date.now();
+            if ($('#createPhoto').hasClass('show')) {
+                addEventAction(canvas, textBox);
+                canvas.add(textBox).setActiveObject(textBox);
+                canvas.centerObject(textBox);
+            } else if ($('#photo_item').hasClass('show')) {
+                addEventAction(photo_canvas, textBox);
+                photo_canvas.add(textBox).setActiveObject(textBox);
+                photo_canvas.centerObject(textBox);
+            }
+        }
     });
     $('#input_emoji_select').on('change', e => {
         let reader = new FileReader();
@@ -391,6 +424,7 @@ function addEmojisOnPhoto() {
 }
 
 function sendPhoto() {
+    // send New Photo
     $('#send-photo').on('click', (e) => {
         if (!ori_image && !canvas._objects.length) {
             return;
@@ -422,6 +456,38 @@ function sendPhoto() {
         if (data.to) {
             socket.emit('send:photo', data);
         }
+    });
+    // edit Photo
+    $('.savePhotoBtn').on('click', function (e) {
+        // if (!ori_image && !canvas._objects.length) {
+        //     return;
+        // }
+        photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
+        let data = {};
+        data.from = currentUserId;
+        // data.to = currentContactId;
+        data.photo = photo_canvas.toDataURL('image/png');
+        data.content = getEmojisInfo(photo_canvas._objects);
+        data.photoId = $(this).closest('.modal-content').attr('photoId');
+        console.log(data.content);
+        // if ($('#group_blank').hasClass('active')) {
+        //     data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+        //     data.castTitle = $('#msgchatModal .cast_title input').val();
+
+        //     data.cast = true;
+        //     // socket.emit('send:castPhoto', data);
+        // } else if ($('#cast_chat').hasClass('active')) {
+        //     data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+        //     data.castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
+        //     // socket.emit('send:castPhoto', data);
+        //     console.log(data.castTitle);
+        //     data.cast = true;
+        // } else {
+        data.to = currentContactId;
+        // }
+        // if (data.to) {
+        socket.emit('edit:photo', data);
+        // }
     });
 }
 

@@ -301,7 +301,6 @@ $(document).ready(function () {
                 $(target).empty();
 
                 res.reverse().forEach(data => {
-                    // let data = usersList.find(user => user.id == item.contact_id)
                     $(target).prepend(
                         `<li data-to="blank" key="${data.id}">
                             <div class="chat-box">
@@ -438,7 +437,6 @@ $(document).ready(function () {
                     $(target).empty();
 
                     res.reverse().forEach(data => {
-                        // let data = usersList.find(user => user.id == item.contact_id);
                         $(target).prepend(
                             `<li data-to="blank" key="${data.id}">
                             <div class="chat-box">

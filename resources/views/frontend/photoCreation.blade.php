@@ -46,7 +46,7 @@
                 <img id="input_btn" class="" src="/images/gallery.png"></button>
             </div>
             <div class="btn emoji_btn">
-                <div id="emoji-button"></div>
+                <div id="create_emoji_button" class="emoji-button"></div>
             </div>
             <div id="input_emoji_btn" class="btn add_photo_btn">
                 <input class="input-file" type="file" id="input_emoji_select">
