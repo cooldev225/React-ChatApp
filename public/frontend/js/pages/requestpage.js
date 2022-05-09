@@ -459,15 +459,13 @@ function sendPhoto() {
     });
     // edit Photo
     $('.savePhotoBtn').on('click', function (e) {
-        // if (!ori_image && !canvas._objects.length) {
-        //     return;
-        // }
-        photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
+
+        photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
         let data = {};
         data.from = currentUserId;
         // data.to = currentContactId;
-        data.photo = photo_canvas.toDataURL('image/png');
         data.content = getEmojisInfo(photo_canvas._objects);
+        data.photo = photo_canvas.toDataURL('image/png');
         data.photoId = $(this).closest('.modal-content').attr('photoId');
         console.log(data.content);
         // if ($('#group_blank').hasClass('active')) {
