@@ -247,7 +247,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('edit:photo', data => {
-        console.log(data.content);
         // let senderSocketId = user_socketMap.get(currentUserId.toString());
         // let recipientSocketId = user_socketMap.get(currentContactId.toString());
         // let message = {

@@ -309,9 +309,12 @@ function blurPhoto() {
         $('.blur-tool').slideToggle();
         $('.text-tool').slideUp();
     });
-    $('#blurRange').on('input', e => {
-        if (canvas.getActiveObject()) {
-            let obj = canvas.getActiveObject();
+    $('.blurRange').on('input', e => {
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
+        let modalId = $(e.target).closest('.modal').attr('id');
+
+        if (target.getActiveObject()) {
+            let obj = target.getActiveObject();
             let filter = new fabric.Image.filters.Blur({
                 blur: e.currentTarget.value
             });
@@ -319,8 +322,8 @@ function blurPhoto() {
             obj.filters.push(filter);
             obj.applyFilters();
             obj.blur = e.currentTarget.value;
-            canvas.renderAll();
-        } else if (globalImage) {
+            target.renderAll();
+        } else if (globalImage && modalId == 'createPhoto') {
             if ($('#createPhoto .preview-paid').hasClass('d-none')) {
                 blurPrice = $('.emojis-price').val();
             } else {
@@ -474,7 +477,6 @@ function sendPhoto() {
         data.content = getEmojisInfo(photo_canvas._objects);
         data.photo = photo_canvas.toDataURL('image/png');
         data.photoId = $(this).closest('.modal-content').attr('photoId');
-        console.log(data.content);
         data.to = currentContactId;
         socket.emit('edit:photo', data);
     });
@@ -852,7 +854,6 @@ function showPhotoContent(id) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
-                console.log(emojis);
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
                 $('#photo_item .modal-content').attr('photoId', res.data[0].id);

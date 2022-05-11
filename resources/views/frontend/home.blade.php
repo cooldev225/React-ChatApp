@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                            <span class="sr-only">Loading...</span>
-                                                                                                                        </div> -->
+                                                                                                                                <span class="sr-only">Loading...</span>
+                                                                                                                            </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                    <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3823,8 +3823,7 @@
                     <div class="blur-tool">
                         <div>
                             <img src="/images/blur.png" alt="">
-                            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1"
-                                value="0">
+                            <input type="range" class="form-range blurRange" min="0" max="1.5" step="0.1" value="0">
                         </div>
                     </div>
                 </div>
@@ -3930,9 +3929,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                        </div> -->
+                                                                                                                                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                            </div> -->
             </div>
         </div>
     </div>

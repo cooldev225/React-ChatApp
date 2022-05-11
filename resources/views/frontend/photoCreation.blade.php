@@ -18,7 +18,7 @@
     <div class="blur-tool">
         <div>
             <img src="/images/blur.png" alt="">
-            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1" value="0">
+            <input type="range" class="form-range blurRange" min="0" max="1.5" step="0.1" value="0">
         </div>
     </div>
     <div class="photo-container">
