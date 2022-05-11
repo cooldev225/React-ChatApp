@@ -2,15 +2,15 @@
     <div class="text-tool">
         <div>
             <input type="text" class="text form-control" placeholder="Text Here">
-            <select class="form-select form-select-sm font-family" id="font-family" aria-label=".form-select-sm example">
+            <select class="form-select form-select-sm font_select" id="font-family" aria-label=".form-select-sm example">
 
             </select>
             <div class="font-style">
                 <span class="bold">B</span>
                 <span class="italic">I</span>
             </div>
-            <div class="colorPicker" id="fontColorPicker" value="#4700B3"></div>
-            <div class="colorPicker" id="backColorPicker" value="#4700B3"></div>
+            <div class="colorPicker fontColorPicker" value="#4700B3"></div>
+            <div class="colorPicker backColorPicker" value="#4700B3"></div>
 
             <button type="button" class="btn btn-primary btn-sm addText">Add</button>
         </div>
@@ -49,7 +49,7 @@
                 <div id="create_emoji_button" class="emoji-button"></div>
             </div>
             <div id="input_emoji_btn" class="btn add_photo_btn">
-                <input class="input-file" type="file" id="input_emoji_select">
+                <input class="input-file layer_photo_btn" type="file" id="input_emoji_select">
                 <img class="" src="/images/add_photo.png"></button>
             </div>
             <div class="btn text_btn">

@@ -219,7 +219,7 @@ ul.chatappend .msg-box .camera-icon {
     height: 30px;
 }
 
-.text-tool .font-family {
+.text-tool .font_select {
     width: 110px;
     height: 30px;
 }
@@ -387,7 +387,12 @@ ul.chatappend .msg-box .camera-icon {
     border-radius: 15px;
 }
 
-#photo_item .modal-content {
+#photo_item .modal-content>div:nth-child(1) {
+    padding: 10px;
+}
+
+#photo_item .modal-content>div:nth-child(2) {
+    display: flex;
     flex-direction: row;
     padding: 10px;
     padding-left: 0;
@@ -465,7 +470,7 @@ ul.chatappend .msg-box .camera-icon {
     border: 1px solid rgba(0, 100, 0, 0.938) !important;
 }
 
-#backColorPicker {
+.backColorPicker {
     background-color: #C4E6C1;
 }
 
@@ -720,7 +725,7 @@ h6.read {
     .text-tool .text {
         width: 110px;
     }
-    .text-tool .font-family {
+    .text-tool .font_select {
         width: 90px;
     }
 }

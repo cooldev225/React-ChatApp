@@ -524,23 +524,25 @@ $(document).ready(function () {
 
     //edit reply message
     $('.messages').on('click', '.replyEditBtn', function (e) {
-        // $('#createPhoto').modal('show');
-        // $('#photo_item').modal('show');
-        if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
-            $('.previewBtn').removeClass('d-none');
-            $('.payBtn').addClass('d-none');
-        } else {
-            $('.previewBtn').addClass('d-none');
-            $('.payBtn').removeClass('d-none');
-        }
+        // if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
+        //     $('.previewBtn').removeClass('d-none');
+        //     $('.payBtn').addClass('d-none');
+        // } else {
+        //     $('.previewBtn').addClass('d-none');
+        //     $('.payBtn').removeClass('d-none');
+        // }
+        $('#photo_item .modal-content .btn-group.edit_btn_group').css('display', 'flex');
+        $('#photo_item .modal-content .btn-group.open_btn_group').css('display', 'none');
+        $('#photo_item').attr('edit', 'true');
         let id = $(e.currentTarget).closest('li.msg-item').attr('key');
         $('.selected-emojis').empty();
         selectedEmojis = [];
-        if (id) {
-            showPhotoContent(id);
-        } else {
-            $('#createPhoto').modal('show');
-        }
+        showPhotoContent(id);
+    });
+    $('#photo_item').on('hidden.bs.modal', function () {
+        $(this).removeAttr('edit');
+        $('.blur-tool').slideUp();
+        $('.text-tool').slideUp();
     });
 
     $('#content').on('click', 'div.replyMessage > span.closeIcon', function (e) {

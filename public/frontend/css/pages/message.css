@@ -1,215 +1,219 @@
-    #group_blank>.contact-details div.media-body {
-        max-width: 100%;
-        height: 42px;
-        border: 1px solid #954b4b;
-        border-radius: 5px;
-        margin-left: 5px;
-        padding: 2px;
-        overflow: auto;
-    }
-    
-    #group_blank>.contact-details .media-body span {
-        background-color: #1c9dea;
-        color: white;
-        border: 1px solid black;
-        border-radius: 3px;
-        white-space: nowrap;
-        padding: 0 2px;
-        cursor: pointer;
-    }
-    
-    #group_blank>.contact-details .media-body span>b {
-        color: black;
-    }
-    
-    #group_blank .contact-chat ul.chatappend {
-        display: none;
-    }
-    
-    .chitchat-main .messages .contact-details .left.media .media-body:before {
-        width: 0;
-    }
-    
-    .theme-tab .nav-tabs .nav-item .nav-link {
-        padding: 6px 15px;
-        min-width: 100px;
-    }
-    
-    .theme-tab .nav-tabs .nav-item .nav-link #msgchatModal ul.chat-main li {
-        cursor: pointer;
-    }
-    
-    #msgchatModal ul.chat-main li:hover {
-        background-color: #eff7fe;
-    }
-    
-    #msgchatModal ul.chat-main li.active {
-        background-color: #eff7fe;
-    }
-    
-    #msgchatModal ul.chat-main li {
-        cursor: pointer;
-    }
-    
-    #msgchatModal ul.chat-main li .chat-box .date-status,
-    #castUserListModal ul.chat-main li .chat-box .date-status {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    
-    #msgchatModal ul.chat-main li .chat-box .date-status .form-check-input,
-    #castUserListModal ul.chat-main li .chat-box .date-status .form-check-input {
-        font-size: 1.5em;
-        border-radius: 50%;
-    }
-    
-    #msgchatModal>div>div>div.modal-body>div>div>input {
-        margin-bottom: 10px;
-    }
-    
-    body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
-        position: absolute;
-        left: 20px;
-        z-index: 2;
-    }
-    
-    #group_blank>div.contact-details>div.cast_title {
-        display: flex;
-        align-items: center;
-        margin-top: 10px;
-    }
-    
-    #group_blank>div.contact-details>div.cast_title input {
-        flex: 1;
-    }
-    
-    #cast_chat>div.contact-chat>ul>li.groupuser {
-        overflow-x: auto;
-        width: 100%;
-    }
-    
-    #cast_chat>div.contact-chat>ul>li.groupuser>div {
-        flex-shrink: 0;
-    }
-    
-    .iti-mobile .iti--container {
-        z-index: 9999;
-    }
-    
-    .messages div.contact-chat li.replies .msg-box li {
-        text-align: left;
-    }
-    
-    .chat-main li .chat-box .date-status {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    
-    #cast .chat-main li .chat-box .date-status {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    #cast .chat-main li .chat-box .icon-btn.btn-outline-light {
-        position: static;
-        margin: 1px;
-    }
-    
-    .chat-main li .chat-box .date-status i.ti-trash {
-        font-size: 16px;
-        color: #1c9dea;
-    }
-    
-    .messages .replies.msg-item .replyBtn {
-        display: none;
-    }
-    
-    #cast .chat-box .msg-setting {
-        width: 25px;
-        height: 25px;
-        background-color: #bbbbbb;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 25px;
-    }
-    
-    #cast .chat-box .msg-setting:hover {
-        background-color: #8b8080;
-    }
-    
-    #cast .chat-box .msg-dropdown {
-        display: none;
-        background-color: #fff;
-        padding: 5px;
-        position: absolute;
-        border: 2px solid #eff1f2;
-        border-radius: 15px;
-        left: 50%;
-        top: -105px;
-        z-index: 999999;
-        transform: translateX(-50%);
-    }
-    
-    #cast .chat-box .msg-dropdown li {
-        margin: 5px 0px;
-        padding: 0px;
-    }
-    
-    #content .chat-content .replyMessage {
-        padding: 15px;
-        border-radius: 15px;
-        background-color: #82878f;
-        color: white;
-    }
-    
-    #content .chat-content>.replyMessage {
-        display: none;
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        background-color: #82878f;
-    }
-    
-    #content .chat-content .replyMessage .replyIcon {
+#group_blank>.contact-details div.media-body {
+    max-width: 100%;
+    height: 42px;
+    border: 1px solid #954b4b;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 2px;
+    overflow: auto;
+}
+
+#group_blank>.contact-details .media-body span {
+    background-color: #1c9dea;
+    color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    white-space: nowrap;
+    padding: 0 2px;
+    cursor: pointer;
+}
+
+#group_blank>.contact-details .media-body span>b {
+    color: black;
+}
+
+#group_blank .contact-chat ul.chatappend {
+    display: none;
+}
+
+.chitchat-main .messages .contact-details .left.media .media-body:before {
+    width: 0;
+}
+
+.theme-tab .nav-tabs .nav-item .nav-link {
+    padding: 6px 15px;
+    min-width: 100px;
+}
+
+.theme-tab .nav-tabs .nav-item .nav-link #msgchatModal ul.chat-main li {
+    cursor: pointer;
+}
+
+#msgchatModal ul.chat-main li:hover {
+    background-color: #eff7fe;
+}
+
+#msgchatModal ul.chat-main li.active {
+    background-color: #eff7fe;
+}
+
+#msgchatModal ul.chat-main li {
+    cursor: pointer;
+}
+
+#msgchatModal ul.chat-main li .chat-box .date-status,
+#castUserListModal ul.chat-main li .chat-box .date-status {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#msgchatModal ul.chat-main li .chat-box .date-status .form-check-input,
+#castUserListModal ul.chat-main li .chat-box .date-status .form-check-input {
+    font-size: 1.5em;
+    border-radius: 50%;
+}
+
+#msgchatModal>div>div>div.modal-body>div>div>input {
+    margin-bottom: 10px;
+}
+
+body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
+    position: absolute;
+    left: 20px;
+    z-index: 2;
+}
+
+#group_blank>div.contact-details>div.cast_title {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#group_blank>div.contact-details>div.cast_title input {
+    flex: 1;
+}
+
+#cast_chat>div.contact-chat>ul>li.groupuser {
+    overflow-x: auto;
+    width: 100%;
+}
+
+#cast_chat>div.contact-chat>ul>li.groupuser>div {
+    flex-shrink: 0;
+}
+
+.iti-mobile .iti--container {
+    z-index: 9999;
+}
+
+.messages div.contact-chat li.replies .msg-box li {
+    text-align: left;
+}
+
+.chat-main li .chat-box .date-status {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#cast .chat-main li .chat-box .date-status {
+    display: flex;
+    flex-direction: column;
+}
+
+#cast .chat-main li .chat-box .icon-btn.btn-outline-light {
+    position: static;
+    margin: 1px;
+}
+
+.chat-main li .chat-box .date-status i.ti-trash {
+    font-size: 16px;
+    color: #1c9dea;
+}
+
+.messages .replies.msg-item .replyBtn {
+    display: none;
+}
+
+#cast .chat-box .msg-setting {
+    width: 25px;
+    height: 25px;
+    background-color: #bbbbbb;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+}
+
+#cast .chat-box .msg-setting:hover {
+    background-color: #8b8080;
+}
+
+#cast .chat-box .msg-dropdown {
+    display: none;
+    background-color: #fff;
+    padding: 5px;
+    position: absolute;
+    border: 2px solid #eff1f2;
+    border-radius: 15px;
+    left: 50%;
+    top: -105px;
+    z-index: 999999;
+    transform: translateX(-50%);
+}
+
+#cast .chat-box .msg-dropdown li {
+    margin: 5px 0px;
+    padding: 0px;
+}
+
+#content .chat-content .replyMessage {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #82878f;
+    color: white;
+}
+
+#content .chat-content>.replyMessage {
+    display: none;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #82878f;
+}
+
+#content .chat-content .replyMessage .replyIcon {
+    margin-right: 10px;
+}
+
+#content .chat-content .replyMessage .replyContent img {
+    width: 65px;
+}
+
+#content .chat-content>.replyMessage .closeIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    background-color: #1c9dea;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+#photo_item .modal-content .btn-group.edit_btn_group {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .chitchat-container .chitchat-main .messages#cast_chat .media-right {
+        order: -1;
         margin-right: 10px;
     }
-    
-    #content .chat-content .replyMessage .replyContent img {
-        width: 65px;
+}
+
+@media (max-width: 600px) {
+    .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(1),
+    .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(2),
+    .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
+    .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
+        display: inline-block;
     }
-    
-    #content .chat-content>.replyMessage .closeIcon {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        cursor: pointer;
-        background-color: #1c9dea;
+    #cat_chat .contact-details>.row .icon-btn,
+    #group_blank .contact-details>.row .icon-btn {
         width: 20px;
         height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
+        background-color: transparent;
     }
-    
-    @media (max-width: 768px) {
-        .chitchat-container .chitchat-main .messages#cast_chat .media-right {
-            order: -1;
-            margin-right: 10px;
-        }
-    }
-    
-    @media (max-width: 600px) {
-        .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(1),
-        .chitchat-container .chitchat-main .messages#cast_chat .media-right ul li:nth-child(2),
-        .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(1),
-        .chitchat-container .chitchat-main .messages#group_blank .media-right ul li:nth-child(2) {
-            display: inline-block;
-        }
-        #cat_chat .contact-details>.row .icon-btn,
-        #group_blank .contact-details>.row .icon-btn {
-            width: 20px;
-            height: 20px;
-            background-color: transparent;
-        }
-    }
+}

@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                            <span class="sr-only">Loading...</span>
-                                                                        </div> -->
+                                                                                                                        <span class="sr-only">Loading...</span>
+                                                                                                                    </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3767,7 +3767,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Photo Creation</h2>
+                    <h2 class="modal-title">Blink Creator</h2>
 
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -3803,45 +3803,92 @@
     <div class="modal fade add-popup request-modal" id="photo_item" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="rate-blur">
-                    <div class="photoRating">
-                        <div>★</div>
-                        <div>★</div>
-                        <div>★</div>
-                        <div>★</div>
-                        <div>★</div>
+                <div class="">
+                    <div class="text-tool">
+                        <div>
+                            <input type="text" class="text form-control" placeholder="Text Here">
+                            <select class="form-select form-select-sm font_select" aria-label=".form-select-sm example">
+
+                            </select>
+                            <div class="font-style">
+                                <span class="bold">B</span>
+                                <span class="italic">I</span>
+                            </div>
+                            <div class="colorPicker fontColorPicker" value="#4700B3"></div>
+                            <div class="colorPicker backColorPicker" value="#4700B3"></div>
+
+                            <button type="button" class="btn btn-primary btn-sm addText">Add</button>
+                        </div>
+                    </div>
+                    <div class="blur-tool">
+                        <div>
+                            <img src="/images/blur.png" alt="">
+                            <input type="range" class="form-range" id="blurRange" min="0" max="1.5" step="0.1"
+                                value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="rate-blur">
+                        <div class="photoRating">
+                            <div>★</div>
+                            <div>★</div>
+                            <div>★</div>
+                            <div>★</div>
+                            <div>★</div>
+                        </div>
+                        <div>
+                            <div class="lock-tool unlock">
+                                <a class="icon-btn btn-outline-success outside mb-3" href="#">
+                                    <i class="fa fa-lock"></i>
+                                    <i class="fa fa-unlock-alt"></i>
+                                </a>
+                            </div>
+                            <div class="blur-image">
+                                <img src="/images/blur.png" alt="">
+                                {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1"
+                                value="0"> --}}
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <div class="lock-tool unlock">
-                            <a class="icon-btn btn-outline-success outside mb-3" href="#">
-                                <i class="fa fa-lock"></i>
-                                <i class="fa fa-unlock-alt"></i>
-                            </a>
-                        </div>
-                        <div class="blur-image">
-                            <img src="/images/blur.png" alt="">
-                            {{-- <input type="range" class="form-range" id="removeBlur" min="0" max="1.5" step="0.1"
-                            value="0"> --}}
-                        </div>
+                        <canvas id="photo_canvas"></canvas>
                     </div>
-                </div>
-                <div>
-                    <canvas id="photo_canvas"></canvas>
-                </div>
-                <div class="btn-group">
-                    <div class="photo-price"></div>
-                    <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png"
-                            alt="Pay"> </div>
-                    <div class="btn payBtn" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
-                    <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share"></div>
-                    <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
-                    <div class="btn emoji_btn">
-                        <div id="edit_emoji_button" class="emoji-button"></div>
+                    <div class="btn-group open_btn_group">
+                        <div class="photo-price"></div>
+                        <div class="btn previewBtn d-none payWholePriceBtn" title="Preview"><img src="/images/preview.png"
+                                alt="Pay"> </div>
+                        <div class="btn payBtn" title="Pay"><img src="/images/pay.png" alt="Pay"> </div>
+                        <div class="btn sharePhotoBtn disabled" title="Share"><img src="/images/share.png" alt="Share">
+                        </div>
+                        <div class="btn restoreBtn" title="Restore"><img src="/images/restore.png" alt="Restore"> </div>
+                        {{-- <div class="btn emoji_btn">
+                            <div id="edit_emoji_button" class="emoji-button"></div>
+                        </div>
+                        <div class="btn savePhotoBtn" title="Save"><img src="/images/save.png" alt="Save"> </div> --}}
+                        <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img
+                                src="/images/cancel.png" alt="Cancel"></div>
                     </div>
-                    <div class="btn savePhotoBtn" title="Save"><img src="/images/save.png" alt="Save"> </div>
-                    {{-- <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div> --}}
+                    <div class="btn-group edit_btn_group">
+                        <div class="photo-price"></div>
+                        <div id="edit_layer_photo" class="btn add_photo_btn">
+                            <input class="input-file layer_photo_btn" type="file" id="select_layer_photo">
+                            <img class="" src="/images/add_photo.png"></button>
+                        </div>
+                        <div class="btn text_btn">
+                            <img src="/images/text.png" alt="Text" style="width: auto">
+                        </div>
+                        <div class="btn blur_btn">
+                            <img src="/images/blur.png" alt="Blur">
+                        </div>
+                        <div class="btn emoji_btn">
+                            <div id="edit_emoji_button" class="emoji-button"></div>
+                        </div>
+                        <div class="btn savePhotoBtn" title="Save"><img src="/images/save.png" alt="Save"> </div>
+                        {{-- <div class="btn " href="#" data-bs-dismiss="modal" title="Cancel"><img src="/images/cancel.png" alt="Cancel"></div> --}}
+                    </div>
+                    <div class="selected-emojis"></div>
                 </div>
-                <div class="selected-emojis"></div>
             </div>
         </div>
     </div>
@@ -3883,9 +3930,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                        </div> -->
+                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                    </div> -->
             </div>
         </div>
     </div>

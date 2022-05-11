@@ -67,6 +67,10 @@ $(document).ready(function () {
         .addEventListener('click', function () {
             document.getElementById("input_emoji_select").click();
         }, false);
+    document.getElementById("edit_layer_photo")
+        .addEventListener('click', function () {
+            document.getElementById("select_layer_photo").click();
+        }, false);
 
     socket.on('receive:request', data => {
         let senderInfo = getCertainUserInfoById(data.from);
@@ -154,12 +158,12 @@ $(document).ready(function () {
 function addFont() {
     fonts.unshift('Times New Roman');
     // Populate the fontFamily select
-    var select = document.getElementById("font-family");
+    var select = $(".font_select");
     fonts.forEach(function (font) {
         var option = document.createElement('option');
         option.innerHTML = font;
         option.value = font;
-        select.appendChild(option);
+        select.append(option);
     });
 }
 
@@ -395,7 +399,9 @@ function addEmojisOnPhoto() {
             }
         }
     });
-    $('#input_emoji_select').on('change', e => {
+
+    $('.layer_photo_btn').on('change', e => {
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
         let reader = new FileReader();
         files = e.target.files;
         reader.onload = () => {
@@ -411,14 +417,15 @@ function addEmojisOnPhoto() {
                 oImg.scaleX = 50 / oImg.width;
                 oImg.scaleY = 50 / ratio / oImg.height;
                 oImg.id = Date.now();
-                addEventAction(canvas, oImg);
+                addEventAction(target, oImg);
 
-                canvas.add(oImg);
-                canvas.centerObject(oImg);
+                target.add(oImg);
+                target.centerObject(oImg);
             });
 
         }
-        reader.readAsDataURL(files[0]);
+        if (files.length)
+            reader.readAsDataURL(files[0]);
 
     })
 }
@@ -468,30 +475,16 @@ function sendPhoto() {
         data.photo = photo_canvas.toDataURL('image/png');
         data.photoId = $(this).closest('.modal-content').attr('photoId');
         console.log(data.content);
-        // if ($('#group_blank').hasClass('active')) {
-        //     data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        //     data.castTitle = $('#msgchatModal .cast_title input').val();
-
-        //     data.cast = true;
-        //     // socket.emit('send:castPhoto', data);
-        // } else if ($('#cast_chat').hasClass('active')) {
-        //     data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-        //     data.castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
-        //     // socket.emit('send:castPhoto', data);
-        //     console.log(data.castTitle);
-        //     data.cast = true;
-        // } else {
         data.to = currentContactId;
-        // }
-        // if (data.to) {
         socket.emit('edit:photo', data);
-        // }
     });
 }
 
 function showPhoto() {
 
     $('#chating .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
+        $('#photo_item .modal-content .btn-group.edit_btn_group').css('display', 'none');
+        $('#photo_item .modal-content .btn-group.open_btn_group').css('display', 'flex');
         if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
             $('.previewBtn').removeClass('d-none');
             $('.payBtn').addClass('d-none');
@@ -684,14 +677,18 @@ function addTextOnPhoto() {
         $('.text-tool').slideToggle();
         $('.blur-tool').slideUp();
     });
-    $('.addText').on('click', function () {
+    $('.addText').on('click', function (e) {
+        let modalId = $(e.target).closest('.modal').attr('id');
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
+        let price = 0;
+        console.log(target);
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
-            var price = $('.emojis-price').val();
-        } else {
-            var price = $('.preview-paid').val();
+            price = $('.emojis-price').val();
+        } else if ($('#photo_item').attr('edit') != 'true') {
+            price = $('.preview-paid').val();
             // var price = $('.sticky-switch').is(':checked') ? -1 : 0;
         }
-        let text = $('.text-tool .text').val();
+        let text = $(`#${modalId} .text-tool .text`).val();
         if (text) {
             let textBox = new fabric.Textbox(text, {
                 with: 200,
@@ -703,57 +700,63 @@ function addTextOnPhoto() {
                 price: price
             });
             textBox.id = Date.now();
-            addEventAction(canvas, textBox);
-            canvas.add(textBox).setActiveObject(textBox);
-            canvas.centerObject(textBox);
-            $('.text-tool .text').val('');
-            $('.text-tool').slideToggle();
-
+            addEventAction(target, textBox);
+            target.add(textBox).setActiveObject(textBox);
+            target.centerObject(textBox);
+            $(`#${modalId} .text-tool .text`).val('');
+            $(`#${modalId} .text-tool`).slideToggle();
         }
 
     });
-    $('#font-family').on('change', function () {
-        if (canvas.getActiveObject()) {
-            canvas.getActiveObject().set("fontFamily", this.value);
-            canvas.requestRenderAll();
+    $('.font_select').on('change', function (e) {
+        let modalId = $(e.target).closest('.modal').attr('id');
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
+        if (target.getActiveObject()) {
+            target.getActiveObject().set("fontFamily", this.value);
+            target.requestRenderAll();
         }
     });
-    $('#backColorPicker').colorpicker().on('changeColor', e => {
+    $('.backColorPicker').colorpicker().on('changeColor', function (e) {
+        let modalId = $(e.target).closest('.modal').attr('id');
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
         let color = e.color.toString();
-        $('#backColorPicker').css('backgroundColor', color);
-        $('#backColorPicker').attr('value', color);
-        if (canvas.getActiveObject()) {
-            canvas.getActiveObject().set("backgroundColor", color);
-            canvas.requestRenderAll();
+        $(this).css('backgroundColor', color);
+        $(this).attr('value', color);
+        if (target.getActiveObject()) {
+            target.getActiveObject().set("backgroundColor", color);
+            target.requestRenderAll();
         }
     })
-    $('#fontColorPicker').colorpicker().on('changeColor', e => {
+    $('.fontColorPicker').colorpicker().on('changeColor', function (e) {
+        let modalId = $(e.target).closest('.modal').attr('id');
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
         let color = e.color.toString();
-        $('#fontColorPicker').css('backgroundColor', color);
-        $('#fontColorPicker').attr('value', color);
-        if (canvas.getActiveObject()) {
-            canvas.getActiveObject().set("fill", color);
-            canvas.requestRenderAll();
+        $(this).css('backgroundColor', color);
+        $(this).attr('value', color);
+        if (target.getActiveObject()) {
+            target.getActiveObject().set("fill", color);
+            target.requestRenderAll();
         }
     })
 
     $('.font-style').on('click', function (e) {
-        if (canvas.getActiveObject()) {
+        let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
+        if (target.getActiveObject()) {
             if ($(e.target).hasClass('bold')) {
                 if ($(e.target).hasClass('active')) {
-                    canvas.getActiveObject().set("fontWeight", '400');
+                    target.getActiveObject().set("fontWeight", '400');
                 } else {
-                    canvas.getActiveObject().set("fontWeight", 'bold');
+                    target.getActiveObject().set("fontWeight", 'bold');
                 }
             } else {
                 if ($(e.target).hasClass('active')) {
-                    canvas.getActiveObject().set("fontStyle", 'normal');
+                    target.getActiveObject().set("fontStyle", 'normal');
                 } else {
-                    canvas.getActiveObject().set("fontStyle", 'italic');
+                    target.getActiveObject().set("fontStyle", 'italic');
                 }
             }
             $(e.target).toggleClass('active');
-            canvas.requestRenderAll();
+            target.requestRenderAll();
         }
     });
 }
