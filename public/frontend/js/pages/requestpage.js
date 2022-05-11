@@ -681,13 +681,15 @@ function addTextOnPhoto() {
         let modalId = $(e.target).closest('.modal').attr('id');
         let target = $(e.target).closest('.modal').attr('id') == 'createPhoto' ? canvas : photo_canvas;
         let price = 0;
-        console.log(target);
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             price = $('.emojis-price').val();
-        } else if ($('#photo_item').attr('edit') != 'true') {
+        } else {
             price = $('.preview-paid').val();
             // var price = $('.sticky-switch').is(':checked') ? -1 : 0;
         }
+        if ($('#photo_item').attr('edit') == 'true')
+            price = 0;
+        console.log(price);
         let text = $(`#${modalId} .text-tool .text`).val();
         if (text) {
             let textBox = new fabric.Textbox(text, {
