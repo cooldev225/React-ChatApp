@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                        <span class="sr-only">Loading...</span>
-                                                                                                                    </div> -->
+                                                                                                                            <span class="sr-only">Loading...</span>
+                                                                                                                        </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3876,10 +3876,10 @@
                             <img class="" src="/images/add_photo.png"></button>
                         </div>
                         <div class="btn text_btn">
-                            <img src="/images/text.png" alt="Text" style="width: auto">
+                            <img src="/images/text.png" alt="Text">
                         </div>
                         <div class="btn blur_btn">
-                            <img src="/images/blur.png" alt="Blur">
+                            <img src="/images/blur.png" alt="Blur" style="width: auto">
                         </div>
                         <div class="btn emoji_btn">
                             <div id="edit_emoji_button" class="emoji-button"></div>
@@ -3930,9 +3930,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                    </div> -->
+                                                                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                        </div> -->
             </div>
         </div>
     </div>
