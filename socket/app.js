@@ -60,10 +60,12 @@ io.on('connection', (socket) => {
                 state: 1,
                 kind: 0,
                 reply_id: data.replyId || 0,
-                reply_kind: data.replyKind || 0
+                reply_kind: data.replyKind || 0,
+                forward_id: data.forwardId || 0,
+                forward_kind: data.forwardKind || 0
             }
 
-            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind} )`, (error, item) => {
+            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind, forward_id, forward_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind}, ${message.forward_id}, ${message.forward_kind} )`, (error, item) => {
                 message.messageId = item.insertId;
                 var axios = require('axios');
                 var data = JSON.stringify({

@@ -524,13 +524,6 @@ $(document).ready(function () {
 
     //edit reply message
     $('.messages').on('click', '.replyEditBtn', function (e) {
-        // if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
-        //     $('.previewBtn').removeClass('d-none');
-        //     $('.payBtn').addClass('d-none');
-        // } else {
-        //     $('.previewBtn').addClass('d-none');
-        //     $('.payBtn').removeClass('d-none');
-        // }
         $('#photo_item .modal-content .btn-group.edit_btn_group').css('display', 'flex');
         $('#photo_item .modal-content .btn-group.open_btn_group').css('display', 'none');
         $('#photo_item').attr('edit', 'true');
@@ -539,6 +532,8 @@ $(document).ready(function () {
         selectedEmojis = [];
         showPhotoContent(id);
     });
+
+
     $('#photo_item').on('hidden.bs.modal', function () {
         $(this).removeAttr('edit');
         $('.blur-tool').slideUp();
@@ -548,7 +543,27 @@ $(document).ready(function () {
     $('#content').on('click', 'div.replyMessage > span.closeIcon', function (e) {
         $('#content .chat-content>.replyMessage').removeAttr('replyId');
         $('#content .chat-content>.replyMessage').removeAttr('replyKind');
+        $('#content .chat-content>.replyMessage').removeAttr('forwardId');
+        $('#content .chat-content>.replyMessage').removeAttr('forwardKind');
         $('#content .chat-content>.replyMessage').hide();
+    });
+
+    // Forward Message
+    $('.messages').on('click', '.forwardBtn', function (e) {
+        let forwardKind = $(this).closest('li.msg-item').attr('kind');
+        console.log('replyKind:', forwardKind);
+        let messageContent = forwardKind == 0 ? $(this).closest('li.msg-setting-main').find('.content').text() : '';
+        if (forwardKind == 2) {
+            let imageSrc = $(this).closest('.msg-setting-main').find('.receive_photo').attr('src');
+            let photoId = $(this).closest('.msg-setting-main').find('.receive_photo').attr('photoId');
+            console.log(photoId)
+            messageContent = `<img src="${imageSrc}" width="50">`;
+        }
+        let forwardId = $(this).closest('li.msg-item').attr('key');
+        $('#content .chat-content>.replyMessage .replyContent').html(messageContent);
+        $('#content .chat-content>.replyMessage').attr('forwardId', forwardId);
+        $('#content .chat-content>.replyMessage').attr('forwardKind', forwardKind);
+        $('#content .chat-content>.replyMessage').show();
     });
 });
 

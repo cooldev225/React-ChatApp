@@ -487,8 +487,12 @@ function addContact(email) {
 function newMessage() {
     let replyId = $('#content .chat-content>.replyMessage').attr('replyId');
     let replyKind = $('#content .chat-content>.replyMessage').attr('replyKind');
+    let forwardId = $('#content .chat-content>.replyMessage').attr('forwardId');
+    let forwardKind = $('#content .chat-content>.replyMessage').attr('forwardKind');
     $('#content .chat-content>.replyMessage').removeAttr('replyId');
     $('#content .chat-content>.replyMessage').removeAttr('replyKind');
+    $('#content .chat-content>.replyMessage').removeAttr('forwardId');
+    $('#content .chat-content>.replyMessage').removeAttr('forwardKind');
     $('#content .chat-content>.replyMessage').hide();
     var message = $('.message-input input').val();
     if ($.trim(message) == '') {
@@ -549,6 +553,8 @@ function newMessage() {
             senderName,
             replyId,
             replyKind,
+            forwardId,
+            forwardKind,
             csrf
         });
     } else {
@@ -597,11 +603,20 @@ function typingMessage() {
 }
 
 function addChatItem(target, senderId, data, loadFlag) {
-    if (data.reply_kind == 0) {
-        var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
-    } else if (data.reply_kind == 2) {
-        let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
-        var replyContent = `<img src="${imageSrc}" width="50">`;
+    if (data.reply_id) {
+        if (data.reply_kind == 0) {
+            var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
+        } else if (data.reply_kind == 2) {
+            let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
+            var replyContent = `<img src="${imageSrc}" width="50">`;
+        }
+    } else if (data.forward_id) {
+        if (data.forward_kind == 0) {
+            var replyContent = $('.chatappend').find(`li.msg-item[key="${data.forward_id}"]`).find('.msg-setting-main .content').text();
+        } else if (data.forward_kind == 2) {
+            let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.forward_id}"]`).find('.receive_photo').attr('src');
+            var replyContent = `<img src="${imageSrc}" width="50">`;
+        }
     }
     let senderInfo = getCertainUserInfoById(senderId);
     let type = senderInfo.id == currentUserId ? "replies" : "sent";
@@ -620,7 +635,7 @@ function addChatItem(target, senderId, data, loadFlag) {
                     <ul class="msg-box">
                         <li class="msg-setting-main">
                             ${data.kind == 0 ?
-            `${data.reply_id ? '<div class="replyMessage">\
+            `${data.reply_id || data.forward_id ? '<div class="replyMessage">\
                 <span class="replyIcon"><i class="fa fa-reply"></i></span>\
                 <span class="replyContent">' + replyContent + '</span>\
                 <hr style="color: black">\

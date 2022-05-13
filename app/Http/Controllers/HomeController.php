@@ -165,18 +165,18 @@ class HomeController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $id = Auth::id();
-        $contactId = $request->input('currentContactId');
-        $content = $request->input('content');
-        $newMessage = new Message;
-        $newMessage->sender = $id;
-        $newMessage->recipient = $contactId;
-        $newMessage->content = $content;
-        $newMessage->save();
-        return array(
-            'message' => 'Save Successfully',
-            'insertion' => true,
-        );
+        // $id = Auth::id();
+        // $contactId = $request->input('currentContactId');
+        // $content = $request->input('content');
+        // $newMessage = new Message;
+        // $newMessage->sender = $id;
+        // $newMessage->recipient = $contactId;
+        // $newMessage->content = $content;
+        // $newMessage->save();
+        // return array(
+        //     'message' => 'Save Successfully',
+        //     'insertion' => true,
+        // );
     }
 
     public function saveProfileInfo(Request $request)
