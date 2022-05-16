@@ -61,11 +61,11 @@ io.on('connection', (socket) => {
                 kind: 0,
                 reply_id: data.replyId || 0,
                 reply_kind: data.replyKind || 0,
-                forward_id: data.forwardId || 0,
-                forward_kind: data.forwardKind || 0
+                // forward_id: data.forwardId || 0,
+                // forward_kind: data.forwardKind || 0
             }
 
-            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind, forward_id, forward_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind}, ${message.forward_id}, ${message.forward_kind} )`, (error, item) => {
+            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
                 message.messageId = item.insertId;
                 var axios = require('axios');
                 var data = JSON.stringify({
@@ -136,6 +136,27 @@ io.on('connection', (socket) => {
     //     console.log(data);
     //     // db.query(`INSERT INTO casts (sender, recipients, content) VALUES ("${currentUserId}", "${recipients}", "${data.message}")`, (error, item) => {});
     // });
+
+    socket.on('forward:message', data => {
+        // let recipients = data.currentContactIdArr.join(', ');
+        console.log(data);
+        // db.query(`CREATE TEMPORARY TABLE temp_table ENGINE=MEMORY
+        // SELECT * FROM messages WHERE id=${data.forwardId};
+        // UPDATE temp_table SET sender=${currentUserId}, recipient=${data.recipient};
+        // INSERT INTO messages SELECT * FROM temp_table;
+        // DROP TABLE temp_table;`, (error, item) => {
+        //     console.log(error);
+        // })
+        db.query(`insert into messages(content, kind) 
+        select content, kind 
+          from messages 
+         where id = ${data.forwardId}`, (error, item) => {
+            console.log(item.insertId);
+            db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
+                if (error) throw error;
+            });
+        })
+    });
 
 
     socket.on('arrive:message', data => {

@@ -196,6 +196,11 @@ body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
     display: none;
 }
 
+#forwardUsersListModal .chat-main .date-status .btn.forward_btn {
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
 @media (max-width: 768px) {
     .chitchat-container .chitchat-main .messages#cast_chat .media-right {
         order: -1;

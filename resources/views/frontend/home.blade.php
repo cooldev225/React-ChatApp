@@ -804,8 +804,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                <span class="sr-only">Loading...</span>
-                                                                                                                            </div> -->
+                                                                                                                                        <span class="sr-only">Loading...</span>
+                                                                                                                                    </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3509,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                    <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3638,20 +3638,31 @@
                         </div>
                     </div>
                     <ul class="chat-main custom-scroll">
-                        {{-- <li data-to="blank">
-                            <div class="chat-box">
-                                <div class="profile offline"><img class="bg-img"
-                                        src="/chat/images/contact/1.jpg" alt="Avatar" /></div>
-                                <div class="details">
-                                    <h5>John Doe</h5>
-                                    <h6>Hi, i am John. How are you.. ! There are many variations of passages.</h6>
-                                </div>
-                                <div class="date-status"><i class="ti-pin2"></i>
-                                    <h6>22/10/19</h6>
-                                    <h6 class="font-success status"></h6>
-                                </div>
-                            </div>
-                        </li> --}}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade add-popup msg-chat-modal" id="forwardUsersListModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        Forward to:</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    {{-- <div class="cast_title">
+                        <div class="input-group">
+                            <input class="form-control cast_title" type="text" placeholder="Cast Title"
+                                aria-label="Recipient's username" aria-describedby="basic-addon21" />
+                        </div>
+                    </div> --}}
+                    <ul class="chat-main custom-scroll">
+
                     </ul>
                 </div>
             </div>
@@ -3929,9 +3940,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                                <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                            </div> -->
+                                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                                    </div> -->
             </div>
         </div>
     </div>

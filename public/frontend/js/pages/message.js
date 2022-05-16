@@ -543,27 +543,85 @@ $(document).ready(function () {
     $('#content').on('click', 'div.replyMessage > span.closeIcon', function (e) {
         $('#content .chat-content>.replyMessage').removeAttr('replyId');
         $('#content .chat-content>.replyMessage').removeAttr('replyKind');
-        $('#content .chat-content>.replyMessage').removeAttr('forwardId');
-        $('#content .chat-content>.replyMessage').removeAttr('forwardKind');
+        // $('#content .chat-content>.replyMessage').removeAttr('forwardId');
+        // $('#content .chat-content>.replyMessage').removeAttr('forwardKind');
         $('#content .chat-content>.replyMessage').hide();
     });
 
     // Forward Message
     $('.messages').on('click', '.forwardBtn', function (e) {
-        let forwardKind = $(this).closest('li.msg-item').attr('kind');
-        console.log('replyKind:', forwardKind);
-        let messageContent = forwardKind == 0 ? $(this).closest('li.msg-setting-main').find('.content').text() : '';
-        if (forwardKind == 2) {
-            let imageSrc = $(this).closest('.msg-setting-main').find('.receive_photo').attr('src');
-            let photoId = $(this).closest('.msg-setting-main').find('.receive_photo').attr('photoId');
-            console.log(photoId)
-            messageContent = `<img src="${imageSrc}" width="50">`;
-        }
         let forwardId = $(this).closest('li.msg-item').attr('key');
-        $('#content .chat-content>.replyMessage .replyContent').html(messageContent);
-        $('#content .chat-content>.replyMessage').attr('forwardId', forwardId);
-        $('#content .chat-content>.replyMessage').attr('forwardKind', forwardKind);
-        $('#content .chat-content>.replyMessage').show();
+        // let forwardKind = $(this).closest('li.msg-item').attr('kind');
+        // console.log('replyKind:', forwardKind);
+        // let messageContent = forwardKind == 0 ? $(this).closest('li.msg-setting-main').find('.content').text() : '';
+        // if (forwardKind == 2) {
+        //     let imageSrc = $(this).closest('.msg-setting-main').find('.receive_photo').attr('src');
+        //     let photoId = $(this).closest('.msg-setting-main').find('.receive_photo').attr('photoId');
+        //     console.log(photoId)
+        //     messageContent = `<img src="${imageSrc}" width="50">`;
+        // }
+        // $('#content .chat-content>.replyMessage .replyContent').html(messageContent);
+        // $('#content .chat-content>.replyMessage').attr('forwardId', forwardId);
+        // $('#content .chat-content>.replyMessage').attr('forwardKind', forwardKind);
+        // $('#content .chat-content>.replyMessage').show();
+        $('#forwardUsersListModal').modal('show');
+        $('#forwardUsersListModal').attr('forwardId', forwardId);
+
+    });
+
+    $('#forwardUsersListModal').on('shown.bs.modal', function (e) {
+        var form_data = new FormData();
+        $.ajax({
+            url: '/home/getContactList',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                let target = '#forwardUsersListModal .chat-main';
+                $(target).empty();
+
+                res.reverse().forEach(data => {
+                    $(target).prepend(
+                        `<li data-to="blank" key="${data.id}">
+                            <div class="chat-box">
+                            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                                
+                            </div>
+                            <div class="details">
+                                <h5>${data.username}</h5>
+                                <h6>${data.description || 'Hello'}</h6>
+                            </div>
+                            <div class="date-status">
+                                <button class="btn btn-outline-primary button-effect btn-sm forward_btn" type="button">Send</button>
+                            </div>
+                            </div>
+                        </li>`
+                    );
+
+                });
+
+            },
+            error: function (response) {
+
+            }
+        });
+    });
+    $('#forwardUsersListModal').on('hidden.bs.modal', function (e) {
+        $('#forwardUsersListModal').removeAttr('forwardId');
+    });
+
+    $('#forwardUsersListModal').on('click', '.chat-main .date-status .btn.forward_btn', function (e) {
+        $(this).addClass('btn-success');
+        $(this).removeClass('btn-outline-primary');
+        let forwardId = $('#forwardUsersListModal').attr('forwardId');
+        let recipient = $(this).closest('li').attr('key');
+        socket.emit('forward:message', { forwardId, recipient });
     });
 });
 
