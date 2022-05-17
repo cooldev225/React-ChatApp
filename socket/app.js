@@ -61,8 +61,6 @@ io.on('connection', (socket) => {
                 kind: 0,
                 reply_id: data.replyId || 0,
                 reply_kind: data.replyKind || 0,
-                // forward_id: data.forwardId || 0,
-                // forward_kind: data.forwardKind || 0
             }
 
             db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
@@ -138,24 +136,52 @@ io.on('connection', (socket) => {
     // });
 
     socket.on('forward:message', data => {
-        // let recipients = data.currentContactIdArr.join(', ');
         console.log(data);
-        // db.query(`CREATE TEMPORARY TABLE temp_table ENGINE=MEMORY
-        // SELECT * FROM messages WHERE id=${data.forwardId};
-        // UPDATE temp_table SET sender=${currentUserId}, recipient=${data.recipient};
-        // INSERT INTO messages SELECT * FROM temp_table;
-        // DROP TABLE temp_table;`, (error, item) => {
-        //     console.log(error);
-        // })
-        db.query(`insert into messages(content, kind) 
-        select content, kind 
-          from messages 
-         where id = ${data.forwardId}`, (error, item) => {
-            console.log(item.insertId);
-            db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
-                if (error) throw error;
+        if (data.forwardKind == 2) {
+            db.query(`SELECT content FROM messages WHERE id=${data.forwardId}`, (error, messageContent) => {
+                if (messageContent.length) {
+                    db.query(`INSERT INTO photo_galleries(photo, back, blur, blur_price, content) SELECT photo, back, blur, blur_price, content FROM photo_galleries WHERE id = ${messageContent[0].content}`, (error, newPhoto) => {
+                        db.query(`SELECT content FROM photo_galleries WHERE id=${messageContent[0].content}`, (error, contents) => {
+                            // let contentData = JSON.parse(contents[0].content);
+                            let contentData = JSON.stringify(JSON.parse(contents[0].content).map(content => {
+                                content.price = content.originalPrice;
+                                content.blur = content.originalBlur;
+                                content.paid = 0;
+                                return content;
+                                // return JSON.stringify(content);
+                                item[0].content = JSON.stringify(content);
+                            }));
+
+                            db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${currentUserId}", "${data.recipient}", "${newPhoto.insertId}", 2)`, (error, item) => {
+                                db.query(`UPDATE photo_galleries SET photo_galleries.from="${currentUserId}", photo_galleries.to="${data.recipient}", content=${JSON.stringify(contentData)} WHERE id=${newPhoto.insertId}`, (error, photo) => {
+                                    // db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${newPhoto.insertId}`, (error, item) => {
+                                    //     db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
+                                    //         if (error) throw error;
+                                    //     });
+                                    // });
+                                    if (error) throw error;
+                                });
+                            });
+                        });
+                        // db.query(`UPDATE messages SET from = ${currentUserId}, to=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
+                        //     if (error) throw error;
+                        //     db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${item.insertId}`, (error, item) => {
+                        //         db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
+                        //             if (error) throw error;
+                        //         });
+                        //     });
+                        // });
+                    });
+                }
+            })
+        } else if (data.forwardKind == 0) {
+            db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${data.forwardId}`, (error, item) => {
+                console.log(item.insertId);
+                db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
+                    if (error) throw error;
+                });
             });
-        })
+        }
     });
 
 
@@ -276,7 +302,7 @@ io.on('connection', (socket) => {
         //     content: data.photo,
         //     kind: 2
         // }
-        console.log(data.photoId);
+        console.log(data.content);
         db.query(`UPDATE photo_galleries SET photo=${JSON.stringify(data.photo)}, content=${JSON.stringify(data.content)} WHERE id=${data.photoId}`, (error, item) => {
             // if (error) throw error;
             console.log(item);
@@ -321,7 +347,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('update:cast', data => {
-        console.log(data);
         let senderSocketId = user_socketMap.get(currentUserId.toString());
 
         db.query(`UPDATE casts SET cast_title = "${data.newCastTitle}", recipients="${data.newRecipients}" WHERE sender=${currentUserId} AND cast_title="${data.oldCastTitle}"`, (error, item) => {
@@ -446,7 +471,6 @@ io.on('connection', (socket) => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             data.selectedEmojis.forEach(id => {
                 let content = JSON.parse(item[0].content);
-                console.log(id);
                 if (id == 'blur') {
                     item[0].blur = 0;
                     item[0].blur_price = 0;
@@ -458,8 +482,6 @@ io.on('connection', (socket) => {
                     item[0].content = JSON.stringify(content);
                 }
             });
-            console.log(JSON.stringify(JSON.parse(item[0].content)));
-            console.log(JSON.stringify(item[0].content) || []);
             db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(JSON.stringify(JSON.parse(item[0].content)))}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {

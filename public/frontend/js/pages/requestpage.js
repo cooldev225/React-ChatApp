@@ -516,7 +516,9 @@ function getEmojisInfo(obj) {
                 position: [item.left, item.top],
                 angle: item.angle,
                 price: item.price,
+                originalPrice: item.price,
                 blur: item.blur,
+                originalBlur: item.blur,
                 // selectable: item.selectable
             }
         else
@@ -530,6 +532,7 @@ function getEmojisInfo(obj) {
                 position: [item.left, item.top],
                 angle: item.angle,
                 price: item.price,
+                originalPrice: item.price,
                 // selectable: item.selectable,
                 fontSize: item.fontSize,
                 fontFamily: item.fontFamily,

@@ -551,7 +551,7 @@ $(document).ready(function () {
     // Forward Message
     $('.messages').on('click', '.forwardBtn', function (e) {
         let forwardId = $(this).closest('li.msg-item').attr('key');
-        // let forwardKind = $(this).closest('li.msg-item').attr('kind');
+        let forwardKind = $(this).closest('li.msg-item').attr('kind');
         // console.log('replyKind:', forwardKind);
         // let messageContent = forwardKind == 0 ? $(this).closest('li.msg-setting-main').find('.content').text() : '';
         // if (forwardKind == 2) {
@@ -566,6 +566,7 @@ $(document).ready(function () {
         // $('#content .chat-content>.replyMessage').show();
         $('#forwardUsersListModal').modal('show');
         $('#forwardUsersListModal').attr('forwardId', forwardId);
+        $('#forwardUsersListModal').attr('forwardKind', forwardKind);
 
     });
 
@@ -622,8 +623,9 @@ $(document).ready(function () {
             $(this).removeClass('btn-outline-primary');
             $(this).text('Sent');
             let forwardId = $('#forwardUsersListModal').attr('forwardId');
+            let forwardKind = $('#forwardUsersListModal').attr('forwardKind');
             let recipient = $(this).closest('li').attr('key');
-            socket.emit('forward:message', { forwardId, recipient });
+            socket.emit('forward:message', { recipient, forwardId, forwardKind });
         }
     });
 });
