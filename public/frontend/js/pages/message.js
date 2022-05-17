@@ -617,11 +617,14 @@ $(document).ready(function () {
     });
 
     $('#forwardUsersListModal').on('click', '.chat-main .date-status .btn.forward_btn', function (e) {
-        $(this).addClass('btn-success');
-        $(this).removeClass('btn-outline-primary');
-        let forwardId = $('#forwardUsersListModal').attr('forwardId');
-        let recipient = $(this).closest('li').attr('key');
-        socket.emit('forward:message', { forwardId, recipient });
+        if ($(this).hasClass('btn-outline-primary')) {
+            $(this).addClass('btn-success');
+            $(this).removeClass('btn-outline-primary');
+            $(this).text('Sent');
+            let forwardId = $('#forwardUsersListModal').attr('forwardId');
+            let recipient = $(this).closest('li').attr('key');
+            socket.emit('forward:message', { forwardId, recipient });
+        }
     });
 });
 
