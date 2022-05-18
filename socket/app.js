@@ -159,6 +159,7 @@ io.on('connection', (socket) => {
                                     //         if (error) throw error;
                                     //     });
                                     // });
+                                    sendSMS(currentUserId, data.recipient, 'photo');
                                     if (error) throw error;
                                 });
                             });
