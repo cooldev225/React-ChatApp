@@ -142,42 +142,25 @@ io.on('connection', (socket) => {
                 if (messageContent.length) {
                     db.query(`INSERT INTO photo_galleries(photo, back, blur, blur_price, content) SELECT photo, back, blur, blur_price, content FROM photo_galleries WHERE id = ${messageContent[0].content}`, (error, newPhoto) => {
                         db.query(`SELECT content FROM photo_galleries WHERE id=${messageContent[0].content}`, (error, contents) => {
-                            // let contentData = JSON.parse(contents[0].content);
                             let contentData = JSON.stringify(JSON.parse(contents[0].content).map(content => {
                                 content.price = content.originalPrice;
                                 content.blur = content.originalBlur;
                                 content.paid = 0;
                                 return content;
-                                // return JSON.stringify(content);
-                                item[0].content = JSON.stringify(content);
                             }));
 
                             db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${currentUserId}", "${data.recipient}", "${newPhoto.insertId}", 2)`, (error, item) => {
                                 db.query(`UPDATE photo_galleries SET photo_galleries.from="${currentUserId}", photo_galleries.to="${data.recipient}", content=${JSON.stringify(contentData)} WHERE id=${newPhoto.insertId}`, (error, photo) => {
-                                    // db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${newPhoto.insertId}`, (error, item) => {
-                                    //     db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
-                                    //         if (error) throw error;
-                                    //     });
-                                    // });
-                                    sendSMS(currentUserId, data.recipient, 'photo');
                                     if (error) throw error;
+                                    sendSMS(currentUserId, data.recipient, 'photo');
                                 });
                             });
                         });
-                        // db.query(`UPDATE messages SET from = ${currentUserId}, to=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
-                        //     if (error) throw error;
-                        //     db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${item.insertId}`, (error, item) => {
-                        //         db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
-                        //             if (error) throw error;
-                        //         });
-                        //     });
-                        // });
                     });
                 }
             })
         } else if (data.forwardKind == 0) {
             db.query(`INSERT INTO messages(content, kind) SELECT content, kind FROM messages WHERE id = ${data.forwardId}`, (error, item) => {
-                console.log(item.insertId);
                 db.query(`UPDATE messages SET sender = ${currentUserId}, recipient=${data.recipient} WHERE id=${item.insertId}`, (error, item) => {
                     if (error) throw error;
                 });
@@ -511,8 +494,6 @@ io.on('connection', (socket) => {
     });
     socket.on('stickyToFree', data => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
-            console.log(currentUserId);
-            console.log(item[0].from);
             if (item[0].from == currentUserId) {
                 let content = JSON.parse(item[0].content);
                 let index = content.findIndex(emojiInfo => emojiInfo.id == data.emojiId);
