@@ -413,6 +413,7 @@ ul.chatappend .msg-box .camera-icon {
     cursor: pointer;
 }
 
+#createPhoto .modal-content .photo-price,
 #photo_item .modal-content .photo-price {
     text-align: center;
     font-size: 20px;

@@ -25,6 +25,7 @@
         <canvas id="back_canvas">
         </canvas>
         <div class="emojis-tool">
+            <div class="photo-price"></div>
             <select class="form-select form-select-sm price-list preview-paid" aria-label="Default select example">
                 <option value="0" selected>Preview</option>
                 <option value="-2">Paid</option>
