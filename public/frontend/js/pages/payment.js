@@ -69,6 +69,7 @@ $(document).ready(function () {
                 }
             }, '#paypal-button')
     });
+
     $('.payWithBalanceBtn').on('click', () => {
         let userInfo = getCertainUserInfoById(currentUserId);
         if (!totalPrice) {
@@ -87,11 +88,12 @@ $(document).ready(function () {
 function tempAction() {
     let messageId = $('#photo_item .modal-content').attr('key');
     let photoId = $('#photo_item .modal-content').attr('photoId');
-    let addBalance = totalPrice * 0.7;
+    let addBalance = totalPrice * 0.7.toFixed(2);
     socket.emit('pay:photo', {
         photoId,
         selectedEmojis,
-        addBalance
+        addBalance,
+        totalPrice,
     });
     payWholePhotoPrice();
     $('#checkoutModal').modal('hide');

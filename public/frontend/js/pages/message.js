@@ -4,6 +4,9 @@ var oldCastTitle = '';
 
 $(document).ready(function () {
     $('#new_cast').on('click', () => {
+        if (!$('#cast .chat-main').children().length) {
+            getCastData();
+        }
         showNewCastPage();
         $('#group_blank > .contact-details .media-body').empty();
         $('#group_blank .contact-chat ul.chatappend').empty()
@@ -644,6 +647,11 @@ function showNewCastPage() {
     $('#chat .tab-content .tab-pane#cast').addClass('active show');
     $('#content .chat-content .messages').removeClass('active');
     $('#group_blank').addClass('active');
+
+    $('#myTabContent .nav-item .nav-link').removeClass('active');
+    $('#myTabContent .nav-item .nav-link#cast-tab').addClass('active');
+    // $('#myTab .nav-item .nav-link#cast-tab').click();
+
 
     $('.chat-cont-setting').removeClass('open');
     $('.chitchat-container').toggleClass("mobile-menu");

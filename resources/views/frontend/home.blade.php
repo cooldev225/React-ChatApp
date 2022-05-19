@@ -125,26 +125,38 @@
                     </div>
                 </div>
                 <div class="chat custom-scroll">
-                    <ul class="chat-cont-setting">
+                    <ul class="chat-cont-setting chat">
                         <li>
-                            {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#msgchatModal"><span>new chat</span>
-                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
-                                        data-feather="message-square"></i></div>
-                            </a> --}}
-                            <a href="#" id="new_cast"><span>new cast</span>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new chat</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
                             </a>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new group</span>
+                                <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="users"></i>
+                                </div>
+                            </a>
                         </li>
+                        <li>
+                            <a href="#" id="new_cast"><span>new cast</span>
+                                <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="cast"></i>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <ul class="chat-cont-setting call">
                         <li>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new call</span>
                                 <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="phone"></i>
                                 </div>
                             </a>
                         </li>
+                    </ul>
+                    <ul class="chat-cont-setting contact">
                         <li>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><span>new Contact</span>
-                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="users"></i>
+                                <div class="icon-btn btn-outline-danger button-effect btn-sm"><i data-feather="user"></i>
                                 </div>
                             </a>
                         </li>
@@ -804,8 +816,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                        <span class="sr-only">Loading...</span>
-                                                                                                                                    </div> -->
+                                                                                                                                                                            <span class="sr-only">Loading...</span>
+                                                                                                                                                                        </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3509,9 +3521,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                            <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                                            <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3940,9 +3952,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                                        <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                                    </div> -->
+                                                                                                                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                                                                        </div> -->
             </div>
         </div>
     </div>
