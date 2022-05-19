@@ -303,6 +303,7 @@ function selectBackPhoto() {
         ori_image = null;
         $('.blur-tool').slideUp();
         $('.text-tool').slideUp();
+        $('#createPhoto .photo-price').text('');
     });
 }
 
@@ -370,6 +371,8 @@ function addEmojisOnPhoto() {
                 addEventAction(canvas, textBox);
                 canvas.add(textBox).setActiveObject(textBox);
                 canvas.centerObject(textBox);
+                console.log(getPhotoPrice(canvas));
+                $('#createPhoto .photo-price').text(`$${getPhotoPrice(canvas)}`);
             } else if ($('#photo_item').hasClass('show')) {
                 addEventAction(photo_canvas, textBox);
                 photo_canvas.add(textBox).setActiveObject(textBox);
@@ -399,6 +402,9 @@ function addEmojisOnPhoto() {
                 addEventAction(canvas, textBox);
                 canvas.add(textBox).setActiveObject(textBox);
                 canvas.centerObject(textBox);
+                console.log(getPhotoPrice(canvas));
+                $('#createPhoto .photo-price').text(`$${getPhotoPrice(canvas)}`);
+
             } else if ($('#photo_item').hasClass('show')) {
                 addEventAction(photo_canvas, textBox);
                 photo_canvas.add(textBox).setActiveObject(textBox);
@@ -430,6 +436,12 @@ function addEmojisOnPhoto() {
 
                 target.add(oImg);
                 target.centerObject(oImg);
+                console.log(getPhotoPrice(canvas));
+                if ($('#createPhoto').hasClass('show')) {
+                    $('#createPhoto .photo-price').text(`$${getPhotoPrice(canvas)}`);
+                }
+
+
             });
 
         }
@@ -472,6 +484,7 @@ function sendPhoto() {
         if (data.to) {
             socket.emit('send:photo', data);
         }
+        $('#createPhoto .photo-price').text('');
     });
     // edit Photo
     $('.savePhotoBtn').on('click', function (e) {
@@ -554,7 +567,13 @@ function showPhotoPriceAndOption() {
     // canvas.on('selection:updated', function () {
     //     console.log('Event object:moving Triggered');
     // });
+
 }
+
+function getPhotoPrice(target) {
+    return target._objects.map(item => item.price).filter(item => item && item > 0).reduce((total, item) => Number(item) + total, 0);
+}
+
 
 function payPhoto() {
     $('.payBtn').on('click', () => {
@@ -699,7 +718,6 @@ function addTextOnPhoto() {
         }
         if ($('#photo_item').attr('edit') == 'true')
             price = 0;
-        console.log(price);
         let text = $(`#${modalId} .text-tool .text`).val();
         if (text) {
             let textBox = new fabric.Textbox(text, {
@@ -717,6 +735,11 @@ function addTextOnPhoto() {
             target.centerObject(textBox);
             $(`#${modalId} .text-tool .text`).val('');
             $(`#${modalId} .text-tool`).slideToggle();
+            console.log(getPhotoPrice(target));
+            if ($('#createPhoto').hasClass('show')) {
+                $('#createPhoto .photo-price').text(`$${getPhotoPrice(canvas)}`);
+            }
+
         }
 
     });
@@ -784,6 +807,10 @@ function addEventAction(panel, element) {
                 panel.remove(tempImage);
                 panel.remove(text);
                 photoPrice -= element.price;
+                console.log(getPhotoPrice(panel));
+                if ($('#createPhoto').hasClass('show')) {
+                    $('#createPhoto .photo-price').text(`$${getPhotoPrice(canvas)}`);
+                }
             }
             if (element.price == -1) tempImage = lockImage;
             else if (element.price == 0) tempImage = unlockImage;
