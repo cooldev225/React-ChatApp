@@ -22,6 +22,8 @@ fabric.Image.fromURL('/images/normal.png', (oImg) => {
 var viewportWidth = jQuery(window).width();
 if (viewportWidth > 650) {
     var canvasDimension = 400
+} else if (viewportWidth <= 425) {
+    var canvasDimension = 280
 } else if (viewportWidth <= 510) {
     var canvasDimension = 300
 } else if (viewportWidth <= 650) {
@@ -360,7 +362,8 @@ function addEmojisOnPhoto() {
                 fontSize: 35,
                 textAlign: 'center',
                 editable: false,
-                price: price
+                price: price,
+                originalPrice: price
             });
             textBox.id = Date.now();
             if ($('#createPhoto').hasClass('show')) {
@@ -388,7 +391,8 @@ function addEmojisOnPhoto() {
                 fontSize: 35,
                 textAlign: 'center',
                 editable: false,
-                price: price
+                price: price,
+                originalPrice: price
             });
             textBox.id = Date.now();
             if ($('#createPhoto').hasClass('show')) {
@@ -411,8 +415,10 @@ function addEmojisOnPhoto() {
             fabric.Image.fromURL(reader.result, function (oImg) {
                 if ($('#createPhoto .preview-paid').hasClass('d-none')) {
                     oImg.price = $('.emojis-price').val();
+                    oImg.originalPrice = $('.emojis-price').val();
                 } else {
                     oImg.price = $('.preview-paid').val();
+                    oImg.originalPrice = $('.preview-paid').val();
                     // $('.sticky-switch').is(':checked') ? oImg.price = -1 : oImg.price = 0;
                 }
 
@@ -469,7 +475,6 @@ function sendPhoto() {
     });
     // edit Photo
     $('.savePhotoBtn').on('click', function (e) {
-
         photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
         let data = {};
         data.from = currentUserId;
@@ -516,9 +521,9 @@ function getEmojisInfo(obj) {
                 position: [item.left, item.top],
                 angle: item.angle,
                 price: item.price,
-                originalPrice: item.price,
+                originalPrice: item.originalPrice || item.price,
                 blur: item.blur,
-                originalBlur: item.blur,
+                originalBlur: item.originalBlur || item.blur,
                 // selectable: item.selectable
             }
         else
@@ -532,7 +537,7 @@ function getEmojisInfo(obj) {
                 position: [item.left, item.top],
                 angle: item.angle,
                 price: item.price,
-                originalPrice: item.price,
+                originalPrice: item.originalPrice || item.price,
                 // selectable: item.selectable,
                 fontSize: item.fontSize,
                 fontFamily: item.fontFamily,
@@ -857,6 +862,7 @@ function showPhotoContent(id) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
+                console.log(emojis);
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
                 $('#photo_item .modal-content').attr('photoId', res.data[0].id);
@@ -935,10 +941,12 @@ function showPhotoContent(id) {
                                     oImg.scaleY = item.size[1];
                                     oImg.angle = item.angle;
                                     oImg.price = item.price;
+                                    oImg.originalPrice = item.originalPrice;
                                     let filter = new fabric.Image.filters.Blur({
                                         blur: item.blur || 0
                                     });
                                     oImg.blur = item.blur;
+                                    oImg.originalBlur = item.originalBlur;
                                     oImg.filters = [];
                                     oImg.filters.push(filter);
                                     oImg.applyFilters();
@@ -989,6 +997,7 @@ function showPhotoContent(id) {
                                     top: item.position[1],
                                     angle: item.angle,
                                     price: item.price,
+                                    originalPrice: item.originalPrice,
                                     fontSize: item.fontSize,
                                     fontFamily: item.fontFamily,
                                     fontSize: item.fontSize,

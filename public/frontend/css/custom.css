@@ -256,6 +256,7 @@ ul.chatappend .msg-box .camera-icon {
 .photo-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
 }
 
@@ -278,8 +279,11 @@ ul.chatappend .msg-box .camera-icon {
 .emojis-tool .btn {
     padding: 5px 10px;
     border: 1px solid black;
-    display: block;
+    /* display: block; */
     width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .emojis-price {
@@ -315,6 +319,7 @@ ul.chatappend .msg-box .camera-icon {
 #create_emoji_button svg,
 #edit_emoji_button svg,
 .emojis-tool .btn img,
+.emojis-tool .icon-btn,
 .emoji-button {
     width: 30px;
     height: 30px;
@@ -691,7 +696,8 @@ h6.read {
     #create_emoji_button svg,
     #edit_emoji_button svg,
     .emojis-tool .btn img,
-    .emoji-button {
+    .emoji-button,
+    .emojis-tool .icon-btn {
         width: 20px;
         height: 20px;
     }
@@ -727,5 +733,19 @@ h6.read {
     }
     .text-tool .font_select {
         width: 90px;
+    }
+}
+
+@media (max-width: 425px) {
+    .canvas-container {
+        min-width: 280px !important;
+        min-height: 280px !important;
+    }
+    .emojis-tool {
+        padding-left: 5px;
+    }
+    .emojis-tool .btn {
+        padding: 5px 7px;
+        width: 60px;
     }
 }

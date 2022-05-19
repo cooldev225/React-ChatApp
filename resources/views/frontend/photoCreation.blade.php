@@ -67,6 +67,16 @@
             <div class="btn reset_btn">
                 <img class="" id="input_reset" src="/images/reset.png"></button>
             </div>
+            <div class="btn">
+                <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="save-photo">
+                    <i data-feather="save"></i>
+                </button>
+            </div>
+            <div class="btn">
+                <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="send-photo">
+                    <i data-feather="send"></i>
+                </button>
+            </div>
             {{-- <div class="emojis">
                 <img src="/images/emojis/1 (1).svg" draggable="true" />
                 <img src="/images/emojis/1 (2).svg" draggable="true" />
@@ -126,7 +136,7 @@
             </div> --}}
         </div>
     </div>
-    <div class="tool-box">
+    {{-- <div class="tool-box">
         <div class="save-send">
             <button class="submit icon-btn btn-primary" data-bs-dismiss="modal" id="save-photo">
                 <i data-feather="save"></i>
@@ -135,7 +145,7 @@
                 <i data-feather="send"></i>
             </button>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('media')
