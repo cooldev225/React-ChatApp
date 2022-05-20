@@ -116,7 +116,7 @@ $(document).ready(() => {
         displayTypingAction();
         deleteMessages();
         displayRate();
-
+        getUsersListBySearch();
     });
     $('#logoutBtn').on('click', () => {
         socket.emit('logout', {
@@ -384,12 +384,54 @@ function searchAndAddRecentChatList() {
                 }
             }, 100);
         }
+        if ($('#newChatModal').hasClass('show')) {
+            console.log('aaa');
+            let target = $('#newChatModal .chat-main');
+            target.empty();
+            usersList.reverse().forEach(item => addChatUserListItem(target, item));
+        }
     });
     $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
         // if ($('#direct-tab').hasClass('active')) {
         $('.new-chat-search').val('');
         getRecentChatUsers();
         // }
+    });
+}
+
+function getUsersListBySearch() {
+    let target = $('#newChatModal .chat-main');
+    let keyuptimer;
+
+    $('.search_user').bind('keyup', function () {
+        clearTimeout(keyuptimer);
+        keyuptimer = setTimeout(function () {
+            let value = $('.search_user').val();
+            if (value) {
+                target.empty();
+                usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => addChatUserListItem(target, item));
+            } else {
+                target.empty();
+                usersList.reverse().filter(item => item.id != currentUserId).forEach(item => addChatUserListItem(target, item));
+            }
+        }, 100);
+    });
+    $('#newChatModal').on('shown.bs.modal', function () {
+        target.empty();
+        usersList.reverse().filter(item => item.id != currentUserId).forEach(item => addChatUserListItem(target, item));
+        $('.chat-cont-setting').removeClass('open');
+    });
+    $('#newChatModal .chat-main').on('click', 'li', function () {
+        let userId = $(this).attr('key');
+        let recentUsersList = Array.from($('#direct .chat-main').children()).map(item => $(item).attr('key'));
+        if (recentUsersList.includes(userId)) {
+            document.querySelector(`#direct .chat-main li[key="${userId}"]`).click();
+        } else {
+            let item = usersList.find(item => item.id == userId)
+            addChatUserListItem($('#direct .chat-main'), item);
+            document.querySelector(`#direct .chat-main li[key="${userId}"]`).click();
+        }
+        $('#newChatModal').modal('hide');
     });
 }
 

@@ -127,7 +127,7 @@
                 <div class="chat custom-scroll">
                     <ul class="chat-cont-setting chat">
                         <li>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#msgcallModal"><span>new chat</span>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#newChatModal"><span>new chat</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
                             </a>
@@ -816,8 +816,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                                                            <span class="sr-only">Loading...</span>
-                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                    <span class="sr-only">Loading...</span>
+                                                                                                                                                                                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -3521,9 +3521,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                                                                <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                                                                                <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3707,6 +3707,44 @@
                         <button class="btn btn-success button-effect btn-sm save_list" id="saveCastListbtn" type="button"
                             style="float: right; margin-top: 20px;">Save</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade add-popup msg-chat-modal" id="newChatModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        Create New Message</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-msg-search">
+                        <div class="input-group">
+                            <input class="form-control search_user" type="text" placeholder="Search"
+                                aria-label="Recipient's username" aria-describedby="basic-addon20" />
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon20">@</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="chat-main custom-scroll">
+                        {{-- <li class="active">
+                            <div class="call-box">
+                                <div class="profile offline"><img class="bg-img"
+                                        src="/images/default-avatar.png" alt="Avatar" /></div>
+                                <div class="details">
+                                    <h5>Jony Lynetin</h5>
+                                    <h6> <i data-feather="arrow-down-left"></i>3:30 pm</h6>
+                                </div>
+                                <div class="call-status">
+                                    <div class="icon-btn btn-outline-success button-effect btn-sm"><i
+                                            data-feather="phone"></i></div>
+                                </div>
+                            </div>
+                        </li> --}}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -3952,9 +3990,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                                                                            <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                                                                                                </div> -->
             </div>
         </div>
     </div>
