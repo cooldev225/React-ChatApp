@@ -66,6 +66,11 @@
 #msgchatModal>div>div>div.modal-body>div>div>input {
     margin-bottom: 10px;
 }
+#newChatModal .chat-main li {
+    background-color: #eff1f2;
+    margin-bottom: 5px;
+    border-radius: 5px 0 0 5px;
+}
 
 body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
     position: absolute;

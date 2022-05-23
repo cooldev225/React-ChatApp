@@ -409,16 +409,54 @@ function getUsersListBySearch() {
             let value = $('.search_user').val();
             if (value) {
                 target.empty();
-                usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => addChatUserListItem(target, item));
+                
+                usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(data => {
+                    $(target).prepend(`<li data-to="blank" key="${data.id}">
+                        <div class="chat-box">
+                            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                                
+                            </div>
+                            <div class="details">
+                                <h5>${data.username}</h5>
+                                <h6>${data.description || 'Hello'}</h6>
+                            </div>
+                        
+                        </div>
+                    </li>`);
+                });
             } else {
                 target.empty();
-                usersList.reverse().filter(item => item.id != currentUserId).forEach(item => addChatUserListItem(target, item));
+                usersList.reverse().filter(item => item.id != currentUserId).forEach(data => {
+                    $(target).prepend(`<li data-to="blank" key="${data.id}">
+                        <div class="chat-box">
+                            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                                
+                            </div>
+                            <div class="details">
+                                <h5>${data.username}</h5>
+                                <h6>${data.description || 'Hello'}</h6>
+                            </div>
+                        </div>
+                    </li>`);
+                });
             }
         }, 100);
     });
     $('#newChatModal').on('shown.bs.modal', function () {
         target.empty();
-        usersList.reverse().filter(item => item.id != currentUserId).forEach(item => addChatUserListItem(target, item));
+        usersList.reverse().filter(item => item.id != currentUserId).forEach(data => {
+            $(target).prepend(`<li data-to="blank" key="${data.id}">
+                <div class="chat-box">
+                    <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                        
+                    </div>
+                    <div class="details">
+                        <h5>${data.username}</h5>
+                        <h6>${data.description || 'Hello'}</h6>
+                    </div>
+                </div>
+            </li>`);
+        });
         $('.chat-cont-setting').removeClass('open');
     });
     $('#newChatModal .chat-main').on('click', 'li', function () {
