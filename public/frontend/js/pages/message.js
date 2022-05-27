@@ -343,7 +343,7 @@ $(document).ready(function () {
             console.log(usersList);
             let target = $(`#${modalId} ul.chat-main`);
             target.empty();
-            usersList.reverse().forEach(data => {
+            usersList.filter(item => item.id != currentUserId).reverse().forEach(data => {
                 target.prepend(
                     `<li data-to="blank" key="${data.id}">
                         <div class="chat-box">
