@@ -35,21 +35,27 @@
     min-width: 100px;
 }
 
-.theme-tab .nav-tabs .nav-item .nav-link #msgchatModal ul.chat-main li {
+.modal ul.chat-main li {
     cursor: pointer;
+    background-color: #eff1f2;
+    margin-bottom: 5px;
+    border-radius: 0 5px 5px 0;
 }
 
-#msgchatModal ul.chat-main li:hover {
+/* #newChatModal .chat-main li {
+    background-color: #eff1f2;
+    margin-bottom: 5px;
+    border-radius: 5px 0 0 5px;
+} */
+
+.modal ul.chat-main li:hover {
     background-color: #eff7fe;
 }
 
-#msgchatModal ul.chat-main li.active {
+.modal ul.chat-main li.active {
     background-color: #eff7fe;
 }
 
-#msgchatModal ul.chat-main li {
-    cursor: pointer;
-}
 
 #msgchatModal ul.chat-main li .chat-box .date-status,
 #castUserListModal ul.chat-main li .chat-box .date-status {
@@ -57,19 +63,19 @@
     transform: translateY(-50%);
 }
 
-#msgchatModal ul.chat-main li .chat-box .date-status .form-check-input,
-#castUserListModal ul.chat-main li .chat-box .date-status .form-check-input {
+.modal ul.chat-main li .chat-box .date-status .form-check-input {
     font-size: 1.5em;
     border-radius: 50%;
+    pointer-events: none;
 }
 
 #msgchatModal>div>div>div.modal-body>div>div>input {
     margin-bottom: 10px;
 }
-#newChatModal .chat-main li {
-    background-color: #eff1f2;
-    margin-bottom: 5px;
-    border-radius: 5px 0 0 5px;
+
+#newGroupModal .group_title .input-group-text {
+    color: #1c9dea;
+    font-weight: 600;
 }
 
 body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {

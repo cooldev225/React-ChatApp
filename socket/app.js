@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
 
                 axios(config)
                     .then(function (response) {
-                        console.log(JSON.stringify(response.data));
+                        // console.log(JSON.stringify(response.data));
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -129,11 +129,6 @@ io.on('connection', (socket) => {
             });
         }
     });
-    // socket.on('send:castPhoto', data => {
-    //     // let recipients = data.currentContactIdArr.join(', ');
-    //     console.log(data);
-    //     // db.query(`INSERT INTO casts (sender, recipients, content) VALUES ("${currentUserId}", "${recipients}", "${data.message}")`, (error, item) => {});
-    // });
 
     socket.on('forward:message', data => {
         console.log(data);
@@ -167,7 +162,6 @@ io.on('connection', (socket) => {
             });
         }
     });
-
 
     socket.on('arrive:message', data => {
         db.query(`UPDATE messages SET state = 2 WHERE id=${data.messageId}`, (error, item) => {
@@ -203,7 +197,8 @@ io.on('connection', (socket) => {
                 }
             }
         })
-    })
+    });
+
     socket.on('send:request', data => {
         if (data.to) {
             let message = {
@@ -232,7 +227,7 @@ io.on('connection', (socket) => {
     });
     socket.on('send:state', data => {
         console.log(data);
-    })
+    });
 
     socket.on('send:photo', data => {
         data.to.forEach((currentContactId, index) => {
@@ -296,37 +291,6 @@ io.on('connection', (socket) => {
             //     }
             // }
         });
-        // db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-        //     data.id = item.insertId;
-        //     message.photoId = item.insertId
-        //     db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
-        //         message.messageId = messageItem.insertId;
-        //         if (index == 0) {
-
-        //             if (data.cast) {
-        //                 console.log("Recipients:", data.to);
-        //                 if (data.to.join(', ') && data.castTitle) {
-        //                     db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
-        //                         console.log("Cast Title: ", data.castTitle);
-        //                         // io.sockets.sockets.get(senderSocketId).emit('update:cast');
-        //                     });
-        //                 }
-
-        //             }
-        //             io.sockets.sockets.get(senderSocketId).emit('message', message);
-        //             io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
-        //         }
-        //         if (recipientSocketId) {
-        //             if (io.sockets.sockets.get(recipientSocketId)) {
-        //                 io.sockets.sockets.get(recipientSocketId).emit('message', message);
-        //                 io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
-        //             }
-        //         } else {
-        //             console.log('Send Photo SMS');
-        //             sendSMS(data.from, currentContactId, 'photo');
-        //         }
-        //     });
-        // });
 
     });
 
@@ -343,41 +307,6 @@ io.on('connection', (socket) => {
             }
         });
     });
-
-    // socket.on('send:castPhoto', data => {
-    //     data.to.forEach((currentContactId, index) => {
-    //         let senderSocketId = user_socketMap.get(currentUserId.toString());
-    //         let recipientSocketId = user_socketMap.get(currentContactId.toString());
-    //         let message = {
-    //             from: data.from,
-    //             to: currentContactId,
-    //             content: data.photo,
-    //             kind: 2
-    //         }
-    //         db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-    //             if (error) console.log(error);
-    //             data.id = item.insertId;
-    //             message.photoId = item.insertId
-    //             db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
-    //                 message.messageId = messageItem.insertId;
-    //                 if (index == 0) {
-    //                     io.sockets.sockets.get(senderSocketId).emit('message', message);
-    //                     io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
-    //                 }
-    //                 if (recipientSocketId) {
-    //                     if (io.sockets.sockets.get(recipientSocketId)) {
-    //                         io.sockets.sockets.get(recipientSocketId).emit('message', message);
-    //                         io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
-    //                     }
-    //                 } else {
-    //                     console.log('Send Photo SMS');
-    //                     sendSMS(data.from, currentContactId, 'photo');
-    //                 }
-    //             });
-    //         });
-    //     });
-
-    // });
 
     socket.on('give:rate', data => {
         if (data.kind != 1) {
@@ -492,6 +421,7 @@ io.on('connection', (socket) => {
     socket.on('send:notification', data => {
         sendSMS(data.from, data.to, data.type);
     });
+
     socket.on('stickyToFree', data => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             if (item[0].from == currentUserId) {
@@ -521,6 +451,7 @@ io.on('connection', (socket) => {
             }
         });
     });
+
     socket.on('test:SMS', data => {
         db.query(`SELECT * FROM countries where iso_code2 = '${data.isoCode2}'`, (error, country) => {
             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
@@ -535,7 +466,6 @@ io.on('connection', (socket) => {
                 var message = `Hey, your mobile number ${data.phoneNumber} has been updated at OJO.`;
             }
             if (data.type == 1) {
-                // var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
                 var smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
 
             } else {
@@ -558,13 +488,15 @@ io.on('connection', (socket) => {
 
         });
     });
+
     socket.on('logout', data => {
         let userSocketId = user_socketMap.get(currentUserId.toString());
         user_socketMap.delete(currentUserId);
         socket_userMap.delete(userSocketId);
         console.log('userId:', currentUserId, ' logouted');
         console.log(user_socketMap);
-    })
+    });
+
     socket.on('disconnect', function () {
         // Do stuff (probably some jQuery)
         user_socketMap.delete(currentUserId);
@@ -572,6 +504,10 @@ io.on('connection', (socket) => {
         console.log(currentUserId, " : ", socket.id, ' Disconnected')
         console.log(user_socketMap);
     });
+
+    socket.on('createGroup', data => {
+        console.log(data);
+    })
 });
 
 server.listen(port, () => {
@@ -610,6 +546,7 @@ function sendSMS(sender, recipient, type) {
                             } else {
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
+                            console.log('aaa');
                             axios.get(smsUrl).then(res => {
                                 console.log(res.status);
                             }).catch(error => {

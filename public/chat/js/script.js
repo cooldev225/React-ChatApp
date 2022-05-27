@@ -918,7 +918,10 @@
     });
 
     $(".close-panel").on("click", function () {
-        $('.dynemic-sidebar, .button-effect.active, sidebar-top .sidebar-top > li > a').removeClass("active");
+        // $('.dynemic-sidebar, .button-effect.active, sidebar-top .sidebar-top > li > a').removeClass("active");
+        // console.log($('#myTab .button-effect.active'));
+        // console.log($('#myTab1 .button-effect.active'));
+        $('.dynemic-sidebar, .button-effect.active:not(#myTab .button-effect):not(#myTab1 .button-effect), sidebar-top .sidebar-top > li > a').removeClass("active");
         $('.recent-default').addClass("active");
     });
 

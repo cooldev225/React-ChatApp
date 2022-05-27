@@ -333,14 +333,11 @@ function setCurrentChatContent(contactorId) {
 }
 
 function getUsersList(resolve) {
-    var form_data = new FormData();
-
     $.ajax({
         url: '/home/getUsersList',
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
-        data: form_data,
         cache: false,
         contentType: false,
         processData: false,
@@ -348,7 +345,9 @@ function getUsersList(resolve) {
         dataType: "json",
         success: function (res) {
             usersList = res.data;
-            if (resolve) resolve();
+            if (resolve) {
+                resolve(res.data);   
+            }
         },
         error: function (response) {
             // document.location.href = '/';
