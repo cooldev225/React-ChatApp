@@ -3,7 +3,7 @@ const app = express()
 const axios = require('axios');
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
-// const port = process.env.PORT || 4000
+    // const port = process.env.PORT || 4000
 const port = 4000;
 const io = require('socket.io')(server, {
     cors: {
@@ -65,39 +65,57 @@ io.on('connection', (socket) => {
 
             db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
                 message.messageId = item.insertId;
-                var axios = require('axios');
-                var data = JSON.stringify({
-                    "channel": "laravel_database_App.User." + currentContactId,
-                    "name": "App\\Events\\NewMessage",
-                    "data": {
-                        "message": {
-                            "content": message.content,
-                            "id": item.insertId,
-                            "recipient": currentContactId,
-                            "sender": currentUserId,
-                            "state": 1
-                        }
-                    },
-                    "socket_id": currentUserId
-                });
 
-                var config = {
-                    method: 'post',
-                    url: 'https://ws.ojochat.com/apps/mongs/events',
-                    headers: {
-                        'Authorization': 'Bearer b9312da459fb8b2a0039ae1040e9c04f',
-                        'Content-Type': 'application/json',
-                    },
-                    data: data
-                };
+                db.query(`SELECT * FROM users WHERE id=${currentUserId}`, function(err, result, fields) {
+                    // if any error while executing above query, throw error
+                    if (err) throw err;
+                    // if there is no error, you have the result
+                    // iterate for all the rows in result
+                    Object.keys(result).forEach(function(key) {
+                        var row = result[key];
+                        //console.log("From all DB", row.username)
 
-                axios(config)
-                    .then(function (response) {
-                        // console.log(JSON.stringify(response.data));
-                    })
-                    .catch(function (error) {
-                        console.log(error);
+                        var axios = require('axios');
+                        var data = JSON.stringify({
+                            "channel": "laravel_database_App.User." + currentContactId,
+                            "name": "App\\Events\\NewMessage",
+                            "data": {
+                                "message": {
+                                    "content": message.content,
+                                    "id": item.insertId,
+                                    "recipient": currentContactId,
+                                    "sender": currentUserId,
+                                    "state": 1
+                                },
+                                "recipient": currentContactId,
+                                "senderProfile": {
+                                    "id": row.id,
+                                    "username": row.username,
+                                    "avatar": row.avatar
+                                }
+                            },
+                            "socket_id": currentUserId
+                        });
+
+                        var config = {
+                            method: 'post',
+                            url: 'https://ws.ojochat.com/apps/mongs/events',
+                            headers: {
+                                'Authorization': 'Bearer b9312da459fb8b2a0039ae1040e9c04f',
+                                'Content-Type': 'application/json',
+                            },
+                            data: data
+                        };
+
+                        axios(config)
+                            .then(function(response) {
+                                console.log(JSON.stringify(response.data));
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
                     });
+                });
                 if (currentContactId) {
                     let recipientSocketId = user_socketMap.get(currentContactId.toString());
                     let senderSocketId = user_socketMap.get(currentUserId.toString());
