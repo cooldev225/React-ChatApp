@@ -105,7 +105,8 @@ $(document).ready(() => {
             let currentContactName = getCertainUserInfoById(currentContactId).username;
             alert(`This photo has been paid by ${currentContactName}. You can not delete this. `);
         }
-    })
+    });
+
     new Promise(resolve => {
         getUsersList(resolve);
     }).then(() => {
@@ -461,6 +462,7 @@ function getUsersListBySearch() {
     $('#newChatModal .chat-main').on('click', 'li', function () {
         let userId = $(this).attr('key');
         let recentUsersList = Array.from($('#direct .chat-main').children()).map(item => $(item).attr('key'));
+        document.querySelector(`#direct-tab`).click();
         if (recentUsersList.includes(userId)) {
             document.querySelector(`#direct .chat-main li[key="${userId}"]`).click();
         } else {

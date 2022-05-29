@@ -20,9 +20,24 @@ use App\Models\PhotoGallery;
 use App\Models\Rating;
 use App\Models\PaymentHistory;
 use App\Models\Cast;
+use App\Models\Group;
 
 class MessageController extends Controller
 {
+
+    public function getGroupData(Request $request) {
+        $userId = Auth::id();
+        $groupData = Group::get();
+        $result = array();
+        foreach($groupData as $groupItem) {
+            $userArr = explode(",", $groupItem['users']);
+            if ($groupItem['owner'] == $userId ||in_array($userId, $userArr)) {
+                array_push($result, $groupItem);
+            }
+        }
+        return count($result) ? array('state' => 'true', 'data' => $result) : array('message' =>'no data');
+    }
+
     public function getCastData(Request $request) {
         $userId = Auth::id();
         $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderByRaw('max(`created_at`) desc')->get();

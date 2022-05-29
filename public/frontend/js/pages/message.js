@@ -21,6 +21,72 @@ $(document).ready(function () {
         getCastData();
     });
 
+    $('#group-tab').on('click', function() {
+        $.ajax({
+            url: '/home/getGroupData',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 'true') {
+                    let target = '#group > ul.group-main';
+                    $(target).empty();
+                    console.log(res.data);
+                    res.data.forEach(data => {
+                        addNewGroupItem(target, data);
+                    });
+                    convertListItems();
+                }
+            },
+            error: function (response) { }
+        });
+    });
+
+    socket.on('createGroup', data => {
+        let target = '#group > ul.group-main';
+        // $('#group .group-main li').removeClass('active');
+        addNewGroupItem(target, data);
+        convertListItems();
+
+    });
+
+    function addNewGroupItem(target, data) {
+        let id = data.id;
+        let title = data.title;
+        let groupUsers = data.users.split(',');
+        let groupUsersAvatar = groupUsers.filter((item, index) => index < 3).map(item => {
+            let avatar = getCertainUserInfoById(item).avatar;
+            return avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png';
+        });
+        let avatarContents = groupUsersAvatar.reduce((content, item) => content + `<li><a class="group-tp" href="#" data-tippy-content="John Doe"> <img src="${item}" alt="group-icon-img"/></a></li>\n`, '');
+
+        // let displayNames = groupUsers.length > 24 ? groupUsers.slice(0, 24) + '...' : groupUsers;
+        let countRecipients = groupUsers.length;
+        $(target).prepend(
+            `<li class="" data-to="group_chat" groupId=${id}>
+                <div class="group-box">
+                    <div class="profile"><img class="bg-img" src="/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
+                    <div class="details">
+                        <h5>${title}</h5>
+                        <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
+                    </div>
+                    <div class="date-status">
+                        <ul class="grop-icon">
+                            ${avatarContents}
+                            ${countRecipients > 3 ? "<li>+"+(countRecipients-3)+"</li>" : ""}
+                        </ul>
+                    </div>
+                </div>
+            </li>`
+        );
+    }
+
+
     socket.on('add:newCast', data => {
         let target = '#cast > ul.chat-main';
         let title = data.castTitle;
@@ -340,7 +406,7 @@ $(document).ready(function () {
         new Promise((resolve) => {
             getUsersList(resolve);
         }).then((usersList) => {
-            console.log(usersList);
+            console.log(usersList.filter(item => item.id != currentUserId));
             let target = $(`#${modalId} ul.chat-main`);
             target.empty();
             usersList.filter(item => item.id != currentUserId).reverse().forEach(data => {
@@ -369,17 +435,19 @@ $(document).ready(function () {
     });
 
     $('#createGroupBtn').on('click', function (e) {
-        let groupTitle = $('#newGroupModal .group_title input').val();
-        if (!groupTitle) {
+        let title = $('#newGroupModal .group_title input').val();
+        if (!title) {
             $('#newGroupModal .group_title input').addClass('is-invalid');
             setTimeout(() => {
                 $('#newGroupModal .group_title input').removeClass('is-invalid');
             }, 2000);
             return;
         }
-        let groupUsers = Array.from($('#newGroupModal .chat-main li.active')).map(item => $(item).attr('key'));
-        socket.emit('createGroup', { groupTitle, groupUsers });
-
+        let users = Array.from($('#newGroupModal .chat-main li.active')).map(item => $(item).attr('key')).join(',');
+        socket.emit('createGroup', { title, users });
+        $('#newGroupModal').modal('hide');
+        $(`.chat-cont-setting`).removeClass('open');
+        document.querySelector(`#group-tab`).click();
     });
 
     $('#msgchatModal').on('hidden.bs.modal', function (e) {
@@ -671,6 +739,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $('#forwardUsersListModal').on('hidden.bs.modal', function (e) {
         $('#forwardUsersListModal').removeAttr('forwardId');
     });
@@ -776,5 +845,25 @@ function getCastData(resolve) {
             }
         },
         error: function (response) { }
+    });
+}
+
+function convertListItems() {
+    $(".bg-top").parent().addClass('b-top');
+    $(".bg-bottom").parent().addClass('b-bottom');
+    $(".bg-center").parent().addClass('b-center');
+    $(".bg_size_content").parent().addClass('b_size_content');
+    $(".bg-img").parent().addClass('bg-size');
+    $('.bg-img').each(function () {
+        var el = $(this),
+            src = el.attr('src'),
+            parent = el.parent();
+        parent.css({
+            'background-image': 'url(' + src + ')',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'display': 'block'
+        });
+        el.hide();
     });
 }

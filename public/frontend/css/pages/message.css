@@ -42,6 +42,10 @@
     border-radius: 0 5px 5px 0;
 }
 
+#group .group-main li {
+    cursor: pointer;
+}
+
 /* #newChatModal .chat-main li {
     background-color: #eff1f2;
     margin-bottom: 5px;
