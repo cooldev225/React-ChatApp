@@ -525,7 +525,7 @@ io.on('connection', (socket) => {
 
     socket.on('createGroup', data => {
         console.log(data);
-        db.query(`INSERT INTO groups (title, users, type, owner) VALUES ("${data.title}", "${data.users}", 2, ${currentUserId})`, (error, item) => {
+        db.query(`INSERT INTO \`groups\` (title, users, type, owner) VALUES ("${data.title}", "${data.users}", 2, ${currentUserId})`, (error, item) => {
             console.log(item);
             data.id = item.insertId
             let senderSocketId = user_socketMap.get(currentUserId.toString());
