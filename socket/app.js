@@ -63,9 +63,9 @@ io.on('connection', (socket) => {
                 reply_kind: data.replyKind || 0,
             }
 
-            db.query(`INSERT INTO messages (sender, recipient, group_id, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", 0, "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
+            db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
                 message.messageId = item.insertId;
-                console.log(error)
+
                 db.query(`SELECT * FROM users WHERE id=${currentUserId}`, function(err, result, fields) {
                     // if any error while executing above query, throw error
                     if (err) throw err;
