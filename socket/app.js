@@ -548,9 +548,8 @@ io.on('connection', (socket) => {
             // if (senderSocketId) {
             //     io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
             // }
-            let recipientSocketIds = data.currentGroupUsers ? data.currentGroupUsers.split(',').map(userId => user_socketMap.get(userId.toString())) : [];
-            console.log("group Users: ", recipientSocketIds);
-            recipientSocketIds.filter(socketId => socketId).forEach(socketId => {
+            let recipientSocketIds = data.currentGroupUsers ? data.currentGroupUsers.split(',').map(userId => user_socketMap.get(userId.toString())).filter(item => item) : [];
+            recipientSocketIds .forEach(socketId => {
                 io.sockets.sockets.get(socketId).emit('send:groupMessage', data);
             });
         });

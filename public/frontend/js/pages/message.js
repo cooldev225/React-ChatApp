@@ -602,7 +602,7 @@ $(document).ready(function () {
     });
 
     $('#group .group-main').on('click', 'li', function () {
-        $('#group .group-main').removeClass('active');
+        $('#group .group-main li').removeClass('active');
         $(this).addClass('active');
         console.log(currentGroupId);
         if (currentGroupId != $(this).attr('groupId')) {
