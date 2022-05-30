@@ -635,6 +635,7 @@ function newMessage() {
         currentContactIdArr = [currentContactId];
     }
     var csrf = $('meta[name="csrf-token"]').attr('content');
+    console.log(currentContactIdArr);
     if (currentContactIdArr.length) {
         socket.emit('message', {
             currentContactIdArr,
