@@ -52,6 +52,7 @@ io.on('connection', (socket) => {
     console.log(user_socketMap);
 
     socket.on('message', data => {
+        console.log('get Message: ', data);
         data.currentContactIdArr.forEach((currentContactId, index) => {
             let message = {
                 from: currentUserId,
