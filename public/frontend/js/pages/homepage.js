@@ -7,6 +7,7 @@ var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
 // var socket;
 let currentGroupId;
+let currentGroupUsers;
 
 $(document).ready(() => {
     // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
@@ -609,7 +610,7 @@ function newMessage() {
     if ($('#group_chat').hasClass('active')) {
         // currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
         
-        socket.emit('send:groupMessage', { currentGroupId, content: message, senderName});
+        socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName});
         return;
 
     } else if ($('#group_blank').hasClass('active')) {

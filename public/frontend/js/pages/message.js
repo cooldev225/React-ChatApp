@@ -52,17 +52,36 @@ $(document).ready(function () {
         // $('#group .group-main li').removeClass('active');
         addNewGroupItem(target, data);
         convertListItems();
-
     });
 
     socket.on('send:groupMessage', data => {
         console.log(data);
         let target = '#group_chat .contact-chat ul.chatappend';
-        addGroupChatItem(target, data);
+        if ($('#group_chat').hasClass('active')) {
+            if (currentGroupId == data.currentGroupId) {
+                addGroupChatItem(target, data);
+            } else if(!$(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).length) {
+
+            } else {
+                $(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+            }
+        }
+        // if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
+        //     let senderInfo = usersList.find(item => item.id == Number(message.from));
+        //     let userListTarget = $('.recent-default .recent-chat-list');
+        //     addChatUserListItem(userListTarget, senderInfo);
+        // } else {
+        //     $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+        //     $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
+        //     $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
+        //     let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
+        //     $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
+        // }
     });
 
 
     function addNewGroupItem(target, data) {
+        console.log(data);
         let id = data.id;
         let title = data.title;
         let groupUsers = data.users.split(',');
@@ -75,7 +94,7 @@ $(document).ready(function () {
         // let displayNames = groupUsers.length > 24 ? groupUsers.slice(0, 24) + '...' : groupUsers;
         let countRecipients = groupUsers.length;
         $(target).prepend(
-            `<li class="" data-to="group_chat" groupId=${id}>
+            `<li class="" data-to="group_chat" groupId=${id} groupUsers=${data.users}>
                 <div class="group-box">
                     <div class="profile"><img class="bg-img" src="/chat/images/avtar/teq.jpg" alt="Avatar"/></div>
                     <div class="details">
@@ -575,6 +594,7 @@ $(document).ready(function () {
             return;
         }
         let users = Array.from($('#newGroupModal .chat-main li.active')).map(item => $(item).attr('key')).join(',');
+        users += `,${currentUserId}`;
         socket.emit('createGroup', { title, users });
         $('#newGroupModal').modal('hide');
         $(`.chat-cont-setting`).removeClass('open');
@@ -582,9 +602,12 @@ $(document).ready(function () {
     });
 
     $('#group .group-main').on('click', 'li', function () {
+        $('#group .group-main').removeClass('active');
+        $(this).addClass('active');
         console.log(currentGroupId);
         if (currentGroupId != $(this).attr('groupId')) {
             currentGroupId = $(this).attr('groupId');
+            currentGroupUsers = $(this).attr('groupUsers');
         }
         showCurrentChatHistory(currentGroupId);
         document.querySelector('.mobile-back').click();

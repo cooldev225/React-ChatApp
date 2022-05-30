@@ -524,7 +524,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('createGroup', data => {
-        console.log(data);
         db.query(`INSERT INTO \`groups\` (title, users, type, owner) VALUES ("${data.title}", "${data.users}", 2, ${currentUserId})`, (error, item) => {
             console.log(item);
             data.id = item.insertId
@@ -544,11 +543,16 @@ io.on('connection', (socket) => {
             data.id = item.insertId
             data.kind = 0;
             data.sender = currentUserId;
-            let senderSocketId = user_socketMap.get(currentUserId.toString());
-            // let recipientSocketId = user_socketMap.get(data.to.toString());
-            if (senderSocketId) {
-                io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
-            }
+            // let senderSocketId = user_socketMap.get(currentUserId.toString());
+            // // let recipientSocketId = user_socketMap.get(data.to.toString());
+            // if (senderSocketId) {
+            //     io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
+            // }
+            let recipientSocketIds = data.currentGroupUsers ? data.currentGroupUsers.split(',').map(userId => user_socketMap.get(userId.toString())) : [];
+            console.log("group Users: ", recipientSocketIds);
+            recipientSocketIds.filter(socketId => socketId).forEach(socketId => {
+                io.sockets.sockets.get(socketId).emit('send:groupMessage', data);
+            });
         });
     });
 });

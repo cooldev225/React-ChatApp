@@ -31,7 +31,7 @@ class MessageController extends Controller
         $result = array();
         foreach($groupData as $groupItem) {
             $userArr = explode(",", $groupItem['users']);
-            if ($groupItem['owner'] == $userId ||in_array($userId, $userArr)) {
+            if ($groupItem['owner'] == $userId || in_array($userId, $userArr)) {
                 array_push($result, $groupItem);
             }
         }
