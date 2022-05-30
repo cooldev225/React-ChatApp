@@ -115,7 +115,7 @@ ul.request-list li {
     border: 1px solid #83bb83;
     box-shadow: 0 0 3px rgb(0 0 0 / 80%);
     border-radius: 5px;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
 }
 
 ul.request-list li.sent {
@@ -123,7 +123,7 @@ ul.request-list li.sent {
 }
 
 ul.request-list li .chat-box .date-status {
-    top: -4px;
+    /* top: -4px; */
 }
 
 ul.request-list li .chat-box .date-status i {
