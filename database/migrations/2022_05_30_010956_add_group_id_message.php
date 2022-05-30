@@ -14,7 +14,7 @@ class AddGroupIdMessage extends Migration
     public function up()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->integer('group_id')->after('recipient');
+            $table->integer('group_id')->nullable()->after('recipient');
         });
     }
 
