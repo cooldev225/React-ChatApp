@@ -533,14 +533,24 @@ io.on('connection', (socket) => {
             if (senderSocketId) {
                 io.sockets.sockets.get(senderSocketId).emit('createGroup', data);
             }
-            // if (recipientSocketId) {
-            //     if (io.sockets.sockets.get(recipientSocketId)) {
-            //         io.sockets.sockets.get(recipientSocketId).emit('message', message);
-            //         io.sockets.sockets.get(recipientSocketId).emit('receive:request', message);
-            //     }
-            // }
         });
-    })
+    });
+
+    socket.on('send:groupMessage', data => {
+        console.log(data);
+        data.senderId = currentUserId;
+        db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${currentUserId}", "${data.currentGroupId}", "${data.content}")`, (error, item) => {
+            console.log(item);
+            data.id = item.insertId
+            data.kind = 0;
+            data.sender = currentUserId;
+            let senderSocketId = user_socketMap.get(currentUserId.toString());
+            // let recipientSocketId = user_socketMap.get(data.to.toString());
+            if (senderSocketId) {
+                io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
+            }
+        });
+    });
 });
 
 server.listen(port, () => {

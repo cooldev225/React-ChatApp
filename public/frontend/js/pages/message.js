@@ -21,7 +21,7 @@ $(document).ready(function () {
         getCastData();
     });
 
-    $('#group-tab').on('click', function() {
+    $('#group-tab').on('click', function () {
         $.ajax({
             url: '/home/getGroupData',
             headers: {
@@ -55,6 +55,13 @@ $(document).ready(function () {
 
     });
 
+    socket.on('send:groupMessage', data => {
+        console.log(data);
+        let target = '#group_chat .contact-chat ul.chatappend';
+        addGroupChatItem(target, data);
+    });
+
+
     function addNewGroupItem(target, data) {
         let id = data.id;
         let title = data.title;
@@ -78,7 +85,7 @@ $(document).ready(function () {
                     <div class="date-status">
                         <ul class="grop-icon">
                             ${avatarContents}
-                            ${countRecipients > 3 ? "<li>+"+(countRecipients-3)+"</li>" : ""}
+                            ${countRecipients > 3 ? "<li>+" + (countRecipients - 3) + "</li>" : ""}
                         </ul>
                     </div>
                 </div>
@@ -86,6 +93,130 @@ $(document).ready(function () {
         );
     }
 
+    function addGroupChatItem(target, data, loadFlag) {
+        console.log("-----------");
+        console.log(data);
+        console.log("-----------");
+        if (data.reply_id) {
+            if (data.reply_kind == 0) {
+                var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
+            } else if (data.reply_kind == 2) {
+                let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
+                var replyContent = `<img src="${imageSrc}" width="50">`;
+            }
+        }
+        let senderInfo = getCertainUserInfoById(data.sender);
+        let type = senderInfo.id == currentUserId ? "replies" : "sent";
+        let time = data.created_at ? new Date(data.created_at) : new Date();
+        let item = `<li class="${type} msg-item" key="${data.id}" kind="${data.kind || 0}">
+            <div class="media">
+                <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
+                </div>
+                <div class="media-body">
+                    <div class="contact-name">
+                        <h5>${senderInfo.username}</h5>
+                        <h6 class="${State[data.state || 0]}">${displayTimeString(time)}</h6>
+                        <div class="photoRating">
+                            <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                        </div>
+                        <ul class="msg-box">
+                            <li class="msg-setting-main">
+                                ${data.kind == 0 ?
+                `${data.reply_id ? '<div class="replyMessage">\
+                    <span class="replyIcon"><i class="fa fa-reply"></i></span>\
+                    <span class="replyContent">' + replyContent + '</span>\
+                    <hr style="color: black">\
+                    <span class="content">' + data.content + '</span>\
+                </div>' : '<h5 class="content">' + data.content + '</h5>'}`
+                : data.kind == 1 ?
+                    `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                    : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                                <div class="msg-dropdown-main">
+                                    <div class="msg-open-btn"><span>Open</span></div>
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                        <ul>
+                                            <li class="replyBtn"><a href="#"><i class="fa fa-reply"></i>reply</a></li>
+                                            <li class="forwardBtn"><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                            ${data.kind == 2 ? '<li class="replyEditBtn"><a href="#"><i class="fa fa-edit"></i> edit</a></li>' : ''}
+                                            <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                            <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                        </ul>
+                                    </div>
+                            </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>`;
+        if (loadFlag) {
+            $(target).prepend(item);
+        } else {
+            $(target).append(item);
+        }
+        // $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
+
+        if (data.rate) {
+            getContentRate(`li.msg-item[key="${data.id}"]`, data.rate)
+        }
+
+    }
+
+    function showCurrentChatHistory(currentGroupId) {
+        $('.spining').css('display', 'flex');
+
+        var form_data = new FormData();
+        form_data.append('currentGroupId', currentGroupId);
+        $.ajax({
+            url: '/home/getCurrentGroupChatContent',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 'true') {
+                    getUsersList();
+                    let { messageData } = res;
+                    //Chat data display
+                    $('#group_chat .contact-chat ul.chatappend').empty();
+
+                    new Promise(resolve => {
+                        if (messageData) {
+                            let target = '#group_chat .contact-chat ul.chatappend';
+                            messageData.reverse().forEach(item => {
+                                if (item.state != 3 && currentUserId != item.sender) {
+                                    let message = {
+                                        from: item.sender,
+                                        to: item.recipient,
+                                        content: item.content,
+                                        messageId: item.id,
+                                        state: item.state,
+                                    }
+                                    socket.emit('read:message', message);
+                                }
+                                addGroupChatItem(target, item);
+                            });
+                        }
+                        resolve();
+                    }).then(() => {
+                        $(".messages").animate({
+                            scrollTop: $('#chating .contact-chat').height()
+                        }, 'fast');
+                        setTimeout(() => {
+                            $('.spining').css('display', 'none');
+                        }, 1000);
+                    });
+                }
+            },
+            error: function (response) { }
+        });
+    }
 
     socket.on('add:newCast', data => {
         let target = '#cast > ul.chat-main';
@@ -212,7 +343,7 @@ $(document).ready(function () {
         if ($('.messages.active').scrollTop() == 0) {
             // $('.chatappend').prepend(loader);
 
-            let firstMessageId = $('.chatappend .msg-item:first-child').attr('key');
+            let firstMessageId = $('.messages.active .chatappend .msg-item:first-child').attr('key');
             if (firstMessageId) {
                 let form_data = new FormData();
                 form_data.append('firstMessageId', firstMessageId);
@@ -450,9 +581,20 @@ $(document).ready(function () {
         document.querySelector(`#group-tab`).click();
     });
 
+    $('#group .group-main').on('click', 'li', function () {
+        console.log(currentGroupId);
+        if (currentGroupId != $(this).attr('groupId')) {
+            currentGroupId = $(this).attr('groupId');
+        }
+        showCurrentChatHistory(currentGroupId);
+        document.querySelector('.mobile-back').click();
+        console.log(currentGroupId);
+    });
+
     $('#msgchatModal').on('hidden.bs.modal', function (e) {
         let castTitle = $('#msgchatModal .cast_title input').val();
     });
+
     $('#msgchatModal .cast_title input').on('keydown', function () {
         $('#msgchatModal .cast_title input').removeClass('is-invalid');
         console.log('aaa');

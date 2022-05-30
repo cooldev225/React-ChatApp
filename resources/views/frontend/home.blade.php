@@ -1073,88 +1073,13 @@
                     <div class="contact-chat">
                         <ul class="chatappend">
                             <li class="groupuser">
-                                <h4>Jewellery project</h4>
-                                <div class="gr-chat-friend-toggle"><a class="icon-btn btn-sm pull-right add-grbtn outside"
-                                        href="#" data-tippy-content="Add User"><i data-feather="plus"></i></a>
-                                    <div class="gr-chat-frind-content">
-                                        <ul class="chat-main">
-                                            <li>
-                                                <div class="chat-box">
-                                                    <div class="media">
-                                                        <div class="profile offline"><img class="bg-img"
-                                                                src="/chat/images/contact/1.jpg" alt="Avatar" /></div>
-                                                        <div class="details">
-                                                            <h5>John Doe</h5>
-                                                            <h6>Alabma , USA</h6>
-                                                        </div>
-                                                        <div class="media-body"><a
-                                                                class="icon-btn btn-outline-primary btn-sm" href="#"
-                                                                data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="chat-box">
-                                                    <div class="media">
-                                                        <div class="profile"><img class="bg-img"
-                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
-                                                        <div class="details">
-                                                            <h5>John Doe</h5>
-                                                            <h6>Alabma , USA</h6>
-                                                        </div>
-                                                        <div class="media-body"><a
-                                                                class="icon-btn btn-outline-primary btn-sm" href="#"
-                                                                data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="chat-box">
-                                                    <div class="media">
-                                                        <div class="profile"><img class="bg-img"
-                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
-                                                        <div class="details">
-                                                            <h5>John Doe</h5>
-                                                            <h6>Alabma , USA</h6>
-                                                        </div>
-                                                        <div class="media-body"><a
-                                                                class="icon-btn btn-outline-primary btn-sm" href="#"
-                                                                data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="chat-box">
-                                                    <div class="media">
-                                                        <div class="profile unreachable"><img class="bg-img"
-                                                                src="/images/default-avatar.png" alt="Avatar" /></div>
-                                                        <div class="details">
-                                                            <h5>John Doe</h5>
-                                                            <h6>Alabma , USA</h6>
-                                                        </div>
-                                                        <div class="media-body"><a
-                                                                class="icon-btn btn-outline-primary btn-sm" href="#"
-                                                                data-tippy-content="Add User"><i
-                                                                    class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <h4>Group Users</h4>
                                 <div class="gr-profile dot-btn dot-success grow"><img class="bg-img"
                                         src="/chat/images/avtar/3.jpg" alt="Avatar" /></div>
-                                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img"
+                                <div class="gr-profile dot-btn dot-success"><img class="bg-img"
                                         src="/chat/images/avtar/5.jpg" alt="Avatar" /></div>
                             </li>
-
+                            
                         </ul>
                     </div>
                 </div>

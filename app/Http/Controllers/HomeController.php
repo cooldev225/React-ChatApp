@@ -35,18 +35,21 @@ class HomeController extends Controller
     public function getRecentChatUsers(Request $request) {
         $id = Auth::id();
 
-        $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
+        // $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
+        $myData = Message::whereRaw("(sender =".$id." OR recipient=".$id.") AND recipient!=0" )->orderBy('created_at', 'desc')->get();
         if (count($myData)) {
             $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
             $recentChatUsers = array();
             foreach($myData as $message) {
                 // if (count($recentChatUsers) < 20) {
-                    if ($message['sender'] == $id) {
-                        if (!in_array($message['recipient'], $recentChatUsers))
-                            array_push($recentChatUsers, $message['recipient']);
-                    } else {
-                        if (!in_array($message['sender'], $recentChatUsers))
-                            array_push($recentChatUsers, $message['sender']);
+                    if ($message['recipient'] != 0) {
+                        if ($message['sender'] == $id) {
+                            if (!in_array($message['recipient'], $recentChatUsers))
+                                array_push($recentChatUsers, $message['recipient']);
+                        } else {
+                            if (!in_array($message['sender'], $recentChatUsers))
+                                array_push($recentChatUsers, $message['sender']);
+                        }
                     }
                 // } else {
                 //     break;
@@ -64,6 +67,28 @@ class HomeController extends Controller
         $contactorId = $request->input('currentContactorId');
         $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId)
             ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id)->orderBy('created_at', 'desc')->limit(20)->get();
+        $messages = $messageData->map(function($item) {
+            if ($item['kind'] == 0) 
+                return $item;
+            if ($item['kind'] == 1) {
+                $temp = PhotoRequest::where('id', $item['content'])->get();
+                $item['requestId'] = $temp[0]['id'];
+                $item['content'] = $temp[0]['price'];
+                return $item;
+            }
+            $temp = PhotoGallery::where('id', $item['content'])->get();
+            $item['photoId'] = $temp[0]['id'];
+            $item['content'] = $temp[0]['photo'];
+            return $item;
+        });
+        
+        return array('state'=>'true','messageData'=>$messages);
+    }
+
+    public function getCurrentGroupChatContent(Request $request) {
+        $id = Auth::id();
+        $groupId = $request->input('currentGroupId');
+        $messageData = Message::where("group_id", $groupId)->orderBy('created_at', 'desc')->limit(20)->get();
         $messages = $messageData->map(function($item) {
             if ($item['kind'] == 0) 
                 return $item;
