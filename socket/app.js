@@ -320,7 +320,7 @@ io.on('connection', (socket) => {
                         }
                     } else {
                         console.log('Send Photo SMS');
-                        sendSMS(data.from, userId, 'photo');
+                        // sendSMS(data.from, userId, 'photo');
                     }
                 })
             });
