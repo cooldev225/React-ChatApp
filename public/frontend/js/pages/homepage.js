@@ -48,6 +48,8 @@ $(document).ready(() => {
             // $('#group_blank .chatappend').css('display', 'flex');
             let target = '#cast_chat > div.contact-chat > ul.chatappend';
             addChatItem(target, message.from, message);
+        } else if($('#group_chat').hasClass('active')) {
+            
         } else {
             if (message.from == currentUserId || message.from == currentContactId) {
                 let target = '#chating .contact-chat ul.chatappend';
