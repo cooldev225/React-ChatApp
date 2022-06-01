@@ -55,7 +55,6 @@ $(document).ready(function () {
     });
 
     socket.on('send:groupMessage', data => {
-        console.log(data);
         let target = '#group_chat .contact-chat ul.chatappend';
         if ($('#group_chat').hasClass('active')) {
             if (currentGroupId == data.currentGroupId) {
@@ -127,7 +126,7 @@ $(document).ready(function () {
         let senderInfo = getCertainUserInfoById(data.sender);
         let type = senderInfo.id == currentUserId ? "replies" : "sent";
         let time = data.created_at ? new Date(data.created_at) : new Date();
-        let item = `<li class="${type} msg-item" key="${data.id}" kind="${data.kind || 0}">
+        let item = `<li class="${type} msg-item" key="${data.id || data.messageId}" kind="${data.kind || 0}">
             <div class="media">
                 <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
                 </div>

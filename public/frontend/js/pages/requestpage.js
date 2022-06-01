@@ -513,7 +513,7 @@ function sendPhoto() {
 
 function showPhoto() {
 
-    $('#chating .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
+    $('#chating .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend, #group_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
         $('#photo_item .modal-content .btn-group.edit_btn_group').css('display', 'none');
         $('#photo_item .modal-content .btn-group.open_btn_group').css('display', 'flex');
         if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {
