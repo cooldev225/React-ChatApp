@@ -112,9 +112,6 @@ $(document).ready(function () {
     }
 
     function addGroupChatItem(target, data, loadFlag) {
-        console.log("-----------");
-        console.log(data);
-        console.log("-----------");
         if (data.reply_id) {
             if (data.reply_kind == 0) {
                 var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
@@ -609,7 +606,13 @@ $(document).ready(function () {
             currentGroupUsers = $(this).attr('groupUsers');
         }
         showCurrentChatHistory(currentGroupId);
-        document.querySelector('.mobile-back').click();
+        var contentwidth = jQuery(window).width();
+        if (contentwidth <= '768') {
+            $('.chitchat-container').toggleClass("mobile-menu");
+        }
+        if (contentwidth <= '575') {
+            $('.main-nav').removeClass("on");
+        }
         console.log(currentGroupId);
     });
 

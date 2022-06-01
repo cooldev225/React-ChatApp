@@ -292,8 +292,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('send:groupBlink', data => {
-        // let senderSocketId = user_socketMap.get(currentUserId.toString());
-        // let recipientSocketId = user_socketMap.get(currentContactId.toString());
         let message = {
             sender: data.from,
             // to: currentContactId,
@@ -312,9 +310,7 @@ io.on('connection', (socket) => {
                     message.to = userId;
                     if (recipientSocketId) {
                         if (io.sockets.sockets.get(recipientSocketId)) {
-                            // io.sockets.sockets.get(recipientSocketId).emit('message', message);
                             console.log('send Blink');
-
                             io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
                             io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
                         }
