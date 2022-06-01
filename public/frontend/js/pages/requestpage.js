@@ -478,7 +478,18 @@ function sendPhoto() {
             // socket.emit('send:castPhoto', data);
             console.log(data.castTitle);
             data.cast = true;
-        } else {
+        } else if($('#group_chat').hasClass('active')) {
+            console.log(currentGroupId);
+            console.log(currentGroupUsers);
+            if (currentGroupId) {
+                data.currentGroupId = currentGroupId;
+                data.currentGroupUsers = currentGroupUsers;
+                socket.emit('send:groupBlink', data);
+            }
+
+            return;
+        } 
+        else {
             data.to = [currentContactId];
         }
         if (data.to) {

@@ -255,7 +255,7 @@ io.on('connection', (socket) => {
                 from: data.from,
                 to: currentContactId,
                 content: data.photo,
-                kind: 2
+                kind: 2,
             }
             db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
                 data.id = item.insertId;
@@ -289,7 +289,42 @@ io.on('connection', (socket) => {
                 });
             });
         });
+    });
 
+    socket.on('send:groupBlink', data => {
+        // let senderSocketId = user_socketMap.get(currentUserId.toString());
+        // let recipientSocketId = user_socketMap.get(currentContactId.toString());
+        let message = {
+            sender: data.from,
+            // to: currentContactId,
+            currentGroupId: data.currentGroupId,
+            content: data.photo,
+            kind: 2
+        }
+        db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", 0, ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+            data.id = item.insertId;
+            message.photoId = item.insertId
+            db.query(`INSERT INTO messages (sender, recipient, group_id, content, kind) VALUES ("${data.from}", 0, "${data.currentGroupId}", "${data.id}", 2)`, (error, messageItem) => {
+                message.messageId = messageItem.insertId;
+                console.log(data.currentGroupUsers);
+                data.currentGroupUsers.split(',').forEach(userId => {
+                    let recipientSocketId = user_socketMap.get(userId.toString());
+                    message.to = userId;
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId)) {
+                            // io.sockets.sockets.get(recipientSocketId).emit('message', message);
+                            console.log('send Blink');
+
+                            io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
+                            io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+                        }
+                    } else {
+                        console.log('Send Photo SMS');
+                        sendSMS(data.from, userId, 'photo');
+                    }
+                })
+            });
+        });
     });
 
     socket.on('edit:photo', data => {
@@ -592,7 +627,6 @@ function sendSMS(sender, recipient, type) {
                             } else {
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
-                            console.log('aaa');
                             axios.get(smsUrl).then(res => {
                                 console.log(res.status);
                             }).catch(error => {
