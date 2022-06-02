@@ -27,8 +27,6 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
-const { type } = require('express/lib/response');
-const { data } = require('jquery');
 
 app.use(cors({
     origin: '*'

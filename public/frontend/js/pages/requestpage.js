@@ -105,12 +105,12 @@ $(document).ready(function () {
         $(e.currentTarget).find('.read-status').removeClass('fa-eye-slash');
         $(e.currentTarget).find('.read-status').addClass('fa-eye');
         // currentContactId = to;
-        if (currentUserId == from && currentContactId != to) {
-            setCurrentChatContent(to);
-        } else if (currentUserId == to && currentContactId != from) {
-            setCurrentChatContent(from);
-        }
-        currentUserId == from ? setCurrentChatContent(to) : setCurrentChatContent(from);
+        // if (currentUserId == from && currentContactId != to) {
+        //     setCurrentChatContent(to);
+        // } else if (currentUserId == to && currentContactId != from) {
+        //     setCurrentChatContent(from);
+        // }
+        // currentUserId == from ? setCurrentChatContent(to) : setCurrentChatContent(from);
 
         if (e.currentTarget.className.includes('sent')) {
             $('#detailRequestModal').find('.btn-success').css('display', 'none');
@@ -478,7 +478,7 @@ function sendPhoto() {
             // socket.emit('send:castPhoto', data);
             console.log(data.castTitle);
             data.cast = true;
-        } else if($('#group_chat').hasClass('active')) {
+        } else if ($('#group_chat').hasClass('active')) {
             console.log(currentGroupId);
             console.log(currentGroupUsers);
             if (currentGroupId) {
@@ -488,7 +488,7 @@ function sendPhoto() {
             }
 
             return;
-        } 
+        }
         else {
             data.to = [currentContactId];
         }
