@@ -27,6 +27,9 @@ $(document).ready(function () {
             setTimeout(() => {
                 $('#group .group-main>li.active').slideUp(300, () => {
                     $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+                    if (!currentGroupId) {
+                        $('#group_chat .chatappend').empty();
+                    }
                 });
             });
         }

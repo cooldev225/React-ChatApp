@@ -36,15 +36,18 @@ $(document).ready(function () {
                 if (res.state == 'true') {
                     let target = '#group > ul.group-main';
                     $(target).empty();
-                    console.log(res.data);
                     res.data.forEach(data => {
                         addNewGroupItem(target, data);
                     });
                     convertListItems();
                     if (currentGroupId) {
-                        document.querySelector(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+                        $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).addClass('active');
                     } else {
-                        document.querySelector('#group > ul.group-main>li:first-child').click();
+                        $('#group > ul.group-main>li:first-child').addClass('active');
+                    }
+                    let contentwidth = jQuery(window).width();
+                    if (contentwidth > 768) {
+                        $('#group > ul.group-main>li.active').click();
                     }
                 }
             },
@@ -86,7 +89,6 @@ $(document).ready(function () {
 
 
     function addNewGroupItem(target, data) {
-        console.log(data);
         let id = data.id;
         let title = data.title;
         let groupUsers = data.users.split(',');
@@ -606,20 +608,19 @@ $(document).ready(function () {
     $('#group .group-main').on('click', 'li', function () {
         $('#group .group-main li').removeClass('active');
         $(this).addClass('active');
-        console.log(currentGroupId);
         if (currentGroupId != $(this).attr('groupId')) {
             currentGroupId = $(this).attr('groupId');
             currentGroupUsers = $(this).attr('groupUsers');
         }
         showCurrentChatHistory(currentGroupId);
-        var contentwidth = jQuery(window).width();
+
+        let contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
             $('.chitchat-container').toggleClass("mobile-menu");
         }
         if (contentwidth <= '575') {
             $('.main-nav').removeClass("on");
         }
-        console.log(currentGroupId);
     });
 
     $('#msgchatModal').on('hidden.bs.modal', function (e) {

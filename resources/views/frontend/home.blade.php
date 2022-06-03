@@ -1010,9 +1010,9 @@
                                     </div>
                                     <div class="media-body">
                                         <h5>Group Chat</h5>
-                                        <div class="badge badge-success">Active</div>
+                                        <!-- <div class="badge badge-success">Active</div> -->
                                     </div>
-                                    <!-- <div class="media-right">
+                                    <div class="media-right">
                                         <ul>
                                             <li><a class="icon-btn btn-light button-effect mute" href="#"><i
                                                         class="fa fa-volume-up"></i></a></li>
@@ -1029,7 +1029,7 @@
                                             <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
                                                         data-feather="chevron-left"></i></a></li>
                                         </ul>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col">
