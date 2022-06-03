@@ -1012,7 +1012,7 @@
                                         <h5>Group Chat</h5>
                                         <div class="badge badge-success">Active</div>
                                     </div>
-                                    <div class="media-right">
+                                    <!-- <div class="media-right">
                                         <ul>
                                             <li><a class="icon-btn btn-light button-effect mute" href="#"><i
                                                         class="fa fa-volume-up"></i></a></li>
@@ -1029,17 +1029,17 @@
                                             <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
                                                         data-feather="chevron-left"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col">
                                 <ul class="calls text-end">
-                                    <li><a class="icon-btn btn-light button-effect" href="#"
+                                    <!-- <li><a class="icon-btn btn-light button-effect" href="#"
                                             data-tippy-content="Start Audio Conference" data-bs-toggle="modal"
                                             data-bs-target="#confercall"><i data-feather="phone"></i></a></li>
                                     <li><a class="icon-btn btn-light button-effect" href="#"
                                             data-tippy-content="Start Video Conference" data-bs-toggle="modal"
-                                            data-bs-target="#confvideocl"><i data-feather="video"></i></a></li>
+                                            data-bs-target="#confvideocl"><i data-feather="video"></i></a></li> -->
                                     <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
                                             data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
                                     <li class="chat-friend-toggle"><a
@@ -1047,12 +1047,20 @@
                                             data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
                                         <div class="chat-frind-content">
                                             <ul>
+                                                <li class="add_users_btn">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="plus-circle"></i></a>
+                                                    <h5>add users</h5>
+                                                </li>
+                                                <li class="invite_users_btn">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="users"></i></a>
+                                                    <h5>invite users</h5>
+                                                </li>
                                                 <li class="leave_group_btn">
                                                     <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash"></i></a>
                                                     <h5>leave</h5>
                                                 </li>
                                                 <li class="remove_group_btn">
-                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
+                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
                                                     <h5>remove</h5>
                                                 </li>
                                                 <!-- <li class="block_group_btn">

@@ -16,14 +16,14 @@
     <link rel="icon" href="/chat/images/favicon/favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="/chat/images/favicon/favicon.png" type="image/x-icon">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&amp;display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600&amp;display=swap" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,600&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap">
 
-    <link href="https://www.jquery-az.com/boots/css/bootstrap-colorpicker/bootstrap-colorpicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.jquery-az.com/boots/css/bootstrap-colorpicker/bootstrap-colorpicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/css/intlTelInput.css">
+
     <link rel="stylesheet" type="text/css" href="/chat/css/date-picker.css">
     <link rel="stylesheet" type="text/css" href="/chat/css/magnific-popup.css">
     <link rel="stylesheet" type="text/css" href="/chat/css/style.css" media="screen" id="color">
@@ -34,17 +34,17 @@
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/tableselection/styles/tableselection.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css">
     <link rel="stylesheet" type="text/css" href="/chat/js/ckeditor/plugins/copyformatting/styles/copyformatting.css">
-    {{-- <link rel="stylesheet" type="text/css" href="/frontend/css/normalize.css"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/star.css">
     <link rel="stylesheet" type="text/css" href="/frontend/css/pages/message.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/css/pages/group.css">
 </head>
 
 <body class="sidebar-active">
-    <!-- <script src="/chat/js/myjquery.js"></script> -->
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
+    <!-- <script src="https://code.jquery.com/jquery-latest.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    
     <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
     <!-- phone number select -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/intlTelInput.min.js"></script>

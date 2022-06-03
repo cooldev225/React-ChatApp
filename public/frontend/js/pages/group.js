@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('#group_chat').on('click', '.leave_group_btn', function () {
         if (confirm("You will leave this Group")) {
             if (currentGroupId) {
-                socket.emit('leave:Group', { currentGroupId,  currentGroupUsers});
+                socket.emit('leave:Group', { currentGroupId, currentGroupUsers });
             }
         }
     });
@@ -21,11 +21,33 @@ $(document).ready(function () {
     })
 
     $('#group_chat').on('click', '.remove_group_btn', function () {
-        if (confirm("You will remove this Group")) {
-            if (currentGroupId) {
-                socket.emit('remove:Group', { currentGroupId,  currentGroupUsers});
+        let content = 'You will remove this Group?'
+        let removeGroupAction = () => {
+            currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
+            setTimeout(() => {
+                $('#group .group-main>li.active').slideUp(300, () => {
+                    $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+                });
+            });
+        }
+        confirmModal('', content, removeGroupAction);
+    });
+});
+
+function confirmModal(title, content, okAction, cancelAction) {
+    $.confirm({
+        title,
+        content,
+        buttons: {
+            Ok: {
+                btnClass: 'btn-primary',
+                action: okAction
+            },
+            Cancel: {
+                btnClass: 'btn-danger',
+                action: cancelAction
             }
         }
     });
-});
+}
 

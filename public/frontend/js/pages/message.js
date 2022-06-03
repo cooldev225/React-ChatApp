@@ -69,6 +69,7 @@ $(document).ready(function () {
             } else {
                 $(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             }
+
         }
         // if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
         //     let senderInfo = usersList.find(item => item.id == Number(message.from));
@@ -175,7 +176,7 @@ $(document).ready(function () {
         } else {
             $(target).append(item);
         }
-        // $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
+        $(".messages.active").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
 
         if (data.rate) {
             getContentRate(`li.msg-item[key="${data.id}"]`, data.rate)

@@ -599,7 +599,7 @@ const onConnection = (socket) => {
                         console.log('Send Message SMS');
                         // sendSMS(data.from, userId, 'photo');
                     }
-                })
+                });
             });
         });
     });
