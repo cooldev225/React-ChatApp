@@ -41,6 +41,11 @@ $(document).ready(function () {
                         addNewGroupItem(target, data);
                     });
                     convertListItems();
+                    if (currentGroupId) {
+                        document.querySelector(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+                    } else {
+                        document.querySelector('#group > ul.group-main>li:first-child').click();
+                    }
                 }
             },
             error: function (response) { }
@@ -59,7 +64,7 @@ $(document).ready(function () {
         if ($('#group_chat').hasClass('active')) {
             if (currentGroupId == data.currentGroupId) {
                 addGroupChatItem(target, data);
-            } else if(!$(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).length) {
+            } else if (!$(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).length) {
 
             } else {
                 $(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');

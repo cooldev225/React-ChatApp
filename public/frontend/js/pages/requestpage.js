@@ -349,7 +349,7 @@ function blurPhoto() {
 }
 
 function addEmojisOnPhoto() {
-    EmojiButton(document.querySelector('#create_emoji_button'), function (emoji) {
+    EmojiButton(document.getElementById('create_emoji_button'), function (emoji) {
         if ($('#createPhoto .preview-paid').hasClass('d-none')) {
             var price = $('.emojis-price').val();
         } else {

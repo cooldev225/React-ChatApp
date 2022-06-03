@@ -1,6 +1,13 @@
 const express = require('express')
 const app = express()
 const axios = require('axios');
+
+const db = require("./config.js");
+const Notification = require("./notification.js");
+
+const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
+const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
+
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
     // const port = process.env.PORT || 4000
@@ -11,17 +18,17 @@ const io = require('socket.io')(server, {
     },
     maxHttpBufferSize: 10E7
 });
-const db = require("./config.js");
-const Notification = require("./notification.js");
 
-const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
-const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
+const groupSocket = require('./groupSocket');
+
+
 
 db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
     // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
     //     console.log(item);
     // });
 });
+
 
 let user_socketMap = new Map();
 let socket_userMap = new Map();
@@ -32,7 +39,9 @@ app.use(cors({
     origin: '*'
 }));
 
-io.on('connection', (socket) => {
+const onConnection = (socket) => {
+    groupSocket(io, socket);
+    
     let currentUserId = socket.handshake.query.currentUserId;
     //user table logout flag make false
     console.log('userId:', currentUserId, ' logined');
@@ -303,19 +312,21 @@ io.on('connection', (socket) => {
             db.query(`INSERT INTO messages (sender, recipient, group_id, content, kind) VALUES ("${data.from}", 0, "${data.currentGroupId}", "${data.id}", 2)`, (error, messageItem) => {
                 message.messageId = messageItem.insertId;
                 console.log(data.currentGroupUsers);
-                data.currentGroupUsers.split(',').forEach(userId => {
-                    let recipientSocketId = user_socketMap.get(userId.toString());
-                    message.to = userId;
-                    if (recipientSocketId) {
-                        if (io.sockets.sockets.get(recipientSocketId)) {
-                            console.log('send Blink');
-                            io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
-                            io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+                db.query(`SELECT users FROM \`groups\` WHERE id="${data.currentGroupId}"`, (error, row) => {
+                    row[0]['users'].split(',').forEach(userId => {
+                        let recipientSocketId = user_socketMap.get(userId.toString());
+                        message.to = userId;
+                        if (recipientSocketId) {
+                            if (io.sockets.sockets.get(recipientSocketId)) {
+                                console.log('send Blink');
+                                io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
+                                io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+                            }
+                        } else {
+                            console.log('Send Photo SMS');
+                            // sendSMS(data.from, userId, 'photo');
                         }
-                    } else {
-                        console.log('Send Photo SMS');
-                        // sendSMS(data.from, userId, 'photo');
-                    }
+                    })
                 })
             });
         });
@@ -577,13 +588,24 @@ io.on('connection', (socket) => {
             // if (senderSocketId) {
             //     io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
             // }
-            let recipientSocketIds = data.currentGroupUsers ? data.currentGroupUsers.split(',').map(userId => user_socketMap.get(userId.toString())).filter(item => item) : [];
-            recipientSocketIds .forEach(socketId => {
-                io.sockets.sockets.get(socketId).emit('send:groupMessage', data);
+            db.query(`SELECT users FROM \`groups\` WHERE id="${data.currentGroupId}"`, (error, row) => {
+                row[0]['users'].split(',').forEach(userId => {
+                    let recipientSocketId = user_socketMap.get(userId.toString());
+                    if (recipientSocketId) {
+                        if (io.sockets.sockets.get(recipientSocketId)) {
+                            io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', data);
+                        }
+                    } else {
+                        console.log('Send Message SMS');
+                        // sendSMS(data.from, userId, 'photo');
+                    }
+                })
             });
         });
     });
-});
+}
+
+io.on('connection', onConnection);
 
 server.listen(port, () => {
     console.log(`Server running on port: ${port}`)

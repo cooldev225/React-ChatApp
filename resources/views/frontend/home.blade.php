@@ -816,8 +816,8 @@
                     <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
                     <!-- <div class="spinner-border" role="status">
-                                                                                                                                                                                                    <span class="sr-only">Loading...</span>
-                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                    <span class="sr-only">Loading...</span>
+                                                                                                                                                                                                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -1044,25 +1044,21 @@
                                             data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
                                     <li class="chat-friend-toggle"><a
                                             class="icon-btn btn-light bg-transparent button-effect outside" href="#"
-                                            data-tippy-content="Quick action"></a>
+                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
                                         <div class="chat-frind-content">
                                             <ul>
-                                                <li><a class="icon-btn btn-outline-primary button-effect btn-sm"
-                                                        href="#"><i data-feather="user"></i></a>
-                                                    <h5>profile</h5>
+                                                <li class="leave_group_btn">
+                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash"></i></a>
+                                                    <h5>leave</h5>
                                                 </li>
-                                                <li><a class="icon-btn btn-outline-success button-effect btn-sm"
-                                                        href="#"><i data-feather="plus-circle"></i></a>
-                                                    <h5>archive</h5>
+                                                <li class="remove_group_btn">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
+                                                    <h5>remove</h5>
                                                 </li>
-                                                <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i
-                                                            data-feather="trash-2"></i></a>
-                                                    <h5>delete</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i
-                                                            data-feather="slash"></i></a>
+                                                <!-- <li class="block_group_btn">
+                                                    <a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i data-feather="slash"></i></a>
                                                     <h5>block</h5>
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </div>
                                     </li>
@@ -1079,7 +1075,7 @@
                                 <div class="gr-profile dot-btn dot-success"><img class="bg-img"
                                         src="/chat/images/avtar/5.jpg" alt="Avatar" /></div>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -3446,9 +3442,9 @@
                             <input class="form-control" id="exampleInputEmail12" type="text" placeholder="John Doe" />
                         </div>
                         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <h5>Contact number</h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input class="form-control" id="examplemsg2" type="number" placeholder="12345678912"/>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -3687,7 +3683,8 @@
                     <div class="group_title">
                         <div class="input-group input-group mb-3">
                             <span class="input-group-text" id="inputGroup-sizing-default">Group Title</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-default">
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 This field is required.
                             </div>
@@ -3795,8 +3792,6 @@
 
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    {{-- <span class="price-mode">Mode:</span>
-                    <span class="text-input">Text:</span> --}}
                 </div>
                 <div class="modal-body">
                     <div class="request-detail">
@@ -3953,9 +3948,9 @@
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
-                                                                                                                                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                    <button type="button" class="btn btn-primary payWholePriceBtn" data-bs-dismiss="modal">OK</button>
+                                                                                                                                                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                                                                                                                </div> -->
             </div>
         </div>
     </div>
@@ -3989,4 +3984,5 @@
     <script src="/frontend/js/pages/notification.js"></script>
     <script src="/frontend/js/pages/message.js"></script>
     <script src="/frontend/js/pages/contact.js"></script>
+    <script src="/frontend/js/pages/group.js"></script>
 @endsection

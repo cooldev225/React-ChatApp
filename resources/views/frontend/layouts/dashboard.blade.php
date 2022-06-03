@@ -42,14 +42,22 @@
 </head>
 
 <body class="sidebar-active">
-    {{-- <script src="/chat/js/jquery-3.3.1.min.js"></script> --}}
+    <!-- <script src="/chat/js/myjquery.js"></script> -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
+    <!-- phone number select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/intlTelInput.min.js"></script>
+    <!-- {{-- emojis --}} -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-button@0.6.0/dist/index.min.js"></script>
 
     <script src="/frontend/js/pages/fabric.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"
         integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @yield('content')
+    
+        @yield('content')
+    
     <script src="/chat/js/owl.carousel.js"></script>
     <script src="/chat/js/popper.min.js"></script>
     <script src="/chat/js/tippy-bundle.iife.min.js"></script>
@@ -71,12 +79,10 @@
     <script src="/chat/js/jquery.magnific-popup.js"></script>
     <script src="/chat/js/zoom-gallery.js"></script>
 
-    <script src="https://www.jquery-az.com/boots/js/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/intlTelInput.min.js"></script>
+
     <script src="/chat/js/script.js"></script>
 
-    {{-- emojis --}}
-    <script src="https://cdn.jsdelivr.net/npm/emoji-button@0.6.0/dist/index.min.js"></script>
+   
 </body>
 
 
