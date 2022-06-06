@@ -63,6 +63,8 @@ $(document).ready(function () {
         groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
         console.log(groupUsers);
         socket.emit('edit:groupUsers', { currentGroupId, groupUsers });
+        $('#custom_modal .modal-content').removeClass('edit_group_modal');
+        $('#custom_modal').modal('hide');
     });
 });
 
