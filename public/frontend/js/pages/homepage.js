@@ -42,22 +42,22 @@ $(document).ready(() => {
             $('#group_blank .chatappend').css('display', 'flex');
             let target = '#group_blank .contact-chat ul.chatappend';
             addChatItem(target, message.from, message);
+            $(".messages").animate({ scrollTop: $('#group_blank .contact-chat').height() }, "fast");
         } else if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
             // $('#group_blank .rightchat').css('display', 'none');
             // $('#group_blank .call-list-center').css('display', 'none');
             // $('#group_blank .chatappend').css('display', 'flex');
             let target = '#cast_chat > div.contact-chat > ul.chatappend';
             addChatItem(target, message.from, message);
-        } else if($('#group_chat').hasClass('active')) {
-            
+            $(".messages").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, "fast");
+        } else if ($('#group_chat').hasClass('active')) {
+
         } else {
             if (message.from == currentUserId || message.from == currentContactId) {
                 let target = '#chating .contact-chat ul.chatappend';
                 addChatItem(target, message.from, message);
                 $('.typing-m').remove();
-                $(".messages").animate({
-                    scrollTop: $('#chating .contact-chat').height()
-                }, "fast");
+                $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, "fast");
                 $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             } else {
                 // if (currentContactId) {
@@ -351,7 +351,7 @@ function getUsersList(resolve) {
         success: function (res) {
             usersList = res.data;
             if (resolve) {
-                resolve(res.data);   
+                resolve(res.data);
             }
         },
         error: function (response) {
@@ -413,7 +413,7 @@ function getUsersListBySearch() {
             let value = $('.search_user').val();
             if (value) {
                 target.empty();
-                
+
                 usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(data => {
                     $(target).prepend(`<li data-to="blank" key="${data.id}">
                         <div class="chat-box">
@@ -611,8 +611,8 @@ function newMessage() {
     var currentContactIdArr = [];
     if ($('#group_chat').hasClass('active')) {
         // currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        
-        socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName});
+
+        socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
         return;
 
     } else if ($('#group_blank').hasClass('active')) {

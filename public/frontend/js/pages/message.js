@@ -178,7 +178,7 @@ $(document).ready(function () {
         } else {
             $(target).append(item);
         }
-        $(".messages.active").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
+        $(".messages.active").animate({ scrollTop: $('#group_chat .contact-chat').height() }, 'fast');
 
         if (data.rate) {
             getContentRate(`li.msg-item[key="${data.id}"]`, data.rate)
@@ -492,6 +492,8 @@ $(document).ready(function () {
                     if (contentwidth <= '575') {
                         $('.main-nav').removeClass("on");
                     }
+                    $(".messages.active").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, 'fast');
+
                 }
             },
             error: function (response) { }

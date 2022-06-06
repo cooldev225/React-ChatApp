@@ -122,9 +122,9 @@ ul.request-list li.sent {
     background-color: #ddf0fc;
 }
 
-ul.request-list li .chat-box .date-status {
-    /* top: -4px; */
-}
+/* ul.request-list li .chat-box .date-status {
+    top: -4px;
+} */
 
 ul.request-list li .chat-box .date-status i {
     font-size: 15px;
