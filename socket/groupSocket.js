@@ -22,4 +22,12 @@ module.exports = (io, socket) => {
         // });
     });
 
+    socket.on('edit:groupUsers', data => {
+        console.log(data);
+        db.query(`UPDATE \`groups\` SET users="${data.groupUsers}" WHERE id=${data.currentGroupId}`, (error, item) => {
+            if (error) throw error;
+            console.log(item);
+        });
+    })
+
 }

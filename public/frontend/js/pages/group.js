@@ -8,6 +8,7 @@ $(document).ready(function () {
             }
         }
     });
+
     socket.on('leave:group', data => {
         console.log(data);
         if (data.state == true) {
@@ -35,7 +36,36 @@ $(document).ready(function () {
         }
         confirmModal('', content, removeGroupAction);
     });
+
+    $('#group_chat .chat-frind-content').on('click', '.add_users_btn', function () {
+        console.log(currentGroupId)
+        console.log(currentGroupUsers)
+        let groupTitle = $('#group .group-main li.active .details h5').text() || 'Group Title is undefined';
+        $('#custom_modal').modal('show');
+        $('#custom_modal .modal-content').addClass('edit_group_modal');
+        $('#custom_modal').find('.modal-title').text('Add/Remove Group Users');
+        $('#custom_modal').find('.sub_title span').text('Group Title');
+        $('#custom_modal').find('.sub_title input').val(groupTitle);
+        $('#custom_modal').find('.btn_group .btn').text('Save');
+        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
+            let target = '#custom_modal .chat-main';
+            $(target).empty();
+            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
+            contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
+            currentGroupUsers.split(',').forEach(userId => {
+                $(`#custom_modal ul.chat-main li[key=${userId}] input`).prop('checked', true);
+                $(`#custom_modal ul.chat-main li[key=${userId}]`).addClass('active');
+            });
+        });
+    });
+
+    $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
+        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
+        console.log(groupUsers);
+        socket.emit('edit:groupUsers', { currentGroupId, groupUsers });
+    });
 });
+
 
 function confirmModal(title, content, okAction, cancelAction) {
     $.confirm({
@@ -54,3 +84,22 @@ function confirmModal(title, content, okAction, cancelAction) {
     });
 }
 
+
+function addUsersListItem(target, data, statusItem) {
+    $(target).prepend(
+        `<li data-to="blank" key="${data.id}">
+            <div class="chat-box">
+                <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                    
+                </div>
+                <div class="details">
+                    <h5>${data.username}</h5>
+                    <h6>${data.description || 'Hello'}</h6>
+                </div>
+                <div class="date-status">
+                    ${statusItem}
+                </div>
+            </div>
+        </li>`
+    );
+}

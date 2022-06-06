@@ -3690,9 +3690,48 @@
                 <div class="modal-body">
                     <div class="group_title">
                         <div class="input-group input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Group Title</span>
+                            <span class="input-group-text" id="newGroup-sizing-default">Group Title</span>
                             <input type="text" class="form-control" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default">
+                                aria-describedby="newGroup-sizing-default">
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                This field is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-msg-search">
+                        <span style="font-size: 16px;">Invite Users</span>
+                        <div class="input-group">
+                            <input class="form-control search_user" type="text" placeholder="Search"
+                                aria-label="Recipient's username" aria-describedby="basic-addon20" />
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon20">@</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="chat-main custom-scroll">
+                    </ul>
+                    <div class="create">
+                        <button class="btn btn-success button-effect btn-sm" id="createGroupBtn" type="button"
+                            style="float: right; margin-top: 20px;">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade add-popup msg-chat-modal" id="EditGroupUsersListModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        Create New Group</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="group_title">
+                        <div class="input-group input-group mb-3">
+                            <span class="input-group-text" id="editGroup-sizing-default">Group Title</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                aria-describedby="editGroup-sizing-default">
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 This field is required.
                             </div>
@@ -3980,6 +4019,42 @@
         </div>
     </div>
 
+
+    <div class="modal fade add-popup msg-chat-modal" id="custom_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Modal Title</h2>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="sub_title">
+                        <div class="input-group input-group mb-3">
+                            <span class="input-group-text custom_title">Sub Title</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input">
+                            <div class="invalid-feedback">
+                                This field is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_field">
+                        <!-- <span style="font-size: 16px;">Add Users</span> -->
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Search Users" aria-label="Recipient's username" aria-describedby="basic-addon20" />
+                            <div class="input-group-append"><span class="input-group-text" id="basic-addon20"><i class="fa fa-search" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="chat-main custom-scroll">
+                    </ul>
+                    <div class="btn_group">
+                        <button class="btn btn-success button-effect btn-sm" type="button">Button</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
     <script src="/frontend/js/constant.js"></script>

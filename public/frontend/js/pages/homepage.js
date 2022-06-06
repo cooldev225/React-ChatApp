@@ -482,24 +482,25 @@ function addChatUserListItem(target, data) {
     $(target).prepend(
         `<li data-to="blank" key="${data.id}">
             <div class="chat-box">
-            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
-                
-            </div>
-            <div class="details">
-                <h5>${data.username}</h5>
-                <h6>${data.description || 'Hello'}</h6>
-            </div>
-            <div class="date-status"><i class="ti-trash"></i>
-                <h6></h6>
-                <h6 class="font-success status"></h6>
-                <div class="badge badge-primary sm"></div>
-            </div>
+                <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
+                    
+                </div>
+                <div class="details">
+                    <h5>${data.username}</h5>
+                    <h6>${data.description || 'Hello'}</h6>
+                </div>
+                <div class="date-status">
+                    <i class="ti-trash"></i>
+                    <h6></h6>
+                    <h6 class="font-success status"></h6>
+                    <div class="badge badge-primary sm"></div>
+                </div>
             </div>
         </li>`
     );
 }
 
-function getContactList() {
+function getContactList(resolve) {
     $('.icon-btn[data-tippy-content="Contact List"]').on('click', () => {
         if ($('.contact-list-tab.dynemic-sidebar').hasClass('active')) {
             var form_data = new FormData();
@@ -517,15 +518,41 @@ function getContactList() {
                 success: function (res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
-                    res.reverse().forEach(item => {
-                        addChatUserListItem(target, item);
-                    });
+                    console.log('aaa')
+                    if (resolve) {
+                        console.log(res);
+                        resolve(res);
 
+                    } else {
+                        res.reverse().forEach(item => {
+                            addChatUserListItem(target, item);
+                        });
+                    }
                 },
                 error: function (response) {
 
                 }
             });
+        }
+    });
+}
+
+function getContactListData(resolve) {
+    $.ajax({
+        url: '/home/getContactList',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            resolve(res);
+        },
+        error: function (response) {
+
         }
     });
 }

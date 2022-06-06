@@ -1,3 +1,7 @@
 #group_chat .chat-friend-toggle .chat-frind-content {
     width: 200px;
 }
+
+#group_chat .chat-frind-content li {
+    cursor: pointer;
+}

@@ -647,6 +647,15 @@ h6.read {
     display: none;
 }
 
+#custom_modal .search_field .fa-search {
+    line-height: 1.5;
+    cursor: pointer;
+}
+#custom_modal .btn_group .btn {
+    float: right;
+    margin-top: 20px;
+}
+
 @media (max-width: 1366px) {
     .sidebar-active .chitchat-container .chitchat-main.section-py-space {
         width: 100%;
