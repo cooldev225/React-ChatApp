@@ -458,10 +458,10 @@ const onConnection = (socket) => {
                 db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
                     if (error) throw error;
                 });
-                db.query(`UPDATE users SET balances=balances-${data.totalPrice} WHERE id=${item[0].to}`, (error, item) => {
+                db.query(`UPDATE users SET balances=balances-${data.totalPrice} WHERE id=${currentUserId}`, (error, item) => {
                     if (error) throw error;
                 });
-                db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${item[0].to}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
+                db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${currentUserId}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
                     if (error) throw error;
                     console.log('OK');
                 });
