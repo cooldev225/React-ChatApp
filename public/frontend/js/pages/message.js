@@ -55,7 +55,7 @@ $(document).ready(function () {
         });
     });
 
-    socket.on('createGroup', data => {
+    socket.on('create:group', data => {
         let target = '#group > ul.group-main';
         // $('#group .group-main li').removeClass('active');
         addNewGroupItem(target, data);
@@ -72,7 +72,6 @@ $(document).ready(function () {
             } else {
                 $(`#group > ul.chat-main li[groupId=${Number(data.currentGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             }
-
         }
         // if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
         //     let senderInfo = usersList.find(item => item.id == Number(message.from));
@@ -601,7 +600,7 @@ $(document).ready(function () {
         }
         let users = Array.from($('#newGroupModal .chat-main li.active')).map(item => $(item).attr('key')).join(',');
         users += `,${currentUserId}`;
-        socket.emit('createGroup', { title, users });
+        socket.emit('create:group', { title, users });
         $('#newGroupModal').modal('hide');
         $(`.chat-cont-setting`).removeClass('open');
         document.querySelector(`#group-tab`).click();

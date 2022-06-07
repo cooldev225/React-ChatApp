@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('#group_chat').on('click', '.leave_group_btn', function () {
         if (confirm("You will leave this Group")) {
             if (currentGroupId) {
-                socket.emit('leave:Group', { currentGroupId, currentGroupUsers });
+                socket.emit('leave:group', { currentGroupId, currentGroupUsers });
             }
         }
     });
@@ -19,11 +19,11 @@ $(document).ready(function () {
         } else {
             // alert("You are owner of this group. You can't leave group.")
         }
-    })
+    });
 
-    $('#group_chat').on('click', '.remove_group_btn', function () {
-        let content = 'You will remove this Group?'
-        let removeGroupAction = () => {
+    socket.on('remove:group', data => {
+        console.log(data);
+        if (data.state == true) {
             currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
             setTimeout(() => {
                 $('#group .group-main>li.active').slideUp(300, () => {
@@ -33,6 +33,24 @@ $(document).ready(function () {
                     }
                 });
             });
+        } else {
+            // alert("You are owner of this group. You can't leave group.")
+        }
+    });
+
+    $('#group_chat').on('click', '.remove_group_btn', function () {
+        let content = 'You will remove this Group?'
+        let removeGroupAction = () => {
+            socket.emit('remove:group', { currentGroupId });
+            // currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
+            // setTimeout(() => {
+            //     $('#group .group-main>li.active').slideUp(300, () => {
+            //         $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+            //         if (!currentGroupId) {
+            //             $('#group_chat .chatappend').empty();
+            //         }
+            //     });
+            // });
         }
         confirmModal('', content, removeGroupAction);
     });
@@ -59,11 +77,42 @@ $(document).ready(function () {
         });
     });
 
+    $('#group_chat .chat-frind-content').on('click', '.invite_users_btn', function () {
+        console.log(currentGroupId);
+        console.log(currentGroupUsers);
+        let groupTitle = $('#group .group-main li.active .details h5').text() || 'Group Title is undefined';
+        $('#custom_modal').modal('show');
+        $('#custom_modal .modal-content').addClass('invite_group_modal');
+        $('#custom_modal').find('.modal-title').text('Invite Users');
+        $('#custom_modal').find('.sub_title span').text('Group Title');
+        $('#custom_modal').find('.sub_title input').val(groupTitle);
+        $('#custom_modal').find('.btn_group .btn').text('Invite');
+        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
+            let target = '#custom_modal .chat-main';
+            $(target).empty();
+            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
+            contactList.filter(item => !currentGroupUsers.split(',').find(id => item.id == id)).forEach(item => addUsersListItem(target, item, statusItem));
+            // contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
+            currentGroupUsers.split(',').forEach(userId => {
+                $(`#custom_modal ul.chat-main li[key=${userId}] input`).prop('checked', true);
+                $(`#custom_modal ul.chat-main li[key=${userId}]`).addClass('active');
+            });
+        });
+    });
+
     $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
         groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
         console.log(groupUsers);
         socket.emit('edit:groupUsers', { currentGroupId, groupUsers });
         $('#custom_modal .modal-content').removeClass('edit_group_modal');
+        $('#custom_modal').modal('hide');
+    });
+
+    $('#custom_modal').on('click', '.modal-content.invite_group_modal .btn_group .btn', function () {
+        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
+        console.log(groupUsers);
+        socket.emit('invite:groupUsers', { currentGroupId, groupUsers });
+        $('#custom_modal .modal-content').removeClass('invite_group_modal');
         $('#custom_modal').modal('hide');
     });
 });

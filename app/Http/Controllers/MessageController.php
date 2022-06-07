@@ -39,6 +39,7 @@ class MessageController extends Controller
             // }
         }
         return count($result) ? array('state' => 'true', 'data' => $result) : array('message' =>'no data');
+        
     }
 
     public function getCastData(Request $request) {

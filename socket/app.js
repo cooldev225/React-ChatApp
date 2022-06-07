@@ -10,7 +10,7 @@ const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call'
 
 // const server = require('https').createServer(app)
 const server = require('http').createServer(app)
-    // const port = process.env.PORT || 4000
+// const port = process.env.PORT || 4000
 const port = 4000;
 const io = require('socket.io')(server, {
     cors: {
@@ -40,8 +40,8 @@ app.use(cors({
 }));
 
 const onConnection = (socket) => {
-    groupSocket(io, socket);
-    
+    groupSocket(io, socket, user_socketMap, socket_userMap);
+
     let currentUserId = socket.handshake.query.currentUserId;
     //user table logout flag make false
     console.log('userId:', currentUserId, ' logined');
@@ -73,12 +73,12 @@ const onConnection = (socket) => {
             db.query(`INSERT INTO messages (sender, recipient, content, reply_id, reply_kind) VALUES ("${message.from}", "${message.to}", "${message.content}", ${message.reply_id}, ${message.reply_kind})`, (error, item) => {
                 message.messageId = item.insertId;
 
-                db.query(`SELECT * FROM users WHERE id=${currentUserId}`, function(err, result, fields) {
+                db.query(`SELECT * FROM users WHERE id=${currentUserId}`, function (err, result, fields) {
                     // if any error while executing above query, throw error
                     if (err) throw err;
                     // if there is no error, you have the result
                     // iterate for all the rows in result
-                    Object.keys(result).forEach(function(key) {
+                    Object.keys(result).forEach(function (key) {
                         var row = result[key];
                         //console.log("From all DB", row.username)
 
@@ -115,10 +115,10 @@ const onConnection = (socket) => {
                         };
 
                         axios(config)
-                            .then(function(response) {
+                            .then(function (response) {
                                 console.log(JSON.stringify(response.data));
                             })
-                            .catch(function(error) {
+                            .catch(function (error) {
                                 console.log(error);
                             });
                     });
@@ -561,47 +561,6 @@ const onConnection = (socket) => {
         socket_userMap.delete(socket.id);
         console.log(currentUserId, " : ", socket.id, ' Disconnected')
         console.log(user_socketMap);
-    });
-
-    socket.on('createGroup', data => {
-        db.query(`INSERT INTO \`groups\` (title, users, type, owner) VALUES ("${data.title}", "${data.users}", 2, ${currentUserId})`, (error, item) => {
-            console.log(item);
-            data.id = item.insertId
-            let senderSocketId = user_socketMap.get(currentUserId.toString());
-            // let recipientSocketId = user_socketMap.get(data.to.toString());
-            if (senderSocketId) {
-                io.sockets.sockets.get(senderSocketId).emit('createGroup', data);
-            }
-        });
-    });
-
-    socket.on('send:groupMessage', data => {
-        console.log(data);
-        data.senderId = currentUserId;
-        db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${currentUserId}", "${data.currentGroupId}", "${data.content}")`, (error, item) => {
-            console.log(item);
-            data.id = item.insertId
-            data.kind = 0;
-            data.sender = currentUserId;
-            // let senderSocketId = user_socketMap.get(currentUserId.toString());
-            // // let recipientSocketId = user_socketMap.get(data.to.toString());
-            // if (senderSocketId) {
-            //     io.sockets.sockets.get(senderSocketId).emit('send:groupMessage', data);
-            // }
-            db.query(`SELECT users FROM \`groups\` WHERE id="${data.currentGroupId}"`, (error, row) => {
-                row[0]['users'].split(',').forEach(userId => {
-                    let recipientSocketId = user_socketMap.get(userId.toString());
-                    if (recipientSocketId) {
-                        if (io.sockets.sockets.get(recipientSocketId)) {
-                            io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', data);
-                        }
-                    } else {
-                        console.log('Send Message SMS');
-                        // sendSMS(data.from, userId, 'photo');
-                    }
-                });
-            });
-        });
     });
 }
 
