@@ -5,13 +5,17 @@ var usersList = [];
 var typingTime;
 var timerId;
 let State = ['', 'sent', 'arrived', 'read'];
-// var socket;
+
 let currentGroupId;
 let currentGroupUsers;
-
+let currentDirectId;
+let currentDirectUsers;
+let currentCastId;
+let currentCastUsers;
+let globalGroupId;
+let globalGroupUsers;
 $(document).ready(() => {
-    // socket = io.connect("http://localhost:3000", { query: "currentUserId=" + currentUserId });
-    // socket = io.connect("http://ojochat.com:3000", { query: "currentUserId=" + currentUserId });
+
     socket.on('message', message => {
         if (currentUserId != message.from) {
             let senderName = getCertainUserInfoById(message.from).username;
@@ -60,10 +64,6 @@ $(document).ready(() => {
                 $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, "fast");
                 $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             } else {
-                // if (currentContactId) {
-                //     $(`#direct > ul.chat-main li[key=${currentContactId}]`).removeClass('active');
-                // }
-                // currentContactId = Number(message.from);
                 if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
                     let senderInfo = usersList.find(item => item.id == Number(message.from));
                     let userListTarget = $('.recent-default .recent-chat-list');
@@ -75,32 +75,33 @@ $(document).ready(() => {
                     let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
                     $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
                 }
-                // $(`#direct > ul.chat-main li[key=${currentContactId}]`).addClass('active');
-                // setCurrentChatContent(currentContactId);
             }
         }
 
     });
+
     socket.on('arrive:message', message => {
         setTimeout(() => {
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('arrived')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('read')
         }, 1000);
-    })
+    });
+
     socket.on('read:message', message => {
         setTimeout(() => {
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('arrived')
             $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('read')
         }, 2000);
-    })
+    });
 
     socket.on('receive:typing', data => {
         if (data == currentContactId) {
             typingMessage();
         }
     });
+
     socket.on('delete:message', data => {
         if (data.state) {
             let element = $('.chatappend').find(`[key=${data.id}]`).closest('li.msg-item');
@@ -115,7 +116,9 @@ $(document).ready(() => {
         getUsersList(resolve);
     }).then(() => {
         $('.balance-amount').text(`$${getCertainUserInfoById(currentUserId).balances.toFixed(2)}`)
-        getRecentChatUsers();
+        getRecentChatUsers(1);
+        getRecentChatUsers(2);
+        // getRecentGroupChatUsers();
         searchAndAddRecentChatList();
         getContactList();
         displayTypingAction();
@@ -123,6 +126,7 @@ $(document).ready(() => {
         displayRate();
         getUsersListBySearch();
     });
+
     $('#logoutBtn').on('click', () => {
         socket.emit('logout', {
             currentUserId
@@ -130,24 +134,33 @@ $(document).ready(() => {
     });
 
     // displayChatData();
-    $('ul.chat-main.chat-item-list').on('click', 'li', (e) => {
+    $('#direct ul.chat-main, #group ul.chat-main').on('click', 'li', function () {
 
-        $('.section-py-space').css('display', 'none');
-        $('.app-list').css('display', 'block');
-        $('#content').css('display', 'block');
-
-        $('#chating').addClass('active');
-        $('#group_blank').removeClass('active');
-
-        if (currentContactId) {
-            $(`ul.chat-item-list li[key=${currentContactId}]`).removeClass('active');
+        $(`#myTabContent1 .tab-pane.active .chat-main li`).removeClass('active');
+        $(this).addClass('active');
+        
+        let target = '.messages.active .contact-chat ul.chatappend';
+        if ($('#direct').hasClass('active')) {
+            currentDirectId = Number($(this).attr('groupId'));
+            currentDirectUsers = $(this).attr('groupUsers');
+            globalGroupId = currentDirectId;
+            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 1);
+        } else if ($('#group').hasClass('active')) {
+            currentGroupId = Number($(this).attr('groupId'));
+            currentGroupUsers = $(this).attr('groupUsers');
+            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 2);
+            globalGroupId = currentGroupId;
+        } else if ($('#cast').hasClass('active')) {
+            currentCastId = Number($(this).attr('groupId'));
+            currentCastUsers = $(this).attr('groupUsers');
+            globalGroupId = currentCastId;
+            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 3);
         }
-        currentContactId = Number($(e.currentTarget).attr('key'));
-        $(`ul.chat-item-list li[key=${currentContactId}]`).addClass('active');
-        $(`ul.chat-main li[key=${currentContactId}] h6.status`).css('display', 'block');
-        $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).text('');
-        $(`ul.chat-main li[key=${currentContactId}] .date-status .badge`).css('display', 'none');
-        setCurrentChatContent(currentContactId);
+
+        // $(`ul.chat-main li[groupId=${currentDirectId}] h6.status`).css('display', 'block');
+        // $(`ul.chat-main li[groupId=${currentDirectId}] .date-status .badge`).text('');
+        // $(`ul.chat-main li[groupId=${currentDirectId}] .date-status .badge`).css('display', 'none');
+        // setCurrentChatContent(currentGroupId);
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
             $('.chitchat-container').toggleClass("mobile-menu");
@@ -156,6 +169,7 @@ $(document).ready(() => {
             $('.main-nav').removeClass("on");
         }
     });
+
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
         $('#createPhoto').modal('show');
@@ -163,6 +177,7 @@ $(document).ready(() => {
         $('#createPhoto .emojis-price').removeClass('d-none');
         $('#createPhoto .save-send').css('margin-left', '0px');
     });
+
     $('#mediaBtn').on('click', () => {
         $('#mediaPhoto').modal('show');
 
@@ -175,6 +190,7 @@ $(document).ready(() => {
         $('#createPhoto .save-send').css('margin-left', '-20px');
 
     });
+
     $('.selfProfileBtn').on('click', () => {
         displayProfileContent(currentUserId);
         $('.chitchat-container').toggleClass("mobile-menu");
@@ -182,22 +198,16 @@ $(document).ready(() => {
             $('.main-nav').removeClass("on");
         }
     });
+
     $('.menu-trigger').on('click', () => {
         if (currentContactId)
             displayProfileContent(currentContactId);
-    })
+    });
+
     $('.balance-amount').on('click', () => {
         displayPaymentHistory(currentUserId);
-    })
+    });
 
-
-    // $('ul.chat-main.request-list').on('click', 'li', (e) => {
-    //     let from = $(e.currentTarget).data('from');
-    //     let to = $(e.currentTarget).data('to');
-    //     $('#detailRequestModal .request-title').text($(e.currentTarget).find('.title').text());
-    //     $('#detailRequestModal .request-description').text($(e.currentTarget).find('.description').val());
-    //     $('#detailRequestModal .request-price').text($(e.currentTarget).find('.price').val() + "$");
-    // });
     $('#profileImageUploadBtn').css('pointer-events', 'none');
     //profile Image Ajax Change
     changeProfileImageAjax();
@@ -208,7 +218,9 @@ function getCertainUserInfoById(id) {
     return usersList.find(item => item.id == id);
 }
 
-function getRecentChatUsers() {
+function getRecentChatUsers(type) {
+    let form_data = new FormData();
+    form_data.append('type', type);
     $.ajax({
         url: '/home/getRecentChatUsers',
         headers: {
@@ -219,27 +231,54 @@ function getRecentChatUsers() {
         processData: false,
         type: 'POST',
         dataType: "json",
+        data: form_data,
         success: function (res) {
             if (res.state == 'true') {
-                let {
-                    recentChatUsers,
-                    lastChatUserId
-                } = res;
-                recentChatUsers = recentChatUsers.map(item => getCertainUserInfoById(item));
-                currentContactId = lastChatUserId;
-                let userListTarget = $('.recent-default .recent-chat-list');
-                userListTarget.empty();
-                recentChatUsers.reverse().forEach(item => {
-                    addChatUserListItem(userListTarget, item);
+                globalGroupId = res.data.slice(-1)[0].id;
+                globalGroupUsers = res.data.slice(-1)[0].users.join(',');
+                if (type == 1) {
+                    var itemTarget = '#direct .chat-main';
+                    var messageTarget = '#chating .chatappend'
+                    currentDirectId = globalGroupId;
+                    currentDirectUsers = globalGroupUsers;
+                    let recentChatUsers = res.data.map(item => item.users.find(userId => userId != currentUserId)).map(id => getCertainUserInfoById(id));
+                    displayRecentChatFriends(recentChatUsers);
+                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 1);
+                } else if (type == 2) {
+                    var itemTarget = '#group .chat-main';
+                    var messageTarget = '#group_chat .chatappend'
+                    currentGroupId = globalGroupId;
+                    currentGroupUsers = globalGroupUsers;
+                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 2);
+                } else if (type == 3) {
+                    var itemTarget = '#cast .chat-main';
+                    var messageTarget = '#cast_chat .chatappend'
+                    currentCastId = globalGroupId;
+                    currentCastUsers = globalGroupUsers;
+                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 3);
+                }
+                
+                $(itemTarget).empty();
+                res.data.forEach(item => {
+                    if (item.lastMessage) {
+                        var content = item.lastMessage.kind == 0 ? item.lastMessage.content : item.lastMessage.kind == 1 ? 'You has been received PhotoRequest' : 'You has been received Blink';
+                        item.lastMessage = content;
+                    }
+                    addNewGroupItem(itemTarget, item);
                 });
-                displayRecentChatFriends(recentChatUsers);
-                $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
-                setCurrentChatContent(lastChatUserId);
+                convertListItems();
+                $(`${itemTarget} li:first-child`).addClass('active');
+                
+                // currentGroupUsers = $('#group .group-main>li.active').attr('groupUsers');
+                // let contentwidth = jQuery(window).width();
+                // if (contentwidth > 768) {
+                //     $('#group > ul.group-main>li.active').click();
+                // }
+
             } else {
                 $('.section-py-space').css('display', 'block');
                 $('#content').css('display', 'none');
                 $('.app-list').css('display', 'none');
-
             }
         },
         error: function (res) {
@@ -249,13 +288,42 @@ function getRecentChatUsers() {
     });
 }
 
-function setCurrentChatContent(contactorId) {
+function getLastMessage(groupId, resolve) {
+    let form_data = new FormData();
+    form_data.append('groupId', groupId);
+    $.ajax({
+        url: '/message/getLastMessage',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        data: form_data,
+        success: function (res) {
+            if (res.data) {
+                var content = res.data.kind == 0 ? res.data.content : res.data.kind == 1 ? 'You has been received PhotoRequest' : 'You has been received Blink';
+            } else {
+                var content = 'Hello';
+            }
+            resolve(content)
+        },
+        error: function (res) {
+            // document.location.href = '/login';
+        }
+    });
+}
+
+
+function setCurrentChatContent(groupId) {
     $('.spining').css('display', 'flex');
 
     var form_data = new FormData();
-    form_data.append('currentContactorId', contactorId);
+    form_data.append('currentGroupId', groupId);
     $.ajax({
-        url: '/home/getCurrentChatContent',
+        url: '/home/getCurrentGroupChatContent',
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
@@ -389,7 +457,6 @@ function searchAndAddRecentChatList() {
             }, 100);
         }
         if ($('#newChatModal').hasClass('show')) {
-            console.log('aaa');
             let target = $('#newChatModal .chat-main');
             target.empty();
             usersList.reverse().forEach(item => addChatUserListItem(target, item));
@@ -446,9 +513,16 @@ function getUsersListBySearch() {
             }
         }, 100);
     });
-    $('#newChatModal').on('shown.bs.modal', function () {
-        target.empty();
-        usersList.reverse().filter(item => item.id != currentUserId).forEach(data => {
+}
+
+$('#newChatModal').on('shown.bs.modal', function () {
+    let target = '#newChatModal .chat-main';
+    $(target).empty();
+    let recentChatUsersList = Array.from($('#direct .chat-main').children()).map(item => $(item).attr('groupUsers')).map(item => item.split(','));
+    new Promise(resolve => {
+        getUsersList(resolve)
+    }).then(usersList => {
+        usersList.reverse().filter(item => !recentChatUsersList.some(userIds => userIds.includes(item.id.toString()))).forEach(data => {
             $(target).prepend(`<li data-to="blank" key="${data.id}">
                 <div class="chat-box">
                     <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
@@ -463,24 +537,23 @@ function getUsersListBySearch() {
         });
         $('.chat-cont-setting').removeClass('open');
     });
-    $('#newChatModal .chat-main').on('click', 'li', function () {
-        let userId = $(this).attr('key');
-        let recentUsersList = Array.from($('#direct .chat-main').children()).map(item => $(item).attr('key'));
-        document.querySelector(`#direct-tab`).click();
-        if (recentUsersList.includes(userId)) {
-            document.querySelector(`#direct .chat-main li[key="${userId}"]`).click();
-        } else {
-            let item = usersList.find(item => item.id == userId)
-            addChatUserListItem($('#direct .chat-main'), item);
-            document.querySelector(`#direct .chat-main li[key="${userId}"]`).click();
-        }
+});
+
+$('#newChatModal .chat-main').on('click', 'li', function () {
+    let userId = $(this).attr('key');
+    new Promise(resolve => getUsersList(resolve)).then(usersList => {
+        let item = usersList.find(item => item.id == userId);
+        users = [userId, currentUserId];
+        socket.emit('create:group', { title: item.username, users, type: 1 });
         $('#newChatModal').modal('hide');
     });
-}
+    // addChatUserListItem($('#direct .chat-main'), item);
+    // $(`#direct .chat-main li[userId="${userId}"]`).click();
+});
 
 function addChatUserListItem(target, data) {
     $(target).prepend(
-        `<li data-to="blank" key="${data.id}">
+        `<li data-to="blank" userId="${data.id}" groupId="${data.groupId || 0}">
             <div class="chat-box">
                 <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
                     
@@ -518,9 +591,7 @@ function getContactList(resolve) {
                 success: function (res) {
                     let target = '#contact-list .chat-main';
                     $(target).empty();
-                    console.log('aaa')
                     if (resolve) {
-                        console.log(res);
                         resolve(res);
 
                     } else {
@@ -613,8 +684,10 @@ function newMessage() {
 
     $('.message-input input').val(null);
     $('.chat-main .active .details h6').html('<span>You : </span>' + message);
+
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
+
 
     console.log("sendername v8 :", getCertainUserInfoById(currentUserId).id);
     $.ajax({
@@ -635,50 +708,62 @@ function newMessage() {
         //dataType: dataType
     });
 
-    var currentContactIdArr = [];
-    if ($('#group_chat').hasClass('active')) {
-        // currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-
-        socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
-        return;
-
+    if ($('#chating').hasClass('active')) {
+        globalGroupId = currentDirectId;
+        // socket.emit('send:groupMessage', { groupId: currentDirectId, groupUsers: currentDirectUsers, content: message, senderName });
+    } else if ($('#group_chat').hasClass('active')) {
+        globalGroupId = currentGroupId;
+        // socket.emit('send:groupMessage', { groupId: currentGroupId, groupUsers: currentGroupUsers, content: message, senderName });
     } else if ($('#group_blank').hasClass('active')) {
-        currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-        var castTitle = $('#msgchatModal .cast_title input').val();
-        if (!castTitle) {
-            $('#msgchatModal').modal('show');
-            // alert('Please enter Cast Title');
-            $('#msgchatModal .cast_title input').addClass('is-invalid');
-            return;
-        }
-        socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0, newCast: true });
-        $('#msgchatModal .cast_title input').val('');
-
+        // socket.emit('send:groupMessage', { groupId: currentCastId, groupUsers: currentCastUsers, content: message, senderName });
     } else if ($('#cast_chat').hasClass('active')) {
-        if ($('#cast > ul.chat-main > li.active').attr('recipients')) {
-            currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-            var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
-            socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
-        }
-    } else {
-        currentContactIdArr = [currentContactId];
+        globalGroupId = currentCastId;
+        // socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
     }
-    var csrf = $('meta[name="csrf-token"]').attr('content');
-    console.log(currentContactIdArr);
-    if (currentContactIdArr.length) {
-        socket.emit('message', {
-            currentContactIdArr,
-            message,
-            senderName,
-            replyId,
-            replyKind,
-            // forwardId,
-            // forwardKind,
-            csrf
-        });
-    } else {
-        console.log('No recipients');
-    }
+    socket.emit('send:groupMessage', { globalGroupId, groupUsers: currentCastUsers, content: message, senderName });
+    return;
+    // var currentContactIdArr = [];
+    // if ($('#group_chat').hasClass('active')) {
+    //     // currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+
+    //     socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
+    //     return;
+
+    // } else if ($('#group_blank').hasClass('active')) {
+    //     currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
+    //     var castTitle = $('#msgchatModal .cast_title input').val();
+    //     if (!castTitle) {
+    //         $('#msgchatModal').modal('show');
+    //         // alert('Please enter Cast Title');
+    //         $('#msgchatModal .cast_title input').addClass('is-invalid');
+    //         return;
+    //     }
+    //     socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0, newCast: true });
+    //     $('#msgchatModal .cast_title input').val('');
+
+    // } else if ($('#cast_chat').hasClass('active')) {
+    //     if ($('#cast > ul.chat-main > li.active').attr('recipients')) {
+    //         currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
+    //         var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
+    //         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
+    //     }
+    // } else {
+    //     currentContactIdArr = [currentContactId];
+    // }
+    // var csrf = $('meta[name="csrf-token"]').attr('content');
+    // if (currentContactIdArr.length) {
+    //     socket.emit('message', {
+    //         currentContactIdArr,
+    //         message,
+    //         senderName,
+    //         replyId,
+    //         replyKind,
+    //         // forwardId,
+    //         // forwardKind,
+    //         csrf
+    //     });
+    // } else {
+    // }
 };
 
 function displayTypingAction() {
@@ -884,10 +969,9 @@ function displayRecentChatFriends(recentChatUsers) {
     recentChatUsers.forEach(item => {
         $('.recent-slider').append(`<div class="item">
             <div class="recent-box">
-            
                 <div class="dot-btn dot-success grow"></div>
-                <div class="recent-profile"><img class="bg-img" src="${item.avatar ? 'v1/api/downloadFile?path=' + item.avatar : '/images/default-avatar.png'}"
-                        alt="Avatar" />
+                <div class="recent-profile">
+                    <img class="bg-img" src="${item.avatar ? 'v1/api/downloadFile?path=' + item.avatar : '/images/default-avatar.png'}" alt="Avatar" />
                     <h6>${item.username}</h6>
                 </div>
             </div>
@@ -946,8 +1030,10 @@ function deleteMessages() {
             } else {
                 console.log('not photo');
             }
-            socket.emit('deleteMessage', {
-                currentContactId,
+            console.log(globalGroupId)
+            globalGroupId = $('#myTabContent1 .tab-pane.active .chat-main li.active').attr('groupId');
+            socket.emit('delete:message', {
+                globalGroupId,
                 messageId,
                 photoId
             });
@@ -986,7 +1072,6 @@ function displayPaymentHistory(userId) {
                 $('.history-list').empty();
                 res.data.forEach(item => {
                     let status = ['Holding', 'Completed'];
-                    console.log(item.sender);
                     let senderInfo = getCertainUserInfoById(item.sender);
                     let receiverInfo = getCertainUserInfoById(item.recipient);
                     let sendFlag = item.sender == currentUserId ? true : false;

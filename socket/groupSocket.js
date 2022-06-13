@@ -2,13 +2,15 @@ const db = require("./config");
 
 module.exports = (io, socket, user_socketMap, socket_userMap) => {
     let currentUserId = socket.handshake.query.currentUserId;
+
     socket.on('create:group', data => {
-        db.query(`INSERT INTO \`groups\` (title, users, type, owner) VALUES ("${data.title}", "${data.users}", 2, ${currentUserId})`, (error, item) => {
+        db.query(`INSERT INTO \`groups\` (title, type, owner, avatar) VALUES ("${data.title}", ${data.type}, ${currentUserId}, ${JSON.stringify(data.avatar) || null})`, (error, item) => {
+            if (error) throw error;
             data.id = item.insertId;
-            data.users.split(',').forEach(userId => {
+            data.users.forEach(userId => {
                 db.query(`INSERT INTO users_groups (user_id, group_id, status) VALUES (${userId}, ${item.insertId}, 2)`, (error, item) => {
                 });
-            })
+            });
             let senderSocketId = user_socketMap.get(currentUserId.toString());
             if (senderSocketId) {
                 io.sockets.sockets.get(senderSocketId).emit('create:group', data);
@@ -18,22 +20,55 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
 
     socket.on('send:groupMessage', data => {
         data.senderId = currentUserId;
-        db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${currentUserId}", "${data.currentGroupId}", "${data.content}")`, (error, item) => {
-            data.id = item.insertId
-            data.kind = 0;
-            data.sender = currentUserId;
-            db.query(`SELECT users FROM \`groups\` WHERE id="${data.currentGroupId}"`, (error, row) => {
-                row[0]['users'].split(',').forEach(userId => {
-                    let recipientSocketId = user_socketMap.get(userId.toString());
-                    if (recipientSocketId) {
-                        if (io.sockets.sockets.get(recipientSocketId)) {
-                            io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', data);
+        if (data.globalGroupId) {
+            db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${currentUserId}", "${data.globalGroupId}", "${data.content}")`, (error, item) => {
+                data.id = item.insertId
+                data.kind = 0;
+                data.sender = currentUserId;
+                db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
+                    row.forEach(item => {
+                        let recipientSocketId = user_socketMap.get(item['user_id'].toString());
+                        if (recipientSocketId) {
+                            if (io.sockets.sockets.get(recipientSocketId)) {
+                                io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', data);
+                            }
+                        } else {
+                            console.log('Send Message SMS');
+                            // sendSMS(data.from, userId, 'photo');
                         }
-                    } else {
-                        console.log('Send Message SMS');
-                        // sendSMS(data.from, userId, 'photo');
-                    }
+                    })
                 });
+            });
+        }
+    });
+
+    socket.on('send:groupBlink', data => {
+        console.log
+        let message = {
+            sender: data.sender,
+            globalGroupId: data.globalGroupId,
+            content: data.photo,
+            kind: 2
+        }
+        db.query(`INSERT INTO photo_galleries (photo, back, blur, blur_price, content) VALUES (${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
+            data.id = item.insertId;
+            message.photoId = item.insertId;
+            db.query(`INSERT INTO messages (sender, group_id, content, kind) VALUES ("${data.sender}", "${data.globalGroupId}", "${data.id}", 2)`, (error, messageItem) => {
+                message.messageId = messageItem.insertId;
+                db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
+                    row.forEach(item => {
+                        let recipientSocketId = user_socketMap.get(item['user_id'].toString());
+                        if (recipientSocketId) {
+                            if (io.sockets.sockets.get(recipientSocketId)) {
+                                io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
+                                io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
+                            }
+                        } else {
+                            console.log('Send Photo SMS');
+                            // sendSMS(data.from, userId, 'photo');
+                        }
+                    })
+                })
             });
         });
     });
@@ -44,10 +79,8 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
         currentGroupUsers = currentGroupUsers.split(',').filter(item => item != currentUserId).join(',');
         db.query(`UPDATE \`groups\` SET users="${currentGroupUsers}" WHERE id=${currentGroupId}`, (error, item) => {
             if (error) throw error;
-            console.log(item);
             db.query(`DELETE from users_groups WHERE user_id=${currentUserId} AND group_id=${currentGroupId}`, (error, item) => {
                 if (error) throw error;
-                console.log(item);
                 socket.emit('leave:group', { state: true });
             });
         });
@@ -57,25 +90,34 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
         let currentUserId = socket.handshake.query.currentUserId;
         db.query(`UPDATE users_groups SET remove_at=CURRENT_TIMESTAMP WHERE user_id=${currentUserId} AND group_id=${data.currentGroupId}`, (error, item) => {
             if (error) throw error;
-            console.log(item);
         })
         socket.emit('remove:group', { state: true });
     });
 
-    socket.on('edit:groupUsers', data => {
-        console.log(data);
+    socket.on('edit:groupUsers', (data, callback) => {
         db.query(`UPDATE \`groups\` SET users="${data.groupUsers}" WHERE id=${data.currentGroupId}`, (error, item) => {
             if (error) throw error;
-            console.log(item);
+            db.query(`DELETE FROM users_groups WHERE group_id=${data.currentGroupId}`, (error, item) => {
+                data.groupUsers.split(',').forEach(userId => {
+                    db.query(`INSERT INTO users_groups (user_id, group_id, status) VALUES (${userId}, ${data.currentGroupId}, 2)`, (error, item) => {
+                        callback({
+                            status: 'OK'
+                        })
+                    });
+                });
+            });
         });
     });
-    
-    socket.on('edit:groupUsers', data => {
+
+    socket.on('invite:groupUsers', (data, callback) => {
         console.log(data);
-        db.query(`UPDATE \`groups\` SET users="${data.groupUsers}" WHERE id=${data.currentGroupId}`, (error, item) => {
-            if (error) throw error;
-            console.log(item);
-        });
+        // db.query(`UPDATE \`groups\` SET users="${data.groupUsers}" WHERE id=${data.currentGroupId}`, (error, item) => {
+        //     if (error) throw error;
+        //     console.log(item);
+        //     callback({
+        //         status: 'OK'
+        //     })
+        // });
     });
 
 }

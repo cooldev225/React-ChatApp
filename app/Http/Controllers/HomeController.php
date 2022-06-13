@@ -18,6 +18,8 @@ use App\Models\PhotoRequest;
 use App\Models\PhotoGallery;
 use App\Models\Rating;
 use App\Models\PaymentHistory;
+use App\Models\Group;
+use App\Models\UsersGroup;
 
 class HomeController extends Controller
 {
@@ -34,32 +36,72 @@ class HomeController extends Controller
     
     public function getRecentChatUsers(Request $request) {
         $id = Auth::id();
+        $type = $request->input('type');
+        $groupArrs = User::join('users_groups', 'users.id', '=', 'users_groups.user_id')
+        ->join('groups', 'users_groups.group_id', '=', 'groups.id')
+        ->where('users.id', $id)
+        ->where('groups.type', $type)
+        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
+        ->orderBy('groups.created_at', 'desc')
+        ->get('groups.*');
+        $result = array();
+        if (count($groupArrs)) {
+            // $result = Group::where()
+            foreach($groupArrs as $index => $group) {
+                // array_push($result, $this->getGroupUsers($group['id']));
+                $groupArrs[$index]['users'] = $this->getGroupUsers($group['id']);
+                $groupArrs[$index]['lastMessage'] = Message::where('group_id', $group['id'])->orderBy('created_at', 'desc')->first();
+            }
+            return array('state' => 'true', 'data' => $groupArrs);
+        } else {
+            return array('state' => 'false');
+        }
+        // $myData = Message::join('groups', 'group_id', '=', 'groups.id')
+        // ->join('users_groups', 'messages.group_id', '=', 'users_groups.group_id')
+        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
+        // ->orderBy('messages.created_at', 'desc')
+        // ->get();
 
         // $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
-        $myData = Message::whereRaw("(sender =".$id." OR recipient=".$id.") AND recipient!=0" )->orderBy('created_at', 'desc')->get();
+        // $myData = Message::whereRaw("(sender =".$id." OR group_id=".$id.") AND recipient!=0" )->orderBy('created_at', 'desc')->get();
+        // var_dump($myData);
         if (count($myData)) {
-            $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
-            $recentChatUsers = array();
-            foreach($myData as $message) {
-                // if (count($recentChatUsers) < 20) {
-                    if ($message['recipient'] != 0) {
-                        if ($message['sender'] == $id) {
-                            if (!in_array($message['recipient'], $recentChatUsers))
-                                array_push($recentChatUsers, $message['recipient']);
-                        } else {
-                            if (!in_array($message['sender'], $recentChatUsers))
-                                array_push($recentChatUsers, $message['sender']);
-                        }
-                    }
-                // } else {
-                //     break;
-                // }
-            }
+            exec($myData);
+
+            // $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
+            // $recentChatUsers = array();
+            // foreach($myData as $message) {
+            //     // if (count($recentChatUsers) < 20) {
+            //         if ($message['recipient'] != 0) {
+            //             if ($message['sender'] == $id) {
+            //                 if (!in_array($message['recipient'], $recentChatUsers))
+            //                     array_push($recentChatUsers, $message['recipient']);
+            //             } else {
+            //                 if (!in_array($message['sender'], $recentChatUsers))
+            //                     array_push($recentChatUsers, $message['sender']);
+            //             }
+            //         }
+            //     // } else {
+            //     //     break;
+            //     // }
+            // }
             return array('state' => 'true',
                     'recentChatUsers' => $recentChatUsers,
                     'lastChatUserId' => $lastChatUserId);
         }
         return array('state' => 'false'); 
+    }
+
+    function cube($arr)
+    {
+        return $arr['user_id'];
+    }
+    public function getGroupUsers($groupId) {
+        $groupUsers = UsersGroup::where('group_id', $groupId)->orderBy('created_at')->get('user_id');
+        $result = $groupUsers->map(function($item) {
+            return $item['user_id'];
+        });
+        return $result;
     }
 
     public function getCurrentChatContent(Request $request) {
@@ -88,7 +130,7 @@ class HomeController extends Controller
     public function getCurrentGroupChatContent(Request $request) {
         $id = Auth::id();
         $groupId = $request->input('currentGroupId');
-        $messageData = Message::where("group_id", $groupId)->orderBy('created_at', 'desc')->limit(20)->get();
+        $messageData = Message::where("group_id", $groupId)->orderBy('created_at', 'desc')->limit(15)->get();
         $messages = $messageData->map(function($item) {
             if ($item['kind'] == 0) 
                 return $item;
@@ -103,8 +145,9 @@ class HomeController extends Controller
             $item['content'] = $temp[0]['photo'];
             return $item;
         });
+        $groupInfo = Group::where('id', $groupId)->first();
         
-        return array('state'=>'true','messageData'=>$messages);
+        return array('state'=>'true','messageData'=>$messages, 'groupInfo'=>$groupInfo);
     }
     
     public function getRateData(Request $request) {
@@ -251,6 +294,7 @@ class HomeController extends Controller
         $request->save();
         return;
     }
+
     public function getPhotoData(Request $request)
     {
         $messageId = $request->input('id');
@@ -290,11 +334,13 @@ class HomeController extends Controller
 
     public function loadMoreMessages(Request $request) {
         $id = Auth::id();
-        $contactorId = $request->input('currentContactId');
+        $groupId = $request->input('globalGroupId');
         $firstMessageId = $request->input('firstMessageId');
         
-        $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId." AND id < ".$firstMessageId)
-            ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id." AND id < ".$firstMessageId)->orderBy('created_at', 'desc')->limit(5)->get();
+        // $messageData = Message::whereRaw("sender = ".$id." AND recipient = ".$contactorId." AND id < ".$firstMessageId)
+        //     ->orWhereRaw("sender = ".$contactorId." AND recipient = ".$id." AND id < ".$firstMessageId)->orderBy('created_at', 'desc')->limit(5)->get();
+        $messageData = Message::where("group_id", $groupId)->where('id', '<', $firstMessageId)->orderBy('created_at', 'desc')->limit(5)->get();
+
         $messages = $messageData->map(function($item) {
             if ($item['kind'] == 0) 
                 return $item;

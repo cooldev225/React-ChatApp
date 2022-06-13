@@ -53,7 +53,8 @@ $(document).ready(function () {
     selectBackPhoto();
     blurPhoto();
     addEmojisOnPhoto();
-    sendPhoto();
+    // sendPhoto();
+    sendBlink();
     showPhoto();
     showPhotoPriceAndOption();
     setContentRate();
@@ -104,14 +105,6 @@ $(document).ready(function () {
         $('.photo-request-icon').removeClass('dot-btn');
         $(e.currentTarget).find('.read-status').removeClass('fa-eye-slash');
         $(e.currentTarget).find('.read-status').addClass('fa-eye');
-        // currentContactId = to;
-        // if (currentUserId == from && currentContactId != to) {
-        //     setCurrentChatContent(to);
-        // } else if (currentUserId == to && currentContactId != from) {
-        //     setCurrentChatContent(from);
-        // }
-        // currentUserId == from ? setCurrentChatContent(to) : setCurrentChatContent(from);
-
         if (e.currentTarget.className.includes('sent')) {
             $('#detailRequestModal').find('.btn-success').css('display', 'none');
         }
@@ -497,6 +490,51 @@ function sendPhoto() {
         }
         $('#createPhoto .photo-price').text('');
     });
+    // edit Photo
+    $('.savePhotoBtn').on('click', function (e) {
+        photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
+        let data = {};
+        data.from = currentUserId;
+        // data.to = currentContactId;
+        data.content = getEmojisInfo(photo_canvas._objects);
+        data.photo = photo_canvas.toDataURL('image/png');
+        data.photoId = $(this).closest('.modal-content').attr('photoId');
+        data.to = currentContactId;
+        socket.emit('edit:photo', data);
+    });
+}
+
+function sendBlink() {
+    // send New Photo
+    $('#send-photo').on('click', (e) => {
+        if (!ori_image && !canvas._objects.length) {
+            return;
+        }
+        canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
+        let data = {};
+        data.sender = currentUserId;
+        // data.to = currentContactId;
+        data.photo = canvas.toDataURL('image/png');
+        data.back = ori_image || '';
+        data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
+        data.blurPrice = blurPrice;
+        data.content = getEmojisInfo(canvas._objects);
+        if ($('#chating').hasClass('active')) {
+            globalGroupId = currentDirectId;
+        } else if ($('#group_chat').hasClass('active')) {
+            globalGroupId = currentGroupId;
+        } else if ($('#cast_chat').hasClass('active')) {
+            globalGroupId = currentCastId;
+        }
+        console.log(globalGroupId);
+        console.log(currentGroupUsers);
+        if (globalGroupId) {
+            data.globalGroupId = globalGroupId;
+            socket.emit('send:groupBlink', data);
+        }
+        $('#createPhoto .photo-price').text('');
+    });
+
     // edit Photo
     $('.savePhotoBtn').on('click', function (e) {
         photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
@@ -900,7 +938,7 @@ function showPhotoContent(id) {
             $('.selected-emojis').css('left', canvasDimension + 40 + 'px');
             if (res.state == 'true') {
                 let emojis = JSON.parse(res.data[0].content);
-                console.log(emojis);
+                console.log(res.data)
                 $('#photo_item').modal('show');
                 $('#photo_item .modal-content').attr('key', id);
                 $('#photo_item .modal-content').attr('photoId', res.data[0].id);

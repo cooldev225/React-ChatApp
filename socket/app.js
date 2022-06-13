@@ -209,6 +209,7 @@ const onConnection = (socket) => {
     socket.on('read:message', data => {
         db.query(`UPDATE messages SET state = 3 WHERE id=${data.messageId}`, (error, item) => {
             if (error) throw error;
+            console.log(data);
             let senderSocketId = user_socketMap.get(data.from.toString());
             let recipientSocketId = user_socketMap.get(data.to.toString());
             if (senderSocketId) {
@@ -272,7 +273,6 @@ const onConnection = (socket) => {
                     if (index == 0) {
 
                         if (data.cast) {
-                            console.log("Recipients:", data.to);
                             if (data.to.join(', ') && data.castTitle) {
                                 db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
                                     console.log("Cast Title: ", data.castTitle);
@@ -294,40 +294,6 @@ const onConnection = (socket) => {
                         sendSMS(data.from, currentContactId, 'photo');
                     }
                 });
-            });
-        });
-    });
-
-    socket.on('send:groupBlink', data => {
-        let message = {
-            sender: data.from,
-            // to: currentContactId,
-            currentGroupId: data.currentGroupId,
-            content: data.photo,
-            kind: 2
-        }
-        db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", 0, ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-            data.id = item.insertId;
-            message.photoId = item.insertId
-            db.query(`INSERT INTO messages (sender, recipient, group_id, content, kind) VALUES ("${data.from}", 0, "${data.currentGroupId}", "${data.id}", 2)`, (error, messageItem) => {
-                message.messageId = messageItem.insertId;
-                console.log(data.currentGroupUsers);
-                db.query(`SELECT users FROM \`groups\` WHERE id="${data.currentGroupId}"`, (error, row) => {
-                    row[0]['users'].split(',').forEach(userId => {
-                        let recipientSocketId = user_socketMap.get(userId.toString());
-                        message.to = userId;
-                        if (recipientSocketId) {
-                            if (io.sockets.sockets.get(recipientSocketId)) {
-                                console.log('send Blink');
-                                io.sockets.sockets.get(recipientSocketId).emit('send:groupMessage', message);
-                                io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
-                            }
-                        } else {
-                            console.log('Send Photo SMS');
-                            // sendSMS(data.from, userId, 'photo');
-                        }
-                    })
-                })
             });
         });
     });
@@ -403,13 +369,13 @@ const onConnection = (socket) => {
         }
     });
 
-    socket.on('deleteMessage', data => {
-        let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
+    socket.on('delete:message', data => {
+        // let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
         let senderSocketId = user_socketMap.get(currentUserId.toString());
         if (data.photoId) {
             console.log(data.photoId);
             db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, photo) => {
-                if (photo[0].paid && currentUserId == photo[0].from) {
+                if (photo[0].paid) {
                     io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: false });
                 } else {
                     var paid_status = false;
@@ -418,10 +384,18 @@ const onConnection = (socket) => {
                     });
                     db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
                         if (!error) {
-                            io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: true });
-                            if (io.sockets.sockets.get(recipientSocketId)) {
-                                io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
-                            }
+                            // io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: true });
+                            // if (io.sockets.sockets.get(recipientSocketId)) {
+                            //     io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
+                            // }
+                            db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
+                                row.forEach(item => {
+                                    let recipientSocketId = user_socketMap.get(item['user_id'].toString());
+                                    if (recipientSocketId && io.sockets.sockets.get(recipientSocketId)) {
+                                        io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
+                                    }
+                                })
+                            });
                         }
                     });
                 }

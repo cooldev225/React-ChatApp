@@ -1,6 +1,7 @@
 
 
 $(document).ready(function () {
+
     $('#group_chat').on('click', '.leave_group_btn', function () {
         if (confirm("You will leave this Group")) {
             if (currentGroupId) {
@@ -10,7 +11,6 @@ $(document).ready(function () {
     });
 
     socket.on('leave:group', data => {
-        console.log(data);
         if (data.state == true) {
             currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
             currentGroupUsers = $('#group .group-main>li.active').next().attr('groupUsers') || $('#group .group-main>li.active').prev().attr('groupUsers');
@@ -22,7 +22,6 @@ $(document).ready(function () {
     });
 
     socket.on('remove:group', data => {
-        console.log(data);
         if (data.state == true) {
             currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
             setTimeout(() => {
@@ -55,9 +54,8 @@ $(document).ready(function () {
         confirmModal('', content, removeGroupAction);
     });
 
+    // add/remove user in group
     $('#group_chat .chat-frind-content').on('click', '.add_users_btn', function () {
-        console.log(currentGroupId)
-        console.log(currentGroupUsers)
         let groupTitle = $('#group .group-main li.active .details h5').text() || 'Group Title is undefined';
         $('#custom_modal').modal('show');
         $('#custom_modal .modal-content').addClass('edit_group_modal');
@@ -77,9 +75,20 @@ $(document).ready(function () {
         });
     });
 
+    $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
+        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key'));
+        groupUsers.push(currentUserId);
+        socket.emit('edit:groupUsers', { currentGroupId, groupUsers: groupUsers.join(',') }, (res) => {
+            if (res.status == 'OK') {
+                $('#group-tab').click();
+            }
+        });
+        $('#custom_modal .modal-content').removeClass('edit_group_modal');
+        $('#custom_modal').modal('hide');
+    });
+
+    //invite users in group 
     $('#group_chat .chat-frind-content').on('click', '.invite_users_btn', function () {
-        console.log(currentGroupId);
-        console.log(currentGroupUsers);
         let groupTitle = $('#group .group-main li.active .details h5').text() || 'Group Title is undefined';
         $('#custom_modal').modal('show');
         $('#custom_modal .modal-content').addClass('invite_group_modal');
@@ -93,25 +102,16 @@ $(document).ready(function () {
             let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
             contactList.filter(item => !currentGroupUsers.split(',').find(id => item.id == id)).forEach(item => addUsersListItem(target, item, statusItem));
             // contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
-            currentGroupUsers.split(',').forEach(userId => {
-                $(`#custom_modal ul.chat-main li[key=${userId}] input`).prop('checked', true);
-                $(`#custom_modal ul.chat-main li[key=${userId}]`).addClass('active');
-            });
         });
     });
 
-    $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
-        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
-        console.log(groupUsers);
-        socket.emit('edit:groupUsers', { currentGroupId, groupUsers });
-        $('#custom_modal .modal-content').removeClass('edit_group_modal');
-        $('#custom_modal').modal('hide');
-    });
-
     $('#custom_modal').on('click', '.modal-content.invite_group_modal .btn_group .btn', function () {
-        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',') + ',' + currentUserId;
-        console.log(groupUsers);
-        socket.emit('invite:groupUsers', { currentGroupId, groupUsers });
+        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',');
+        socket.emit('invite:groupUsers', { currentGroupId, groupUsers }, (res) => {
+            if (res.status == 'OK') {
+                $('#group-tab').click();
+            }
+        });
         $('#custom_modal .modal-content').removeClass('invite_group_modal');
         $('#custom_modal').modal('hide');
     });
@@ -135,7 +135,6 @@ function confirmModal(title, content, okAction, cancelAction) {
     });
 }
 
-
 function addUsersListItem(target, data, statusItem) {
     $(target).prepend(
         `<li data-to="blank" key="${data.id}">
@@ -153,4 +152,191 @@ function addUsersListItem(target, data, statusItem) {
             </div>
         </li>`
     );
+}
+
+function addNewGroupItem(target, data) {
+
+    let { id, title, avatar, type, users } = data;
+    if (type == 1) {
+        let directId = users.find(item => item != currentUserId);
+        let userInfo = getCertainUserInfoById(directId);
+        avatar = userInfo.avatar;
+        title = userInfo.username;
+    }
+    let groupUsersAvatar = users.filter((item, index) => index < 3).map(item => {
+        let avatar = getCertainUserInfoById(item).avatar;
+        return avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png';
+    });
+    let avatarContents = groupUsersAvatar.reduce((content, item) => content + `<li><a class="group-tp" href="#" data-tippy-content="John Doe"> <img src="${item}" alt="group-icon-img"/></a></li>\n`, '');
+    avatarContents = type == 1 ? '' : avatarContents;
+    // let displayNames = groupUsers.length > 24 ? groupUsers.slice(0, 24) + '...' : groupUsers;
+    let countRecipients = users.length;
+    $(target).prepend(
+        `<li class="" data-to="group_chat" groupId=${id} groupUsers=${users.join(',')}>
+            <div class="group-box">
+                <div class="profile">
+                    <img class="bg-img" src=${avatar ? 'v1/api/downloadFile?path=' + avatar : '/images/default-avatar.png'} alt="Avatar"/>
+                </div>
+                <div class="details">
+                    <h5>${title}</h5>
+                    <h6>${data.lastMessage || 'Hello'}</h6>
+                </div>
+                <div class="date-status">
+                    <ul class="grop-icon">
+                        ${avatarContents}
+                        ${countRecipients > 3 ? "<li>+" + (countRecipients - 3) + "</li>" : ""}
+                    </ul>
+                </div>
+            </div>
+        </li>`
+    );
+}
+
+function addGroupChatItem(target, data, loadFlag) {
+    if (data.reply_id) {
+        if (data.reply_kind == 0) {
+            var replyContent = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.msg-setting-main .content').text();
+        } else if (data.reply_kind == 2) {
+            let imageSrc = $('.chatappend').find(`li.msg-item[key="${data.reply_id}"]`).find('.receive_photo').attr('src');
+            var replyContent = `<img src="${imageSrc}" width="50">`;
+        }
+    }
+    let senderInfo = getCertainUserInfoById(data.sender);
+    let type = senderInfo.id == currentUserId ? "replies" : "sent";
+    let time = data.created_at ? new Date(data.created_at) : new Date();
+    let item = `<li class="${type} msg-item" key="${data.id || data.messageId}" kind="${data.kind || 0}">
+        <div class="media">
+            <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
+            </div>
+            <div class="media-body">
+                <div class="contact-name">
+                    <h5>${senderInfo.username}</h5>
+                    <h6 class="${State[data.state || 0]}">${displayTimeString(time)}</h6>
+                    <div class="photoRating">
+                        <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
+                    </div>
+                    <ul class="msg-box">
+                        <li class="msg-setting-main">
+                            ${data.kind == 0 ?
+            `${data.reply_id ? '<div class="replyMessage">\
+                <span class="replyIcon"><i class="fa fa-reply"></i></span>\
+                <span class="replyContent">' + replyContent + '</span>\
+                <hr style="color: black">\
+                <span class="content">' + data.content + '</span>\
+            </div>' : '<h5 class="content">' + data.content + '</h5>'}`
+            : data.kind == 1 ?
+                `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
+                : data.kind == 2 ? `<img class="receive_photo" messageId="${data.messageId}" photoId="${data.photoId}" src="${data.content}">` : ''}
+                            <div class="msg-dropdown-main">
+                                <div class="msg-open-btn"><span>Open</span></div>
+                                <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                <div class="msg-dropdown"> 
+                                    <ul>
+                                        <li class="replyBtn"><a href="#"><i class="fa fa-reply"></i>reply</a></li>
+                                        <li class="forwardBtn"><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        ${data.kind == 2 ? '<li class="replyEditBtn"><a href="#"><i class="fa fa-edit"></i> edit</a></li>' : ''}
+                                        <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                </div>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </li>`;
+    if (loadFlag) {
+        $(target).prepend(item);
+    } else {
+        $(target).append(item);
+    }
+    // $(".messages.active").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
+
+    if (data.rate) {
+        getContentRate(`li.msg-item[key="${data.id}"]`, data.rate)
+    }
+
+}
+
+function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
+    $('.spining').css('display', 'flex');
+    var form_data = new FormData();
+    form_data.append('currentGroupId', currentGroupId);
+    $.ajax({
+        url: '/home/getCurrentGroupChatContent',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            console.log("Message Data:", res);
+            console.log(pageSettingFlag);
+            if (res.state == 'true') {
+                getUsersList();
+                let { messageData, groupInfo } = res;
+                // chat page setting
+                if (pageSettingFlag == 1) {
+                    groupInfo.avatar = $('#direct .chat-main li.active .profile .bg-img').attr('src').slice(-100);
+                    console.log(groupInfo.avatar)
+                    groupInfo.title = $('#direct .chat-main li.active .details h5').text();
+                    $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url(${groupInfo.avatar})`)
+                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
+                    // console.log(avatar)
+                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
+                    // let directId = users.find(item => item != currentUserId);
+                    // let userInfo = getCertainUserInfoById(directId);
+                    // avatar = userInfo.avatar;
+                    // title = userInfo.username;
+                } else {
+                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
+                    if (groupInfo.avatar)
+                        $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${groupInfo.avatar}")`)
+                }
+                $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
+                
+
+                // show chat page display
+                $('.section-py-space').css('display', 'none');
+                $('.app-list').css('display', 'block');
+                $('#content').css('display', 'block');
+
+                // chat history append
+                new Promise(resolve => {
+                    if (messageData.length) {
+                        $(target).empty();
+                        messageData.reverse().forEach(item => {
+                            if (item.state != 3 && currentUserId != item.sender) {
+                                let message = {
+                                    from: item.sender,
+                                    to: currentUserId,
+                                    content: item.content,
+                                    messageId: item.id,
+                                    state: item.state,
+                                }
+                                socket.emit('read:message', message);
+                            }
+                            addGroupChatItem(target, item);
+                        });
+                    }
+                    resolve();
+                }).then(() => {
+                    $(".messages").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
+                    setTimeout(() => {
+                        $('.spining').css('display', 'none');
+                    }, 1000);
+                });
+            } else {
+                $('.section-py-space').css('display', 'block');
+                $('#content').css('display', 'none');
+                $('.app-list').css('display', 'none');
+            }
+        },
+        error: function (response) { }
+    });
 }

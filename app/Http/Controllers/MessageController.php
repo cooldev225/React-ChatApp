@@ -21,12 +21,37 @@ use App\Models\Rating;
 use App\Models\PaymentHistory;
 use App\Models\Cast;
 use App\Models\Group;
+use App\Models\UsersGroup;
 
 class MessageController extends Controller
 {
+    public function getLastMessage(Request $request) {
+        $groupId = $request->input('groupId');
+        $lastMessage = Message::where('group_id', $groupId)->orderBy('created_at', 'desc')->first();
+        return array('state' => 'true', 'data' => $lastMessage);
+    }
 
     public function getGroupData(Request $request) {
         $userId = Auth::id();
+        $groupArrs = User::join('users_groups', 'users.id', '=', 'users_groups.user_id')
+        ->join('groups', 'users_groups.group_id', '=', 'groups.id')
+        ->where('users.id', $userId)
+        ->where('groups.type', 2)
+        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
+        ->orderBy('groups.created_at', 'desc')
+        ->get('groups.*');
+
+        if (count($groupArrs)) {
+            // $result = Group::where()
+            foreach($groupArrs as $index => $group) {
+                // array_push($result, $this->getGroupUsers($group['id']));
+                $groupArrs[$index]['users'] = $this->getGroupUsers($group['id']);
+            }
+            return array('state' => 'true', 'data' => $groupArrs);
+        } else {
+            return array('state' => 'false');
+        }
+
         $groupData = Group::get();
         $result = array();
         foreach($groupData as $groupItem) {
@@ -38,8 +63,8 @@ class MessageController extends Controller
             //     array_push($result, $groupItem);
             // }
         }
-        return count($result) ? array('state' => 'true', 'data' => $result) : array('message' =>'no data');
-        
+        return array('state' => 'true', 'data' => $result);
+
     }
 
     public function getCastData(Request $request) {

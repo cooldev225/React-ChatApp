@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddGroupIdMessage extends Migration
+class RemoveFromToPhotoRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class AddGroupIdMessage extends Migration
      */
     public function up()
     {
-        Schema::table('messages', function (Blueprint $table) {
-            $table->integer('group_id')->nullable()->after('recipient');
+        Schema::table('photo_requests', function (Blueprint $table) {
+            $table->dropColumn('from');
+            $table->dropColumn('to');
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *
@@ -25,8 +26,9 @@ class AddGroupIdMessage extends Migration
      */
     public function down()
     {
-        Schema::table('messages', function (Blueprint $table) {
-            $table->dropColumn('group_id');
+        Schema::table('photo_requests', function (Blueprint $table) {
+            $table->integer('from')->after('id');
+            $table->integer('to')->after('from');
         });
     }
 }

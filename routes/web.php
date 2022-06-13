@@ -42,6 +42,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getCastData', 'MessageController@getCastData');
     Route::post('/home/getGroupData', 'MessageController@getGroupData');
     Route::post('/home/displayCastChatData', 'MessageController@displayCastChatData');
+    Route::post('/message/getLastMessage', 'MessageController@getLastMessage');
     Route::post('/api/create-paypal-transaction', 'PaymentController@createPayment');
     Route::post('/api/confirm-paypal-transaction', 'PaymentController@confirmPayment');
     Route::post('/home/getPaymentHistories', 'HomeController@getPaymentHistories');

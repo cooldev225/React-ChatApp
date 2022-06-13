@@ -126,18 +126,18 @@
                 </div>
                 <div class="chat custom-scroll">
                     <ul class="chat-cont-setting chat">
-                        <li>
+                        <li class="create_new_chat_btn">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#newChatModal"><span>new chat</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i
                                         data-feather="message-square"></i></div>
                             </a>
-                        <li>
+                        <li class="create_new_group_btn">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#newGroupModal"><span>new group</span>
                                 <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="users"></i>
                                 </div>
                             </a>
                         </li>
-                        <li>
+                        <li class="create_new_cast_btn">
                             <a href="#" id="new_cast"><span>new cast</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="cast"></i>
                                 </div>
@@ -212,7 +212,7 @@
                                     <div class="tab-content" id="myTabContent1">
                                         <div class="tab-pane fade show active" id="direct" role="tabpanel"
                                             aria-labelledby="direct-tab">
-                                            <ul class="chat-main recent-chat-list chat-item-list">
+                                            <ul class="group-main chat-main recent-chat-list chat-item-list">
 
                                             </ul>
                                         </div>
@@ -227,12 +227,12 @@
                                                     </div>
                                                 </div>
                                             </div> --}}
-                                            <ul class="group-main">
+                                            <ul class="group-main chat-main">
 
                                             </ul>
                                         </div>
                                         <div class="tab-pane fade" id="cast" role="tabpanel" aria-labelledby="cast-tab">
-                                            <ul class="chat-main">
+                                            <ul class="group-main chat-main">
 
                                             </ul>
                                         </div>
@@ -813,11 +813,6 @@
                         <div class="double-bounce1"></div>
                         <div class="double-bounce2"></div>
                     </div>
-                    <!-- <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> -->
-                    <!-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> -->
-                    <!-- <div class="spinner-border" role="status">
-                                                                                                                                                                                                                    <span class="sr-only">Loading...</span>
-                                                                                                                                                                                                                </div> -->
                 </div>
                 <div class="messages custom-scroll active" id="chating">
                     <div class="contact-details">
@@ -831,11 +826,11 @@
                             <div class="col-7">
                                 <div class="media left">
                                     <div class="media-left me-3">
-                                        <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/images/default-avatar.png" alt="Avatar" /></div>
+                                        <div class="profile online menu-trigger">
+                                            <img class="bg-img" src="/images/default-avatar.png" alt="Avatar" /></div>
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="contactor-name">John Doe</h5>
+                                        <h5 class="group_title">John Doe</h5>
                                         <div class="badge badge-success contactor-status">Active</div>
                                     </div>
                                     <div class="media-right">
@@ -897,6 +892,164 @@
                     <div class="contact-chat">
                         <ul class="chatappend">
 
+                        </ul>
+                    </div>
+                </div>
+                <div class="messages custom-scroll" id="group_chat">
+                    <div class="contact-details">
+                        <div class="row">
+                            <div class="col">
+                                <div class="media left">
+                                    <div class="media-left me-3">
+                                        <div class="profile online menu-trigger"><img class="bg-img"
+                                                src="/chat/images/avtar/teq.jpg" alt="Avatar" /></div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="group_title">Group Chat</h5>
+                                        <!-- <div class="badge badge-success">Active</div> -->
+                                    </div>
+                                    <div class="media-right">
+                                        <ul>
+                                            <li><a class="icon-btn btn-light button-effect mute" href="#"><i
+                                                        class="fa fa-volume-up"></i></a></li>
+                                            <li><a class="icon-btn btn-light search search-right" href="#"> <i
+                                                        data-feather="search"></i></a>
+                                                <form class="form-inline search-form">
+                                                    <div class="form-group">
+                                                        <input class="form-control-plaintext" type="search"
+                                                            placeholder="Search.." />
+                                                        <div class="icon-close close-search"> </div>
+                                                    </div>
+                                                </form>
+                                            </li>
+                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
+                                                        data-feather="chevron-left"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <ul class="calls text-end">
+                                    <!-- <li><a class="icon-btn btn-light button-effect" href="#"
+                                            data-tippy-content="Start Audio Conference" data-bs-toggle="modal"
+                                            data-bs-target="#confercall"><i data-feather="phone"></i></a></li>
+                                    <li><a class="icon-btn btn-light button-effect" href="#"
+                                            data-tippy-content="Start Video Conference" data-bs-toggle="modal"
+                                            data-bs-target="#confvideocl"><i data-feather="video"></i></a></li> -->
+                                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
+                                            data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
+                                    <li class="chat-friend-toggle"><a
+                                            class="icon-btn btn-light bg-transparent button-effect outside" href="#"
+                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
+                                        <div class="chat-frind-content">
+                                            <ul>
+                                                <li class="add_users_btn">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="plus-circle"></i></a>
+                                                    <h5>add users</h5>
+                                                </li>
+                                                <li class="invite_users_btn">
+                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="users"></i></a>
+                                                    <h5>invite users</h5>
+                                                </li>
+                                                <li class="leave_group_btn">
+                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash"></i></a>
+                                                    <h5>leave</h5>
+                                                </li>
+                                                <li class="remove_group_btn">
+                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
+                                                    <h5>remove</h5>
+                                                </li>
+                                                <!-- <li class="block_group_btn">
+                                                    <a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i data-feather="slash"></i></a>
+                                                    <h5>block</h5>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-chat">
+                        <ul class="chatappend">
+                            <li class="groupuser">
+                                <h4>Group Users</h4>
+                                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img"
+                                        src="/chat/images/avtar/3.jpg" alt="Avatar" /></div>
+                                <div class="gr-profile dot-btn dot-success"><img class="bg-img"
+                                        src="/chat/images/avtar/5.jpg" alt="Avatar" /></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="messages custom-scroll" id="cast_chat">
+                    <div class="contact-details">
+                        <div class="row">
+                            <div class="col">
+                                <div class="media left">
+                                    <div class="media-left me-3">
+                                        <div class="profile online menu-trigger"><img class="bg-img"
+                                                src="/chat/images/avtar/teq.jpg" alt="Avatar" /></div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="group_title">Cast Title</h5>
+                                        <div class="badge badge-success">Active</div>
+                                    </div>
+                                    <div class="media-right">
+                                        <ul>
+                                            <li>
+                                                <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
+                                                        data-feather="chevron-left"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <ul class="calls text-end">
+
+                                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
+                                            data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
+                                    <li class="chat-friend-toggle"><a
+                                            class="icon-btn btn-light bg-transparent button-effect outside" href="#"
+                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
+                                        <div class="chat-frind-content">
+                                            <ul>
+                                                <li><a class="icon-btn btn-outline-primary button-effect btn-sm"
+                                                        href="#"><i data-feather="user"></i></a>
+                                                    <h5>profile</h5>
+                                                </li>
+                                                <li><a class="icon-btn btn-outline-success button-effect btn-sm"
+                                                        href="#"><i data-feather="plus-circle"></i></a>
+                                                    <h5>archive</h5>
+                                                </li>
+                                                <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i
+                                                            data-feather="trash-2"></i></a>
+                                                    <h5>delete</h5>
+                                                </li>
+                                                <li><a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i
+                                                            data-feather="slash"></i></a>
+                                                    <h5>block</h5>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-chat">
+                        <ul class="chatappend">
+                            <li class="groupuser">
+                                <h4>Cast Title</h4>
+                                {{-- <div class="gr-profile dot-btn dot-success grow">
+                                    <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" />
+                                </div>
+                                <div class="gr-profile dot-btn dot-success grow">
+                                    <img class="bg-img" src="/chat/images/avtar/5.jpg" alt="Avatar" />
+                                </div> --}}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -999,94 +1152,6 @@
                         <p>Select a chat to read messages</p>
                     </div>
                 </div>
-                <div class="messages custom-scroll" id="group_chat">
-                    <div class="contact-details">
-                        <div class="row">
-                            <div class="col">
-                                <div class="media left">
-                                    <div class="media-left me-3">
-                                        <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/chat/images/avtar/teq.jpg" alt="Avatar" /></div>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Group Chat</h5>
-                                        <!-- <div class="badge badge-success">Active</div> -->
-                                    </div>
-                                    <div class="media-right">
-                                        <ul>
-                                            <li><a class="icon-btn btn-light button-effect mute" href="#"><i
-                                                        class="fa fa-volume-up"></i></a></li>
-                                            <li><a class="icon-btn btn-light search search-right" href="#"> <i
-                                                        data-feather="search"></i></a>
-                                                <form class="form-inline search-form">
-                                                    <div class="form-group">
-                                                        <input class="form-control-plaintext" type="search"
-                                                            placeholder="Search.." />
-                                                        <div class="icon-close close-search"> </div>
-                                                    </div>
-                                                </form>
-                                            </li>
-                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
-                                                        data-feather="chevron-left"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <ul class="calls text-end">
-                                    <!-- <li><a class="icon-btn btn-light button-effect" href="#"
-                                            data-tippy-content="Start Audio Conference" data-bs-toggle="modal"
-                                            data-bs-target="#confercall"><i data-feather="phone"></i></a></li>
-                                    <li><a class="icon-btn btn-light button-effect" href="#"
-                                            data-tippy-content="Start Video Conference" data-bs-toggle="modal"
-                                            data-bs-target="#confvideocl"><i data-feather="video"></i></a></li> -->
-                                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
-                                            data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
-                                    <li class="chat-friend-toggle"><a
-                                            class="icon-btn btn-light bg-transparent button-effect outside" href="#"
-                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
-                                        <div class="chat-frind-content">
-                                            <ul>
-                                                <li class="add_users_btn">
-                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="plus-circle"></i></a>
-                                                    <h5>add users</h5>
-                                                </li>
-                                                <li class="invite_users_btn">
-                                                    <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><i data-feather="users"></i></a>
-                                                    <h5>invite users</h5>
-                                                </li>
-                                                <li class="leave_group_btn">
-                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash"></i></a>
-                                                    <h5>leave</h5>
-                                                </li>
-                                                <li class="remove_group_btn">
-                                                    <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
-                                                    <h5>remove</h5>
-                                                </li>
-                                                <!-- <li class="block_group_btn">
-                                                    <a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i data-feather="slash"></i></a>
-                                                    <h5>block</h5>
-                                                </li> -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-chat">
-                        <ul class="chatappend">
-                            <li class="groupuser">
-                                <h4>Group Users</h4>
-                                <div class="gr-profile dot-btn dot-success grow"><img class="bg-img"
-                                        src="/chat/images/avtar/3.jpg" alt="Avatar" /></div>
-                                <div class="gr-profile dot-btn dot-success"><img class="bg-img"
-                                        src="/chat/images/avtar/5.jpg" alt="Avatar" /></div>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
                 <div class="messages custom-scroll" id="group_blank">
                     <div class="contact-details">
                         <div class="row">
@@ -1173,76 +1238,6 @@
                     <div class="call-list-center"><img src="/chat/images/chat.png" alt="" />
                         <div class="animated-bg"><i></i><i></i><i></i></div>
                         <p>Select one or more contacts</p>
-                    </div>
-                </div>
-                <div class="messages custom-scroll" id="cast_chat">
-                    <div class="contact-details">
-                        <div class="row">
-                            <div class="col">
-                                <div class="media left">
-                                    <div class="media-left me-3">
-                                        <div class="profile online menu-trigger"><img class="bg-img"
-                                                src="/chat/images/avtar/teq.jpg" alt="Avatar" /></div>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Cast Title</h5>
-                                        <div class="badge badge-success">Active</div>
-                                    </div>
-                                    <div class="media-right">
-                                        <ul>
-                                            <li>
-                                                <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
-                                                        data-feather="chevron-left"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <ul class="calls text-end">
-
-                                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
-                                            data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
-                                    <li class="chat-friend-toggle"><a
-                                            class="icon-btn btn-light bg-transparent button-effect outside" href="#"
-                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
-                                        <div class="chat-frind-content">
-                                            <ul>
-                                                <li><a class="icon-btn btn-outline-primary button-effect btn-sm"
-                                                        href="#"><i data-feather="user"></i></a>
-                                                    <h5>profile</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-success button-effect btn-sm"
-                                                        href="#"><i data-feather="plus-circle"></i></a>
-                                                    <h5>archive</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i
-                                                            data-feather="trash-2"></i></a>
-                                                    <h5>delete</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i
-                                                            data-feather="slash"></i></a>
-                                                    <h5>block</h5>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-chat">
-                        <ul class="chatappend">
-                            <li class="groupuser">
-                                <h4>Cast Title</h4>
-                                {{-- <div class="gr-profile dot-btn dot-success grow">
-                                    <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" />
-                                </div>
-                                <div class="gr-profile dot-btn dot-success grow">
-                                    <img class="bg-img" src="/chat/images/avtar/5.jpg" alt="Avatar" />
-                                </div> --}}
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <div class="replyMessage">
