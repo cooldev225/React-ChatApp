@@ -18,6 +18,10 @@ use App\Models\PhotoRequest;
 use App\Models\PhotoGallery;
 use App\Models\Rating;
 use App\Models\PaymentHistory;
+use App\Events\NewMessage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+
 use App\Models\Group;
 use App\Models\UsersGroup;
 
@@ -230,21 +234,23 @@ class HomeController extends Controller
         }
         return count($result) ? $result[0] : array('message' =>'no data');
     }
-
     public function sendMessage(Request $request)
     {
-        $id = Auth::id();
-        $contactId = $request->input('currentContactId');
+        //$id = Auth::id();
+	    /*$id =$request->input('id');
+    	$user =  User::find($id);
+        $contactId = $request->input('currentContactID');
         $content = $request->input('content');
         $newMessage = new Message;
         $newMessage->sender = $id;
         $newMessage->recipient = $contactId;
         $newMessage->content = $content;
-        $newMessage->save();
         return array(
             'message' => 'Save Successfully',
             'insertion' => true,
-        );
+        );*/
+        return true;
+	//broadcast(new NewMessage($user, $newMessage))->toOthers();
     }
 
     public function saveProfileInfo(Request $request)
