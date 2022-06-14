@@ -393,23 +393,16 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
         dataType: "json",
         success: function (res) {
             if (res.state == 'true') {
+                $(target).empty();
                 getUsersList();
                 let { messageData, groupInfo } = res;
                 // chat page setting
                 if (pageSettingFlag == 1) {
-                    groupInfo.avatar = $('#direct .chat-main li.active .profile .bg-img').attr('src').slice(-100);
+                    groupInfo.avatar = $('#direct .chat-main li.active .profile .bg-img').attr('src');
                     console.log(groupInfo.avatar)
                     groupInfo.title = $('#direct .chat-main li.active .details h5').text();
                     $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url(${groupInfo.avatar})`)
-                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
-                    // console.log(avatar)
-                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
-                    // let directId = users.find(item => item != currentUserId);
-                    // let userInfo = getCertainUserInfoById(directId);
-                    // avatar = userInfo.avatar;
-                    // title = userInfo.username;
                 } else {
-                    // $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
                     if (groupInfo.avatar)
                         $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${groupInfo.avatar}")`)
                 }
@@ -424,7 +417,6 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
                 // chat history append
                 new Promise(resolve => {
                     if (messageData.length) {
-                        $(target).empty();
                         messageData.reverse().forEach(item => {
                             if (item.state != 3 && currentUserId != item.sender) {
                                 let message = {

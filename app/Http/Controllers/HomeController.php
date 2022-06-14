@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Http;
 
 use App\Models\Group;
 use App\Models\UsersGroup;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
@@ -46,10 +47,8 @@ class HomeController extends Controller
         ->join('groups', 'users_groups.group_id', '=', 'groups.id')
         ->where('users.id', $id)
         ->where('groups.type', $type)
-        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
         ->orderBy('groups.created_at', 'desc')
-        ->get('groups.*');
-        $result = array();
+        ->get('groups.*')->toArray();
         if (count($groupArrs)) {
             // $result = Group::where()
             foreach($groupArrs as $index => $group) {
@@ -57,46 +56,18 @@ class HomeController extends Controller
                 $groupArrs[$index]['users'] = $this->getGroupUsers($group['id']);
                 $groupArrs[$index]['lastMessage'] = Message::where('group_id', $group['id'])->orderBy('created_at', 'desc')->first();
             }
+            
+            // $groupArrs = collect($groupArrs)->sortBy('lastMessage')
+            usort($groupArrs, function ($a, $b) {
+                $val1 = $a['lastMessage'] ? strtotime($a['lastMessage']['created_at']) : strtotime($a['created_at']);
+                $val2 = $b['lastMessage'] ? strtotime($b['lastMessage']['created_at']) : strtotime($b['created_at']);
+                return $val1 - $val2;
+            });
             return array('state' => 'true', 'data' => $groupArrs);
         } else {
             return array('state' => 'false');
         }
-        // $myData = Message::join('groups', 'group_id', '=', 'groups.id')
-        // ->join('users_groups', 'messages.group_id', '=', 'users_groups.group_id')
-        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
-        // ->orderBy('messages.created_at', 'desc')
-        // ->get();
-
-        // $myData = Message::where("sender", $id)->orWhere("recipient", $id)->orderBy('created_at', 'desc')->get();
-        // $myData = Message::whereRaw("(sender =".$id." OR group_id=".$id.") AND recipient!=0" )->orderBy('created_at', 'desc')->get();
-        // var_dump($myData);
-        if (count($myData)) {
-            exec($myData);
-
-            // $lastChatUserId = $myData[0]['sender'] == $id ? $myData[0]['recipient'] : $myData[0]['sender'];
-            // $recentChatUsers = array();
-            // foreach($myData as $message) {
-            //     // if (count($recentChatUsers) < 20) {
-            //         if ($message['recipient'] != 0) {
-            //             if ($message['sender'] == $id) {
-            //                 if (!in_array($message['recipient'], $recentChatUsers))
-            //                     array_push($recentChatUsers, $message['recipient']);
-            //             } else {
-            //                 if (!in_array($message['sender'], $recentChatUsers))
-            //                     array_push($recentChatUsers, $message['sender']);
-            //             }
-            //         }
-            //     // } else {
-            //     //     break;
-            //     // }
-            // }
-            return array('state' => 'true',
-                    'recentChatUsers' => $recentChatUsers,
-                    'lastChatUserId' => $lastChatUserId);
-        }
-        return array('state' => 'false'); 
     }
-
     function cube($arr)
     {
         return $arr['user_id'];

@@ -14,6 +14,7 @@ let currentCastId;
 let currentCastUsers;
 let globalGroupId;
 let globalGroupUsers;
+let recentUsers;
 $(document).ready(() => {
 
     socket.on('message', message => {
@@ -234,6 +235,7 @@ function getRecentChatUsers(type) {
         data: form_data,
         success: function (res) {
             if (res.state == 'true') {
+                type == 1 ? recentUsers =  res.data : '';
                 globalGroupId = res.data.slice(-1)[0].id;
                 globalGroupUsers = res.data.slice(-1)[0].users.join(',');
                 if (type == 1) {
@@ -259,9 +261,14 @@ function getRecentChatUsers(type) {
                 }
                 
                 $(itemTarget).empty();
+                // res.data.sort(function(a, b){
+                //     let firstValue = a.lastMessage ? new Date(a.lastMessage.created_at) : new Date(a.created_at);
+                //     let secondValue = b.lastMessage ? new Date(b.lastMessage.created_at) : new Date(b.created_at);
+                //     return secondValue - firstValue;
+                // }).reverse()
                 res.data.forEach(item => {
                     if (item.lastMessage) {
-                        var content = item.lastMessage.kind == 0 ? item.lastMessage.content : item.lastMessage.kind == 1 ? 'You has been received PhotoRequest' : 'You has been received Blink';
+                        var content = item.lastMessage.kind == 0 ? item.lastMessage.content : item.lastMessage.kind == 1 ? 'You have been received PhotoRequest' : 'You have been received Blink';
                         item.lastMessage = content;
                     }
                     addNewGroupItem(itemTarget, item);
