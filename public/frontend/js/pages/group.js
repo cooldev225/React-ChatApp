@@ -68,6 +68,9 @@ $(document).ready(function () {
 
     socket.on('send:groupMessage', data => {
         console.log(data);
+        $(`#direct > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+        $(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#group > ul.chat-main li:eq(0)');
+        $(`#cast > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#cast > ul.chat-main li:eq(0)');
         if (currentDirectId == data.globalGroupId) {
             var target = '#chating .contact-chat ul.chatappend';
         } else if(currentGroupId == data.globalGroupId) {
@@ -77,8 +80,6 @@ $(document).ready(function () {
         }
         else if (!$(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).length) {
             
-        } else {
-            $(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
         }
         addGroupChatItem(target, data);
         $(".messages.active").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
@@ -399,7 +400,6 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
                 // chat page setting
                 if (pageSettingFlag == 1) {
                     groupInfo.avatar = $('#direct .chat-main li.active .profile .bg-img').attr('src');
-                    console.log(groupInfo.avatar)
                     groupInfo.title = $('#direct .chat-main li.active .details h5').text();
                     $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url(${groupInfo.avatar})`)
                 } else {
