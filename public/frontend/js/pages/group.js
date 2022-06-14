@@ -2,6 +2,123 @@
 
 $(document).ready(function () {
 
+    socket.on('message', message => {
+        if (currentUserId != message.from) {
+            let senderName = getCertainUserInfoById(message.from).username;
+            let type = message.kind == 2 ? 'photo' :
+                message.kind == 1 ? 'request' :
+                    message.kind == 0 ? 'text' : "new";
+            //arrived message
+            socket.emit('arrive:message', message);
+            if (document.visibilityState == "visible") {
+                if (currentContactId == message.from) {
+                    //unread -> read
+                    socket.emit('read:message', message);
+                }
+            } else {
+                socket.emit('send:notification', {
+                    sender: message.from,
+                    to: message.to,
+                    senderName,
+                    type
+                });
+            }
+        }
+        message.from = Number(message.from);
+
+        if ($('#group_blank').hasClass('active') && message.from == currentUserId) {
+            $('#group_blank .rightchat').css('display', 'none');
+            $('#group_blank .call-list-center').css('display', 'none');
+            $('#group_blank .chatappend').css('display', 'flex');
+            let target = '#group_blank .contact-chat ul.chatappend';
+            addChatItem(target, message.from, message);
+            $(".messages").animate({ scrollTop: $('#group_blank .contact-chat').height() }, "fast");
+        } else if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
+            // $('#group_blank .rightchat').css('display', 'none');
+            // $('#group_blank .call-list-center').css('display', 'none');
+            // $('#group_blank .chatappend').css('display', 'flex');
+            let target = '#cast_chat > div.contact-chat > ul.chatappend';
+            addChatItem(target, message.from, message);
+            $(".messages").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, "fast");
+        } else if ($('#group_chat').hasClass('active')) {
+
+        } else {
+            if (message.from == currentUserId || message.from == currentContactId) {
+                let target = '#chating .contact-chat ul.chatappend';
+                addChatItem(target, message.from, message);
+                $('.typing-m').remove();
+                $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, "fast");
+                $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+            } else {
+                if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
+                    let senderInfo = usersList.find(item => item.id == Number(message.from));
+                    let userListTarget = $('.recent-default .recent-chat-list');
+                    addChatUserListItem(userListTarget, senderInfo);
+                } else {
+                    $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+                    $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
+                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
+                    let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
+                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
+                }
+            }
+        }
+
+    });
+
+    socket.on('send:groupMessage', data => {
+        console.log(data);
+        if (currentDirectId == data.globalGroupId) {
+            var target = '#chating .contact-chat ul.chatappend';
+        } else if(currentGroupId == data.globalGroupId) {
+            var target = '#group_chat .contact-chat ul.chatappend';
+        } else if(currentCastId == data.globalGroupId) {
+            var target = '#cast_chat .contact-chat ul.chatappend';
+        }
+        else if (!$(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).length) {
+            
+        } else {
+            $(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
+        }
+        addGroupChatItem(target, data);
+        $(".messages.active").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
+        
+        // SMS notification
+        if (currentUserId != data.sender) {
+            let type = data.kind == 2 ? 'photo' :
+                data.kind == 1 ? 'request' :
+                    data.kind == 0 ? 'text' : "new";
+            //arrived message
+            // socket.emit('arrive:message', data);
+            if (document.visibilityState == "visible") {
+                if (currentContactId == data.sender) {
+                    //unread -> read
+                    socket.emit('read:message', data);
+                }
+            } else {
+                socket.emit('send:notification', {
+                    sender: data.sender,
+                    recipient: currentUserId,
+                    groupId: data.globalGroupId,
+                    senderName: data.senderName,
+                    type
+                });
+            }
+        }
+    });
+
+    socket.on('create:group', data => {
+        if (data.type == 1) {
+            var target = '#direct > ul.chat-main';
+        } else if (data.type == 2) {
+            var target = '#group > ul.group-main';
+        }
+        // $(`#myTabContent .tab-pane.active .chat-main li[groupId=${data.id}`).addClass('active');
+        addNewGroupItem(target, data);
+        $(`#myTabContent1 .tab-pane.active .group-main li[groupId=${data.id}]`).click();
+        convertListItems();
+    });
+
     $('#group_chat').on('click', '.leave_group_btn', function () {
         if (confirm("You will leave this Group")) {
             if (currentGroupId) {
@@ -275,8 +392,6 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
         type: 'POST',
         dataType: "json",
         success: function (res) {
-            console.log("Message Data:", res);
-            console.log(pageSettingFlag);
             if (res.state == 'true') {
                 getUsersList();
                 let { messageData, groupInfo } = res;

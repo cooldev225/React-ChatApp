@@ -1,4 +1,5 @@
 const db = require("./config");
+const Notification = require("./notification.js");
 
 module.exports = (io, socket, user_socketMap, socket_userMap) => {
     let currentUserId = socket.handshake.query.currentUserId;
@@ -27,6 +28,7 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
                 data.sender = currentUserId;
                 db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
                     row.forEach(item => {
+                        console.log(item);
                         let recipientSocketId = user_socketMap.get(item['user_id'].toString());
                         if (recipientSocketId) {
                             if (io.sockets.sockets.get(recipientSocketId)) {
@@ -34,7 +36,7 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
                             }
                         } else {
                             console.log('Send Message SMS');
-                            // sendSMS(data.from, userId, 'photo');
+                            Notification.sendSMS(data.sender, item['user_id'], 'text');
                         }
                     })
                 });
@@ -43,7 +45,6 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
     });
 
     socket.on('send:groupBlink', data => {
-        console.log
         let message = {
             sender: data.sender,
             globalGroupId: data.globalGroupId,
@@ -65,7 +66,8 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
                             }
                         } else {
                             console.log('Send Photo SMS');
-                            // sendSMS(data.from, userId, 'photo');
+                            console.log(recipientSocketId);
+                            Notification.sendSMS(data.sender, item['user_id'], 'photo');
                         }
                     })
                 })

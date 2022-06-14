@@ -720,7 +720,7 @@ function newMessage() {
         globalGroupId = currentCastId;
         // socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
     }
-    socket.emit('send:groupMessage', { globalGroupId, groupUsers: currentCastUsers, content: message, senderName });
+    socket.emit('send:groupMessage', { globalGroupId, groupUsers: globalGroupUsers, content: message, senderName });
     return;
     // var currentContactIdArr = [];
     // if ($('#group_chat').hasClass('active')) {

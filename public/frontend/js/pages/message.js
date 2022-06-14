@@ -21,36 +21,6 @@ $(document).ready(function () {
         getCastData();
     });
 
-    socket.on('create:group', data => {
-        if (data.type == 1) {
-            var target = '#direct > ul.chat-main';
-        } else if (data.type == 2) {
-            var target = '#group > ul.group-main';
-        }
-        // $(`#myTabContent .tab-pane.active .chat-main li[groupId=${data.id}`).addClass('active');
-        addNewGroupItem(target, data);
-        $(`#myTabContent1 .tab-pane.active .group-main li[groupId=${data.id}]`).click();
-        convertListItems();
-    });
-
-    socket.on('send:groupMessage', data => {
-        if (currentDirectId == data.globalGroupId) {
-            var target = '#chating .contact-chat ul.chatappend';
-        } else if(currentGroupId == data.globalGroupId) {
-            var target = '#group_chat .contact-chat ul.chatappend';
-        } else if(currentCastId == data.globalGroupId) {
-            var target = '#cast_chat .contact-chat ul.chatappend';
-        }
-        else if (!$(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).length) {
-            
-        } else {
-            $(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-        }
-        addGroupChatItem(target, data);
-        $(".messages.active").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
-
-    });
-
     socket.on('add:newCast', data => {
         let target = '#cast > ul.chat-main';
         let title = data.castTitle;
