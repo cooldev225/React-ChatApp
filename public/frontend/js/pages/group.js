@@ -196,6 +196,7 @@ $(document).ready(function () {
     $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
         groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key'));
         groupUsers.push(currentUserId);
+        console.log(groupUsers);
         socket.emit('edit:groupUsers', { currentGroupId, groupUsers: groupUsers.join(',') }, (res) => {
             if (res.status == 'OK') {
                 $('#group-tab').click();
@@ -233,6 +234,7 @@ $(document).ready(function () {
         $('#custom_modal .modal-content').removeClass('invite_group_modal');
         $('#custom_modal').modal('hide');
     });
+
 });
 
 

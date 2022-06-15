@@ -97,15 +97,12 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
     });
 
     socket.on('edit:groupUsers', (data, callback) => {
-        db.query(`UPDATE \`groups\` SET users="${data.groupUsers}" WHERE id=${data.currentGroupId}`, (error, item) => {
-            if (error) throw error;
-            db.query(`DELETE FROM users_groups WHERE group_id=${data.currentGroupId}`, (error, item) => {
-                data.groupUsers.split(',').forEach(userId => {
-                    db.query(`INSERT INTO users_groups (user_id, group_id, status) VALUES (${userId}, ${data.currentGroupId}, 2)`, (error, item) => {
-                        callback({
-                            status: 'OK'
-                        })
-                    });
+        db.query(`DELETE FROM users_groups WHERE group_id=${data.currentGroupId}`, (error, item) => {
+            data.groupUsers.split(',').forEach(userId => {
+                db.query(`INSERT INTO users_groups (user_id, group_id, status) VALUES (${userId}, ${data.currentGroupId}, 2)`, (error, item) => {
+                    callback({
+                        status: 'OK'
+                    })
                 });
             });
         });
