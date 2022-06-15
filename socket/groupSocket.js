@@ -79,12 +79,10 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
         let currentUserId = socket.handshake.query.currentUserId;
         let { currentGroupId, currentGroupUsers } = data;
         currentGroupUsers = currentGroupUsers.split(',').filter(item => item != currentUserId).join(',');
-        db.query(`UPDATE \`groups\` SET users="${currentGroupUsers}" WHERE id=${currentGroupId}`, (error, item) => {
+
+        db.query(`DELETE from users_groups WHERE user_id=${currentUserId} AND group_id=${currentGroupId}`, (error, item) => {
             if (error) throw error;
-            db.query(`DELETE from users_groups WHERE user_id=${currentUserId} AND group_id=${currentGroupId}`, (error, item) => {
-                if (error) throw error;
-                socket.emit('leave:group', { state: true });
-            });
+            socket.emit('leave:group', { state: true });
         });
     });
 

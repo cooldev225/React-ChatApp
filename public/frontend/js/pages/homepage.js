@@ -145,18 +145,19 @@ $(document).ready(() => {
             currentDirectId = Number($(this).attr('groupId'));
             currentDirectUsers = $(this).attr('groupUsers');
             globalGroupId = currentDirectId;
-            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 1);
+            var pageSettingFlag = 1;
         } else if ($('#group').hasClass('active')) {
             currentGroupId = Number($(this).attr('groupId'));
             currentGroupUsers = $(this).attr('groupUsers');
-            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 2);
             globalGroupId = currentGroupId;
+            var pageSettingFlag = 2;
         } else if ($('#cast').hasClass('active')) {
             currentCastId = Number($(this).attr('groupId'));
             currentCastUsers = $(this).attr('groupUsers');
             globalGroupId = currentCastId;
-            showCurrentChatHistory(target, globalGroupId, pageSettingFlag = 3);
+            var pageSettingFlag = 3;
         }
+        showCurrentChatHistory(target, globalGroupId, pageSettingFlag);
 
         // $(`ul.chat-main li[groupId=${currentDirectId}] h6.status`).css('display', 'block');
         // $(`ul.chat-main li[groupId=${currentDirectId}] .date-status .badge`).text('');
@@ -245,20 +246,21 @@ function getRecentChatUsers(type) {
                     currentDirectUsers = globalGroupUsers;
                     let recentChatUsers = res.data.map(item => item.users.find(userId => userId != currentUserId)).map(id => getCertainUserInfoById(id));
                     displayRecentChatFriends(recentChatUsers);
-                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 1);
+                    var pageSettingFlag = 1;
                 } else if (type == 2) {
                     var itemTarget = '#group .chat-main';
                     var messageTarget = '#group_chat .chatappend'
                     currentGroupId = globalGroupId;
                     currentGroupUsers = globalGroupUsers;
-                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 2);
+                    var pageSettingFlag = 2;
                 } else if (type == 3) {
                     var itemTarget = '#cast .chat-main';
                     var messageTarget = '#cast_chat .chatappend'
                     currentCastId = globalGroupId;
                     currentCastUsers = globalGroupUsers;
-                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag = 3);
+                    var pageSettingFlag = 3;
                 }
+                showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag);
                 
                 $(itemTarget).empty();
                 // res.data.sort(function(a, b){
