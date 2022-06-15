@@ -3,6 +3,17 @@ var oldCastTitle = '';
 
 
 $(document).ready(function () {
+    $('#direct-tab').on('click', function () {
+        getRecentChatUsers(1);
+    });
+    $('#group-tab').on('click', function () {
+        getRecentChatUsers(2);
+    });
+    $('#cast-tab').on('click', function () {
+        // getRecentChatUsers(3);
+    });
+
+
     $('#new_cast').on('click', () => {
         if (!$('#cast .chat-main').children().length) {
             getCastData();
