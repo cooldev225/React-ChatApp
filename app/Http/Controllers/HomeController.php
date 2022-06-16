@@ -72,10 +72,7 @@ class HomeController extends Controller
             return array('state' => 'false');
         }
     }
-    function cube($arr)
-    {
-        return $arr['user_id'];
-    }
+    
     public function getGroupUsers($groupId) {
         $groupUsers = UsersGroup::where('group_id', $groupId)->orderBy('created_at')->get('user_id');
         $result = $groupUsers->map(function($item) {

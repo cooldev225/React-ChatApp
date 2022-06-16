@@ -370,7 +370,6 @@ const onConnection = (socket) => {
     });
 
     socket.on('delete:message', data => {
-        // let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
         let senderSocketId = user_socketMap.get(currentUserId.toString());
         if (data.photoId) {
             console.log(data.photoId);
@@ -384,10 +383,6 @@ const onConnection = (socket) => {
                     });
                     db.query(`DELETE FROM messages WHERE id=${data.messageId}`, (error, item) => {
                         if (!error) {
-                            // io.sockets.sockets.get(senderSocketId).emit('delete:message', { id: data.messageId, state: true });
-                            // if (io.sockets.sockets.get(recipientSocketId)) {
-                            //     io.sockets.sockets.get(recipientSocketId).emit('delete:message', { id: data.messageId, state: true });
-                            // }
                             db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
                                 row.forEach(item => {
                                     let recipientSocketId = user_socketMap.get(item['user_id'].toString());
@@ -467,9 +462,6 @@ const onConnection = (socket) => {
     });
 
     socket.on('send:notification', data => {
-        console.log('Notification Data: ');
-        console.log(data);
-        console.log('------------');
         Notification.sendSMS(data.sender, data.recipient, data.type);
         // db.query(`SELECT user_id FROM users_groups WHERE group_id=${data.groupId}`, (error, users) => {
         //     if (users.length) {

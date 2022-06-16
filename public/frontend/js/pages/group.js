@@ -16,7 +16,6 @@ $(document).ready(function () {
             contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
         });
     });
-
     $('#custom_modal').on('click', '.modal-content.create_new_group_modal .btn_group .btn', function () {
         let title = $('#custom_modal').find('.sub_title input').val();
         if (!title) {
@@ -28,7 +27,7 @@ $(document).ready(function () {
         }
         let users = Array.from($('#custom_modal .chat-main li.active')).map(item => $(item).attr('key'));
         users.push(currentUserId);
-        socket.emit('create:group', { title, users, type: 2});
+        socket.emit('create:group', { title, users, type: 2 });
         $('#custom_modal').modal('hide');
         $(`.chat-cont-setting`).removeClass('open');
         $('#custom_modal .modal-content').removeClass('create_new_group_modal');
@@ -37,7 +36,45 @@ $(document).ready(function () {
         }, 100);
 
     });
-    
+    // create new group end
+
+    // create new cast start
+    $('.create_new_cast_btn').on('click', function (e) {
+        $('#custom_modal').modal('show');
+        $('#custom_modal .modal-content').addClass('create_new_cast_modal');
+        $('#custom_modal').find('.modal-title').text('Create New Cast');
+        $('#custom_modal').find('.sub_title span').text('Cast Title');
+        $('#custom_modal').find('.sub_title input').val('');
+        $('#custom_modal').find('.btn_group .btn').text('Create');
+        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
+            let target = '#custom_modal .chat-main';
+            $(target).empty();
+            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
+            contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
+        });
+    });
+    $('#custom_modal').on('click', '.modal-content.create_new_cast_modal .btn_group .btn', function () {
+        let title = $('#custom_modal').find('.sub_title input').val();
+        if (!title) {
+            $('#custom_modal .sub_title input').addClass('is-invalid');
+            setTimeout(() => {
+                $('#custom_modal .sub_title input').removeClass('is-invalid');
+            }, 2000);
+            return;
+        }
+        let users = Array.from($('#custom_modal .chat-main li.active')).map(item => $(item).attr('key'));
+        users.push(currentUserId);
+        socket.emit('create:group', { title, users, type: 3 });
+        $('#custom_modal').modal('hide');
+        $(`.chat-cont-setting`).removeClass('open');
+        $('#custom_modal .modal-content').removeClass('create_new_cast_modal');
+        setTimeout(() => {
+            $(`#cast-tab`).click();
+        }, 100);
+
+    });
+    // create new cast end
+
     socket.on('create:group', data => {
         if (data.type == 1) {
             var target = '#direct > ul.chat-main';
@@ -51,7 +88,7 @@ $(document).ready(function () {
         $(`#myTabContent1 .tab-pane.active .group-main li[groupId=${data.id}]`).click();
         convertListItems();
     });
-    // create new group end
+
 
     socket.on('send:groupMessage', data => {
         $(`#direct > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
@@ -59,17 +96,17 @@ $(document).ready(function () {
         $(`#cast > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#cast > ul.chat-main li:eq(0)');
         if (currentDirectId == data.globalGroupId) {
             var target = '#direct_chat .contact-chat ul.chatappend';
-        } else if(currentGroupId == data.globalGroupId) {
+        } else if (currentGroupId == data.globalGroupId) {
             var target = '#group_chat .contact-chat ul.chatappend';
-        } else if(currentCastId == data.globalGroupId) {
+        } else if (currentCastId == data.globalGroupId) {
             var target = '#cast_chat .contact-chat ul.chatappend';
         }
         else if (!$(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).length) {
-            
+
         }
         addGroupChatItem(target, data);
         $(".messages.active").animate({ scrollTop: $('.messages.active .contact-chat').height() }, 'fast');
-        
+
         // SMS notification
         if (currentUserId != data.sender) {
             let type = data.kind == 2 ? 'photo' :
@@ -113,22 +150,6 @@ $(document).ready(function () {
         }
     });
 
-    socket.on('remove:group', data => {
-        if (data.state == true) {
-            currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
-            setTimeout(() => {
-                $('#group .group-main>li.active').slideUp(300, () => {
-                    $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
-                    if (!currentGroupId) {
-                        $('#group_chat .chatappend').empty();
-                    }
-                });
-            });
-        } else {
-            // alert("You are owner of this group. You can't leave group.")
-        }
-    });
-
     $('#group_chat').on('click', '.remove_group_btn', function () {
         let content = 'You will remove this Group?'
         let removeGroupAction = () => {
@@ -144,6 +165,21 @@ $(document).ready(function () {
             // });
         }
         confirmModal('', content, removeGroupAction);
+    });
+    socket.on('remove:group', data => {
+        if (data.state == true) {
+            currentGroupId = $('#group .group-main>li.active').next().attr('groupId') || $('#group .group-main>li.active').prev().attr('groupId');
+            setTimeout(() => {
+                $('#group .group-main>li.active').slideUp(300, () => {
+                    $(`#group > ul.group-main>li[groupId="${currentGroupId}"]`).click();
+                    if (!currentGroupId) {
+                        $('#group_chat .chatappend').empty();
+                    }
+                });
+            });
+        } else {
+            // alert("You are owner of this group. You can't leave group.")
+        }
     });
 
     // add/remove user in group
@@ -206,42 +242,6 @@ $(document).ready(function () {
         });
         $('#custom_modal .modal-content').removeClass('invite_group_modal');
         $('#custom_modal').modal('hide');
-    });
-
-    // create new cast start
-    $('.create_new_cast_btn').on('click', function (e) {
-        $('#custom_modal').modal('show');
-        $('#custom_modal .modal-content').addClass('create_new_cast_modal');
-        $('#custom_modal').find('.modal-title').text('Create New Cast');
-        $('#custom_modal').find('.sub_title span').text('Cast Title');
-        $('#custom_modal').find('.sub_title input').val('');
-        $('#custom_modal').find('.btn_group .btn').text('Create');
-        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
-            let target = '#custom_modal .chat-main';
-            $(target).empty();
-            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
-            contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
-        });
-    });
-    $('#custom_modal').on('click', '.modal-content.create_new_cast_modal .btn_group .btn', function () {
-        let title = $('#custom_modal').find('.sub_title input').val();
-        if (!title) {
-            $('#custom_modal .sub_title input').addClass('is-invalid');
-            setTimeout(() => {
-                $('#custom_modal .sub_title input').removeClass('is-invalid');
-            }, 2000);
-            return;
-        }
-        let users = Array.from($('#custom_modal .chat-main li.active')).map(item => $(item).attr('key'));
-        users.push(currentUserId);
-        socket.emit('create:group', { title, users, type: 3});
-        $('#custom_modal').modal('hide');
-        $(`.chat-cont-setting`).removeClass('open');
-        $('#custom_modal .modal-content').removeClass('create_new_cast_modal');
-        setTimeout(() => {
-            $(`#cast-tab`).click();
-        }, 100);
-
     });
 });
 
@@ -417,7 +417,7 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
                         $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${groupInfo.avatar}")`)
                 }
                 $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
-                
+
 
                 // show chat page display
                 $('.section-py-space').css('display', 'none');

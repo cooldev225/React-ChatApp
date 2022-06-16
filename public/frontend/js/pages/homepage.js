@@ -707,8 +707,9 @@ function newMessage() {
         globalGroupId = currentGroupId;
     } else if ($('#cast_chat').hasClass('active')) {
         globalGroupId = currentCastId;
+        var castFlag = true;
     }
-    socket.emit('send:groupMessage', { globalGroupId, globalGroupUsers, content, senderName });
+    socket.emit('send:groupMessage', { globalGroupId, globalGroupUsers, content, senderName, castFlag });
     return;
 };
 

@@ -164,15 +164,19 @@ exports.sendSMS = (sender, recipient, type) => {
                             } else {
                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
                             }
-                            axios.get(smsUrl).then(res => {
-                                console.log("Recipient: ", recipient)
-                                console.log('SMS sent to: ', fullPhoneNumber);
-                                console.log('Status: ', res.status);
-                            }).catch(error => {
-                                console.log('-------------------------------');
-                                console.log(error);
-                                console.log('------------------------------');
-                            });
+                            if (fullPhoneNumber) {
+                                axios.get(smsUrl).then(res => {
+                                    // console.log("Recipient: ", recipient)
+                                    console.log('SMS sent to: ', fullPhoneNumber);
+                                    // console.log('Status: ', res.status);
+                                }).catch(error => {
+                                    console.log('-------------------------------');
+                                    console.log(error);
+                                    console.log('------------------------------');
+                                });
+                            } else {
+                                console.log('There are ')
+                            }
                         });
                     });
                 });

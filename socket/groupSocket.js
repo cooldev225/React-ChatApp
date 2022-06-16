@@ -1,3 +1,4 @@
+const { received } = require("laravel-mix/src/Log");
 const db = require("./config");
 const Notification = require("./notification.js");
 
@@ -40,6 +41,45 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
                     })
                 });
             });
+        }
+        if (data.castFlag) {
+            let groupUsers = data.globalGroupUsers ? data.globalGroupUsers.split(',') : []
+            groupUsers.filter(id => id != currentUserId).forEach(recipientId => {
+                db.query(`SELECT group_id
+                    FROM \`groups\` 
+                    INNER JOIN users_groups 
+                    ON groups.id = users_groups.group_id
+                    WHERE (user_id = ${recipientId} OR user_id = ${data.senderId})
+                    AND TYPE=1
+                    GROUP BY group_id
+                    HAVING COUNT(group_id) = 2`,
+
+                    (error, result) => {
+                        if (error) throw error;
+                        if (result.length) {
+                            console.log("CastID:", result[0]['group_id']);
+                            db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${currentUserId}", "${result[0]['group_id']}", "${data.content}")`, (error, item) => {
+                                                                
+                            });
+                        } else {
+                            db.query(`INSERT INTO \`groups\` (title, owner) VALUES ("${data.senderName}", ${data.senderId})`, (error, group) => {
+                                if (error) throw error;
+                                let groupId = group.insertId;
+                                
+                                db.query(`INSERT INTO users_groups (user_id, group_id, status) VALUES (${data.senderId}, ${groupId}, 2), (${recipientId}, ${groupId}, 2)`, (error, item) => {
+                                    db.query(`INSERT INTO messages (sender, group_id, content) VALUES ("${data.senderId}", "${groupId}", "${data.content}")`, (error, item) => {
+                                        console.log('You created new group');
+                                    });
+                                });
+
+                                // let senderSocketId = user_socketMap.get(currentUserId.toString());
+                                // if (senderSocketId) {
+                                //     io.sockets.sockets.get(senderSocketId).emit('create:group', data);
+                                // }
+                            });
+                        }
+                    });
+            })
         }
     });
 
