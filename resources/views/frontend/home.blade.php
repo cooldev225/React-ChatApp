@@ -132,13 +132,13 @@
                                         data-feather="message-square"></i></div>
                             </a>
                         <li class="create_new_group_btn">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#newGroupModal"><span>new group</span>
+                            <a href="#"><span>new group</span>
                                 <div class="icon-btn btn-outline-success button-effect btn-sm"><i data-feather="users"></i>
                                 </div>
                             </a>
                         </li>
                         <li class="create_new_cast_btn">
-                            <a href="#" id="new_cast"><span>new cast</span>
+                            <a href="#"><span>new cast</span>
                                 <div class="icon-btn btn-outline-primary button-effect btn-sm"><i data-feather="cast"></i>
                                 </div>
                             </a>
@@ -201,7 +201,7 @@
                                     <ul class="nav nav-tabs" id="myTab1" role="tablist">
                                         <li class="nav-item"><a class="nav-link button-effect active" id="direct-tab"
                                                 data-bs-toggle="tab" href="#direct" role="tab" aria-controls="direct"
-                                                aria-selected="false" data-to="chating">Direct</a></li>
+                                                aria-selected="false" data-to="direct_chat">Direct</a></li>
                                         <li class="nav-item"><a class="nav-link button-effect" id="group-tab"
                                                 data-bs-toggle="tab" href="#group" role="tab" aria-controls="group"
                                                 aria-selected="true" data-to="group_chat">Group</a></li>
@@ -814,7 +814,7 @@
                         <div class="double-bounce2"></div>
                     </div>
                 </div>
-                <div class="messages custom-scroll active" id="chating">
+                <div class="messages custom-scroll active" id="direct_chat">
                     <div class="contact-details">
                         <div class="row">
                             <form class="form-inline search-form">
@@ -1150,94 +1150,6 @@
                         <img src="/chat/images/chat.png" alt="" />
                         <div class="animated-bg"><i></i><i></i><i></i></div>
                         <p>Select a chat to read messages</p>
-                    </div>
-                </div>
-                <div class="messages custom-scroll" id="group_blank">
-                    <div class="contact-details">
-                        <div class="row">
-                            <div class="col">
-                                <div class="media left">
-                                    <span style="width: 30px">To: </span>
-                                    <div class="media-body">
-
-                                    </div>
-                                    <div class="media-right">
-                                        <ul>
-                                            <li><a class="icon-btn btn-light button-effect" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#msgchatModal"><i class="fa fa-plus"></i></a></li>
-
-                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
-                                                        data-feather="chevron-left"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- <div class="col">
-                                <ul class="calls text-end">
-                                    <li><a class="icon-btn btn-light button-effect" href="#"
-                                            data-tippy-content="Quick Audio Call" data-bs-toggle="modal"
-                                            data-bs-target="#confercall"><i data-feather="phone"></i></a></li>
-                                    <li><a class="icon-btn btn-light button-effect" href="#"
-                                            data-tippy-content="Quick Video Call" data-bs-toggle="modal"
-                                            data-bs-target="#confvideocl"><i data-feather="video"></i></a></li>
-                                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="#"
-                                            data-tippy-content="All Apps"><i class="ti-layout-grid2"></i></a></li>
-                                    <li class="chat-friend-toggle"><a
-                                            class="icon-btn btn-light bg-transparent button-effect outside" href="#"
-                                            data-tippy-content="Quick action"><i data-feather="more-vertical"></i></a>
-                                        <div class="chat-frind-content">
-                                            <ul>
-                                                <li><a class="icon-btn btn-outline-primary button-effect btn-sm"
-                                                        href="#"><i data-feather="user"></i></a>
-                                                    <h5>profile</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-success button-effect btn-sm"
-                                                        href="#"><i data-feather="plus-circle"></i></a>
-                                                    <h5>archive</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i
-                                                            data-feather="trash-2"></i></a>
-                                                    <h5>delete</h5>
-                                                </li>
-                                                <li><a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i
-                                                            data-feather="slash"></i></a>
-                                                    <h5>block</h5>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div> --}}
-                        </div>
-                    </div>
-                    <div class="contact-chat">
-                        <div class="rightchat animat-rate">
-                            <div class="bg_circle">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                            <div class="cross"></div>
-                            <div class="cross1"></div>
-                            <div class="cross2"></div>
-                            <div class="dot"></div>
-                            <div class="dot1"></div>
-                        </div>
-                        <ul class="chatappend">
-
-                        </ul>
-                    </div>
-                    <div class="call-list-center"><img src="/chat/images/chat.png" alt="" />
-                        <div class="animated-bg"><i></i><i></i><i></i></div>
-                        <p>Select one or more contacts</p>
                     </div>
                 </div>
                 <div class="replyMessage">
@@ -3669,84 +3581,6 @@
                             </div>
                         </li> --}}
                     </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade add-popup msg-chat-modal" id="newGroupModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        Create New Group</h2>
-                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="group_title">
-                        <div class="input-group input-group mb-3">
-                            <span class="input-group-text" id="newGroup-sizing-default">Group Title</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                aria-describedby="newGroup-sizing-default">
-                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                This field is required.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-msg-search">
-                        <span style="font-size: 16px;">Invite Users</span>
-                        <div class="input-group">
-                            <input class="form-control search_user" type="text" placeholder="Search"
-                                aria-label="Recipient's username" aria-describedby="basic-addon20" />
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon20">@</span>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="chat-main custom-scroll">
-                    </ul>
-                    <div class="create">
-                        <button class="btn btn-success button-effect btn-sm" id="createGroupBtn" type="button"
-                            style="float: right; margin-top: 20px;">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade add-popup msg-chat-modal" id="EditGroupUsersListModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        Create New Group</h2>
-                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="group_title">
-                        <div class="input-group input-group mb-3">
-                            <span class="input-group-text" id="editGroup-sizing-default">Group Title</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                aria-describedby="editGroup-sizing-default">
-                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                This field is required.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-msg-search">
-                        <span style="font-size: 16px;">Invite Users</span>
-                        <div class="input-group">
-                            <input class="form-control search_user" type="text" placeholder="Search"
-                                aria-label="Recipient's username" aria-describedby="basic-addon20" />
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon20">@</span>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="chat-main custom-scroll">
-                    </ul>
-                    <div class="create">
-                        <button class="btn btn-success button-effect btn-sm" id="createGroupBtn" type="button"
-                            style="float: right; margin-top: 20px;">Create</button>
-                    </div>
                 </div>
             </div>
         </div>

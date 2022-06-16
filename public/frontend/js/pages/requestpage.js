@@ -53,7 +53,7 @@ $(document).ready(function () {
     selectBackPhoto();
     blurPhoto();
     addEmojisOnPhoto();
-    // sendPhoto();
+    savePhoto();
     sendBlink();
     showPhoto();
     showPhotoPriceAndOption();
@@ -116,7 +116,7 @@ $(document).ready(function () {
         e.preventDefault();
         let reason = prompt('Please enter the reject reason.');
         if (reason) {
-            let target = '#chating .contact-chat ul.chatappend';
+            let target = '#direct_chat .contact-chat ul.chatappend';
             $(target).append(`<li class="replies photo-request">
                 <div class="media">
                     <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
@@ -444,52 +444,7 @@ function addEmojisOnPhoto() {
     })
 }
 
-function sendPhoto() {
-    // send New Photo
-    $('#send-photo').on('click', (e) => {
-        if (!ori_image && !canvas._objects.length) {
-            return;
-        }
-        canvas._objects.filter(item => item.kind == 'temp').forEach(item => canvas.remove(item));
-        let data = {};
-        data.from = currentUserId;
-        // data.to = currentContactId;
-        data.photo = canvas.toDataURL('image/png');
-        data.back = ori_image || '';
-        data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
-        data.blurPrice = blurPrice;
-        data.content = getEmojisInfo(canvas._objects);
-        if ($('#group_blank').hasClass('active')) {
-            data.to = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-            data.castTitle = $('#msgchatModal .cast_title input').val();
-
-            data.cast = true;
-            // socket.emit('send:castPhoto', data);
-        } else if ($('#cast_chat').hasClass('active')) {
-            data.to = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-            data.castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
-            // socket.emit('send:castPhoto', data);
-            console.log(data.castTitle);
-            data.cast = true;
-        } else if ($('#group_chat').hasClass('active')) {
-            console.log(currentGroupId);
-            console.log(currentGroupUsers);
-            if (currentGroupId) {
-                data.currentGroupId = currentGroupId;
-                data.currentGroupUsers = currentGroupUsers;
-                socket.emit('send:groupBlink', data);
-            }
-
-            return;
-        }
-        else {
-            data.to = [currentContactId];
-        }
-        if (data.to) {
-            socket.emit('send:photo', data);
-        }
-        $('#createPhoto .photo-price').text('');
-    });
+function savePhoto() {
     // edit Photo
     $('.savePhotoBtn').on('click', function (e) {
         photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
@@ -519,7 +474,7 @@ function sendBlink() {
         data.blur = canvas.backgroundImage && canvas.backgroundImage.blur || 0;
         data.blurPrice = blurPrice;
         data.content = getEmojisInfo(canvas._objects);
-        if ($('#chating').hasClass('active')) {
+        if ($('#direct_chat').hasClass('active')) {
             globalGroupId = currentDirectId;
         } else if ($('#group_chat').hasClass('active')) {
             globalGroupId = currentGroupId;
@@ -551,7 +506,7 @@ function sendBlink() {
 
 function showPhoto() {
 
-    $('#chating .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend, #group_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
+    $('#direct_chat .contact-chat ul.chatappend, #cast_chat .contact-chat ul.chatappend, #group_chat .contact-chat ul.chatappend').on('click', '.receive_photo~.msg-dropdown-main .msg-open-btn', e => {
         $('#photo_item .modal-content .btn-group.edit_btn_group').css('display', 'none');
         $('#photo_item .modal-content .btn-group.open_btn_group').css('display', 'flex');
         if ($(e.currentTarget).closest('li.msg-item').hasClass('replies')) {

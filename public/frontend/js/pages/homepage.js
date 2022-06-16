@@ -14,7 +14,7 @@ let currentCastId;
 let currentCastUsers;
 let globalGroupId;
 let globalGroupUsers;
-let recentUsers;
+
 $(document).ready(() => {
 
     socket.on('message', message => {
@@ -41,14 +41,7 @@ $(document).ready(() => {
         }
         message.from = Number(message.from);
 
-        if ($('#group_blank').hasClass('active') && message.from == currentUserId) {
-            $('#group_blank .rightchat').css('display', 'none');
-            $('#group_blank .call-list-center').css('display', 'none');
-            $('#group_blank .chatappend').css('display', 'flex');
-            let target = '#group_blank .contact-chat ul.chatappend';
-            addChatItem(target, message.from, message);
-            $(".messages").animate({ scrollTop: $('#group_blank .contact-chat').height() }, "fast");
-        } else if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
+        if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
             // $('#group_blank .rightchat').css('display', 'none');
             // $('#group_blank .call-list-center').css('display', 'none');
             // $('#group_blank .chatappend').css('display', 'flex');
@@ -59,10 +52,10 @@ $(document).ready(() => {
 
         } else {
             if (message.from == currentUserId || message.from == currentContactId) {
-                let target = '#chating .contact-chat ul.chatappend';
+                let target = '#direct_chat .contact-chat ul.chatappend';
                 addChatItem(target, message.from, message);
                 $('.typing-m').remove();
-                $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, "fast");
+                $(".messages").animate({ scrollTop: $('#direct_chat .contact-chat').height() }, "fast");
                 $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
             } else {
                 if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
@@ -119,7 +112,7 @@ $(document).ready(() => {
         $('.balance-amount').text(`$${getCertainUserInfoById(currentUserId).balances.toFixed(2)}`)
         getRecentChatUsers(1);
         getRecentChatUsers(2);
-        // getRecentGroupChatUsers();
+        getRecentChatUsers(3);
         searchAndAddRecentChatList();
         getContactList();
         displayTypingAction();
@@ -135,7 +128,7 @@ $(document).ready(() => {
     });
 
     // displayChatData();
-    $('#direct ul.chat-main, #group ul.chat-main').on('click', 'li', function () {
+    $('#direct ul.chat-main, #group ul.chat-main, #cast ul.chat-main').on('click', 'li', function () {
 
         $(`#myTabContent1 .tab-pane.active .chat-main li`).removeClass('active');
         $(this).addClass('active');
@@ -159,10 +152,6 @@ $(document).ready(() => {
         }
         showCurrentChatHistory(target, globalGroupId, pageSettingFlag);
 
-        // $(`ul.chat-main li[groupId=${currentDirectId}] h6.status`).css('display', 'block');
-        // $(`ul.chat-main li[groupId=${currentDirectId}] .date-status .badge`).text('');
-        // $(`ul.chat-main li[groupId=${currentDirectId}] .date-status .badge`).css('display', 'none');
-        // setCurrentChatContent(currentGroupId);
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
             $('.chitchat-container').toggleClass("mobile-menu");
@@ -236,12 +225,11 @@ function getRecentChatUsers(type) {
         data: form_data,
         success: function (res) {
             if (res.state == 'true') {
-                type == 1 ? recentUsers =  res.data : '';
-                globalGroupId = res.data.slice(-1)[0].id;
-                globalGroupUsers = res.data.slice(-1)[0].users.join(',');
+                globalGroupId = res.data.slice(-1)[0] ? res.data.slice(-1)[0].id : 0;
+                globalGroupUsers = res.data.slice(-1)[0] ? res.data.slice(-1)[0].users.join(',') : '';
                 if (type == 1) {
                     var itemTarget = '#direct .chat-main';
-                    var messageTarget = '#chating .chatappend'
+                    var messageTarget = '#direct_chat .chatappend'
                     currentDirectId = globalGroupId;
                     currentDirectUsers = globalGroupUsers;
                     let recentChatUsers = res.data.map(item => item.users.find(userId => userId != currentUserId)).map(id => getCertainUserInfoById(id));
@@ -260,14 +248,12 @@ function getRecentChatUsers(type) {
                     currentCastUsers = globalGroupUsers;
                     var pageSettingFlag = 3;
                 }
-                showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag);
-                
+                if (globalGroupId) {
+                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag);
+                } else {
+                    $(messageTarget).empty();
+                }
                 $(itemTarget).empty();
-                // res.data.sort(function(a, b){
-                //     let firstValue = a.lastMessage ? new Date(a.lastMessage.created_at) : new Date(a.created_at);
-                //     let secondValue = b.lastMessage ? new Date(b.lastMessage.created_at) : new Date(b.created_at);
-                //     return secondValue - firstValue;
-                // }).reverse()
                 res.data.forEach(item => {
                     if (item.lastMessage) {
                         var content = item.lastMessage.kind == 0 ? item.lastMessage.content : item.lastMessage.kind == 1 ? 'You have been received PhotoRequest' : 'You have been received Blink';
@@ -276,7 +262,7 @@ function getRecentChatUsers(type) {
                     addNewGroupItem(itemTarget, item);
                 });
                 convertListItems();
-                $(`${itemTarget} li:first-child`).addClass('active');
+                $(`${itemTarget}>li:first-child`).addClass('active');
                 
                 // currentGroupUsers = $('#group .group-main>li.active').attr('groupUsers');
                 // let contentwidth = jQuery(window).width();
@@ -324,7 +310,6 @@ function getLastMessage(groupId, resolve) {
         }
     });
 }
-
 
 function setCurrentChatContent(groupId) {
     $('.spining').css('display', 'flex');
@@ -377,11 +362,11 @@ function setCurrentChatContent(groupId) {
                 displayProfileContent(contactorId)
 
                 //Chat data display
-                $('#chating .contact-chat ul.chatappend').empty();
+                $('#direct_chat .contact-chat ul.chatappend').empty();
 
                 new Promise(resolve => {
                     if (messageData) {
-                        let target = '#chating .contact-chat ul.chatappend';
+                        let target = '#direct_chat .contact-chat ul.chatappend';
                         messageData.reverse().forEach(item => {
                             if (item.state != 3 && currentUserId != item.sender) {
                                 let message = {
@@ -400,7 +385,7 @@ function setCurrentChatContent(groupId) {
                     resolve();
                 }).then(() => {
                     $(".messages").animate({
-                        scrollTop: $('#chating .contact-chat').height()
+                        scrollTop: $('#direct_chat .contact-chat').height()
                     }, 'fast');
                     setTimeout(() => {
                         $('.spining').css('display', 'none');
@@ -471,12 +456,12 @@ function searchAndAddRecentChatList() {
             usersList.reverse().forEach(item => addChatUserListItem(target, item));
         }
     });
-    $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
-        // if ($('#direct-tab').hasClass('active')) {
-        $('.new-chat-search').val('');
-        getRecentChatUsers();
-        // }
-    });
+    // $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
+    //     // if ($('#direct-tab').hasClass('active')) {
+    //     $('.new-chat-search').val('');
+    //     getRecentChatUsers();
+    //     // }
+    // });
 }
 
 function getUsersListBySearch() {
@@ -686,13 +671,13 @@ function newMessage() {
     // $('#content .chat-content>.replyMessage').removeAttr('forwardId');
     // $('#content .chat-content>.replyMessage').removeAttr('forwardKind');
     $('#content .chat-content>.replyMessage').hide();
-    var message = $('.message-input input').val();
-    if ($.trim(message) == '') {
+    var content = $('.message-input input').val();
+    if ($.trim(content) == '') {
         return false;
     }
 
     $('.message-input input').val(null);
-    $('.chat-main .active .details h6').html('<span>You : </span>' + message);
+    $('.chat-main .active .details h6').html('<span>You : </span>' + content);
 
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     let senderName = getCertainUserInfoById(currentUserId).username;
@@ -707,72 +692,24 @@ function newMessage() {
         url: "/home/sendMessage",
         data: {
             id: getCertainUserInfoById(currentUserId).id,
-            content: message,
+            content,
             foo: 'bar',
             currentContactID: currentContactId
         },
         success: function (datas) {
             console.log("Request Sent");
         },
-        //dataType: dataType
     });
 
-    if ($('#chating').hasClass('active')) {
+    if ($('#direct_chat').hasClass('active')) {
         globalGroupId = currentDirectId;
-        // socket.emit('send:groupMessage', { groupId: currentDirectId, groupUsers: currentDirectUsers, content: message, senderName });
     } else if ($('#group_chat').hasClass('active')) {
         globalGroupId = currentGroupId;
-        // socket.emit('send:groupMessage', { groupId: currentGroupId, groupUsers: currentGroupUsers, content: message, senderName });
-    } else if ($('#group_blank').hasClass('active')) {
-        // socket.emit('send:groupMessage', { groupId: currentCastId, groupUsers: currentCastUsers, content: message, senderName });
     } else if ($('#cast_chat').hasClass('active')) {
         globalGroupId = currentCastId;
-        // socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
     }
-    socket.emit('send:groupMessage', { globalGroupId, groupUsers: globalGroupUsers, content: message, senderName });
+    socket.emit('send:groupMessage', { globalGroupId, globalGroupUsers, content, senderName });
     return;
-    // var currentContactIdArr = [];
-    // if ($('#group_chat').hasClass('active')) {
-    //     // currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-
-    //     socket.emit('send:groupMessage', { currentGroupId, currentGroupUsers, content: message, senderName });
-    //     return;
-
-    // } else if ($('#group_blank').hasClass('active')) {
-    //     currentContactIdArr = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId')));
-    //     var castTitle = $('#msgchatModal .cast_title input').val();
-    //     if (!castTitle) {
-    //         $('#msgchatModal').modal('show');
-    //         // alert('Please enter Cast Title');
-    //         $('#msgchatModal .cast_title input').addClass('is-invalid');
-    //         return;
-    //     }
-    //     socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0, newCast: true });
-    //     $('#msgchatModal .cast_title input').val('');
-
-    // } else if ($('#cast_chat').hasClass('active')) {
-    //     if ($('#cast > ul.chat-main > li.active').attr('recipients')) {
-    //         currentContactIdArr = $('#cast > ul.chat-main > li.active').attr('recipients').split(', ').map(item => Number(item));
-    //         var castTitle = $('#cast_chat > div.contact-details div.media-body > h5').text();
-    //         socket.emit('send:castMessage', { currentContactIdArr, message, senderName, castTitle, kind: 0 });
-    //     }
-    // } else {
-    //     currentContactIdArr = [currentContactId];
-    // }
-    // var csrf = $('meta[name="csrf-token"]').attr('content');
-    // if (currentContactIdArr.length) {
-    //     socket.emit('message', {
-    //         currentContactIdArr,
-    //         message,
-    //         senderName,
-    //         replyId,
-    //         replyKind,
-    //         // forwardId,
-    //         // forwardKind,
-    //         csrf
-    //     });
-    // } else {
-    // }
 };
 
 function displayTypingAction() {
@@ -797,7 +734,7 @@ function typingMessage() {
         let contactorInfo = getCertainUserInfoById(currentContactId);
         $(`<li class="sent last typing-m"> <div class="media"> <div class="profile me-4 bg-size" style="background-image: url(${contactorInfo.avatar ? 'v1/api/downloadFile?path=' + contactorInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;"></div><div class="media-body"> <div class="contact-name"> <h5>${contactorInfo.username}</h5> <h6>${typingTime.toLocaleTimeString()}</h6> <ul class="msg-box"> <li> <h5> <div class="type"> <div class="typing-loader"></div></div></h5> </li></ul> </div></div></div></li>`).appendTo($('.messages .chatappend'));
         $(".messages").animate({
-            scrollTop: $('#chating .contact-chat').height()
+            scrollTop: $('#direct_chat .contact-chat').height()
         }, "fast");
     }
     if (delta < 1500) {
@@ -807,7 +744,7 @@ function typingMessage() {
     timerId = setTimeout(() => {
         $('.typing-m').remove();
         $(".messages").animate({
-            scrollTop: $('#chating .contact-chat').height()
+            scrollTop: $('#direct_chat .contact-chat').height()
         }, "fast");
         typingTime = undefined;
     }, 1500);
@@ -882,7 +819,7 @@ function addChatItem(target, senderId, data, loadFlag) {
     } else {
         $(target).append(item);
     }
-    // $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, 'fast');
+    // $(".messages").animate({ scrollTop: $('#direct_chat .contact-chat').height() }, 'fast');
 
     if (data.rate) {
         getContentRate(`li.msg-item[key="${data.messageId}"]`, data.rate)

@@ -1,78 +1,64 @@
 
 
 $(document).ready(function () {
-
-    socket.on('message', message => {
-        if (currentUserId != message.from) {
-            let senderName = getCertainUserInfoById(message.from).username;
-            let type = message.kind == 2 ? 'photo' :
-                message.kind == 1 ? 'request' :
-                    message.kind == 0 ? 'text' : "new";
-            //arrived message
-            socket.emit('arrive:message', message);
-            if (document.visibilityState == "visible") {
-                if (currentContactId == message.from) {
-                    //unread -> read
-                    socket.emit('read:message', message);
-                }
-            } else {
-                socket.emit('send:notification', {
-                    sender: message.from,
-                    to: message.to,
-                    senderName,
-                    type
-                });
-            }
-        }
-        message.from = Number(message.from);
-
-        if ($('#group_blank').hasClass('active') && message.from == currentUserId) {
-            $('#group_blank .rightchat').css('display', 'none');
-            $('#group_blank .call-list-center').css('display', 'none');
-            $('#group_blank .chatappend').css('display', 'flex');
-            let target = '#group_blank .contact-chat ul.chatappend';
-            addChatItem(target, message.from, message);
-            $(".messages").animate({ scrollTop: $('#group_blank .contact-chat').height() }, "fast");
-        } else if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
-            // $('#group_blank .rightchat').css('display', 'none');
-            // $('#group_blank .call-list-center').css('display', 'none');
-            // $('#group_blank .chatappend').css('display', 'flex');
-            let target = '#cast_chat > div.contact-chat > ul.chatappend';
-            addChatItem(target, message.from, message);
-            $(".messages").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, "fast");
-        } else if ($('#group_chat').hasClass('active')) {
-
-        } else {
-            if (message.from == currentUserId || message.from == currentContactId) {
-                let target = '#chating .contact-chat ul.chatappend';
-                addChatItem(target, message.from, message);
-                $('.typing-m').remove();
-                $(".messages").animate({ scrollTop: $('#chating .contact-chat').height() }, "fast");
-                $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-            } else {
-                if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
-                    let senderInfo = usersList.find(item => item.id == Number(message.from));
-                    let userListTarget = $('.recent-default .recent-chat-list');
-                    addChatUserListItem(userListTarget, senderInfo);
-                } else {
-                    $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-                    $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
-                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
-                    let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
-                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
-                }
-            }
-        }
-
+    // create newGroup start
+    $('.create_new_group_btn').on('click', function (e) {
+        $('#custom_modal').modal('show');
+        $('#custom_modal .modal-content').addClass('create_new_group_modal');
+        $('#custom_modal').find('.modal-title').text('Create New Group');
+        $('#custom_modal').find('.sub_title span').text('Group Title');
+        $('#custom_modal').find('.sub_title input').val('');
+        $('#custom_modal').find('.btn_group .btn').text('Create');
+        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
+            let target = '#custom_modal .chat-main';
+            $(target).empty();
+            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
+            contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
+        });
     });
 
+    $('#custom_modal').on('click', '.modal-content.create_new_group_modal .btn_group .btn', function () {
+        let title = $('#custom_modal').find('.sub_title input').val();
+        if (!title) {
+            $('#custom_modal .sub_title input').addClass('is-invalid');
+            setTimeout(() => {
+                $('#custom_modal .sub_title input').removeClass('is-invalid');
+            }, 2000);
+            return;
+        }
+        let users = Array.from($('#custom_modal .chat-main li.active')).map(item => $(item).attr('key'));
+        users.push(currentUserId);
+        socket.emit('create:group', { title, users, type: 2});
+        $('#custom_modal').modal('hide');
+        $(`.chat-cont-setting`).removeClass('open');
+        $('#custom_modal .modal-content').removeClass('create_new_group_modal');
+        setTimeout(() => {
+            $(`#group-tab`).click();
+        }, 100);
+
+    });
+    
+    socket.on('create:group', data => {
+        if (data.type == 1) {
+            var target = '#direct > ul.chat-main';
+        } else if (data.type == 2) {
+            var target = '#group > ul.group-main';
+        } else if (data.type == 3) {
+            var target = '#cast > ul.group-main';
+        }
+        // $(`#myTabContent .tab-pane.active .chat-main li[groupId=${data.id}`).addClass('active');
+        addNewGroupItem(target, data);
+        $(`#myTabContent1 .tab-pane.active .group-main li[groupId=${data.id}]`).click();
+        convertListItems();
+    });
+    // create new group end
+
     socket.on('send:groupMessage', data => {
-        console.log(data);
         $(`#direct > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
         $(`#group > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#group > ul.chat-main li:eq(0)');
         $(`#cast > ul.chat-main li[groupId=${Number(data.globalGroupId)}]`).insertBefore('#cast > ul.chat-main li:eq(0)');
         if (currentDirectId == data.globalGroupId) {
-            var target = '#chating .contact-chat ul.chatappend';
+            var target = '#direct_chat .contact-chat ul.chatappend';
         } else if(currentGroupId == data.globalGroupId) {
             var target = '#group_chat .contact-chat ul.chatappend';
         } else if(currentCastId == data.globalGroupId) {
@@ -106,18 +92,6 @@ $(document).ready(function () {
                 });
             }
         }
-    });
-
-    socket.on('create:group', data => {
-        if (data.type == 1) {
-            var target = '#direct > ul.chat-main';
-        } else if (data.type == 2) {
-            var target = '#group > ul.group-main';
-        }
-        // $(`#myTabContent .tab-pane.active .chat-main li[groupId=${data.id}`).addClass('active');
-        addNewGroupItem(target, data);
-        $(`#myTabContent1 .tab-pane.active .group-main li[groupId=${data.id}]`).click();
-        convertListItems();
     });
 
     $('#group_chat').on('click', '.leave_group_btn', function () {
@@ -194,7 +168,7 @@ $(document).ready(function () {
     });
 
     $('#custom_modal').on('click', '.modal-content.edit_group_modal .btn_group .btn', function () {
-        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key'));
+        let groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key'));
         groupUsers.push(currentUserId);
         socket.emit('edit:groupUsers', { currentGroupId, groupUsers: groupUsers.join(',') }, (res) => {
             if (res.status == 'OK') {
@@ -224,7 +198,7 @@ $(document).ready(function () {
     });
 
     $('#custom_modal').on('click', '.modal-content.invite_group_modal .btn_group .btn', function () {
-        groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',');
+        let groupUsers = Array.from($('#custom_modal ul.chat-main li.active')).map(listItem => $(listItem).attr('key')).join(',');
         socket.emit('invite:groupUsers', { currentGroupId, groupUsers }, (res) => {
             if (res.status == 'OK') {
                 $('#group-tab').click();
@@ -234,6 +208,41 @@ $(document).ready(function () {
         $('#custom_modal').modal('hide');
     });
 
+    // create new cast start
+    $('.create_new_cast_btn').on('click', function (e) {
+        $('#custom_modal').modal('show');
+        $('#custom_modal .modal-content').addClass('create_new_cast_modal');
+        $('#custom_modal').find('.modal-title').text('Create New Cast');
+        $('#custom_modal').find('.sub_title span').text('Cast Title');
+        $('#custom_modal').find('.sub_title input').val('');
+        $('#custom_modal').find('.btn_group .btn').text('Create');
+        new Promise((resolve) => getUsersList(resolve)).then((contactList) => {
+            let target = '#custom_modal .chat-main';
+            $(target).empty();
+            let statusItem = '<input class="form-check-input" type="checkbox" value="" aria-label="...">';
+            contactList.filter(item => item.id != currentUserId).forEach(item => addUsersListItem(target, item, statusItem));
+        });
+    });
+    $('#custom_modal').on('click', '.modal-content.create_new_cast_modal .btn_group .btn', function () {
+        let title = $('#custom_modal').find('.sub_title input').val();
+        if (!title) {
+            $('#custom_modal .sub_title input').addClass('is-invalid');
+            setTimeout(() => {
+                $('#custom_modal .sub_title input').removeClass('is-invalid');
+            }, 2000);
+            return;
+        }
+        let users = Array.from($('#custom_modal .chat-main li.active')).map(item => $(item).attr('key'));
+        users.push(currentUserId);
+        socket.emit('create:group', { title, users, type: 3});
+        $('#custom_modal').modal('hide');
+        $(`.chat-cont-setting`).removeClass('open');
+        $('#custom_modal .modal-content').removeClass('create_new_cast_modal');
+        setTimeout(() => {
+            $(`#cast-tab`).click();
+        }, 100);
+
+    });
 });
 
 

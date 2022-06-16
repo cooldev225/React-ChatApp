@@ -28,7 +28,6 @@ module.exports = (io, socket, user_socketMap, socket_userMap) => {
                 data.sender = currentUserId;
                 db.query(`SELECT user_id FROM users_groups WHERE group_id="${data.globalGroupId}"`, (error, row) => {
                     row.forEach(item => {
-                        console.log(item);
                         let recipientSocketId = user_socketMap.get(item['user_id'].toString());
                         if (recipientSocketId) {
                             if (io.sockets.sockets.get(recipientSocketId)) {

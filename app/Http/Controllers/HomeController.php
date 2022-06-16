@@ -56,7 +56,11 @@ class HomeController extends Controller
                 $groupArrs[$index]['users'] = $this->getGroupUsers($group['id']);
                 $groupArrs[$index]['lastMessage'] = Message::where('group_id', $group['id'])->orderBy('created_at', 'desc')->first();
             }
-            
+            if ($type == 3) {
+                $groupArrs = array_filter($groupArrs, function ($item) {
+                    return $item["owner"] == Auth::id();
+                });
+            }
             // $groupArrs = collect($groupArrs)->sortBy('lastMessage')
             usort($groupArrs, function ($a, $b) {
                 $val1 = $a['lastMessage'] ? strtotime($a['lastMessage']['created_at']) : strtotime($a['created_at']);
