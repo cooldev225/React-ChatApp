@@ -387,10 +387,10 @@ function addGroupChatItem(target, data, loadFlag) {
 
 }
 
-function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
+function showCurrentChatHistory(target, groupId, groupUsers, pageSettingFlag) {
     $('.spining').css('display', 'flex');
     var form_data = new FormData();
-    form_data.append('currentGroupId', currentGroupId);
+    form_data.append('currentGroupId', groupId);
     $.ajax({
         url: '/home/getCurrentGroupChatContent',
         headers: {
@@ -413,8 +413,21 @@ function showCurrentChatHistory(target, currentGroupId, pageSettingFlag) {
                     groupInfo.title = $('#direct .chat-main li.active .details h5').text();
                     $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url(${groupInfo.avatar})`)
                 } else {
-                    if (groupInfo.avatar)
-                        $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${groupInfo.avatar}")`)
+                    if (groupInfo.avatar) {
+                        $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.profile.menu-trigger').css('background-image', `url("v1/api/downloadFile?path=${groupInfo.avatar}")`);
+                    }
+                    console.log(groupUsers);
+                    
+                    let groupUsersTarget = $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.contact-chat .groupuser');
+                    groupUsersTarget.empty();
+                    let groupUsersAvatar = groupUsers.split(',').filter(id => id != currentUserId).map(id => {
+                        let avatar = getCertainUserInfoById(id).avatar;
+                        return avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png';
+                    });
+                    groupUsersAvatar.forEach(avatar => {
+                        groupUsersTarget.append(`<div class="gr-profile dot-btn dot-success"><img class="bg-img" src="${avatar}" alt="Avatar"/></div>`);
+                    })
+                    convertListItems();
                 }
                 $(`.messages:nth-of-type(${pageSettingFlag + 1})`).find('.group_title').html(groupInfo.title);
 

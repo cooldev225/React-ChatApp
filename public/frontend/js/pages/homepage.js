@@ -138,19 +138,22 @@ $(document).ready(() => {
             currentDirectId = Number($(this).attr('groupId'));
             currentDirectUsers = $(this).attr('groupUsers');
             globalGroupId = currentDirectId;
+            globalGroupUsers = currentDirectUsers;
             var pageSettingFlag = 1;
         } else if ($('#group').hasClass('active')) {
             currentGroupId = Number($(this).attr('groupId'));
             currentGroupUsers = $(this).attr('groupUsers');
             globalGroupId = currentGroupId;
+            globalGroupUsers = currentGroupUsers;
             var pageSettingFlag = 2;
         } else if ($('#cast').hasClass('active')) {
             currentCastId = Number($(this).attr('groupId'));
             currentCastUsers = $(this).attr('groupUsers');
             globalGroupId = currentCastId;
+            globalGroupUsers = currentCastUsers;
             var pageSettingFlag = 3;
         }
-        showCurrentChatHistory(target, globalGroupId, pageSettingFlag);
+        showCurrentChatHistory(target, globalGroupId, globalGroupUsers, pageSettingFlag);
 
         var contentwidth = jQuery(window).width();
         if (contentwidth <= '768') {
@@ -249,7 +252,7 @@ function getRecentChatUsers(type) {
                     var pageSettingFlag = 3;
                 }
                 if (globalGroupId) {
-                    showCurrentChatHistory(messageTarget, globalGroupId, pageSettingFlag);
+                    showCurrentChatHistory(messageTarget, globalGroupId, globalGroupUsers, pageSettingFlag);
                 } else {
                     $(messageTarget).empty();
                 }
