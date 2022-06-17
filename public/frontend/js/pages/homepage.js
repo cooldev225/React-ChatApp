@@ -17,95 +17,6 @@ let globalGroupUsers;
 
 $(document).ready(() => {
 
-    socket.on('message', message => {
-        if (currentUserId != message.from) {
-            let senderName = getCertainUserInfoById(message.from).username;
-            let type = message.kind == 2 ? 'photo' :
-                message.kind == 1 ? 'request' :
-                    message.kind == 0 ? 'text' : "new";
-            //arrived message
-            socket.emit('arrive:message', message);
-            if (document.visibilityState == "visible") {
-                if (currentContactId == message.from) {
-                    //unread -> read
-                    socket.emit('read:message', message);
-                }
-            } else {
-                socket.emit('send:notification', {
-                    from: message.from,
-                    to: message.to,
-                    senderName,
-                    type
-                });
-            }
-        }
-        message.from = Number(message.from);
-
-        if ($('#cast_chat').hasClass('active') && message.from == currentUserId) {
-            // $('#group_blank .rightchat').css('display', 'none');
-            // $('#group_blank .call-list-center').css('display', 'none');
-            // $('#group_blank .chatappend').css('display', 'flex');
-            let target = '#cast_chat > div.contact-chat > ul.chatappend';
-            addChatItem(target, message.from, message);
-            $(".messages").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, "fast");
-        } else if ($('#group_chat').hasClass('active')) {
-
-        } else {
-            if (message.from == currentUserId || message.from == currentContactId) {
-                let target = '#direct_chat .contact-chat ul.chatappend';
-                addChatItem(target, message.from, message);
-                $('.typing-m').remove();
-                $(".messages").animate({ scrollTop: $('#direct_chat .contact-chat').height() }, "fast");
-                $(`#direct > ul.chat-main li[key=${message.to}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-            } else {
-                if (!$(`#direct > ul.chat-main li[key=${Number(message.from)}]`).length) {
-                    let senderInfo = usersList.find(item => item.id == Number(message.from));
-                    let userListTarget = $('.recent-default .recent-chat-list');
-                    addChatUserListItem(userListTarget, senderInfo);
-                } else {
-                    $(`#direct > ul.chat-main li[key=${message.from}]`).insertBefore('#direct > ul.chat-main li:eq(0)');
-                    $(`#direct > ul.chat-main li[key=${message.from}] h6.status`).css('display', 'none');
-                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).css('display', 'inline-flex');
-                    let count = $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).text() || 0;
-                    $(`#direct > ul.chat-main li[key=${message.from}] .date-status .badge`).html(Number(count) + 1);
-                }
-            }
-        }
-
-    });
-
-    socket.on('arrive:message', message => {
-        setTimeout(() => {
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('arrived')
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('read')
-        }, 1000);
-    });
-
-    socket.on('read:message', message => {
-        setTimeout(() => {
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('arrived')
-            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('read')
-        }, 2000);
-    });
-
-    socket.on('receive:typing', data => {
-        if (data == currentContactId) {
-            typingMessage();
-        }
-    });
-
-    socket.on('delete:message', data => {
-        if (data.state) {
-            let element = $('.chatappend').find(`[key=${data.id}]`).closest('li.msg-item');
-            element.length ? element.remove() : '';
-        } else {
-            let currentContactName = getCertainUserInfoById(currentContactId).username;
-            alert(`This photo has been paid by ${currentContactName}. You can not delete this. `);
-        }
-    });
-
     new Promise(resolve => {
         getUsersList(resolve);
     }).then(() => {
@@ -114,7 +25,6 @@ $(document).ready(() => {
         getRecentChatUsers(2);
         getRecentChatUsers(3);
         searchAndAddRecentChatList();
-        getContactList();
         displayTypingAction();
         deleteMessages();
         displayRate();
@@ -127,42 +37,6 @@ $(document).ready(() => {
         });
     });
 
-    // displayChatData();
-    $('#direct ul.chat-main, #group ul.chat-main, #cast ul.chat-main').on('click', 'li', function () {
-
-        $(`#myTabContent1 .tab-pane.active .chat-main li`).removeClass('active');
-        $(this).addClass('active');
-        
-        let target = '.messages.active .contact-chat ul.chatappend';
-        if ($('#direct').hasClass('active')) {
-            currentDirectId = Number($(this).attr('groupId'));
-            currentDirectUsers = $(this).attr('groupUsers');
-            globalGroupId = currentDirectId;
-            globalGroupUsers = currentDirectUsers;
-            var pageSettingFlag = 1;
-        } else if ($('#group').hasClass('active')) {
-            currentGroupId = Number($(this).attr('groupId'));
-            currentGroupUsers = $(this).attr('groupUsers');
-            globalGroupId = currentGroupId;
-            globalGroupUsers = currentGroupUsers;
-            var pageSettingFlag = 2;
-        } else if ($('#cast').hasClass('active')) {
-            currentCastId = Number($(this).attr('groupId'));
-            currentCastUsers = $(this).attr('groupUsers');
-            globalGroupId = currentCastId;
-            globalGroupUsers = currentCastUsers;
-            var pageSettingFlag = 3;
-        }
-        showCurrentChatHistory(target, globalGroupId, globalGroupUsers, pageSettingFlag);
-
-        var contentwidth = jQuery(window).width();
-        if (contentwidth <= '768') {
-            $('.chitchat-container').toggleClass("mobile-menu");
-        }
-        if (contentwidth <= '575') {
-            $('.main-nav').removeClass("on");
-        }
-    });
 
     //createPhoto by click Media
     $('#createPhotoBtn').on('click', () => {
@@ -185,7 +59,7 @@ $(document).ready(() => {
 
     });
 
-    $('.selfProfileBtn').on('click', () => {
+    $('.self_profile_btn').on('click', () => {
         displayProfileContent(currentUserId);
         $('.chitchat-container').toggleClass("mobile-menu");
         if ($(window).width() <= 768) {
@@ -435,17 +309,10 @@ function searchAndAddRecentChatList() {
             keyuptimer = setTimeout(function () {
                 let value = $('.new-chat-search').val();
                 let users = Array.from($('.recent-chat-list .details h5')).map(item => item.innerText);
-                // Array.from($('.recent-chat-list .details h5')).forEach(item => {
-                //     if (item.innerText.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
-                //         $(item).closest('li').css('display', 'block');
-                //     } else {
-                //         $(item).closest('li').css('display', 'none');
-                //     }
-                // })
                 if (value) {
                     target.empty();
                     usersList.reverse().filter(item => item.id != currentUserId && item.username.toLowerCase().includes(value.toLowerCase())).forEach(item => {
-                        addChatUserListItem(target, item);
+                        addNewUserListItem(target, item);
                     });
                     $(`ul.chat-main li[key=${currentContactId}]`).addClass('active');
                 } else {
@@ -456,7 +323,7 @@ function searchAndAddRecentChatList() {
         if ($('#newChatModal').hasClass('show')) {
             let target = $('#newChatModal .chat-main');
             target.empty();
-            usersList.reverse().forEach(item => addChatUserListItem(target, item));
+            usersList.reverse().forEach(item => addNewUserListItem(target, item));
         }
     });
     // $('.recent-default.dynemic-sidebar.active .text-end .close-search').on('click', () => {
@@ -544,125 +411,10 @@ $('#newChatModal .chat-main').on('click', 'li', function () {
         socket.emit('create:group', { title: item.username, users, type: 1 });
         $('#newChatModal').modal('hide');
     });
-    // addChatUserListItem($('#direct .chat-main'), item);
+    // addNewUserListItem($('#direct .chat-main'), item);
     // $(`#direct .chat-main li[userId="${userId}"]`).click();
 });
 
-function addChatUserListItem(target, data) {
-    $(target).prepend(
-        `<li data-to="blank" userId="${data.id}" groupId="${data.groupId || 0}">
-            <div class="chat-box">
-                <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
-                    
-                </div>
-                <div class="details">
-                    <h5>${data.username}</h5>
-                    <h6>${data.description || 'Hello'}</h6>
-                </div>
-                <div class="date-status">
-                    <i class="ti-trash"></i>
-                    <h6></h6>
-                    <h6 class="font-success status"></h6>
-                    <div class="badge badge-primary sm"></div>
-                </div>
-            </div>
-        </li>`
-    );
-}
-
-function getContactList(resolve) {
-    $('.icon-btn[data-tippy-content="Contact List"]').on('click', () => {
-        if ($('.contact-list-tab.dynemic-sidebar').hasClass('active')) {
-            var form_data = new FormData();
-            $.ajax({
-                url: '/home/getContactList',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: "json",
-                success: function (res) {
-                    let target = '#contact-list .chat-main';
-                    $(target).empty();
-                    if (resolve) {
-                        resolve(res);
-
-                    } else {
-                        res.reverse().forEach(item => {
-                            addChatUserListItem(target, item);
-                        });
-                    }
-                },
-                error: function (response) {
-
-                }
-            });
-        }
-    });
-}
-
-function getContactListData(resolve) {
-    $.ajax({
-        url: '/home/getContactList',
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        dataType: "json",
-        success: function (res) {
-            resolve(res);
-        },
-        error: function (response) {
-
-        }
-    });
-}
-
-function addContact(email) {
-    var form_data = new FormData();
-    form_data.append('email', email || $('#exampleInputEmail1').val());
-    $.ajax({
-        url: '/home/addContactItem',
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: form_data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        dataType: "json",
-        success: function (res) {
-            if (res.insertion == false) {
-                $('.addContactError').html(res.message);
-                setTimeout(() => {
-                    $('.addContactError').html('');
-                }, 1000);
-
-            } else {
-                let data = res.data;
-                data.created_at = new Date();
-                let target = '#contact-list .chat-main';
-                addChatUserListItem(target, data);
-                if (email) {
-                    let username = getCertainUserInfoById(currentContactId).username;
-                    alert(`${username} has been added to contacts successfully`);
-                }
-            }
-        },
-        error: function (response) {
-            // document.location.href = '/';
-            alert('Add Contact Error');
-        }
-    });
-}
 
 function newMessage() {
     let replyId = $('#content .chat-content>.replyMessage').attr('replyId');
@@ -1066,4 +818,21 @@ function displayTimeString(time) {
         default:
             return dateString + ' ' + timeString;
     }
+}
+
+function confirmModal(title, content, okAction, cancelAction) {
+    $.confirm({
+        title,
+        content,
+        buttons: {
+            Ok: {
+                btnClass: 'btn-primary',
+                action: okAction
+            },
+            Cancel: {
+                btnClass: 'btn-danger',
+                action: cancelAction
+            }
+        }
+    });
 }

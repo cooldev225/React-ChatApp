@@ -31,42 +31,6 @@ class MessageController extends Controller
         return array('state' => 'true', 'data' => $lastMessage);
     }
 
-    public function getGroupData(Request $request) {
-        $userId = Auth::id();
-        $groupArrs = User::join('users_groups', 'users.id', '=', 'users_groups.user_id')
-        ->join('groups', 'users_groups.group_id', '=', 'groups.id')
-        ->where('users.id', $userId)
-        ->where('groups.type', 2)
-        // ->whereRaw("(sender = ".$id." OR users_groups.user_id = ".$id.") AND groups.type = 1")
-        ->orderBy('groups.created_at', 'desc')
-        ->get('groups.*');
-
-        if (count($groupArrs)) {
-            // $result = Group::where()
-            foreach($groupArrs as $index => $group) {
-                // array_push($result, $this->getGroupUsers($group['id']));
-                $groupArrs[$index]['users'] = $this->getGroupUsers($group['id']);
-            }
-            return array('state' => 'true', 'data' => $groupArrs);
-        } else {
-            return array('state' => 'false');
-        }
-
-        $groupData = Group::get();
-        $result = array();
-        foreach($groupData as $groupItem) {
-            $userArr = explode(",", $groupItem['users']);
-            if (in_array($userId, $userArr)) {
-                array_push($result, $groupItem);
-            }
-            // if ($groupItem['owner'] == $userId || in_array($userId, $userArr)) {
-            //     array_push($result, $groupItem);
-            // }
-        }
-        return array('state' => 'true', 'data' => $result);
-
-    }
-
     public function getCastData(Request $request) {
         $userId = Auth::id();
         $castData = Cast::where('sender', $userId)->groupBy('cast_title')->orderByRaw('max(`created_at`) desc')->get();

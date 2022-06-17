@@ -81,6 +81,15 @@ class HomeController extends Controller
         return $result;
     }
 
+    public function getUsersListByGroupId(Request $request) {
+        $groupId = $request->input('groupId');
+        $groupUsers = UsersGroup::where('group_id', $groupId)->orderBy('created_at')->get('user_id');
+        $result = $groupUsers->map(function($item) {
+            return $item['user_id'];
+        });
+        return array('state' => 'true', 'data' => $result);;
+    }
+
     public function getCurrentChatContent(Request $request) {
         $id = Auth::id();
         $contactorId = $request->input('currentContactorId');
@@ -187,7 +196,7 @@ class HomeController extends Controller
         //     $contacts[$i]['message'] = $msg->count() ? $msg->orderBy('created_at','desc')->get()[0] : '';
         //     $contacts[$i]['username'] = User::where('id', $contacts[$i]->contact_id)->get()[0]->username;
         // }
-        return $contactIds;
+        // return $contactIds;
     }
     
     public function getChatData(Request $request)

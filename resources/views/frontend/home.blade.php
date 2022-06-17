@@ -41,33 +41,30 @@
             </div>
             <div class="sidebar-main">
                 <ul class="sidebar-top">
-                    <li>
-                        <!-- <a class="button-effect" data-intro="Check Status here"> -->
-                        <div class="user-popup status one selfProfileBtn">
+                    <li class="self_profile_btn">
+                        <div class="user-popup status one ">
                             <div>
                                 <img class="bg-img"
                                     src="{{ !Auth::user()->avatar ? '/images/default-avatar.png' : '/v1/api/downloadFile?path=' . Auth::user()->avatar }}"
                                     alt="Avatar" />
                             </div>
                         </div>
-                        <!-- </a> -->
                     </li>
-                    <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star">               </i></a></li> -->
-
-                    <li><a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List">
-                            <i class="fa fa-users"> </i></a></li>
-                    <li>
-                        <div class="dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification"
-                                data-tippy-content="Notification"> <i class="fa fa-bell"></i></a></div>
+                    <!-- <li><a class="icon-btn btn-light button-effect" href="favourite" data-tippy-content="Favourite"><i class="fa fa-star"></i></a></li> -->
+                    <li class="contact_list_btn">
+                        <a class="icon-btn btn-light button-effect" href="contact-list" data-tippy-content="Contact List"><i class="fa fa-users"> </i></a>
                     </li>
-                    <li>
-                        <div class="dot-danger grow photo-request-icon">
-                            <a class="icon-btn btn-light button-effect" href="request" data-tippy-content="PhotoRequest"> <i
-                                    class="fa fa-image"></i></a>
+                    <li class="notification_list_btn">
+                        <div class="dot-danger grow"><a class="icon-btn btn-light button-effect" href="notification" data-tippy-content="Notification"> <i class="fa fa-bell"></i></a></div>
+                    </li>
+                    <li class="photo_request_list_btn">
+                        <div class="dot-danger grow photo_request_icon">
+                            <a class="icon-btn btn-light button-effect" href="request" data-tippy-content="PhotoRequest"> <i class="fa fa-image"></i></a>
                         </div>
                     </li>
-                    <li><a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"> <i
-                                class="fa fa-cog"></i></a></li>
+                    <li class="setting_btn">
+                        <a class="icon-btn btn-light button-effect" href="settings" data-tippy-content="Setting"> <i class="fa fa-cog"></i></a>
+                    </li>
                 </ul>
                 <ul class="sidebar-bottom">
                     <li><a class="icon-btn btn-light button-effect mode" href="#" data-tippy-content="Theme Mode"><i
@@ -212,7 +209,7 @@
                                     <div class="tab-content" id="myTabContent1">
                                         <div class="tab-pane fade show active" id="direct" role="tabpanel"
                                             aria-labelledby="direct-tab">
-                                            <ul class="group-main chat-main recent-chat-list chat-item-list">
+                                            <ul class="group-main chat-main">
 
                                             </ul>
                                         </div>
@@ -898,7 +895,7 @@
                 <div class="messages custom-scroll" id="group_chat">
                     <div class="contact-details">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-7">
                                 <div class="media left">
                                     <div class="media-left me-3">
                                         <div class="profile online menu-trigger"><img class="bg-img"
@@ -922,8 +919,7 @@
                                                     </div>
                                                 </form>
                                             </li>
-                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
-                                                        data-feather="chevron-left"></i></a></li>
+                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i data-feather="chevron-left"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -990,7 +986,7 @@
                 <div class="messages custom-scroll" id="cast_chat">
                     <div class="contact-details">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-7">
                                 <div class="media left">
                                     <div class="media-left me-3">
                                         <div class="profile online menu-trigger"><img class="bg-img"
@@ -1002,10 +998,12 @@
                                     </div>
                                     <div class="media-right">
                                         <ul>
-                                            <li>
-                                                <a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
-                                                        data-feather="chevron-left"></i></a>
-                                            </li>
+                                            <li><a class="icon-btn btn-light button-effect mute" href="#"><i
+                                                        class="fa fa-volume-up"></i></a></li>
+                                            <li><a class="icon-btn btn-light search-right" href="#"><i
+                                                        data-feather="search"></i></a></li>
+                                            <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><i
+                                                        data-feather="chevron-left"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -2866,6 +2864,8 @@
             </div>
         </aside>
     </div>
+
+
     <div class="modal fade add-popup add-contact-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -3364,29 +3364,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade add-popup msg-chat-modal" id="msgchatModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        Add New Recipient</h2>
-                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="cast_title">
-                        <div class="input-group">
-                            <input class="form-control cast_title" type="text" placeholder="Cast Title"
-                                aria-label="Recipient's username" aria-describedby="basic-addon21" />
-                        </div>
-                    </div>
-                    <ul class="chat-main custom-scroll">
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade add-popup msg-chat-modal" id="forwardUsersListModal" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -3407,37 +3384,6 @@
                     <ul class="chat-main custom-scroll">
 
                     </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade add-popup msg-chat-modal" id="castUserListModal" tabindex="-1" role="dialog"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        List Recipients: </h2>
-                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="chat-msg-search">
-                        <div class="input-group"
-                            style="justify-content: flex-end; border: none; background-color: white">
-                            <input class="form-control" type="text" placeholder="Cast Title"
-                                aria-label="Recipient's username" aria-describedby="basic-addon21" />
-                        </div>
-                    </div>
-                    <ul class="chat-main custom-scroll">
-
-                    </ul>
-                    <div class="edit_save_cast_list edit">
-                        <button class="btn btn-success button-effect btn-sm edit_list" id="editCastListbtn" type="button"
-                            style="float: right; margin-top: 20px;">Edit</button>
-                        <button class="btn btn-success button-effect btn-sm save_list" id="saveCastListbtn" type="button"
-                            style="float: right; margin-top: 20px;">Save</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -3480,6 +3426,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade add-popup msg-chat-modal" id="msgcallModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

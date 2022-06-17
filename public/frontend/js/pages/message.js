@@ -13,16 +13,74 @@ $(document).ready(function () {
         getRecentChatUsers(3);
     });
 
+    // displayChatData();
+    $('#direct ul.chat-main, #group ul.chat-main, #cast ul.chat-main').on('click', 'li', function () {
 
-    // $('#new_cast').on('click', () => {
-    //     if (!$('#cast .chat-main').children().length) {
-    //         getCastData();
-    //     }
-    //     showNewCastPage();
-    //     $('#group_blank > .contact-details .media-body').empty();
-    //     $('#group_blank .contact-chat ul.chatappend').empty()
+        $(`#myTabContent1 .tab-pane.active .chat-main li`).removeClass('active');
+        $(this).addClass('active');
 
-    // });
+        let target = '.messages.active .contact-chat ul.chatappend';
+        if ($('#direct').hasClass('active')) {
+            currentDirectId = Number($(this).attr('groupId'));
+            currentDirectUsers = $(this).attr('groupUsers');
+            globalGroupId = currentDirectId;
+            globalGroupUsers = currentDirectUsers;
+            var pageSettingFlag = 1;
+        } else if ($('#group').hasClass('active')) {
+            currentGroupId = Number($(this).attr('groupId'));
+            currentGroupUsers = $(this).attr('groupUsers');
+            globalGroupId = currentGroupId;
+            globalGroupUsers = currentGroupUsers;
+            var pageSettingFlag = 2;
+        } else if ($('#cast').hasClass('active')) {
+            currentCastId = Number($(this).attr('groupId'));
+            currentCastUsers = $(this).attr('groupUsers');
+            globalGroupId = currentCastId;
+            globalGroupUsers = currentCastUsers;
+            var pageSettingFlag = 3;
+        }
+        showCurrentChatHistory(target, globalGroupId, globalGroupUsers, pageSettingFlag);
+
+        var contentwidth = jQuery(window).width();
+        if (contentwidth <= '768') {
+            $('.chitchat-container').toggleClass("mobile-menu");
+        }
+        if (contentwidth <= '575') {
+            $('.main-nav').removeClass("on");
+        }
+    });
+
+    socket.on('arrive:message', message => {
+        setTimeout(() => {
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('arrived')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('read')
+        }, 1000);
+    });
+
+    socket.on('read:message', message => {
+        setTimeout(() => {
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('sent')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).removeClass('arrived')
+            $(`.chatappend .msg-item[key=${message.messageId}] h6`).addClass('read')
+        }, 2000);
+    });
+
+    socket.on('receive:typing', data => {
+        if (data == currentContactId) {
+            typingMessage();
+        }
+    });
+
+    socket.on('delete:message', data => {
+        if (data.state) {
+            let element = $('.chatappend').find(`[key=${data.id}]`).closest('li.msg-item');
+            element.length ? element.remove() : '';
+        } else {
+            let currentContactName = getCertainUserInfoById(currentContactId).username;
+            alert(`This photo has been paid by ${currentContactName}. You can not delete this. `);
+        }
+    });
 
     $('#editCastListbtn').on('click', () => {
         // showNewCastPage();
@@ -82,37 +140,6 @@ $(document).ready(function () {
                 return $(this).find('.details>h5').text() === data.newCastTitle;
             }).addClass('active');
         })
-    })
-
-    $('.recent-chat-list').on('click', 'li .date-status .ti-trash', function (e) {
-        e.stopPropagation();
-        if (confirm('Delete this Thread?')) {
-            let recipient = $(this).closest('.date-status').closest('li').attr('key');
-            console.log(recipient);
-            let form_data = new FormData();
-            form_data.append('recipient', recipient);
-            $.ajax({
-                url: '/message/deleteChatThread',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: "json",
-                success: function (res) {
-                    if (res.state = 'true') {
-                        $(`.recent-chat-list li[key=${recipient}]`).remove();
-
-                    }
-                },
-                error: function (response) {
-
-                }
-            });
-        }
     });
 
     $('#cast').on('click', 'li .date-status .ti-trash', function (e) {
@@ -191,253 +218,13 @@ $(document).ready(function () {
         }
     });
 
-    // $('#cast > ul.chat-main').on('click', 'li', function () {
-    //     $('#cast > ul.chat-main li').removeClass('active');
-    //     $(this).addClass('active');
-    //     $('#content .chat-content .messages').removeClass('active');
-    //     $('#content .chat-content .messages#cast_chat').addClass('active');
-
-    //     let recipients = $(this).attr('recipients');
-    //     let castTitle = $(this).find('.details h5').text();
-    //     let form_data = new FormData();
-    //     form_data.append('recipients', recipients);
-    //     form_data.append('castTitle', castTitle);
-    //     $.ajax({
-    //         url: '/home/displayCastChatData',
-    //         headers: {
-    //             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         cache: false,
-    //         contentType: false,
-    //         processData: false,
-    //         type: 'POST',
-    //         data: form_data,
-    //         dataType: "json",
-    //         success: function (res) {
-    //             if (res.state == 'true') {
-    //                 //cast title display
-    //                 $('#cast_chat .chatappend .groupuser>h4').text(res.data[0].cast_title);
-    //                 $('#cast_chat > div.contact-details div.media-body > h5').text(res.data[0].cast_title || 'Cast Title');
-    //                 // avatar display
-    //                 $('#cast_chat ul.chatappend li.groupuser>div').remove();
-    //                 recipients.split(', ').forEach((item, index) => {
-    //                     let avatar = getCertainUserInfoById(item).avatar;
-    //                     let userName = getCertainUserInfoById(item).username;
-    //                     avatar = avatar ? `v1/api/downloadFile?path=${avatar}` : '/images/default-avatar.png'
-    //                     $('#cast_chat ul.chatappend li.groupuser').append(`
-    //                         <div class="gr-profile dot-btn dot-success bg-size" style="background-image: url('${avatar}'); background-size: cover; background-position: center center; display: block;">
-    //                             <img class="bg-img" src="/chat/images/avtar/3.jpg" alt="Avatar" style="display: none;">
-    //                         </div>
-    //                     `);
-    //                     tippy(`#cast_chat ul.chatappend li.groupuser>div:nth-child(${index + 2})`, {
-    //                         content: userName
-    //                     });
-    //                 });
-    //                 // history display
-    //                 let target = '#cast_chat > div.contact-chat > ul';
-    //                 let senderInfo = getCertainUserInfoById(currentUserId);
-    //                 $(target).find('li:not(:first-child)').remove();
-    //                 res.data.reverse().forEach(data => {
-    //                     let time = data.created_at ? new Date(data.created_at) : new Date();
-    //                     let item = `<li class="replies msg-item" key="${data.id}" kind="${data.kind}">
-    //                         <div class="media">
-    //                             <div class="profile me-4 bg-size" style="background-image: url(${senderInfo.avatar ? 'v1/api/downloadFile?path=' + senderInfo.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center;">
-    //                             </div>
-    //                             <div class="media-body">
-    //                                 <div class="contact-name">
-    //                                     <h5>${senderInfo.username}</h5>
-    //                                     <h6 class="${State[data.state]}">${displayTimeString(time)}</h6>
-    //                                     <div class="photoRating">
-    //                                         <div>★</div><div>★</div><div>★</div><div>★</div><div>★</div>
-    //                                     </div>
-    //                                     <ul class="msg-box">
-    //                                         <li class="msg-setting-main">
-    //                                             ${data.kind == 0 ?
-    //                             `<h5 class="content">${data.content}</h5>`
-    //                             : data.kind == 1 ?
-    //                                 `<div class="camera-icon" requestid="${data.requestId}">$${data.content}</div>`
-    //                                 : data.kind == 2 ? `<img class="receive_photo" castId="${data.castId}" photoId="${data.photoId}" src="${data.content}">` : ''}
-    //                                             <div class="msg-dropdown-main">
-    //                                                 <div class="msg-open-btn"><span>Open</span></div>
-    //                                                 <div class="msg-setting"><i class="ti-more-alt"></i></div>
-    //                                                 <div class="msg-dropdown"> 
-    //                                                     <ul>
-    //                                                         <li class="rateBtn"><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-    //                                                         <li class="deleteMessageBtn"><a href="#"><i class="ti-trash"></i>delete</a></li>
-    //                                                     </ul>
-    //                                                 </div>
-    //                                         </div>
-    //                                         </li>
-    //                                     </ul>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </li>`;
-    //                     $(target).append(item);
-    //                 });
-    //                 var contentwidth = jQuery(window).width();
-    //                 if (contentwidth <= '768') {
-    //                     $('.chitchat-container').toggleClass("mobile-menu");
-    //                 }
-    //                 if (contentwidth <= '575') {
-    //                     $('.main-nav').removeClass("on");
-    //                 }
-    //                 $(".messages.active").animate({ scrollTop: $('#cast_chat .contact-chat').height() }, 'fast');
-
-    //             }
-    //         },
-    //         error: function (response) { }
-    //     });
-    // });
-
-    $('#castUserListModal').on('shown.bs.modal', function () {
-        let recipients = $('#castUserListModal').data('recipients').toString();
-        let castTitle = $('#castUserListModal').data('title') || 'No Title';
-        oldRecipients = recipients;
-        oldCastTitle = $('#castUserListModal').data('title');
-        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').val(castTitle);
-        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').prop('disabled', true);
-
-        $('.edit_save_cast_list').addClass('edit');
-        $('.edit_save_cast_list').removeClass('save');
-
-        let target = '#castUserListModal > div > div > div.modal-body > ul';
-        $(target).empty();
-        recipients.split(',').forEach(item => {
-            let data = getCertainUserInfoById(item)
-            $(target).append(
-                `<li data-to="blank" key="${data.id}">
-                    <div class="chat-box">
-                        <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
-                            
-                        </div>
-                        <div class="details">
-                            <h5>${data.username}</h5>
-                            <h6>${data.description || 'Hello'}</h6>
-                        </div>
-                    </div>
-                </li>`
-            );
-        });
-    });
-
-    $('.modal ul.chat-main').on('click', 'li', function (e) {
+    $('#custom_modal ul.chat-main').on('click', 'li', function (e) {
         if ($(this).find('.form-check-input').length) {
             $(this).find('.form-check-input').prop('checked', !$(this).find('.form-check-input')[0].checked);
             $(this).toggleClass('active');
         }
     });
 
-    $('#cast > ul.chat-main').on('click', 'li .list_info', function (e) {
-        e.stopPropagation();
-        let recipients = $(this).closest('.date-status').closest('li').attr('recipients').split(', ');
-        let castTitle = $(this).closest('.date-status').closest('li').find('.details h5').text();
-        // showNewCastPage();
-        $('#castUserListModal').attr('data-recipients', recipients.join(', '));
-        $('#castUserListModal').attr('data-title', castTitle);
-        $('#castUserListModal').modal('show');
-        $('#castUserListModal .modal-header h2').text(`List Recipients: ${recipients.length} of Unlimited`);
-
-        $('#group_blank > .contact-details .media-body').empty();
-        recipients.forEach(userId => {
-            let userName = getCertainUserInfoById(userId).username;
-            if (!$('#group_blank > .contact-details .media-body').find(`span[userId=${userId}]`).length) {
-                $('#group_blank > .contact-details .media-body').append(`
-                <span userId=${userId}>${userName}&nbsp&nbsp<b>\u2716</b></span>
-                `);
-            } else { }
-        })
-    });
-
-    $('.edit_save_cast_list button').on('click', function (e) {
-        $(this).closest('.edit_save_cast_list').toggleClass('edit');
-        $(this).closest('.edit_save_cast_list').toggleClass('save');
-        $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').prop('disabled', false);
-
-        if ($(this).closest('.edit_save_cast_list').hasClass('save')) {
-            var form_data = new FormData();
-            $.ajax({
-                url: '/home/getContactList',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: "json",
-                success: function (res) {
-                    let target = '#castUserListModal div.modal-body > ul';
-                    $(target).empty();
-
-                    res.reverse().forEach(data => {
-                        $(target).prepend(
-                            `<li data-to="blank" key="${data.id}">
-                            <div class="chat-box">
-                            <div class="profile ${data.logout ? 'offline' : 'online'} bg-size" style="background-image: url(${data.avatar ? 'v1/api/downloadFile?path=' + data.avatar : "/images/default-avatar.png"}); background-size: cover; background-position: center center; display: block;">
-                                
-                            </div>
-                            <div class="details">
-                                <h5>${data.username}</h5>
-                                <h6>${data.description || 'Hello'}</h6>
-                            </div>
-                            <div class="date-status">
-                                <input class="form-check-input" type="checkbox" value="" aria-label="...">
-                            </div>
-                            </div>
-                        </li>`
-                        );
-                        if ($('#group_blank > .contact-details .media-body').find(`span[userId=${data.id}]`).length) {
-                            $(`#castUserListModal ul.chat-main li[key=${data.id}] input`).prop('checked', true);
-                            $(`#castUserListModal ul.chat-main li[key=${data.id}]`).addClass('active');
-                        }
-                    });
-
-                },
-                error: function (response) {
-
-                }
-            });
-        }
-
-
-    });
-
-    $('#saveCastListbtn').on('click', function (e) {
-        let newCastTitle = $('#castUserListModal > div > div > div.modal-body > div.chat-msg-search > div > input').val();
-        var newRecipients = Array.from($('#group_blank > div.contact-details .media-body span')).map(item => Number($(item).attr('userId'))).join(', ');
-        socket.emit('update:cast', {
-            oldCastTitle,
-            oldRecipients,
-            newCastTitle,
-            newRecipients
-        });
-
-        $('#castUserListModal').modal('hide');
-
-    });
-
-    $('#castUserListModal').on('hidden.bs.modal', function () {
-        $(this).removeData('title');
-        $(this).removeData('recipients');
-
-    });
-
-    //remove Chat Thread
-    // $(document).on("contextmenu", ".element", function(e){
-    //     alert('Context Menu event has fired!');
-    //     return false;
-    //  });
-
-
-    $('#cast .chat-main').on('click', '.msg-setting', function (event) {
-        event.stopPropagation();
-        $(this).siblings('.msg-dropdown').toggle();
-        setTimeout(() => {
-            $(this).siblings('.msg-dropdown').hide();
-        }, 5000);
-    });
 
     //reply message
     $('.messages').on('click', '.replyBtn', function (e) {
@@ -579,7 +366,6 @@ function showNewCastPage() {
     $('#chat .tab-content .tab-pane').removeClass('active show');
     $('#chat .tab-content .tab-pane#cast').addClass('active show');
     $('#content .chat-content .messages').removeClass('active');
-    $('#group_blank').addClass('active');
 
     $('#myTabContent .nav-item .nav-link').removeClass('active');
     $('#myTabContent .nav-item .nav-link#cast-tab').addClass('active');
@@ -588,9 +374,6 @@ function showNewCastPage() {
 
     $('.chat-cont-setting').removeClass('open');
     $('.chitchat-container').toggleClass("mobile-menu");
-    //remove history
-    // $('#group_blank > .contact-details .media-body').empty();
-    // $('#group_blank .contact-chat ul.chatappend').empty()
 
     if ($(window).width() <= 768) {
         $('.main-nav').removeClass("on");

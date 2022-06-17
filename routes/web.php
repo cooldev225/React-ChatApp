@@ -28,6 +28,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getCurrentChatContent', 'HomeController@getCurrentChatContent');
     Route::post('/home/getCurrentGroupChatContent', 'HomeController@getCurrentGroupChatContent');
     Route::post('/home/getUsersList', 'HomeController@getUsersList');
+    Route::post('/home/getUsersListByGroupId', 'HomeController@getUsersListByGroupId');
     Route::post('/home/addContactItem', 'HomeController@addContactItem');
     Route::post('/home/getContactList', 'HomeController@getContactList');
     Route::post('/home/getChatData', 'HomeController@getChatData');
@@ -40,7 +41,6 @@ Route::group(['middleware' => ['login']], function () {
     Route::post('/home/getRateData', 'HomeController@getRateData');
     Route::post('/home/loadMoreMessages', 'HomeController@loadMoreMessages');
     Route::post('/home/getCastData', 'MessageController@getCastData');
-    Route::post('/home/getGroupData', 'MessageController@getGroupData');
     Route::post('/home/displayCastChatData', 'MessageController@displayCastChatData');
     Route::post('/message/getLastMessage', 'MessageController@getLastMessage');
     Route::post('/api/create-paypal-transaction', 'PaymentController@createPayment');

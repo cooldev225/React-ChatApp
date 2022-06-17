@@ -29,6 +29,7 @@ if (viewportWidth > 650) {
 } else if (viewportWidth <= 650) {
     var canvasDimension = 350
 }
+
 var canvas = new fabric.Canvas('back_canvas', {
     width: canvasDimension,
     height: canvasDimension,
@@ -80,7 +81,7 @@ $(document).ready(function () {
         let receiverInfo = getCertainUserInfoById(currentUserId);
         addRequestItem(senderInfo, receiverInfo, data);
         if (data.from != currentUserId)
-            $('.photo-request-icon').addClass('dot-btn');
+            $('.photo_request_icon').addClass('dot-btn');
     });
 
     socket.on('get:rate', data => {
@@ -102,7 +103,7 @@ $(document).ready(function () {
         $('#detailRequestModal .request-title').text($(e.currentTarget).find('.title').text());
         $('#detailRequestModal .request-description').text($(e.currentTarget).find('.description').val());
         $('#detailRequestModal .request-price').text($(e.currentTarget).find('.price').val() + "$");
-        $('.photo-request-icon').removeClass('dot-btn');
+        $('.photo_request_icon').removeClass('dot-btn');
         $(e.currentTarget).find('.read-status').removeClass('fa-eye-slash');
         $(e.currentTarget).find('.read-status').addClass('fa-eye');
         if (e.currentTarget.className.includes('sent')) {

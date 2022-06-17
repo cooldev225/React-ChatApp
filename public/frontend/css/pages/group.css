@@ -2,13 +2,9 @@
     width: 200px;
 }
 
-#group_chat .chat-frind-content li {
-    cursor: pointer;
-}
-
 .messages .groupuser {
     overflow: auto;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     z-index: 101;
     position: relative;
 }

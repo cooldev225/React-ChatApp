@@ -66,7 +66,7 @@ body {
     justify-content: center;
 }
 
-.selfProfileBtn {
+.self_profile_btn {
     cursor: pointer;
 }
 
@@ -632,10 +632,6 @@ h6.read {
 
 .msg-setting-main:hover .receive_photo~.msg-dropdown-main .msg-open-btn {
     display: flex;
-}
-
-.chat-main>li {
-    cursor: pointer;
 }
 
 .msg-chat-modal .chat-msg-search .input-group .form-control {

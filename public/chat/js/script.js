@@ -733,7 +733,7 @@
     /*=====================
            27. profile open close
            ==========================*/
-    $('.selfProfileBtn, .menu-trigger, .close-profile').on('click', function (e) {
+    $('.self_profile_btn, .menu-trigger, .close-profile').on('click', function (e) {
         $('body').toggleClass('menu-active'); //add class
         $('.app-sidebar').toggleClass('active'); //remove
         $('.chitchat-main').toggleClass("small-sidebar"); //remove

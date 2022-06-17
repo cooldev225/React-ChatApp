@@ -245,24 +245,6 @@ $(document).ready(function () {
     });
 });
 
-
-function confirmModal(title, content, okAction, cancelAction) {
-    $.confirm({
-        title,
-        content,
-        buttons: {
-            Ok: {
-                btnClass: 'btn-primary',
-                action: okAction
-            },
-            Cancel: {
-                btnClass: 'btn-danger',
-                action: cancelAction
-            }
-        }
-    });
-}
-
 function addUsersListItem(target, data, statusItem) {
     $(target).prepend(
         `<li data-to="blank" key="${data.id}">
@@ -465,6 +447,32 @@ function showCurrentChatHistory(target, groupId, groupUsers, pageSettingFlag) {
                 $('.section-py-space').css('display', 'block');
                 $('#content').css('display', 'none');
                 $('.app-list').css('display', 'none');
+            }
+        },
+        error: function (response) { }
+    });
+}
+
+function getUsersListByGroupId(groupId, resolve) {
+    var form_data = new FormData();
+    form_data.append('groupId', groupId);
+    $.ajax({
+        url: '/home/getUsersListByGroupId',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (res) {
+            if (res.state == 'true') {
+                console.log(res.data);
+                resolve(res.data);
+            } else {
+               
             }
         },
         error: function (response) { }
