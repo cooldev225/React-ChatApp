@@ -426,7 +426,7 @@ const onConnection = (socket) => {
         }
     });
 
-    socket.on('pay:photo', data => {
+    socket.on('pay:photo', (data, callback) => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             data.selectedEmojis.forEach(id => {
                 let content = JSON.parse(item[0].content);
@@ -443,8 +443,8 @@ const onConnection = (socket) => {
             });
             db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(JSON.stringify(JSON.parse(item[0].content)))}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
-                db.query(`SELECT sender FROM messages WHERE content=${item.id} AND kind=2`, (error, messageItem) => {
-                    if (error) throw err;
+                db.query(`SELECT sender FROM messages WHERE content=${item[0].id} AND kind=2`, (error, messageItem) => {
+                    if (error) throw error;
                     if (messageItem.length) {
                         let photoSender = messageItem[0]['sender'];
 
@@ -454,11 +454,14 @@ const onConnection = (socket) => {
                         db.query(`UPDATE users SET balances=balances-${data.totalPrice} WHERE id=${currentUserId}`, (error, item) => {
                             if (error) throw error;
                         });
-                        db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${currentUserId}, ${photoSender}, ${data.addBalance})`, (error, historyItem) => {
+                        db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${currentUserId}, ${photoSender}, ${data.totalPrice})`, (error, historyItem) => {
                             if (error) throw error;
                             console.log('OK');
                         });
                         Notification.sendPaySMS(currentUserId, photoSender, data.addBalance);
+                        callback({
+                            status: 'OK'
+                        })
                     }
                 });
             });

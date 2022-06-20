@@ -778,7 +778,7 @@ function displayPaymentHistory(userId) {
                     let receiverInfo = getCertainUserInfoById(item.recipient);
                     let sendFlag = item.sender == currentUserId ? true : false;
                     let avatar = sendFlag ? receiverInfo.avatar : senderInfo.avatar;
-                    let amount = sendFlag ? (item.amount / 0.7).toFixed(2) : (item.amount).toFixed(2);
+                    let amount = sendFlag ? (item.amount).toFixed(2) : (item.amount * 0.7).toFixed(2);
                     $('.history-list').append(`<li class="sent">
                         <a>
                             <div class="chat-box">

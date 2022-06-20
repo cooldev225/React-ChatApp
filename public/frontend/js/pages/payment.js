@@ -89,18 +89,18 @@ function tempAction() {
     let messageId = $('#photo_item .modal-content').attr('key');
     let photoId = $('#photo_item .modal-content').attr('photoId');
     let addBalance = totalPrice * 0.7.toFixed(2);
-    socket.emit('pay:photo', {
-        photoId,
-        selectedEmojis,
-        addBalance,
-        totalPrice,
+    socket.emit('pay:photo', { photoId, selectedEmojis, addBalance, totalPrice}, (res) => {
+        if (res.status == 'OK') {
+            $('#checkoutModal').modal('hide');
+            alert('You paid Successfully');
+            payWholePhotoPrice();
+            photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
+            let thumbnailPhoto = photo_canvas.toDataURL('image/png');
+            socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
+        } else {
+            console.log(res);
+        }
     });
-    payWholePhotoPrice();
-    $('#checkoutModal').modal('hide');
-    alert('You paid Successfully');
-    photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
-    let thumbnailPhoto = photo_canvas.toDataURL('image/png');
-    socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
 }
 
 function payPhoto() {
