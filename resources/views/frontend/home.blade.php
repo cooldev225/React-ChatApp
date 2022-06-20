@@ -3636,14 +3636,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <!-- <div>
                         <span class="">To: </span>
                         <span class="recipientName"></span>
                     </div>
                     <div>
                         <span class="">Mail:</span>
                         <span class="recipientMail"></span>
-                    </div>
+                    </div> -->
                     <div class="product-payment">
                         <div class="product-list">
                             <hr>

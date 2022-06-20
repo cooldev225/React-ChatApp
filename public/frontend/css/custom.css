@@ -533,6 +533,7 @@ ul.chatappend .msg-box .camera-icon {
 #checkoutModal .product-list img {
     width: 30px;
     height: 30px;
+    /* border-radius: 50%; */
 }
 
 .chitchat-container .main-nav .logo-warpper {
@@ -557,14 +558,6 @@ ul.chatappend .msg-box .camera-icon {
     font-size: 13px;
 }
 
-
-/* .chatappend .sent .msg-dropdown .deleteMessageBtn {
-    display: none;
-}
-
-.chatappend .sent .msg-dropdown .rateBtn {
-    margin-bottom: 0;
-} */
 
 #paypal-animation-content>div.paypal-button-container.paypal-button-layout-horizontal.paypal-button-shape-pill.paypal-button-branding-branded.paypal-button-number-single.paypal-button-env-sandbox.paypal-should-focus {
     min-width: fit-content;

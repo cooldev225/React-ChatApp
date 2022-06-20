@@ -61,7 +61,6 @@ $(document).ready(function () {
     setContentRate();
     addTextOnPhoto();
     lockResizeEmojis();
-    payPhoto();
 
     document.getElementById("input_btn")
         .addEventListener('click', function () {
@@ -579,26 +578,6 @@ function getPhotoPrice(target) {
     return target._objects.map(item => item.price).filter(item => item && item > 0).reduce((total, item) => Number(item) + total, 0);
 }
 
-
-function payPhoto() {
-    $('.payBtn').on('click', () => {
-        let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.id == item).price) + total, 0);
-        let blur_price = Number($('.blur-image').attr('price')) < 0 ? 0 : Number($('.blur-image').attr('price'));
-        if (selectedEmojis.includes('blur')) price += blur_price;
-        price == 0 ? price = photoPrice : '';
-        if (price != 0) {
-            $('#checkoutModal').modal('show');
-        } else {
-            payWholePhotoPrice();
-            let photoId = $('#photo_item .modal-content').attr('photoId');
-            photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
-            let thumbnailPhoto = photo_canvas.toDataURL('image/png');
-            socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
-            console.log('aaa');
-        }
-    })
-}
-
 function getPhotoSrcById(id, target) {
     let form_data = new FormData();
     form_data.append('id', id);
@@ -687,7 +666,6 @@ function setContentRate() {
         if ($('#photo_item').hasClass('show') && !$('#photo_item .modal-content').hasClass('sent')) {
             var messageId = $('#photo_item .modal-content').attr('key');
             var kind = 2;
-
         } else {
             var messageId = $(this).parents('li.sent').attr('key');
             var kind = $(this).parents('li.sent').attr('kind');

@@ -1,19 +1,19 @@
 let totalPrice = 0;
 
 $(document).ready(function () {
+    payPhoto();
 
     $('#checkoutModal').on('shown.bs.modal', function (e) {
         totalPrice = 0;
-        let userInfo = getCertainUserInfoById(currentContactId);
-        $('#checkoutModal .recipientName').text(userInfo.username);
-        $('#checkoutModal .recipientMail').text(userInfo.email);
+        // let userInfo = getCertainUserInfoById(currentContactId);
+        // $('#checkoutModal .recipientName').text(userInfo.username);
+        // $('#checkoutModal .recipientMail').text(userInfo.email);
         $('#checkoutModal .product-list .product-item').remove();
         if (!selectedEmojis.length) {
             photo_canvas._objects.filter(item => item.kind != 'temp').forEach(item => selectedEmojis.push(item.id));
             selectedEmojis.push('blur');
         }
         let blurPrice = $('#photo_item .blur-image').attr('price');
-
         photo_canvas._objects.filter(oImg => selectedEmojis.includes(oImg.id) && oImg.price > 0).forEach(item => {
             $('#checkoutModal .product-list .bottom-hr').before(
                 `<div class="product-item mt-2 mb-2">
@@ -22,10 +22,10 @@ $(document).ready(function () {
                 </div>`);
             totalPrice += Number(item.price);
         });
-        if (selectedEmojis.includes('blur')) {
+        if (Number(blurPrice) && selectedEmojis.includes('blur')) {
             $('#checkoutModal .product-list .bottom-hr').before(
                 `<div class="product-item mt-2 mb-2">
-                    <img src="/images/blur.png" />
+                    <img src="/images/blur.png" style="border-radius: 50%;"/>
                     <span>$${blurPrice}</span>
                 </div>`);
             totalPrice += Number(blurPrice);
@@ -101,4 +101,22 @@ function tempAction() {
     photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
     let thumbnailPhoto = photo_canvas.toDataURL('image/png');
     socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
+}
+
+function payPhoto() {
+    $('.payBtn').on('click', () => {
+        let price = selectedEmojis.filter(item => item != 'blur').reduce((total, item) => Number(photo_canvas._objects.find(oImg => oImg.id == item).price) + total, 0);
+        let blur_price = Number($('.blur-image').attr('price')) < 0 ? 0 : Number($('.blur-image').attr('price'));
+        if (selectedEmojis.includes('blur')) price += blur_price;
+        price == 0 ? price = photoPrice : '';
+        if (price != 0) {
+            $('#checkoutModal').modal('show');
+        } else {
+            payWholePhotoPrice();
+            let photoId = $('#photo_item .modal-content').attr('photoId');
+            photo_canvas._objects.filter(item => item.kind == 'temp').forEach(item => photo_canvas.remove(item));
+            let thumbnailPhoto = photo_canvas.toDataURL('image/png');
+            socket.emit('update:thumbnailPhoto', { photoId, thumbnailPhoto });
+        }
+    });
 }

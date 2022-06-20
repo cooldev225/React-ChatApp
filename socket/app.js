@@ -8,7 +8,7 @@ const Notification = require("./notification.js");
 const SpanishCountries = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Uruguay', 'Venezuela', 'Spain'];
 const KindConstant = ['text', 'request', 'photo', 'video', 'audio', 'video_call', 'voice_call'];
 
-// const server = require('https').createServer(app)
+
 const server = require('http').createServer(app)
 // const port = process.env.PORT || 4000
 const port = 4000;
@@ -21,8 +21,6 @@ const io = require('socket.io')(server, {
 
 const groupSocket = require('./groupSocket');
 
-
-
 db.query(`SET GLOBAL max_allowed_packet=1024*1024*1024`, (error, item) => {
     // db.query(`SHOW VARIABLES LIKE 'max_allowed_packet'`, (error, item) => {
     //     console.log(item);
@@ -34,6 +32,7 @@ let user_socketMap = new Map();
 let socket_userMap = new Map();
 
 const cors = require('cors');
+const { message } = require('laravel-mix/src/Log.js');
 
 app.use(cors({
     origin: '*'
@@ -334,10 +333,11 @@ const onConnection = (socket) => {
 
     socket.on('give:rate', data => {
         if (data.kind != 1) {
-            db.query(`SELECT rate FROM messages where id = ${data.messageId}`, (error, row) => {
+            db.query(`SELECT sender, rate FROM messages where id = ${data.messageId}`, (error, row) => {
+                let sender = row[0].sender;
                 let rate = data.rate - row[0].rate;
                 let count = row[0].rate ? 0 : 1;
-                db.query(`INSERT INTO ratings (user_id, ${KindConstant[data.kind]}_count, ${KindConstant[data.kind]}_rate) VALUES (${data.currentContactId}, 1, ${rate}) ON DUPLICATE KEY UPDATE user_id=${data.currentContactId}, ${KindConstant[data.kind]}_count=${KindConstant[data.kind]}_count+${count}, ${KindConstant[data.kind]}_rate=${KindConstant[data.kind]}_rate+${rate}`, (error, item) => {
+                db.query(`INSERT INTO ratings (user_id, ${KindConstant[data.kind]}_count, ${KindConstant[data.kind]}_rate) VALUES (${sender}, 1, ${rate}) ON DUPLICATE KEY UPDATE user_id=${sender}, ${KindConstant[data.kind]}_count=${KindConstant[data.kind]}_count+${count}, ${KindConstant[data.kind]}_rate=${KindConstant[data.kind]}_rate+${rate}`, (error, item) => {
 
                     // let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
                     // if (recipientSocketId) {
@@ -348,16 +348,19 @@ const onConnection = (socket) => {
                 });
             });
         }
-        db.query(`UPDATE messages SET rate = ${data.rate} WHERE id=${data.messageId}`, (error, item) => {
-            if (error) throw error;
-            let recipientSocketId = user_socketMap.get(data.currentContactId.toString());
-            if (recipientSocketId) {
-                if (io.sockets.sockets.get(recipientSocketId)) {
-                    io.sockets.sockets.get(recipientSocketId).emit('get:rate', data);
+        db.query(`SELECT sender FROM messages WHERE id=${data.messageId}`, (error, row) => {
+            let sender = row[0].sender;
+            db.query(`UPDATE messages SET rate = ${data.rate} WHERE id=${data.messageId}`, (error, item) => {
+                if (error) throw error;
+                let recipientSocketId = user_socketMap.get(sender.toString());
+                if (recipientSocketId) {
+                    if (io.sockets.sockets.get(recipientSocketId)) {
+                        io.sockets.sockets.get(recipientSocketId).emit('get:rate', data);
+                    }
                 }
-            }
-        });
-        Notification.sendRateSMS(currentUserId, data.currentContactId, data.rate, data.kind);
+            });
+            Notification.sendRateSMS(currentUserId, sender, data.rate, data.kind);
+        })
     })
 
     socket.on('typing', data => {
@@ -440,18 +443,25 @@ const onConnection = (socket) => {
             });
             db.query(`UPDATE photo_galleries SET blur=${item[0].blur}, blur_price=${item[0].blur_price}, content=${JSON.stringify(JSON.stringify(JSON.parse(item[0].content)))}, paid=1 WHERE id=${item[0].id}`, (error, photo) => {
                 if (error) throw error;
-                db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${item[0].from}`, (error, item) => {
-                    if (error) throw error;
-                });
-                db.query(`UPDATE users SET balances=balances-${data.totalPrice} WHERE id=${currentUserId}`, (error, item) => {
-                    if (error) throw error;
-                });
-                db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${currentUserId}, ${item[0].from}, ${data.addBalance})`, (error, historyItem) => {
-                    if (error) throw error;
-                    console.log('OK');
+                db.query(`SELECT sender FROM messages WHERE content=${item.id} AND kind=2`, (error, messageItem) => {
+                    if (error) throw err;
+                    if (messageItem.length) {
+                        let photoSender = messageItem[0]['sender'];
+
+                        db.query(`UPDATE users SET balances=balances+${data.addBalance} WHERE id=${photoSender}`, (error, item) => {
+                            if (error) throw error;
+                        });
+                        db.query(`UPDATE users SET balances=balances-${data.totalPrice} WHERE id=${currentUserId}`, (error, item) => {
+                            if (error) throw error;
+                        });
+                        db.query(`INSERT INTO payment_histories (sender, recipient, amount) VALUES (${currentUserId}, ${photoSender}, ${data.addBalance})`, (error, historyItem) => {
+                            if (error) throw error;
+                            console.log('OK');
+                        });
+                        Notification.sendPaySMS(currentUserId, photoSender, data.addBalance);
+                    }
                 });
             });
-            Notification.sendPaySMS(item[0].to, item[0].from, data.addBalance);
         });
     });
 
@@ -563,52 +573,3 @@ io.on('connection', onConnection);
 server.listen(port, () => {
     console.log(`Server running on port: ${port}`)
 })
-
-// function sendSMS(sender, recipient, type) {
-//     db.query(`SELECT * FROM users WHERE id = ${recipient}`, (error, row) => {
-//         if (row.length) {
-//             if (row[0].notification) {
-//                 var val = Math.floor(100000 + Math.random() * 900000);
-//                 let phoneNumber = row[0].phone_number.replace(/[^0-9]/g, '');
-//                 let isoCode2 = row[0].national.toUpperCase();
-//                 db.query(`SELECT * FROM countries where iso_code2 = '${isoCode2}'`, (error, country) => {
-
-//                     db.query(`SELECT * FROM country_phone_codes where country_id = ${country[0].id}`, (error, phoneInfo) => {
-//                         let phone_code = phoneInfo[0].phone_code
-//                         let fullPhoneNumber = '';
-//                         if (phone_code != 1) {
-//                             fullPhoneNumber = '011' + phoneNumber;
-//                         } else {
-//                             fullPhoneNumber = phoneNumber;
-//                         }
-//                         db.query(`SELECT * FROM users where id=${sender}`, (error, user) => {
-//                             let spainish = SpanishCountries.map(item => item.toLowerCase()).includes(country[0].name.toLowerCase());
-//                             let message = '';
-//                             let messageType = type == 'text' ? 'de texto' : type == 'photo' ? 'con foto' : 'solicitar';
-//                             if (spainish) {
-//                                 message = `Hola ${row[0].username}, tienes un nuevo mensaje ${messageType} de ${user[0].username}. Inicie sesion en Ojochat.com para ver sus mensajes. ${val}`;
-//                             } else {
-//                                 message = `Hey ${row[0].username}, you have a new ${type} message from ${user[0].username || 'Someone'}. Login to Ojochat.com to view your messages. ${val}`;
-//                             }
-//                             if (row[0].sms_type == 1) {
-//                                 // var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=%5B%2237%22%2C%2238%22%5D&type=sms&useRandomDevice=1&prioritize=1`;
-//                                 var smsUrl = `https://gws.bouncesms.com/index.php?app=ws&u=ojo&h=8626eda4876ce9a63a564b8b28418abd&op=pv&to=${fullPhoneNumber}&msg=${message}`
-//                             } else {
-//                                 var smsUrl = `https://app.centsms.app/services/send.php?key=52efd2c71f080fa8d775b2a5ae1bb03cbb599e2f&number=${fullPhoneNumber}&message=${message}&devices=58&type=sms&prioritize=1`;
-//                             }
-//                             axios.get(smsUrl).then(res => {
-//                                 console.log("Recipient: ", recipient)
-//                                 console.log('SMS sent to: ', fullPhoneNumber);
-//                                 console.log('Status: ', res.status);
-//                             }).catch(error => {
-//                                 console.log('-------------------------------');
-//                                 console.log(error);
-//                                 console.log('------------------------------');
-//                             });
-//                         });
-//                     });
-//                 });
-//             }
-//         }
-//     });
-// }
