@@ -154,3 +154,10 @@ body>div.chitchat-container.sidebar-toggle.mobile-menu>section>a {
     padding: 3px 10px;
     border-radius: 20px;
 }
+
+.chat-main li .details>h6 {
+    width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

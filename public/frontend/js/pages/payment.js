@@ -89,7 +89,7 @@ function tempAction() {
     let messageId = $('#photo_item .modal-content').attr('key');
     let photoId = $('#photo_item .modal-content').attr('photoId');
     let addBalance = totalPrice * 0.7.toFixed(2);
-    socket.emit('pay:photo', { photoId, selectedEmojis, addBalance, totalPrice}, (res) => {
+    socket.emit('pay:blink', { photoId, selectedEmojis, addBalance, totalPrice}, (res) => {
         if (res.status == 'OK') {
             $('#checkoutModal').modal('hide');
             alert('You paid Successfully');

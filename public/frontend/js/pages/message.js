@@ -86,51 +86,6 @@ $(document).ready(function () {
         // showNewCastPage();
     });
 
-    socket.on('add:newCast', data => {
-        let target = '#cast > ul.chat-main';
-        let title = data.castTitle;
-        let recipients = data.currentContactIdArr.map(item => getCertainUserInfoById(item).username).join(', ');
-        let countRecipients = data.currentContactIdArr.length;
-        let displayNames = recipients.length > 24 ? recipients.slice(0, 24) + '...' : recipients;
-        $(target).prepend(
-            `<li data-to="cast_chat" recipients="${data.currentContactIdArr.join(', ')}">
-                <div class="chat-box">
-                    <div class="profile bg-size" style="background-image: url('/images/default-avatar.png'); background-size: cover; background-position: center center; display: block;">
-                        
-                    </div>
-                    <div class="details">
-                        <h5>${title}</h5>
-                        <h6>${countRecipients} : ${displayNames}</h6>
-                    </div>
-                    <div class="date-status">
-                        <div class="msg-dropdown-main">
-                            <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                            <div class="msg-dropdown">
-                                <ul>
-                                    <li>
-                                        <a class="icon-btn btn-outline-light btn-sm list_info" href="#">
-                                            <img src="/images/icons/info.svg" alt="info">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="icon-btn btn-outline-light btn-sm" href="#">
-                                            <i class="ti-trash"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>`
-        );
-        $(target).children().removeClass('active');
-        $(target).children().first().addClass('active');
-
-        $('#content .chat-content .messages').removeClass('active');
-        $('#cast_chat').addClass('active');
-    });
-
     socket.on('update:cast', (data) => {
         new Promise((resolve) => {
             getCastData(resolve);

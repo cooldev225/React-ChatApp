@@ -272,6 +272,7 @@ function addNewGroupItem(target, data) {
         let userInfo = getCertainUserInfoById(directId);
         avatar = userInfo.avatar;
         title = userInfo.username;
+        var description = userInfo.description;
     }
     let groupUsersAvatar = users.filter((item, index) => index < 3).map(item => {
         let avatar = getCertainUserInfoById(item).avatar;
@@ -289,7 +290,7 @@ function addNewGroupItem(target, data) {
                 </div>
                 <div class="details">
                     <h5>${title}</h5>
-                    <h6>${data.lastMessage || 'Hello'}</h6>
+                    <h6 >${data.lastMessage || description}</h6>
                 </div>
                 <div class="date-status">
                     <ul class="grop-icon">

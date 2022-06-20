@@ -250,71 +250,17 @@ const onConnection = (socket) => {
             });
         }
     });
+
     socket.on('send:state', data => {
         console.log(data);
     });
 
-    socket.on('send:photo', data => {
-        data.to.forEach((currentContactId, index) => {
-            let senderSocketId = user_socketMap.get(currentUserId.toString());
-            let recipientSocketId = user_socketMap.get(currentContactId.toString());
-            let message = {
-                from: data.from,
-                to: currentContactId,
-                content: data.photo,
-                kind: 2,
-            }
-            db.query(`INSERT INTO photo_galleries (\`from\`, \`to\`, photo, back, blur, blur_price, content) VALUES ("${data.from}", "${currentContactId}", ${JSON.stringify(data.photo)},${JSON.stringify(data.back)}, ${data.blur}, ${data.blurPrice} , ${JSON.stringify(data.content)})`, (error, item) => {
-                data.id = item.insertId;
-                message.photoId = item.insertId
-                db.query(`INSERT INTO messages (sender, recipient, content, kind) VALUES ("${data.from}", "${currentContactId}", "${data.id}", 2)`, (error, messageItem) => {
-                    message.messageId = messageItem.insertId;
-                    if (index == 0) {
-
-                        if (data.cast) {
-                            if (data.to.join(', ') && data.castTitle) {
-                                db.query(`INSERT INTO casts (sender, recipients, cast_title,  content, kind) VALUES ("${data.from}", "${data.to.join(', ')}", "${data.castTitle}", "${data.id}", 2)`, (error, castItem) => {
-                                    console.log("Cast Title: ", data.castTitle);
-                                    // io.sockets.sockets.get(senderSocketId).emit('update:cast');
-                                });
-                            }
-
-                        }
-                        io.sockets.sockets.get(senderSocketId).emit('message', message);
-                        io.sockets.sockets.get(senderSocketId).emit('receive:photo', data);
-                    }
-                    if (recipientSocketId) {
-                        if (io.sockets.sockets.get(recipientSocketId)) {
-                            io.sockets.sockets.get(recipientSocketId).emit('message', message);
-                            io.sockets.sockets.get(recipientSocketId).emit('receive:photo', data);
-                        }
-                    } else {
-                        console.log('Send Photo SMS');
-                        sendSMS(data.from, currentContactId, 'photo');
-                    }
-                });
-            });
-        });
-    });
-
     socket.on('edit:photo', data => {
-        // let senderSocketId = user_socketMap.get(currentUserId.toString());
-        // let recipientSocketId = user_socketMap.get(currentContactId.toString());
-        // let message = {
-        //     content: data.photo,
-        //     kind: 2
-        // }
         console.log(data.content);
         db.query(`UPDATE photo_galleries SET photo=${JSON.stringify(data.photo)}, content=${JSON.stringify(data.content)} WHERE id=${data.photoId}`, (error, item) => {
             // if (error) throw error;
             console.log(item);
-            // if (senderSocketId) {
-            //     if (io.sockets.sockets.get(senderSocketId)) {
-            //         io.sockets.sockets.get(senderSocketId).emit('update:cast', data);
-            //     }
-            // }
         });
-
     });
 
     socket.on('update:cast', data => {
@@ -426,7 +372,7 @@ const onConnection = (socket) => {
         }
     });
 
-    socket.on('pay:photo', (data, callback) => {
+    socket.on('pay:blink', (data, callback) => {
         db.query(`SELECT * FROM photo_galleries WHERE id=${data.photoId}`, (error, item) => {
             data.selectedEmojis.forEach(id => {
                 let content = JSON.parse(item[0].content);
